@@ -8,598 +8,422 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
-  --bg:            #0c0e14;
-  --surface:       #13161f;
-  --surface2:      #191d28;
-  --surface3:      #1f2436;
-  --border:        rgba(255,255,255,0.06);
-  --border2:       rgba(255,255,255,0.11);
-  --border3:       rgba(255,255,255,0.22);
-  --text:          #dde1ed;
-  --text2:         #8e97b4;
-  --text3:         #5a6480;
-  --accent:        #38bdf8;
-  --accent-bg:     rgba(56,189,248,0.10);
-  --accent-glow:   rgba(56,189,248,0.22);
-  --green:         #34d399;
-  --green-bg:      rgba(52,211,153,0.10);
-  --red:           #f87171;
-  --red-bg:        rgba(248,113,113,0.10);
-  --gold:          #fbbf24;
-  --gold-bg:       rgba(251,191,36,0.10);
-  --radius:        10px;
-  --radius-lg:     16px;
-  --radius-xl:     20px;
-  --mono:          'IBM Plex Mono', monospace;
-  --sans:          'IBM Plex Sans', sans-serif;
-  --shadow:        0 4px 24px rgba(0,0,0,0.4);
-  --shadow-lg:     0 8px 48px rgba(0,0,0,0.6);
+  --bg:#0c0e14; --surface:#13161f; --surface2:#191d28; --surface3:#1f2436;
+  --border:rgba(255,255,255,0.06); --border2:rgba(255,255,255,0.11); --border3:rgba(255,255,255,0.22);
+  --text:#dde1ed; --text2:#8e97b4; --text3:#5a6480;
+  --accent:#38bdf8; --accent-bg:rgba(56,189,248,0.10); --accent-glow:rgba(56,189,248,0.22);
+  --green:#34d399; --green-bg:rgba(52,211,153,0.10);
+  --red:#f87171; --red-bg:rgba(248,113,113,0.10);
+  --gold:#fbbf24; --gold-bg:rgba(251,191,36,0.10);
+  --purple:#a78bfa; --purple-bg:rgba(167,139,250,0.10);
+  --radius:10px; --radius-lg:16px; --radius-xl:20px;
+  --mono:'IBM Plex Mono',monospace; --sans:'IBM Plex Sans',sans-serif;
+  --shadow:0 4px 24px rgba(0,0,0,0.4); --shadow-lg:0 8px 48px rgba(0,0,0,0.6);
 }
+html{height:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100%;
+  background-image:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);
+  background-size:32px 32px;}
 
-html { height: 100%; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--sans);
-  min-height: 100%;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
-  background-size: 32px 32px;
-}
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(19,22,31,0.9);backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 20px;height:52px;
+  display:flex;align-items:center;gap:12px;}
+.topbar-logo{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent) 0%,#0ea5e9 100%);
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;
+  color:#000;flex-shrink:0;box-shadow:0 2px 8px var(--accent-glow);}
+.topbar-title{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--text);text-transform:uppercase;}
+.topbar-divider{width:1px;height:18px;background:var(--border2);flex-shrink:0;}
+.topbar-date-str{font-family:var(--mono);font-size:11px;color:var(--text2);letter-spacing:0.02em;}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.topbar-clock{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--text);letter-spacing:0.06em;
+  background:var(--surface2);border:1px solid var(--border2);padding:4px 10px;border-radius:8px;}
+@media(max-width:480px){.topbar-date-str{display:none}.topbar{padding:0 14px}}
 
-/* ── TOPBAR ──────────────────────────────────────────────── */
-.topbar {
-  position: sticky; top: 0; z-index: 50;
-  background: rgba(19,22,31,0.88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 20px;
-  height: 52px;
-  display: flex; align-items: center; gap: 12px;
-}
-.topbar-logo {
-  width: 28px; height: 28px; border-radius: 8px;
-  background: linear-gradient(135deg, var(--accent) 0%, #0ea5e9 100%);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--mono); font-size: 11px; font-weight: 700;
-  color: #000; flex-shrink: 0; box-shadow: 0 2px 8px var(--accent-glow);
-}
-.topbar-title {
-  font-family: var(--mono); font-size: 12px; font-weight: 600;
-  letter-spacing: 0.08em; color: var(--text); text-transform: uppercase;
-}
-.topbar-divider { width: 1px; height: 18px; background: var(--border2); flex-shrink: 0; }
-.topbar-date-str {
-  font-family: var(--mono); font-size: 11px; color: var(--text2);
-  letter-spacing: 0.02em;
-}
-.topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
-.topbar-clock {
-  font-family: var(--mono); font-size: 13px; font-weight: 500;
-  color: var(--text); letter-spacing: 0.06em;
-  background: var(--surface2); border: 1px solid var(--border2);
-  padding: 4px 10px; border-radius: 8px;
-}
-@media (max-width: 480px) {
-  .topbar-date-str { display: none; }
-  .topbar { padding: 0 14px; }
-}
+/* PAGE */
+.page{max-width:1100px;margin:0 auto;padding:20px 16px 60px;}
 
-/* ── PAGE ──────────────────────────────────────────────────── */
-.page { max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; }
+/* BANNER */
+.shift-banner{position:relative;display:flex;align-items:center;justify-content:space-between;
+  min-height:110px;padding:20px 28px;margin-bottom:16px;
+  background:linear-gradient(135deg,rgba(255,255,255,0.013),rgba(255,255,255,0.027));
+  border:1px solid var(--border2);border-radius:18px;overflow:hidden;isolation:isolate;
+  backdrop-filter:blur(10px);}
+.shift-banner::after{content:'';position:absolute;inset:0 0 auto 0;height:2px;
+  background:linear-gradient(90deg,var(--accent) 0%,var(--green) 100%);}
+.banner-half{position:relative;z-index:2;display:flex;flex-direction:column;gap:6px;max-width:42%;}
+.banner-eyebrow{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:0.16em;
+  text-transform:uppercase;color:var(--text3);}
+.banner-main{font-family:var(--mono);font-size:clamp(13px,2vw,16px);font-weight:600;line-height:1.25;color:var(--text);}
+.banner-sub{font-family:var(--mono);font-size:11px;color:var(--text3);}
+.banner-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  display:flex;flex-direction:column;align-items:center;gap:5px;pointer-events:none;text-align:center;}
+.banner-cdown-label{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:0.12em;
+  text-transform:uppercase;color:var(--text3);}
+.banner-cdown{font-family:var(--mono);font-size:clamp(28px,3.5vw,44px);font-weight:600;
+  letter-spacing:-0.05em;color:var(--text);font-variant-numeric:tabular-nums;font-feature-settings:"tnum";}
+.banner-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;
+  font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;}
+.chip-open{background:var(--green-bg);border:1px solid rgba(52,211,153,0.3);color:var(--green);}
+.chip-closed{background:var(--red-bg);border:1px solid rgba(248,113,113,0.3);color:var(--red);}
+.chip-soon{background:var(--gold-bg);border:1px solid rgba(251,191,36,0.3);color:var(--gold);}
+.chip-weekend{background:var(--purple-bg);border:1px solid rgba(167,139,250,0.3);color:var(--purple);}
+.sdot{width:5px;height:5px;border-radius:50%;background:currentColor;}
 
-/* ── HOURS BANNER ─────────────────────────────────────────── */
-.hours-banner {
-  position: relative;
-  display: flex; align-items: center; justify-content: space-between;
-  min-height: 100px;
-  padding: 20px 28px;
-  margin-bottom: 16px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.013), rgba(255,255,255,0.027));
-  border: 1px solid var(--border2);
-  border-radius: 18px;
-  overflow: hidden; isolation: isolate;
-  backdrop-filter: blur(10px);
-}
-.hours-banner::after {
-  content: '';
-  position: absolute; inset: 0 0 auto 0; height: 2px;
-  background: linear-gradient(90deg, var(--accent) 0%, var(--green) 100%);
-}
-.banner-side { display: flex; flex-direction: column; gap: 5px; }
-.banner-eyebrow {
-  font-family: var(--mono); font-size: 10px; font-weight: 500;
-  letter-spacing: 0.16em; text-transform: uppercase; color: var(--text3);
-}
-.banner-label {
-  font-family: var(--mono); font-size: 17px; font-weight: 600;
-  line-height: 1.2; letter-spacing: -0.01em; color: var(--text);
-}
-.banner-sub {
-  font-family: var(--mono); font-size: 11px; color: var(--text3);
-  letter-spacing: 0.02em;
-}
-.banner-center {
-  position: absolute; left: 50%; top: 50%;
-  transform: translate(-50%, -50%);
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
-  pointer-events: none;
-}
-.banner-countdown-label {
-  font-family: var(--mono); font-size: 10px; font-weight: 500;
-  letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3);
-}
-.banner-countdown {
-  font-family: var(--mono); font-size: clamp(30px, 4vw, 46px); font-weight: 600;
-  letter-spacing: -0.05em; color: var(--text);
-  font-variant-numeric: tabular-nums; font-feature-settings: "tnum";
-}
-.banner-status-chip {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 3px 9px; border-radius: 20px;
-  font-family: var(--mono); font-size: 10px; font-weight: 500;
-  letter-spacing: 0.06em; text-transform: uppercase;
-}
-.chip-open  { background: var(--green-bg);  border: 1px solid rgba(52,211,153,0.3);  color: var(--green); }
-.chip-closed { background: var(--red-bg);   border: 1px solid rgba(248,113,113,0.3); color: var(--red); }
-.chip-soon  { background: var(--gold-bg);   border: 1px solid rgba(251,191,36,0.3);  color: var(--gold); }
-.status-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+/* ROLLCALL BAR */
+.rollcall-bar{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-lg);
+  padding:12px 20px;margin-bottom:16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;}
+.rc-label{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);flex-shrink:0;}
+.rc-times{display:flex;gap:10px;flex-wrap:wrap;flex:1;}
+.rc-pill{font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:20px;
+  border:1px solid var(--border2);color:var(--text2);white-space:nowrap;transition:all 0.2s;}
+.rc-pill.rc-next{border-color:rgba(56,189,248,0.5);color:var(--accent);background:var(--accent-bg);
+  font-weight:600;}
+.rc-pill.rc-past{color:var(--text3);border-color:var(--border);}
+.rc-countdown{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent);
+  margin-left:auto;letter-spacing:0.04em;white-space:nowrap;}
 
-@media (max-width: 700px) {
-  .hours-banner { flex-direction: column; align-items: stretch; gap: 14px; min-height: auto; padding: 18px; }
-  .banner-center { position: relative; left: auto; top: auto; transform: none; order: -1; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-  .banner-countdown { font-size: 30px; }
-}
+/* WEEKEND CARD */
+.weekend-card{background:linear-gradient(135deg,rgba(167,139,250,0.06),rgba(167,139,250,0.02));
+  border:1px solid rgba(167,139,250,0.2);border-radius:18px;padding:32px;text-align:center;
+  margin-bottom:16px;}
+.weekend-emoji{font-size:48px;margin-bottom:12px;}
+.weekend-title{font-family:var(--mono);font-size:16px;font-weight:600;color:var(--purple);margin-bottom:8px;}
+.weekend-sub{font-family:var(--sans);font-size:14px;color:var(--text2);line-height:1.6;}
+.weekend-cdown{font-family:var(--mono);font-size:28px;font-weight:700;color:var(--text);
+  margin:16px 0 4px;letter-spacing:-0.04em;font-variant-numeric:tabular-nums;}
+.weekend-cdown-label{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;}
 
-/* ── MAIN GRID ────────────────────────────────────────────── */
-.main-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 12px; align-items: start;
-}
-@media (max-width: 700px) { .main-grid { grid-template-columns: 1fr; } }
+/* GRID */
+.main-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start;}
+@media(max-width:700px){.main-grid{grid-template-columns:1fr;}}
 
-/* ── WIDGET ───────────────────────────────────────────────── */
-.widget {
-  background: var(--surface);
-  border: 1px solid var(--border2);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-.widget-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface2);
-}
-.widget-title {
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--text2); font-weight: 500;
-}
-.widget-badge {
-  font-family: var(--mono); font-size: 10px; padding: 2px 8px;
-  border-radius: 20px; font-weight: 500; letter-spacing: 0.04em;
-}
-.badge-ok    { background: var(--green-bg); color: var(--green); border: 1px solid rgba(52,211,153,0.3); }
-.badge-err   { background: var(--red-bg);   color: var(--red);   border: 1px solid rgba(248,113,113,0.3); }
-.badge-info  { background: var(--accent-bg); color: var(--accent); border: 1px solid rgba(56,189,248,0.3); }
-.widget-body { padding: 14px 16px; }
+/* WIDGET */
+.widget{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);overflow:hidden;}
+.widget-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;
+  border-bottom:1px solid var(--border);background:var(--surface2);}
+.widget-title{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--text2);font-weight:500;}
+.widget-badge{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500;letter-spacing:0.04em;}
+.badge-ok{background:var(--green-bg);color:var(--green);border:1px solid rgba(52,211,153,0.3);}
+.badge-err{background:var(--red-bg);color:var(--red);border:1px solid rgba(248,113,113,0.3);}
+.badge-info{background:var(--accent-bg);color:var(--accent);border:1px solid rgba(56,189,248,0.3);}
+.badge-sync{background:var(--purple-bg);color:var(--purple);border:1px solid rgba(167,139,250,0.3);}
+.widget-body{padding:14px 16px;}
 
-/* ── CONTROLS ─────────────────────────────────────────────── */
-.ctrl-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
-.ctrl-label { font-family: var(--mono); font-size: 10px; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; min-width: 50px; }
-input[type="date"] {
-  background: var(--surface2); border: 1px solid var(--border2);
-  border-radius: var(--radius); color: var(--text);
-  font-family: var(--mono); font-size: 12px; padding: 6px 10px;
-  outline: none; transition: border-color 0.15s; color-scheme: dark;
-}
-input[type="date"]:focus { border-color: var(--border3); }
+/* DATE CONTROLS */
+.date-ctrl{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.ctrl-label{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;}
+input[type="date"]{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);
+  color:var(--text);font-family:var(--mono);font-size:12px;padding:6px 10px;outline:none;
+  transition:border-color 0.15s;color-scheme:dark;}
+input[type="date"]:focus{border-color:var(--border3);}
+.day-btn{padding:5px 12px;background:var(--surface3);border:1px solid var(--border2);border-radius:var(--radius);
+  color:var(--text2);font-family:var(--mono);font-size:11px;cursor:pointer;transition:all 0.15s;
+  -webkit-tap-highlight-color:transparent;}
+.day-btn:hover{border-color:var(--border3);color:var(--text);}
+.day-btn.today-btn{border-color:rgba(56,189,248,0.4);color:var(--accent);background:var(--accent-bg);}
+.divider{border:none;border-top:1px solid var(--border);margin:12px 0;}
 
-.divider { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+/* ROSTER META */
+.roster-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;
+  font-family:var(--mono);font-size:10px;color:var(--text3);}
+.rdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:var(--green);}
+.rdot.loading{background:var(--gold);animation:blink 1s infinite;}
+.rdot.error{background:var(--red);}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
 
-/* ── ROSTER META ──────────────────────────────────────────── */
-.roster-meta {
-  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
-  font-family: var(--mono); font-size: 10px; color: var(--text3);
-}
-.rdot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: var(--green); }
-.rdot.loading { background: var(--gold); animation: blink 1s infinite; }
-.rdot.error { background: var(--red); }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+/* PERSON BLOCKS */
+.person-block{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);
+  margin-bottom:5px;transition:border-color 0.15s,box-shadow 0.15s,background 0.2s;}
+.person-block:last-child{margin-bottom:0;}
+.person-block.focused{border-color:var(--border3);box-shadow:0 0 0 2px rgba(56,189,248,0.08);}
+.person-block.off-duty{background:linear-gradient(90deg,rgba(248,113,113,0.05) 0%,var(--surface2) 100%);
+  border-color:rgba(248,113,113,0.18);}
+.person-block.off-duty .person-name{color:var(--text2);}
+.person-top{display:flex;align-items:center;gap:10px;padding:9px 12px;}
+.person-name{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--text);
+  min-width:110px;flex-shrink:0;letter-spacing:0.02em;-webkit-user-select:none;user-select:none;}
+.status-wrap{flex:1;min-width:0;}
+.status-input{width:100%;background:transparent;border:none;outline:none;color:var(--text);
+  font-family:var(--mono);font-size:12px;padding:2px 4px;border-radius:4px;transition:background 0.1s;}
+.status-input:focus{background:rgba(255,255,255,0.04);}
 
-/* ── PERSON BLOCKS ────────────────────────────────────────── */
-.person-block {
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--radius); margin-bottom: 6px;
-  transition: border-color 0.15s, box-shadow 0.15s, background 0.2s;
-}
-.person-block:last-child { margin-bottom: 0; }
-.person-block.focused { border-color: var(--border3); box-shadow: 0 0 0 2px rgba(56,189,248,0.08); }
-.person-block.off-duty {
-  background: linear-gradient(90deg, rgba(248,113,113,0.05) 0%, var(--surface2) 100%);
-  border-color: rgba(248,113,113,0.18);
-}
-.person-block.off-duty .person-name { color: var(--text2); }
-.person-block.off-duty .person-rank { color: rgba(248,113,113,0.35); }
-.person-top { display: flex; align-items: center; gap: 10px; padding: 9px 12px; }
-.person-rank {
-  font-family: var(--mono); font-size: 9px; color: var(--text3);
-  width: 14px; text-align: right; flex-shrink: 0;
-}
-.person-name {
-  font-family: var(--mono); font-size: 12px; font-weight: 600;
-  color: var(--text); min-width: 110px; flex-shrink: 0; letter-spacing: 0.02em;
-  -webkit-user-select: none; user-select: none;
-}
-.status-wrap { flex: 1; min-width: 0; }
-.status-input {
-  width: 100%; background: transparent; border: none; outline: none;
-  color: var(--text); font-family: var(--mono); font-size: 12px;
-  padding: 2px 4px; border-radius: 4px; transition: background 0.1s;
-  -webkit-user-select: text; user-select: text;
-}
-.status-input:focus { background: rgba(255,255,255,0.04); }
+/* CHIPS — condensed */
+.chips-row{display:flex;flex-wrap:wrap;gap:5px;padding:0 12px 9px;}
+.chip-btn{padding:3px 9px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;
+  color:var(--text2);font-family:var(--mono);font-size:10px;cursor:pointer;transition:all 0.12s;
+  white-space:nowrap;letter-spacing:0.02em;-webkit-user-select:none;user-select:none;
+  -webkit-tap-highlight-color:transparent;}
+.chip-btn:hover{border-color:var(--border3);color:var(--text);background:var(--surface3);}
+.chip-btn.c-in{border-color:rgba(52,211,153,0.4);color:var(--green);background:var(--green-bg);}
+.chip-btn.c-out{border-color:rgba(248,113,113,0.4);color:var(--red);background:var(--red-bg);}
+.chip-btn.c-expand{border-color:rgba(248,113,113,0.25);color:var(--red);}
 
-.chips-row {
-  display: flex; flex-wrap: wrap; gap: 5px;
-  padding: 0 12px 9px; padding-top: 0;
-}
-.chip {
-  padding: 3px 8px; background: var(--surface3);
-  border: 1px solid var(--border2); border-radius: 6px;
-  color: var(--text2); font-family: var(--mono); font-size: 10px;
-  cursor: pointer; transition: all 0.12s; white-space: nowrap;
-  letter-spacing: 0.02em; -webkit-user-select: none; user-select: none;
-  -webkit-tap-highlight-color: transparent;
-}
-.chip:hover { border-color: var(--border3); color: var(--text); background: var(--surface3); }
-.chip.chip-on  { border-color: rgba(52,211,153,0.35); color: var(--green); }
-.chip.chip-on:hover { background: var(--green-bg); }
-.chip.chip-off { border-color: rgba(248,113,113,0.35); color: var(--red); }
-.chip.chip-off:hover { background: var(--red-bg); }
+/* Leave sub-chips (hidden until expanded) */
+.leave-chips{display:none;flex-wrap:wrap;gap:5px;padding:0 12px 9px;}
+.leave-chips.open{display:flex;}
+.leave-chip{padding:3px 9px;background:var(--surface3);border:1px solid rgba(248,113,113,0.25);
+  border-radius:6px;color:var(--red);font-family:var(--mono);font-size:10px;cursor:pointer;
+  transition:all 0.12s;white-space:nowrap;-webkit-user-select:none;user-select:none;
+  -webkit-tap-highlight-color:transparent;}
+.leave-chip:hover{background:var(--red-bg);border-color:rgba(248,113,113,0.5);}
 
-/* ── SECTION DIVIDER IN PERSON LIST ─────────────────────── */
-.section-label {
-  font-family: var(--mono); font-size: 9px; font-weight: 600;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--accent); padding: 10px 0 6px;
-  border-top: 1px solid var(--border);
-  margin-top: 4px;
-}
-.section-label:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+/* SECTION LABEL */
+.section-label{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--accent);padding:10px 0 6px;
+  border-top:1px solid var(--border);margin-top:4px;}
+.section-label:first-child{border-top:none;margin-top:0;padding-top:0;}
 
-/* ── TIME OFF FIELD ──────────────────────────────────────── */
-.timeoff-wrap {
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 10px 12px; margin-top: 8px;
-}
-.timeoff-label {
-  font-family: var(--mono); font-size: 9px; color: var(--text3);
-  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px;
-}
-.timeoff-input {
-  width: 100%; background: transparent; border: none; outline: none;
-  color: var(--text); font-family: var(--mono); font-size: 12px;
-  resize: none; min-height: 40px; line-height: 1.6;
-}
+/* TIME OFF PANEL */
+.timeoff-panel{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:12px;margin-top:10px;}
+.timeoff-header{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.1em;
+  text-transform:uppercase;margin-bottom:10px;}
+.timeoff-rows{display:flex;flex-direction:column;gap:8px;}
+.timeoff-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.timeoff-name-sel{background:var(--surface3);border:1px solid var(--border2);border-radius:8px;
+  color:var(--text);font-family:var(--mono);font-size:11px;padding:5px 8px;outline:none;
+  cursor:pointer;min-width:120px;max-width:160px;transition:border-color 0.15s;}
+.timeoff-name-sel:focus{border-color:var(--border3);}
+.timeoff-time{display:flex;align-items:center;gap:5px;}
+.time-sel{background:var(--surface3);border:1px solid var(--border2);border-radius:8px;
+  color:var(--text);font-family:var(--mono);font-size:11px;padding:5px 6px;outline:none;
+  cursor:pointer;transition:border-color 0.15s;}
+.time-sel:focus{border-color:var(--border3);}
+.time-sep{font-family:var(--mono);font-size:11px;color:var(--text3);}
+.timeoff-del{width:22px;height:22px;background:none;border:1px solid var(--border2);border-radius:6px;
+  color:var(--text3);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all 0.15s;flex-shrink:0;}
+.timeoff-del:hover{border-color:rgba(248,113,113,0.5);color:var(--red);}
+.timeoff-add{display:flex;align-items:center;gap:6px;padding:5px 10px;background:none;
+  border:1px dashed var(--border2);border-radius:8px;color:var(--text3);font-family:var(--mono);
+  font-size:10px;cursor:pointer;transition:all 0.15s;letter-spacing:0.04em;width:100%;
+  justify-content:center;margin-top:4px;}
+.timeoff-add:hover{border-color:var(--border3);color:var(--text2);}
 
-/* ── EMOJI ROLLER ────────────────────────────────────────── */
-.emoji-section {
-  margin-top: 12px;
-}
-.emoji-card {
-  background: var(--surface2);
-  border: 1px solid var(--border2);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-.emoji-header {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-  background: var(--surface2);
-}
-.emoji-title {
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--text2); font-weight: 500;
-}
-.emoji-roll-count {
-  font-family: var(--mono); font-size: 10px; color: var(--text3);
-  letter-spacing: 0.04em;
-}
+/* PREVIEW */
+.preview-box{font-family:var(--mono);font-size:12px;color:var(--text);white-space:pre;line-height:1.9;
+  padding:16px;overflow:auto;background:var(--surface2);border-radius:var(--radius);
+  border:1px solid var(--border);min-height:380px;max-height:520px;width:100%;resize:none;cursor:text;
+  -webkit-user-select:text;user-select:text;}
+.preview-emoji-ghost{opacity:0.28;font-style:italic;}
 
-.emoji-body { padding: 20px 16px; }
+/* COPY BTN */
+.copy-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px;
+  border-radius:var(--radius-lg);border:none;
+  background:linear-gradient(135deg,var(--accent) 0%,#0ea5e9 100%);color:#000;
+  font-family:var(--mono);font-size:14px;font-weight:600;cursor:pointer;letter-spacing:0.06em;
+  transition:all 0.2s;box-shadow:0 4px 20px rgba(56,189,248,0.3);text-transform:uppercase;margin-top:12px;}
+.copy-btn:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(56,189,248,0.45);}
+.copy-btn:active{transform:translateY(0);}
+.copy-btn.success{background:linear-gradient(135deg,var(--green) 0%,#059669 100%);
+  box-shadow:0 4px 20px rgba(52,211,153,0.35);color:#000;}
 
-/* The slot machine display */
-.slot-machine {
-  display: flex; flex-direction: column; align-items: center; gap: 12px;
-  margin-bottom: 18px;
-}
-.slot-window {
-  width: 100px; height: 100px;
-  background: var(--surface);
-  border: 2px solid var(--border2);
-  border-radius: 16px;
-  overflow: hidden;
-  position: relative;
-  box-shadow: inset 0 2px 12px rgba(0,0,0,0.4), 0 0 0 0px var(--accent);
-  transition: box-shadow 0.3s;
-}
-.slot-window.rolling {
-  border-color: var(--accent);
-  box-shadow: inset 0 2px 12px rgba(0,0,0,0.4), 0 0 16px var(--accent-glow);
-}
-.slot-track {
-  position: absolute; width: 100%;
-  display: flex; flex-direction: column; align-items: center;
-  transition: transform 0.06s linear;
-}
-.slot-item {
-  width: 100px; height: 100px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 52px; flex-shrink: 0;
-  line-height: 1;
-}
-.slot-shimmer {
-  position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(180deg,
-    rgba(12,14,20,0.6) 0%,
-    transparent 30%,
-    transparent 70%,
-    rgba(12,14,20,0.6) 100%
-  );
-  border-radius: 14px;
-}
+/* EMOJI ROLLER */
+.slot-window{width:96px;height:96px;background:var(--surface);border:2px solid var(--border2);
+  border-radius:16px;overflow:hidden;position:relative;
+  box-shadow:inset 0 2px 12px rgba(0,0,0,0.4);transition:border-color 0.3s,box-shadow 0.3s;
+  flex-shrink:0;}
+.slot-window.rolling{border-color:var(--accent);box-shadow:inset 0 2px 12px rgba(0,0,0,0.4),0 0 18px var(--accent-glow);}
+.slot-window.landed{border-color:var(--green);box-shadow:inset 0 2px 12px rgba(0,0,0,0.4),0 0 18px rgba(52,211,153,0.35);}
+.slot-track{position:absolute;width:100%;display:flex;flex-direction:column;align-items:center;}
+.slot-item{width:96px;height:96px;display:flex;align-items:center;justify-content:center;
+  font-size:50px;flex-shrink:0;line-height:1;}
+.slot-shimmer{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(12,14,20,0.65) 0%,transparent 28%,transparent 72%,rgba(12,14,20,0.65) 100%);
+  border-radius:14px;}
+.emoji-unknown{font-size:52px;display:flex;align-items:center;justify-content:center;
+  width:96px;height:96px;color:var(--text3);}
 
-/* Current chosen emoji display (after locked in) */
-.chosen-display {
-  font-size: 48px; line-height: 1;
-  display: flex; align-items: center; justify-content: center;
-  width: 80px; height: 80px;
-  background: var(--surface);
-  border: 2px solid var(--border2);
-  border-radius: 14px;
-  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
-}
-.chosen-display.pop { transform: scale(1.3); }
+.roller-wrap{display:flex;align-items:center;gap:16px;margin-bottom:16px;}
+.roller-right{flex:1;display:flex;flex-direction:column;gap:8px;}
+.roll-stats-row{display:flex;gap:14px;flex-wrap:wrap;}
+.roll-stat{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.04em;}
+.roll-stat-val{color:var(--text2);font-weight:600;}
 
-/* Stats bar */
-.roll-stats {
-  display: flex; gap: 16px; justify-content: center;
-  font-family: var(--mono); font-size: 10px; color: var(--text3);
-  letter-spacing: 0.04em;
-}
-.roll-stat-val { color: var(--text2); font-weight: 600; }
+/* Streak display */
+.streak-display{display:flex;align-items:center;gap:8px;padding:8px 12px;
+  background:var(--surface3);border:1px solid var(--border);border-radius:10px;
+  font-family:var(--mono);font-size:11px;color:var(--text2);transition:all 0.3s;min-height:38px;}
+.streak-display.s1{border-color:rgba(56,189,248,0.3);background:var(--accent-bg);color:var(--accent);}
+.streak-display.s2{border-color:rgba(251,191,36,0.4);background:var(--gold-bg);color:var(--gold);}
+.streak-display.s3{border-color:rgba(248,113,113,0.4);background:var(--red-bg);color:var(--red);
+  animation:streakPulse 0.8s ease infinite alternate;}
+@keyframes streakPulse{from{box-shadow:none}to{box-shadow:0 0 12px rgba(248,113,113,0.3)}}
+.streak-icon{font-size:16px;transition:transform 0.3s;}
 
-/* Roll button */
-.roll-btn {
-  width: 100%;
-  padding: 14px;
-  border: none; border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, var(--accent) 0%, #0ea5e9 100%);
-  color: #000;
-  font-family: var(--mono); font-size: 14px; font-weight: 700;
-  cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase;
-  transition: all 0.2s;
-  box-shadow: 0 4px 20px rgba(56,189,248,0.3);
-  position: relative; overflow: hidden;
-}
-.roll-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(56,189,248,0.45); }
-.roll-btn:active { transform: translateY(0); }
-.roll-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-.roll-btn.locked {
-  background: linear-gradient(135deg, var(--green) 0%, #059669 100%);
-  box-shadow: 0 4px 20px rgba(52,211,153,0.3);
-}
+.roll-btn{width:100%;padding:13px;border:none;border-radius:var(--radius-lg);
+  background:linear-gradient(135deg,var(--accent) 0%,#0ea5e9 100%);color:#000;
+  font-family:var(--mono);font-size:13px;font-weight:700;cursor:pointer;letter-spacing:0.06em;
+  text-transform:uppercase;transition:all 0.2s;box-shadow:0 4px 20px rgba(56,189,248,0.3);}
+.roll-btn:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(56,189,248,0.45);}
+.roll-btn:active{transform:translateY(0);}
+.roll-btn:disabled{opacity:0.45;cursor:not-allowed;transform:none;}
+.roll-flavour{font-family:var(--mono);font-size:10px;color:var(--text3);text-align:center;
+  margin-top:8px;letter-spacing:0.04em;min-height:14px;}
 
-/* Streak badge */
-.streak-badge {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 4px 10px; border-radius: 20px; margin-top: 10px;
-  font-family: var(--mono); font-size: 11px; font-weight: 600;
-  background: var(--gold-bg); border: 1px solid rgba(251,191,36,0.35);
-  color: var(--gold); letter-spacing: 0.04em;
-  animation: fadeIn 0.3s ease;
-  display: none;
-}
-@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+/* ROSTER EDITOR */
+.roster-editor{display:flex;flex-direction:column;gap:6px;}
+.roster-group-label{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--accent);padding:8px 0 4px;
+  border-top:1px solid var(--border);margin-top:2px;}
+.roster-group-label:first-child{border-top:none;margin-top:0;padding-top:0;}
+.roster-name-row{display:flex;align-items:center;gap:6px;}
+.roster-name-input{flex:1;background:var(--surface3);border:1px solid var(--border2);
+  border-radius:8px;color:var(--text);font-family:var(--mono);font-size:12px;
+  padding:6px 10px;outline:none;transition:border-color 0.15s;}
+.roster-name-input:focus{border-color:var(--border3);}
+.roster-del-btn{width:26px;height:26px;background:none;border:1px solid var(--border2);
+  border-radius:6px;color:var(--text3);font-size:16px;cursor:pointer;display:flex;
+  align-items:center;justify-content:center;transition:all 0.15s;flex-shrink:0;}
+.roster-del-btn:hover{border-color:rgba(248,113,113,0.5);color:var(--red);}
+.roster-add-btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:6px 12px;
+  background:none;border:1px dashed var(--border2);border-radius:8px;color:var(--text3);
+  font-family:var(--mono);font-size:10px;cursor:pointer;transition:all 0.15s;letter-spacing:0.04em;
+  width:100%;margin-top:2px;}
+.roster-add-btn:hover{border-color:var(--border3);color:var(--text2);}
+.roster-save-btn{padding:9px 16px;background:var(--green-bg);border:1px solid rgba(52,211,153,0.4);
+  border-radius:var(--radius);color:var(--green);font-family:var(--mono);font-size:11px;
+  font-weight:600;cursor:pointer;letter-spacing:0.04em;transition:all 0.15s;width:100%;margin-top:8px;}
+.roster-save-btn:hover{background:rgba(52,211,153,0.18);}
 
-/* Toast */
-.toast {
-  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
-  background: var(--surface); border: 1px solid var(--border2);
-  border-radius: 12px; padding: 10px 18px;
-  font-family: var(--mono); font-size: 12px; color: var(--text);
-  box-shadow: var(--shadow); z-index: 999;
-  opacity: 0; transition: all 0.3s; pointer-events: none;
-  white-space: nowrap; max-width: 90vw;
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* FIREBASE CONFIG */
+.fb-section{margin-top:12px;padding-top:12px;border-top:1px solid var(--border);}
+.fb-label{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.1em;
+  text-transform:uppercase;margin-bottom:6px;}
+.fb-row{display:flex;gap:8px;align-items:center;}
+.fb-input{flex:1;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);
+  color:var(--text);font-family:var(--mono);font-size:11px;padding:6px 10px;outline:none;
+  transition:border-color 0.15s;}
+.fb-input:focus{border-color:var(--border3);}
+.fb-save{padding:6px 12px;background:var(--accent-bg);border:1px solid rgba(56,189,248,0.4);
+  border-radius:var(--radius);color:var(--accent);font-family:var(--mono);font-size:11px;
+  cursor:pointer;white-space:nowrap;transition:all 0.15s;}
+.fb-save:hover{background:rgba(56,189,248,0.18);}
+.fb-hint{margin-top:8px;padding:8px 10px;background:rgba(0,0,0,0.2);border-radius:8px;
+  border:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--text3);line-height:1.8;}
+.fb-hint code{color:var(--accent);}
+.fb-hint strong{color:var(--text2);}
 
-/* ── PREVIEW ──────────────────────────────────────────────── */
-.preview-box {
-  font-family: var(--mono); font-size: 12px; color: var(--text);
-  white-space: pre; line-height: 1.9;
-  padding: 16px; overflow: auto;
-  background: var(--surface2);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  min-height: 260px;
-  width: 100%; resize: none; cursor: text;
-  -webkit-user-select: text; user-select: text;
-}
+/* SYNC INDICATOR */
+.sync-dot{width:6px;height:6px;border-radius:50%;background:var(--green);flex-shrink:0;}
+.sync-dot.syncing{background:var(--gold);animation:blink 0.6s infinite;}
+.sync-dot.offline{background:var(--text3);}
 
-/* ── COPY BUTTON ──────────────────────────────────────────── */
-.copy-btn {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  width: 100%; padding: 16px;
-  border-radius: var(--radius-lg); border: none;
-  background: linear-gradient(135deg, var(--accent) 0%, #0ea5e9 100%);
-  color: #000;
-  font-family: var(--mono); font-size: 14px; font-weight: 600;
-  cursor: pointer; letter-spacing: 0.06em;
-  transition: all 0.2s;
-  box-shadow: 0 4px 20px rgba(56,189,248,0.3);
-  text-transform: uppercase; margin-top: 12px;
-}
-.copy-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(56,189,248,0.45); }
-.copy-btn:active { transform: translateY(0); }
-.copy-btn.success {
-  background: linear-gradient(135deg, var(--green) 0%, #059669 100%);
-  box-shadow: 0 4px 20px rgba(52,211,153,0.35); color: #000;
-}
+/* CONFIG TOGGLE */
+.config-toggle{display:flex;align-items:center;gap:6px;background:none;border:none;cursor:pointer;
+  font-family:var(--mono);font-size:10px;letter-spacing:0.06em;color:var(--text3);
+  padding:0;transition:color 0.15s;text-transform:uppercase;}
+.config-toggle:hover{color:var(--text2);}
+.config-slide{max-height:0;overflow:hidden;transition:max-height 0.35s ease;}
+.config-slide.open{max-height:900px;}
 
-/* ── CONFIG PANEL ─────────────────────────────────────────── */
-.config-toggle {
-  display: flex; align-items: center; gap: 6px;
-  background: none; border: none; cursor: pointer;
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em;
-  color: var(--text3); padding: 0; transition: color 0.15s; text-transform: uppercase;
-}
-.config-toggle:hover { color: var(--text2); }
-.config-slide { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-.config-slide.open { max-height: 600px; }
-.config-inner { padding-top: 12px; }
-.cfg-label {
-  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--text3); margin-bottom: 6px;
-}
-.cfg-row { display: flex; gap: 8px; align-items: center; }
-.cfg-row input[type="text"] {
-  flex: 1; background: var(--surface2); border: 1px solid var(--border2);
-  border-radius: var(--radius); color: var(--text);
-  font-family: var(--mono); font-size: 12px; padding: 7px 10px; outline: none;
-  transition: border-color 0.15s;
-}
-.cfg-row input[type="text"]:focus { border-color: var(--border3); }
-.cfg-save {
-  padding: 7px 14px; background: var(--green-bg);
-  border: 1px solid rgba(52,211,153,0.4);
-  border-radius: var(--radius); color: var(--green);
-  font-family: var(--mono); font-size: 11px; cursor: pointer;
-  white-space: nowrap; transition: all 0.15s;
-}
-.cfg-save:hover { background: rgba(52,211,153,0.18); }
-.cfg-hint {
-  margin-top: 10px; padding: 10px 12px;
-  background: rgba(0,0,0,0.25); border-radius: var(--radius);
-  border: 1px solid var(--border);
-  font-family: var(--mono); font-size: 10px; color: var(--text3); line-height: 1.9;
-}
-.cfg-hint strong { color: var(--text2); }
-.cfg-hint code { color: var(--accent); }
+/* DATE PICKER */
+.dp-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);display:flex;align-items:flex-start;
+  justify-content:center;padding-top:40px;z-index:200;backdrop-filter:blur(4px);}
+@media(min-width:481px){.dp-overlay{align-items:center;padding-top:0;}}
+.dp-modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-xl);
+  padding:20px;width:310px;box-shadow:var(--shadow-lg);}
+.dp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.dp-title{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--text);}
+.dp-nav{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text2);
+  font-size:14px;width:30px;height:30px;cursor:pointer;display:flex;align-items:center;
+  justify-content:center;transition:all 0.15s;}
+.dp-nav:hover{color:var(--text);border-color:var(--border3);}
+.dp-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:12px;}
+.dp-dow{font-family:var(--mono);font-size:9px;color:var(--text3);text-align:center;padding:4px 0;letter-spacing:0.06em;}
+.dp-day{font-family:var(--mono);font-size:12px;text-align:center;padding:7px 2px;border-radius:8px;
+  cursor:pointer;border:1px solid transparent;transition:all 0.12s;color:var(--text2);background:none;}
+.dp-day:hover{background:var(--surface3);color:var(--text);}
+.dp-day.empty{cursor:default;pointer-events:none;}
+.dp-day.today{border-color:rgba(56,189,248,0.45);color:var(--accent);font-weight:600;}
+.dp-day.selected{background:var(--accent-bg);border-color:rgba(56,189,248,0.5);color:var(--accent);font-weight:600;}
+.dp-day.in-range{background:rgba(56,189,248,0.06);color:var(--text);}
+.dp-day.range-end{background:var(--accent-bg);border-color:rgba(56,189,248,0.5);color:var(--accent);font-weight:600;}
+.dp-hint{font-family:var(--mono);font-size:11px;color:var(--text2);text-align:center;margin-bottom:14px;min-height:16px;}
+.dp-actions{display:flex;gap:8px;justify-content:flex-end;}
+.dp-cancel{background:none;border:1px solid var(--border2);border-radius:var(--radius);color:var(--text2);
+  font-family:var(--mono);font-size:11px;padding:6px 14px;cursor:pointer;}
+.dp-cancel:hover{border-color:var(--border3);color:var(--text);}
+.dp-confirm{background:var(--green-bg);border:1px solid rgba(52,211,153,0.4);border-radius:var(--radius);
+  color:var(--green);font-family:var(--mono);font-size:11px;padding:6px 14px;cursor:pointer;transition:all 0.15s;}
+.dp-confirm:hover{background:rgba(52,211,153,0.18);}
+.dp-confirm:disabled{opacity:0.3;cursor:default;}
 
-/* ── SHEETS EMBED ─────────────────────────────────────────── */
-.sheets-embed-wrap {
-  width: 100%; border-radius: var(--radius); overflow: hidden;
-  border: 1px solid var(--border2); background: var(--surface2);
-}
-.sheets-embed-wrap iframe { width: 100%; height: 300px; border: none; display: block; }
-.sheets-placeholder {
-  height: 120px; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 8px;
-  color: var(--text3); font-family: var(--mono); font-size: 11px; text-align: center;
-}
-.sheets-placeholder a { color: var(--accent); text-decoration: none; }
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:10px 18px;
+  font-family:var(--mono);font-size:12px;color:var(--text);box-shadow:var(--shadow);z-index:999;
+  opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;max-width:90vw;}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
-/* ── DATE PICKER ──────────────────────────────────────────── */
-.dp-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-  display: flex; align-items: flex-start; justify-content: center;
-  padding-top: 40px; z-index: 200; backdrop-filter: blur(4px);
-}
-@media (min-width: 481px) { .dp-overlay { align-items: center; padding-top: 0; } }
-.dp-modal {
-  background: var(--surface); border: 1px solid var(--border2);
-  border-radius: var(--radius-xl); padding: 20px; width: 310px;
-  box-shadow: var(--shadow-lg);
-}
-.dp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-.dp-title { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--text); }
-.dp-nav {
-  background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px;
-  color: var(--text2); font-size: 14px; width: 30px; height: 30px;
-  cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s;
-}
-.dp-nav:hover { color: var(--text); border-color: var(--border3); }
-.dp-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; margin-bottom: 12px; }
-.dp-dow { font-family: var(--mono); font-size: 9px; color: var(--text3); text-align: center; padding: 4px 0; letter-spacing: 0.06em; }
-.dp-day {
-  font-family: var(--mono); font-size: 12px; text-align: center;
-  padding: 7px 2px; border-radius: 8px; cursor: pointer;
-  border: 1px solid transparent; transition: all 0.12s; color: var(--text2); background: none;
-}
-.dp-day:hover { background: var(--surface3); color: var(--text); }
-.dp-day.empty { cursor: default; pointer-events: none; }
-.dp-day.today { border-color: rgba(56,189,248,0.45); color: var(--accent); font-weight: 600; }
-.dp-day.selected { background: var(--accent-bg); border-color: rgba(56,189,248,0.5); color: var(--accent); font-weight: 600; }
-.dp-day.in-range { background: rgba(56,189,248,0.06); color: var(--text); }
-.dp-day.range-end { background: var(--accent-bg); border-color: rgba(56,189,248,0.5); color: var(--accent); font-weight: 600; }
-.dp-hint { font-family: var(--mono); font-size: 11px; color: var(--text2); text-align: center; margin-bottom: 14px; min-height: 16px; }
-.dp-actions { display: flex; gap: 8px; justify-content: flex-end; }
-.dp-cancel {
-  background: none; border: 1px solid var(--border2); border-radius: var(--radius);
-  color: var(--text2); font-family: var(--mono); font-size: 11px; padding: 6px 14px; cursor: pointer;
-}
-.dp-cancel:hover { border-color: var(--border3); color: var(--text); }
-.dp-confirm {
-  background: var(--green-bg); border: 1px solid rgba(52,211,153,0.4);
-  border-radius: var(--radius); color: var(--green);
-  font-family: var(--mono); font-size: 11px; padding: 6px 14px; cursor: pointer; transition: all 0.15s;
-}
-.dp-confirm:hover { background: rgba(52,211,153,0.18); }
-.dp-confirm:disabled { opacity: 0.3; cursor: default; }
-
-@media (max-width: 480px) {
-  .page { padding: 14px 12px 48px; }
-  .widget-body { padding: 12px; }
-  .copy-btn { font-size: 13px; padding: 15px; }
-  .dp-modal { width: calc(100vw - 32px); }
-  .main-grid { gap: 10px; }
-  .slot-window { width: 88px; height: 88px; }
-  .slot-item { width: 88px; height: 88px; font-size: 44px; }
+@media(max-width:480px){
+  .page{padding:14px 12px 48px;}
+  .widget-body{padding:12px;}
+  .copy-btn{font-size:13px;padding:15px;}
+  .dp-modal{width:calc(100vw - 32px);}
+  .main-grid{gap:10px;}
+  .slot-window{width:80px;height:80px;}
+  .slot-item{width:80px;height:80px;font-size:42px;}
+  .emoji-unknown{width:80px;height:80px;font-size:44px;}
 }
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
   <div class="topbar-logo">OH</div>
   <span class="topbar-title">OH Movement</span>
-  <div class="topbar-divider" style="width:1px;height:18px;background:var(--border2);flex-shrink:0;"></div>
+  <div class="topbar-divider"></div>
   <span class="topbar-date-str" id="topbar-date"></span>
   <div class="topbar-right">
+    <div style="display:flex;align-items:center;gap:6px;font-family:var(--mono);font-size:10px;color:var(--text3);">
+      <span class="sync-dot offline" id="sync-dot"></span>
+      <span id="sync-label">local</span>
+    </div>
     <div class="topbar-clock" id="topbar-clock">00:00:00</div>
   </div>
 </div>
 
-<div class="page">
+<div class="page" id="main-page">
 
-  <!-- HOURS BANNER -->
-  <div class="hours-banner" id="hours-banner">
-    <div class="banner-side">
+  <!-- WEEKEND CARD (hidden on weekdays) -->
+  <div class="weekend-card" id="weekend-card" style="display:none;">
+    <div class="weekend-emoji" id="weekend-emoji">🏖️</div>
+    <div class="weekend-title" id="weekend-title">Weekend</div>
+    <div class="weekend-sub" id="weekend-sub">Enjoy the break.</div>
+    <div class="weekend-cdown" id="weekend-cdown">--:--:--</div>
+    <div class="weekend-cdown-label" id="weekend-cdown-label">until Monday OH</div>
+  </div>
+
+  <!-- SHIFT BANNER (weekdays only) -->
+  <div class="shift-banner" id="shift-banner" style="display:none;">
+    <div class="banner-half">
       <div class="banner-eyebrow">Office Hours</div>
-      <div class="banner-label" id="banner-hours-label">—</div>
-      <div class="banner-sub" id="banner-hours-sub">Mon – Thu · 0800–1800</div>
+      <div class="banner-main" id="banner-oh-hours">0800 – 1800</div>
+      <div class="banner-sub" id="banner-oh-day">Monday – Thursday</div>
     </div>
     <div class="banner-center">
-      <div class="banner-countdown-label" id="banner-cdown-label">Opens in</div>
-      <div class="banner-countdown" id="banner-countdown">00:00:00</div>
-      <div class="banner-status-chip chip-closed" id="banner-status-chip">
-        <span class="status-dot"></span>
-        <span id="banner-status-text">Closed</span>
+      <div class="banner-cdown-label" id="banner-cdown-label">—</div>
+      <div class="banner-cdown" id="banner-cdown">--:--:--</div>
+      <div class="banner-chip chip-closed" id="banner-chip">
+        <span class="sdot"></span><span id="banner-chip-text">Closed</span>
       </div>
     </div>
-    <div class="banner-side" style="align-items:flex-end;text-align:right;">
-      <div class="banner-eyebrow">Closes</div>
-      <div class="banner-label" id="banner-close-label">—</div>
-      <div class="banner-sub" id="banner-close-sub">Fri · 0800–1730</div>
+    <div class="banner-half" style="align-items:flex-end;text-align:right;">
+      <div class="banner-eyebrow">Next Rollcall</div>
+      <div class="banner-main" id="banner-next-rc">—</div>
+      <div class="banner-sub" id="banner-rc-in">—</div>
     </div>
+  </div>
+
+  <!-- ROLLCALL BAR (weekdays only) -->
+  <div class="rollcall-bar" id="rollcall-bar" style="display:none;">
+    <span class="rc-label">Rollcalls</span>
+    <div class="rc-times" id="rc-times"></div>
+    <div class="rc-countdown" id="rc-countdown"></div>
   </div>
 
   <!-- MAIN GRID -->
@@ -608,67 +432,80 @@ input[type="date"]:focus { border-color: var(--border3); }
     <!-- LEFT COLUMN -->
     <div style="display:flex;flex-direction:column;gap:12px;">
 
-      <!-- CONTROLS WIDGET -->
+      <!-- CONTROLS -->
       <div class="widget">
         <div class="widget-header">
-          <span class="widget-title">Controls</span>
+          <span class="widget-title">Date</span>
           <span class="widget-badge badge-info" id="ctrl-badge">TODAY</span>
         </div>
         <div class="widget-body">
-          <div class="ctrl-row">
-            <span class="ctrl-label">Date</span>
+          <div class="date-ctrl">
             <input type="date" id="date-input" onchange="onDateChange()">
+            <button class="day-btn" onclick="shiftDay(-1)">← Yesterday</button>
+            <button class="day-btn today-btn" id="btn-today" onclick="goToday()">Today</button>
+            <button class="day-btn" onclick="shiftDay(1)">Tomorrow →</button>
           </div>
         </div>
       </div>
 
-      <!-- PERSONNEL WIDGET -->
+      <!-- PERSONNEL -->
       <div class="widget">
         <div class="widget-header">
           <span class="widget-title">Personnel</span>
-          <span class="widget-badge badge-ok" id="roster-badge" style="display:none">loaded</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span class="widget-badge badge-ok" id="roster-badge">ready</span>
+          </div>
         </div>
         <div class="widget-body">
           <div class="roster-meta">
-            <div class="rdot loading" id="roster-dot"></div>
-            <span id="roster-status-text">loading...</span>
+            <div class="rdot" id="roster-dot"></div>
+            <span id="roster-status-text">loaded</span>
           </div>
           <div id="person-list"></div>
+
+          <!-- TIME OFF -->
+          <div class="timeoff-panel">
+            <div class="timeoff-header">⏰ Time Off / Partial Absence</div>
+            <div class="timeoff-rows" id="timeoff-rows"></div>
+            <button class="timeoff-add" onclick="addTimeOffRow()">+ Add time off entry</button>
+          </div>
         </div>
       </div>
 
-      <!-- ROSTER SHEET WIDGET -->
+      <!-- ROSTER EDITOR -->
       <div class="widget">
         <div class="widget-header" style="cursor:pointer;" onclick="toggleRosterPanel()">
-          <span class="widget-title">Roster Sheet</span>
+          <span class="widget-title">Edit Roster</span>
           <div style="display:flex;align-items:center;gap:10px;">
-            <button class="config-toggle" onclick="event.stopPropagation();toggleConfig()" style="pointer-events:auto;">
-              ⚙ <span id="cfg-toggle-text">configure</span>
-            </button>
             <span id="roster-chevron" style="font-family:var(--mono);font-size:12px;color:var(--text3);transition:transform 0.2s;">▸</span>
           </div>
         </div>
         <div class="config-slide" id="roster-panel">
-          <div style="padding:0 16px;">
-            <div class="config-slide" id="config-slide">
-              <div class="config-inner">
-                <div class="cfg-label">Google Sheet ID</div>
-                <div class="cfg-row">
-                  <input type="text" id="sheet-id-input" placeholder="paste Sheet ID here">
-                  <button class="cfg-save" onclick="saveSheetId()">Save</button>
-                </div>
-                <div class="cfg-hint">
-                  <strong>Column A</strong> = Group (MAIN or EMS) &nbsp;·&nbsp; <strong>Column B</strong> = Name<br>
-                  Share → <strong>Anyone with link → Viewer</strong><br>
-                  File → Share → <strong>Publish to web → Sheet → CSV</strong><br>
-                  Sheet ID is the part of the URL between <code>/d/</code> and <code>/edit</code>
-                </div>
-                <div class="divider"></div>
+          <div class="widget-body" style="padding-top:8px;">
+            <div class="roster-editor" id="roster-editor"></div>
+            <button class="roster-save-btn" onclick="saveRoster()">✓ Save Roster</button>
+            <!-- FIREBASE CONFIG -->
+            <div class="fb-section">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+                <span style="font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;">Shared Sync (Firebase)</span>
+                <button class="config-toggle" onclick="toggleFbHelp()">
+                  <span id="fb-help-toggle-text">setup guide</span>
+                </button>
               </div>
-            </div>
-            <div class="sheets-embed-wrap" id="sheets-embed-wrap" style="margin-bottom:14px;">
-              <div class="sheets-placeholder" id="sheets-placeholder">
-                <span>Configure a Sheet ID above to<br>view and edit your roster here</span>
+              <div class="fb-row">
+                <input class="fb-input" id="fb-url-input" placeholder="https://your-project.firebaseio.com" type="url">
+                <button class="fb-save" onclick="saveFbUrl()">Connect</button>
+              </div>
+              <div class="config-slide" id="fb-help-slide">
+                <div class="fb-hint" style="margin-top:8px;">
+                  <strong>Free setup (~5 min):</strong><br>
+                  1. Go to <code>console.firebase.google.com</code><br>
+                  2. New project → Build → Realtime Database<br>
+                  3. Create database → Start in test mode<br>
+                  4. Copy the URL (e.g. <code>https://xxx.firebaseio.com</code>)<br>
+                  5. Paste above and click Connect<br><br>
+                  Without Firebase, statuses save locally on each device only.
+                </div>
               </div>
             </div>
           </div>
@@ -681,598 +518,715 @@ input[type="date"]:focus { border-color: var(--border3); }
     <div style="display:flex;flex-direction:column;gap:12px;">
 
       <!-- EMOJI ROLLER -->
-      <div class="widget emoji-section">
+      <div class="widget">
         <div class="widget-header">
-          <span class="emoji-title widget-title">Emoji of the Day</span>
-          <span class="emoji-roll-count" id="roll-count-display">0 rolls</span>
+          <span class="widget-title">Emoji of the Day</span>
+          <span class="widget-badge badge-info" id="roll-count-badge">not rolled</span>
         </div>
-        <div class="emoji-body widget-body">
-          <div class="slot-machine">
+        <div class="widget-body">
+          <div class="roller-wrap">
             <div class="slot-window" id="slot-window">
-              <div class="slot-track" id="slot-track">
-                <!-- populated by JS -->
-              </div>
+              <div class="emoji-unknown" id="emoji-unknown">?</div>
+              <div class="slot-track" id="slot-track" style="display:none;"></div>
               <div class="slot-shimmer"></div>
             </div>
-            <div class="roll-stats">
-              <span>Best streak: <span class="roll-stat-val" id="stat-streak">0</span></span>
-              <span>Total: <span class="roll-stat-val" id="stat-total">0</span></span>
+            <div class="roller-right">
+              <div class="roll-stats-row">
+                <div class="roll-stat">Rolls: <span class="roll-stat-val" id="stat-total">0</span></div>
+                <div class="roll-stat">Best streak: <span class="roll-stat-val" id="stat-best">0</span></div>
+              </div>
+              <div class="streak-display" id="streak-display">
+                <span class="streak-icon" id="streak-icon">💤</span>
+                <span id="streak-msg">No rolls yet</span>
+              </div>
             </div>
-            <div class="streak-badge" id="streak-badge">🔥 Streak: <span id="streak-val">0</span></div>
           </div>
           <button class="roll-btn" id="roll-btn" onclick="rollEmoji()">🎲 Roll Today's Emoji</button>
-          <div style="margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--text3);text-align:center;letter-spacing:0.04em;" id="roll-flavour"></div>
+          <div class="roll-flavour" id="roll-flavour"></div>
         </div>
       </div>
 
-      <!-- PREVIEW WIDGET -->
+      <!-- MESSAGE PREVIEW -->
       <div class="widget">
         <div class="widget-header">
           <span class="widget-title">Message Preview</span>
         </div>
         <div class="widget-body">
-          <textarea class="preview-box" id="preview" readonly spellcheck="false">Loading...</textarea>
-          <button class="copy-btn" id="copy-btn" onclick="copyMessage()">
-            ✦ &nbsp;Copy to Clipboard
-          </button>
+          <div class="preview-box" id="preview-box"></div>
+          <button class="copy-btn" id="copy-btn" onclick="copyMessage()">✦ &nbsp;Copy to Clipboard</button>
         </div>
       </div>
 
     </div>
-  </div><!-- /main-grid -->
-</div><!-- /page -->
+  </div>
+</div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONFIGURATION ──────────────────────────────────────────
-const SHEET_ID_KEY = 'oh_rollcall_sheet_id';
+// ═══════════════════════════════════════════════════════════
+// CONSTANTS & STATE
+// ═══════════════════════════════════════════════════════════
+const FB_URL_KEY    = 'oh_fb_url';
+const ROSTER_KEY    = 'oh_roster';
+const STATUSES_KEY  = 'oh_statuses';
+const EMOJI_KEY     = 'oh_today_emoji';
+const DATE_KEY      = 'oh_selected_date';
 
-// ── PERSONNEL ROSTER (fixed, no rota rotation) ────────────
-const MAIN_TEAM = [
-  'LCP IRFAN','CPL RAZIN','CPL RIZQ','LCP JEFF',
-  'PTE HUZAIFAH','LCP ZACHARIAH','LCP MARCUS',
-  'PTE MAHESH','PTE KHAIRUL','LCP KAR KIT',
-  'PTE FERDINAND','PTE IRYAN','PTE GARRET','PTE MIRZA'
-];
-const EMS_TEAM = [
-  'CPL KHAIRI','PTE DARWISY','PTE CYRUS','LCP ZEN','CPL WEN XUAN'
-];
+// Default roster
+const DEFAULT_ROSTER = {
+  MAIN: ['LCP IRFAN','CPL RAZIN','CPL RIZQ','LCP JEFF',
+         'PTE HUZAIFAH','LCP ZACHARIAH','LCP MARCUS',
+         'PTE MAHESH','PTE KHAIRUL','LCP KAR KIT',
+         'PTE FERDINAND','PTE IRYAN','PTE GARRET','PTE MIRZA'],
+  EMS:  ['CPL KHAIRI','PTE DARWISY','PTE CYRUS','LCP ZEN','CPL WEN XUAN']
+};
 
-// ── EMOJI POOL ────────────────────────────────────────────
 const EMOJI_POOL = [
   '🩻','✌️','😴','🧚‍♂️','🫃','🫠','🐸','🌵','🎯','🦋',
-  '🍄','🎪','🌊','🦆','🏔️','🎭','🔮','🧃','🌸','🐢',
-  '🎵','🌙','🍉','🦀','🧊','🌈','🐙','🎲','🦜','🍜',
-  '🏄','🧸','🌻','🐡','🎺','🦩','🌍','🧩','🍋','🎠',
-  '🦭','🌺','🐻','🎋','🧁','🐝','🌴','🎪','🦊','🐉'
+  '🍄','🌊','🦆','🏔️','🎭','🔮','🧃','🌸','🐢','🎵',
+  '🌙','🍉','🦀','🧊','🌈','🐙','🎲','🦜','🍜','🏄',
+  '🧸','🌻','🐡','🎺','🦩','🌍','🧩','🍋','🦭','🌺',
+  '🐻','🎋','🧁','🐝','🌴','🦊','🐉','🎪','🌟','🍀'
 ];
 
-// Flavour texts for roll button
-const FLAVOUR_TEXTS = [
+const FLAVOURS_ROLLING = [
   'the universe decides...','fate is spinning...','let destiny choose...',
   'consulting the emoji oracle...','the wheel of fortune turns...',
-  'asking the cosmos...','probability engaged...','rolling for vibes...',
-  'the algorithm speaks...','quantum randomness activated...',
-  'today\'s energy incoming...','channeling the spirits...',
-  'the dice have been cast...','fortune favours the roller...',
-  'commencing sacred roll...'
+  'asking the cosmos...','rolling for vibes...','quantum randomness activated...',
+  'channeling the spirits...','commencing sacred roll...',
+  'the algorithm speaks...','today\'s energy incoming...'
+];
+const FLAVOURS_LANDED = [
+  '🎯 locked in.','✅ vibe confirmed.','🌟 excellent choice.',
+  '💫 the emoji has spoken.','🎰 jackpot.','🏆 worthy selection.',
+  '⚡ energy set.','🔮 destiny fulfilled.','🎪 spectacular.',
 ];
 
-const WIN_MESSAGES = [
-  '🎯 locked in.','✅ today\'s vibe: set.','🌟 excellent choice.',
-  '💫 the emoji has spoken.','🎰 jackpot energy.','🏆 a worthy selection.',
-  '⚡ vibes confirmed.','🎪 spectacular.','🔮 destiny fulfilled.',
+const STREAK_LEVELS = [
+  { min:0,  cls:'',   icon:'💤', msg:'No rolls yet' },
+  { min:1,  cls:'',   icon:'🎲', msg:'First roll!' },
+  { min:3,  cls:'s1', icon:'🔵', msg:'On a roll — {n} rolls' },
+  { min:6,  cls:'s2', icon:'🔥', msg:'Getting hot — {n} rolls!' },
+  { min:10, cls:'s2', icon:'🔥🔥', msg:'Scorching — {n} rolls!!' },
+  { min:15, cls:'s3', icon:'💀', msg:'Unhinged — {n} rolls!!!' },
+  { min:25, cls:'s3', icon:'👹', msg:'CURSED ROLLER — {n} rolls!!!!' },
 ];
 
-// ── STATE ─────────────────────────────────────────────────
+// OH hours
+const OH = {
+  weekday: { start: 8*60,      end: 18*60 },    // Mon-Thu
+  friday:  { start: 8*60,      end: 17*60+30 }, // Fri
+  rc: {
+    weekday: [8*60, 14*60, 18*60],
+    friday:  [8*60, 14*60+30, 17*60+30]
+  }
+};
+
+let roster   = JSON.parse(localStorage.getItem(ROSTER_KEY) || 'null') || deepCopy(DEFAULT_ROSTER);
 let statuses = {};
-let mainRoster = [...MAIN_TEAM];
-let emsRoster  = [...EMS_TEAM];
+let timeOffRows = [];
 let currentEmoji = null;
-let isRolling = false;
 let rollCount = 0;
 let rollStreak = 0;
 let bestStreak = 0;
-let rollInterval = null;
-let rollTimeout = null;
+let isRolling  = false;
+let fbRef      = null; // Firebase ref
+let fbUrl      = localStorage.getItem(FB_URL_KEY) || '';
+let todayKey   = '';   // YYYY-MM-DD used as FB path
 
-// ── DATE HELPERS ──────────────────────────────────────────
+function deepCopy(o) { return JSON.parse(JSON.stringify(o)); }
+
+// ═══════════════════════════════════════════════════════════
+// DATE HELPERS
+// ═══════════════════════════════════════════════════════════
 function getSelectedDate() {
   const v = document.getElementById('date-input').value;
   if (!v) return new Date();
   const [y,m,d] = v.split('-').map(Number);
   return new Date(y,m-1,d);
 }
-function fmtDate(date) {
-  return String(date.getDate()).padStart(2,'0') + '/'
-       + String(date.getMonth()+1).padStart(2,'0') + '/'
-       + String(date.getFullYear());
+function fmtDate(d) {
+  return `${String(d.getDate()).padStart(2,'0')}/${String(d.getMonth()+1).padStart(2,'0')}/${d.getFullYear()}`;
 }
-function getDayName(date) {
-  return date.toLocaleDateString('en-SG', { weekday: 'long' });
+function fmtDateKey(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 }
-function isWeekend(date) {
-  const d = date.getDay(); return d === 0 || d === 6;
+function getDayName(d) {
+  return d.toLocaleDateString('en-SG',{weekday:'long'});
 }
-function isFriday(date) { return date.getDay() === 5; }
+function isWeekend(d) { const w=d.getDay(); return w===0||w===6; }
+function isFriday(d) { return d.getDay()===5; }
 
-// OH hours: Mon-Thu 0800-1800, Fri 0800-1730
-function getOHHours(date) {
-  if (isWeekend(date)) return null;
-  return { start: 8*60, end: isFriday(date) ? 17*60+30 : 18*60 };
+function getOHHours(d) {
+  if (isWeekend(d)) return null;
+  return isFriday(d) ? OH.friday : OH.weekday;
+}
+function getRCTimes(d) {
+  if (isWeekend(d)) return [];
+  return isFriday(d) ? OH.rc.friday : OH.rc.weekday;
 }
 
-function getSecondsUntil(targetMins) {
+function secsUntilMins(targetMins) {
   const now = new Date();
-  const cur = now.getHours()*60 + now.getMinutes();
-  let diff = targetMins - cur;
+  const curMins = now.getHours()*60 + now.getMinutes();
+  let diff = targetMins - curMins;
   if (diff < 0) diff += 24*60;
-  return diff * 60 - now.getSeconds();
+  return diff*60 - now.getSeconds();
+}
+function hhmmss(s) {
+  s = Math.max(0,s);
+  return `${String(Math.floor(s/3600)).padStart(2,'0')}:${String(Math.floor((s%3600)/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`;
+}
+function minsToStr(m) {
+  const h=Math.floor(m/60), mm=m%60;
+  return `${String(h).padStart(2,'0')}${String(mm).padStart(2,'0')}`;
 }
 
-function hhmmss(secs) {
-  if (secs < 0) secs = 0;
-  const h = Math.floor(secs/3600);
-  const m = Math.floor((secs%3600)/60);
-  const s = secs%60;
-  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-}
-
-// ── CLOCK & BANNER ────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════
+// CLOCK / BANNER / ROLLCALL BAR
+// ═══════════════════════════════════════════════════════════
 function tickClock() {
   const now = new Date();
-  const hh = String(now.getHours()).padStart(2,'0');
-  const mm = String(now.getMinutes()).padStart(2,'0');
-  const ss = String(now.getSeconds()).padStart(2,'0');
-  document.getElementById('topbar-clock').textContent = `${hh}:${mm}:${ss}`;
+  document.getElementById('topbar-clock').textContent =
+    `${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}:${String(now.getSeconds()).padStart(2,'0')}`;
   updateBanner();
+  updateRCBar();
 }
 
 function updateBanner() {
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const hours = getOHHours(today);
-  const curMins = now.getHours()*60 + now.getMinutes();
+  const now  = new Date();
+  const today = new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const dow   = today.getDay(); // 0=Sun ... 6=Sat
+  const wkend = isWeekend(today);
 
-  const chip = document.getElementById('banner-status-chip');
-  const label = document.getElementById('banner-status-text');
-  const cdLabel = document.getElementById('banner-cdown-label');
-  const cdEl = document.getElementById('banner-countdown');
-  const hoursLabel = document.getElementById('banner-hours-label');
-  const closeSub = document.getElementById('banner-close-sub');
+  const wcard  = document.getElementById('weekend-card');
+  const sbanner= document.getElementById('shift-banner');
+  const rcbar  = document.getElementById('rollcall-bar');
 
-  if (!hours) {
-    // Weekend
-    chip.className='banner-status-chip chip-closed';
-    label.textContent='Weekend';
-    cdLabel.textContent='Next OH in';
-    // Find next Monday
-    const daysUntilMon = (8 - today.getDay()) % 7 || 7;
-    const secsLeft = daysUntilMon * 86400 - (now.getHours()*3600 + now.getMinutes()*60 + now.getSeconds()) + 8*3600;
-    cdEl.textContent = hhmmss(secsLeft);
-    hoursLabel.textContent = 'Weekend';
-    return;
+  if (wkend) {
+    wcard.style.display=''; sbanner.style.display='none'; rcbar.style.display='none';
+    updateWeekendCard(now, today, dow);
+  } else {
+    wcard.style.display='none'; sbanner.style.display=''; rcbar.style.display='';
+    updateShiftBanner(now, today);
+  }
+}
+
+function updateWeekendCard(now, today, dow) {
+  const isSunday = dow === 0;
+  const isSaturday = dow === 6;
+  const hour = now.getHours();
+  const isSundayEvening = isSunday && hour >= 18;
+
+  const emojiEl = document.getElementById('weekend-emoji');
+  const titleEl = document.getElementById('weekend-title');
+  const subEl   = document.getElementById('weekend-sub');
+  const cdEl    = document.getElementById('weekend-cdown');
+  const cdLbl   = document.getElementById('weekend-cdown-label');
+
+  if (isSundayEvening) {
+    emojiEl.textContent = '📋';
+    titleEl.textContent = 'Sunday Night — Prep Mode';
+    subEl.textContent   = 'New work week starts tomorrow. Get the movement chart ready.';
+    cdLbl.textContent   = 'until Monday OH opens';
+  } else if (isSunday) {
+    emojiEl.textContent = '☀️';
+    titleEl.textContent = 'Sunday';
+    subEl.textContent   = 'Rest up — one more day until the work week.';
+    cdLbl.textContent   = 'until Monday OH opens';
+  } else {
+    emojiEl.textContent = '🏖️';
+    titleEl.textContent = 'Saturday';
+    subEl.textContent   = 'Weekend. You deserve it.';
+    cdLbl.textContent   = 'until Monday OH opens';
   }
 
-  const isOpen = curMins >= hours.start && curMins < hours.end;
-  const endTimeStr = isFriday(today) ? '1730' : '1800';
-  hoursLabel.textContent = `0800 – ${endTimeStr}`;
+  // Count down to Monday 0800
+  const daysUntilMon = (8 - dow) % 7 || 7;
+  const secsTilMon = daysUntilMon*86400 - (now.getHours()*3600 + now.getMinutes()*60 + now.getSeconds()) + 8*3600;
+  cdEl.textContent = hhmmss(secsTilMon);
+}
+
+function updateShiftBanner(now, today) {
+  const curMins = now.getHours()*60 + now.getMinutes();
+  const hours   = getOHHours(today);
+  const fri     = isFriday(today);
+
+  document.getElementById('banner-oh-hours').textContent = fri ? '0800 – 1730' : '0800 – 1800';
+  document.getElementById('banner-oh-day').textContent   = fri ? 'Friday' : 'Monday – Thursday';
+
+  const chip     = document.getElementById('banner-chip');
+  const chipTxt  = document.getElementById('banner-chip-text');
+  const cdLabel  = document.getElementById('banner-cdown-label');
+  const cdEl     = document.getElementById('banner-cdown');
+
+  const isOpen   = curMins >= hours.start && curMins < hours.end;
+  const isBefore = curMins < hours.start;
 
   if (isOpen) {
-    chip.className='banner-status-chip chip-open';
-    label.textContent='Open';
+    chip.className='banner-chip chip-open'; chipTxt.textContent='Open';
     cdLabel.textContent='Closes in';
-    cdEl.textContent = hhmmss(getSecondsUntil(hours.end));
-  } else if (curMins < hours.start) {
-    chip.className='banner-status-chip chip-soon';
-    label.textContent='Opens soon';
+    cdEl.textContent=hhmmss(secsUntilMins(hours.end));
+  } else if (isBefore) {
+    chip.className='banner-chip chip-soon'; chipTxt.textContent='Opens soon';
     cdLabel.textContent='Opens in';
-    cdEl.textContent = hhmmss(getSecondsUntil(hours.start));
+    cdEl.textContent=hhmmss(secsUntilMins(hours.start));
   } else {
-    chip.className='banner-status-chip chip-closed';
-    label.textContent='Closed';
-    cdLabel.textContent='Opens tomorrow';
-    // Secs until 0800 tomorrow
-    const secsLeft = getSecondsUntil(8*60) || 86400;
-    cdEl.textContent = hhmmss(secsLeft);
-  }
-}
-
-// ── TOPBAR DATE ───────────────────────────────────────────
-function updateTopbarDate() {
-  const d = getSelectedDate();
-  const str = d.toLocaleDateString('en-SG', {weekday:'short', day:'numeric', month:'short', year:'numeric'});
-  document.getElementById('topbar-date').textContent = str;
-  document.getElementById('ctrl-badge').textContent =
-    fmtDate(d) === fmtDate(new Date()) ? 'TODAY' : 'CUSTOM';
-}
-
-// ── EMOJI SLOT MACHINE ────────────────────────────────────
-const SLOT_COLS = 5; // items visible in track padding
-let trackEmojis = [...EMOJI_POOL].sort(() => Math.random()-0.5);
-
-function buildSlotTrack() {
-  const track = document.getElementById('slot-track');
-  track.innerHTML = '';
-  // Pre-fill with shuffled emojis for the reel
-  const pool = [];
-  while (pool.length < 40) {
-    const shuffled = [...EMOJI_POOL].sort(() => Math.random()-0.5);
-    pool.push(...shuffled);
-  }
-  trackEmojis = pool;
-  pool.forEach(e => {
-    const div = document.createElement('div');
-    div.className = 'slot-item'; div.textContent = e;
-    track.appendChild(div);
-  });
-  // Position at item 5 initially
-  const win = document.getElementById('slot-window');
-  const itemH = win.offsetHeight;
-  track.style.transform = `translateY(0px)`;
-}
-
-function rollEmoji() {
-  if (isRolling) return;
-  isRolling = true;
-
-  const btn = document.getElementById('roll-btn');
-  btn.disabled = true;
-  btn.classList.remove('locked');
-
-  const win = document.getElementById('slot-window');
-  const track = document.getElementById('slot-track');
-  const itemH = win.offsetHeight; // slot window height = item height
-
-  // Expand the track with fresh emojis
-  track.innerHTML = '';
-  const pool = [];
-  while (pool.length < 80) {
-    const shuffled = [...EMOJI_POOL].sort(() => Math.random()-0.5);
-    pool.push(...shuffled);
-  }
-  pool.forEach(e => {
-    const div = document.createElement('div');
-    div.className = 'slot-item'; div.textContent = e;
-    track.appendChild(div);
-  });
-  track.style.transition = 'none';
-  track.style.transform = 'translateY(0px)';
-
-  win.classList.add('rolling');
-
-  // Animation phases: fast → slow → stop
-  const totalItems = pool.length;
-  const stopAt = 55 + Math.floor(Math.random() * 15); // land somewhere in middle
-  const totalPx = stopAt * itemH;
-
-  let currentPx = 0;
-  let speed = itemH * 0.4; // initial step
-  const maxSpeed = itemH * 1.2;
-  const duration = 2200 + Math.random() * 800;
-  const startTime = performance.now();
-
-  document.getElementById('roll-flavour').textContent =
-    FLAVOUR_TEXTS[Math.floor(Math.random() * FLAVOUR_TEXTS.length)];
-
-  function animate(now) {
-    const elapsed = now - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-
-    // Ease: fast in middle, decelerate at end
-    let step;
-    if (progress < 0.6) {
-      // accelerate
-      step = maxSpeed * (progress / 0.6);
-    } else {
-      // decelerate — ease-out
-      const decel = (progress - 0.6) / 0.4;
-      step = maxSpeed * (1 - decel * decel * decel);
-    }
-    step = Math.max(step, 2);
-
-    currentPx += step;
-
-    // Wrap track if needed
-    if (currentPx > totalPx - itemH * 5) {
-      // snap to final
-      currentPx = totalPx;
-    }
-
-    track.style.transition = 'none';
-    track.style.transform = `translateY(-${currentPx}px)`;
-
-    if (progress < 1 && currentPx < totalPx) {
-      requestAnimationFrame(animate);
-    } else {
-      // Snap to exact item boundary
-      const landedIdx = Math.round(currentPx / itemH);
-      track.style.transform = `translateY(-${landedIdx * itemH}px)`;
-
-      const chosenEmoji = pool[Math.min(landedIdx, pool.length-1)];
-      landEmoji(chosenEmoji);
-    }
+    chip.className='banner-chip chip-closed'; chipTxt.textContent='Closed';
+    cdLabel.textContent='Closed for today';
+    // Secs until tomorrow 0800
+    cdEl.textContent=hhmmss(secsUntilMins(8*60));
   }
 
-  requestAnimationFrame(animate);
-}
-
-function landEmoji(emoji) {
-  const win = document.getElementById('slot-window');
-  win.classList.remove('rolling');
-
-  currentEmoji = emoji;
-  rollCount++;
-  rollStreak++;
-  if (rollStreak > bestStreak) bestStreak = rollStreak;
-
-  document.getElementById('stat-streak').textContent = bestStreak;
-  document.getElementById('stat-total').textContent = rollCount;
-  document.getElementById('roll-count-display').textContent =
-    rollCount === 1 ? '1 roll' : `${rollCount} rolls`;
-
-  const streakBadge = document.getElementById('streak-badge');
-  if (rollStreak >= 3) {
-    streakBadge.style.display = 'inline-flex';
-    document.getElementById('streak-val').textContent = rollStreak;
-  }
-
-  // Flash border
-  win.style.border = '2px solid var(--green)';
-  win.style.boxShadow = '0 0 20px rgba(52,211,153,0.4)';
-  setTimeout(() => {
-    win.style.border = '';
-    win.style.boxShadow = '';
-  }, 800);
-
-  document.getElementById('roll-flavour').textContent =
-    WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)];
-
-  const btn = document.getElementById('roll-btn');
-  btn.textContent = `🎲 Roll Again (${rollCount})`;
-  btn.disabled = false;
-  btn.classList.add('locked');
-
-  isRolling = false;
-  updatePreview();
-  showToast(`${emoji} locked in as today's emoji!`);
-}
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2800);
-}
-
-// ── ROSTER LOADING ────────────────────────────────────────
-function getSheetId() { return localStorage.getItem(SHEET_ID_KEY) || ''; }
-
-async function loadRoster() {
-  const id = getSheetId();
-  const dot = document.getElementById('roster-dot');
-  const txt = document.getElementById('roster-status-text');
-  const badge = document.getElementById('roster-badge');
-
-  if (!id) {
-    dot.className='rdot'; txt.textContent='using built-in roster';
-    badge.style.display=''; badge.className='widget-badge badge-info'; badge.textContent='default';
-    useBuiltInRoster(); renderSheetEmbed(); render(); return;
-  }
-
-  dot.className='rdot loading'; txt.textContent='loading...';
-  const urls = [
-    `https://docs.google.com/spreadsheets/d/${id}/pub?gid=0&single=true&output=csv`,
-    `https://docs.google.com/spreadsheets/d/${id}/export?format=csv`,
-    `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv`,
-  ];
-  let loaded = false;
-  for (const url of urls) {
-    try {
-      const r = await fetch(url, {cache:'no-cache'});
-      if (!r.ok) continue;
-      const csv = await r.text();
-      if (!csv || csv.includes('<!DOCTYPE')) continue;
-      parseRosterCSV(csv);
-      loaded = true; break;
-    } catch(e) { continue; }
-  }
-  if (loaded) {
-    const n = mainRoster.length + emsRoster.length;
-    dot.className='rdot'; txt.textContent=`${n} personnel loaded`;
-    badge.style.display=''; badge.className='widget-badge badge-ok'; badge.textContent='live';
+  // Next rollcall
+  const rcs = getRCTimes(today);
+  const next = rcs.find(t => t > curMins);
+  const nextEl = document.getElementById('banner-next-rc');
+  const rcInEl = document.getElementById('banner-rc-in');
+  if (next !== undefined) {
+    nextEl.textContent = minsToStr(next) + ' hrs';
+    const secsLeft = secsUntilMins(next);
+    rcInEl.textContent = 'in ' + hhmmss(secsLeft);
   } else {
-    dot.className='rdot error'; txt.textContent='sheet error — using built-in roster';
-    badge.style.display=''; badge.className='widget-badge badge-err'; badge.textContent='error';
-    useBuiltInRoster();
+    nextEl.textContent = 'Done for today';
+    rcInEl.textContent = '';
   }
-  renderSheetEmbed(); render();
 }
 
-function parseRosterCSV(csv) {
-  mainRoster=[]; emsRoster=[];
-  csv.trim().split('\n').slice(1).forEach(line => {
-    const cols=(line.match(/(".*?"|[^,]+)/g)||[]).map(c=>c.replace(/^"|"$/g,'').trim().toUpperCase());
-    const group=cols[0], name=cols[1];
-    if(!name) return;
-    if(group==='EMS') emsRoster.push(name);
-    else mainRoster.push(name);
+function updateRCBar() {
+  const now = new Date();
+  const today = new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  if (isWeekend(today)) return;
+  const curMins = now.getHours()*60 + now.getMinutes();
+  const rcs = getRCTimes(today);
+  const container = document.getElementById('rc-times');
+  const cdEl = document.getElementById('rc-countdown');
+
+  container.innerHTML = '';
+  rcs.forEach(t => {
+    const pill = document.createElement('div');
+    pill.className='rc-pill';
+    const past = t <= curMins;
+    const isNext = !past && rcs.findIndex(x=>x>curMins)===rcs.indexOf(t);
+    if (isNext) pill.classList.add('rc-next');
+    else if (past) pill.classList.add('rc-past');
+    pill.textContent = minsToStr(t)+'hrs';
+    container.appendChild(pill);
   });
-  if (!mainRoster.length && !emsRoster.length) useBuiltInRoster();
-}
 
-function useBuiltInRoster() {
-  mainRoster = [...MAIN_TEAM];
-  emsRoster  = [...EMS_TEAM];
-}
-
-function renderSheetEmbed() {
-  const id = getSheetId();
-  const wrap = document.getElementById('sheets-embed-wrap');
-  if (!id) {
-    wrap.innerHTML='<div class="sheets-placeholder"><span>Configure a Sheet ID above to<br>view and edit your roster here</span></div>';
-    return;
-  }
-  const src = `https://docs.google.com/spreadsheets/d/${id}/edit?usp=sharing&rm=minimal&embedded=true`;
-  wrap.innerHTML = `<iframe src="${src}" frameborder="0" allowfullscreen></iframe>`;
-}
-
-// ── OVERRIDES ────────────────────────────────────────────
-function onDateChange() { statuses={}; render(); updateTopbarDate(); }
-
-// ── BLOCK STYLING ─────────────────────────────────────────
-function refreshBlockStyle(block, val) {
-  const v = (val||'').toUpperCase();
-  if (v.startsWith('OFF DUTY') || v==='MC' || v==='RS' || v==='HL') {
-    block.classList.add('off-duty');
+  const next = rcs.find(t => t > curMins);
+  if (next !== undefined) {
+    const s = secsUntilMins(next);
+    cdEl.textContent = hhmmss(s) + ' to next RC';
   } else {
-    block.classList.remove('off-duty');
+    cdEl.textContent = 'All rollcalls done';
   }
 }
 
-// ── RENDER ────────────────────────────────────────────────
-const CHIPS = [
-  {label:'ON DUTY',  cls:'chip-on',  type:'set'},
-  {label:'OFF DUTY', cls:'chip-off', type:'set'},
-  {label:'RS',  cls:'', type:'suffix',   code:'RS'},
-  {label:'MC',  cls:'', type:'datepick', code:'MC'},
-  {label:'VL',  cls:'', type:'datepick', code:'VL'},
-  {label:'OVL', cls:'', type:'datepick', code:'OVL'},
-  {label:'HL',  cls:'', type:'datepick', code:'HL'},
-  {label:'CL',  cls:'', type:'datepick', code:'CL'},
+// ═══════════════════════════════════════════════════════════
+// FIREBASE
+// ═══════════════════════════════════════════════════════════
+function setSyncUI(state) { // 'online'|'offline'|'syncing'
+  const dot = document.getElementById('sync-dot');
+  const lbl = document.getElementById('sync-label');
+  dot.className = 'sync-dot' + (state==='online'?' ':'') + (state==='syncing'?' syncing':'') + (state==='offline'?' offline':'');
+  if (state==='online') { dot.style.background='var(--green)'; lbl.textContent='synced'; }
+  else if (state==='syncing') { lbl.textContent='syncing…'; }
+  else { dot.style.background='var(--text3)'; lbl.textContent='local'; }
+}
+
+function initFirebase(url) {
+  if (!url) { setSyncUI('offline'); return; }
+  fbUrl = url;
+  todayKey = fmtDateKey(getSelectedDate());
+  const dbUrl = url.replace(/\/$/,'') + '/' + todayKey;
+
+  // Lightweight Firebase REST polling (no SDK needed)
+  setSyncUI('syncing');
+  fbPoll(dbUrl);
+  setInterval(() => fbPoll(dbUrl), 5000); // poll every 5s
+}
+
+async function fbPoll(url) {
+  try {
+    const r = await fetch(url + '.json');
+    if (!r.ok) throw new Error('bad');
+    const data = await r.json();
+    if (data) {
+      // Merge remote into local (remote wins)
+      if (data.statuses) { statuses = data.statuses; renderPersonList(); }
+      if (data.timeOff)  { timeOffRows = data.timeOff; renderTimeOffRows(); }
+      if (data.emoji)    { currentEmoji = data.emoji; applyLockedEmoji(data.emoji); }
+    }
+    setSyncUI('online');
+  } catch(e) { setSyncUI('offline'); }
+}
+
+async function fbPush() {
+  if (!fbUrl) return;
+  const url = fbUrl.replace(/\/$/,'') + '/' + todayKey;
+  setSyncUI('syncing');
+  try {
+    await fetch(url + '.json', {
+      method: 'PATCH',
+      headers: {'Content-Type':'application/json'},
+      body: JSON.stringify({ statuses, timeOff: timeOffRows, emoji: currentEmoji })
+    });
+    setSyncUI('online');
+  } catch(e) { setSyncUI('offline'); }
+}
+
+function saveFbUrl() {
+  const val = document.getElementById('fb-url-input').value.trim();
+  localStorage.setItem(FB_URL_KEY, val);
+  fbUrl = val;
+  initFirebase(val);
+  showToast(val ? '🔗 Connected to Firebase!' : 'Firebase disconnected');
+}
+
+function toggleFbHelp() {
+  const s = document.getElementById('fb-help-slide');
+  const open = s.classList.toggle('open');
+  document.getElementById('fb-help-toggle-text').textContent = open ? 'hide' : 'setup guide';
+}
+
+// ═══════════════════════════════════════════════════════════
+// ROSTER EDITOR
+// ═══════════════════════════════════════════════════════════
+function toggleRosterPanel() {
+  const panel = document.getElementById('roster-panel');
+  const chevron = document.getElementById('roster-chevron');
+  const open = panel.classList.toggle('open');
+  chevron.style.transform = open ? 'rotate(90deg)' : 'rotate(0deg)';
+  if (open) buildRosterEditor();
+}
+
+function buildRosterEditor() {
+  const ed = document.getElementById('roster-editor');
+  ed.innerHTML = '';
+  ['MAIN','EMS'].forEach(grp => {
+    const lbl = document.createElement('div');
+    lbl.className = 'roster-group-label';
+    lbl.textContent = grp === 'MAIN' ? 'Main Team' : 'EMS Team';
+    ed.appendChild(lbl);
+    (roster[grp]||[]).forEach((name, idx) => {
+      ed.appendChild(makeRosterRow(grp, idx, name));
+    });
+    const addBtn = document.createElement('button');
+    addBtn.className = 'roster-add-btn';
+    addBtn.textContent = `+ Add ${grp === 'MAIN' ? 'Main' : 'EMS'} member`;
+    addBtn.onclick = () => {
+      roster[grp].push('');
+      buildRosterEditor();
+    };
+    ed.appendChild(addBtn);
+  });
+}
+
+function makeRosterRow(grp, idx, name) {
+  const row = document.createElement('div');
+  row.className = 'roster-name-row';
+  const inp = document.createElement('input');
+  inp.type='text'; inp.className='roster-name-input';
+  inp.value=name; inp.placeholder='RANK NAME';
+  inp.setAttribute('autocapitalize','characters');
+  inp.addEventListener('input', () => { roster[grp][idx] = inp.value.toUpperCase(); });
+  const del = document.createElement('button');
+  del.className='roster-del-btn'; del.textContent='×';
+  del.onclick = () => { roster[grp].splice(idx,1); buildRosterEditor(); };
+  row.appendChild(inp); row.appendChild(del);
+  return row;
+}
+
+function saveRoster() {
+  // Clean empty entries
+  roster.MAIN = (roster.MAIN||[]).map(n=>n.trim().toUpperCase()).filter(Boolean);
+  roster.EMS  = (roster.EMS||[]).map(n=>n.trim().toUpperCase()).filter(Boolean);
+  localStorage.setItem(ROSTER_KEY, JSON.stringify(roster));
+  statuses = {}; timeOffRows = [];
+  renderPersonList(); renderTimeOffRows(); updatePreview();
+  showToast('✓ Roster saved!');
+  buildRosterEditor();
+}
+
+// ═══════════════════════════════════════════════════════════
+// PERSON BLOCKS
+// ═══════════════════════════════════════════════════════════
+const CHIPS_DEF = [
+  { label:'IN',       cls:'c-in',     type:'set', val:'IN' },
+  { label:'OFF DUTY', cls:'c-expand', type:'expand' },
+];
+const LEAVE_CHIPS = [
+  { label:'OFF DUTY', cls:'', type:'set',      val:'OFF DUTY' },
+  { label:'RS',       cls:'', type:'suffix',   code:'RS' },
+  { label:'MC',       cls:'', type:'datepick', code:'MC' },
+  { label:'VL',       cls:'', type:'datepick', code:'VL' },
+  { label:'OVL',      cls:'', type:'datepick', code:'OVL' },
+  { label:'HL',       cls:'', type:'datepick', code:'HL' },
+  { label:'CL',       cls:'', type:'datepick', code:'CL' },
 ];
 
-function makePersonBlock(name, groupKey) {
-  const key = `${groupKey}-${name}`;
-  if (!statuses[key]) statuses[key] = '';
+function renderPersonList() {
+  const list = document.getElementById('person-list');
+  list.innerHTML='';
+
+  ['MAIN','EMS'].forEach(grp => {
+    const lbl = document.createElement('div');
+    lbl.className='section-label';
+    lbl.textContent = grp==='MAIN' ? 'Main Team' : 'EMS Team';
+    list.appendChild(lbl);
+    (roster[grp]||[]).forEach(name => {
+      list.appendChild(makePersonBlock(name, grp));
+    });
+  });
+}
+
+function makePersonBlock(name, grp) {
+  const key = grp+'-'+name;
+  if (statuses[key] === undefined) statuses[key] = '';
 
   const block = document.createElement('div');
-  block.className = 'person-block';
+  block.className='person-block';
 
-  const top = document.createElement('div');
-  top.className = 'person-top';
-
+  const top = document.createElement('div'); top.className='person-top';
   const nameEl = document.createElement('span');
-  nameEl.className = 'person-name';
-  nameEl.textContent = name;
-
-  const wrap = document.createElement('div');
-  wrap.className = 'status-wrap';
-
+  nameEl.className='person-name'; nameEl.textContent=name;
+  const wrap = document.createElement('div'); wrap.className='status-wrap';
   const input = document.createElement('input');
   input.type='text'; input.className='status-input';
-  input.value=statuses[key]; input.placeholder='status...';
-  input.setAttribute('autocomplete','off');
-  input.setAttribute('autocorrect','off');
-  input.setAttribute('autocapitalize','characters');
-  input.setAttribute('spellcheck','false');
-  input.addEventListener('input',()=>{ statuses[key]=input.value; refreshBlockStyle(block,input.value); updatePreview(); });
-  input.addEventListener('focus',()=> block.classList.add('focused'));
-  input.addEventListener('blur',()=> setTimeout(()=>block.classList.remove('focused'),180));
+  input.value=statuses[key]; input.placeholder='—';
+  input.setAttribute('autocomplete','off'); input.setAttribute('autocorrect','off');
+  input.setAttribute('autocapitalize','characters'); input.setAttribute('spellcheck','false');
+  input.addEventListener('input', () => { statuses[key]=input.value; refreshStyle(block,input.value); syncAndPreview(); });
+  input.addEventListener('focus', () => block.classList.add('focused'));
+  input.addEventListener('blur',  () => setTimeout(()=>block.classList.remove('focused'),180));
+  wrap.appendChild(input); top.appendChild(nameEl); top.appendChild(wrap); block.appendChild(top);
 
-  wrap.appendChild(input);
-  top.appendChild(nameEl); top.appendChild(wrap);
-  block.appendChild(top);
-
-  const chipsRow = document.createElement('div');
-  chipsRow.className = 'chips-row';
-  CHIPS.forEach(c => {
-    const chip = document.createElement('button');
-    chip.className='chip '+c.cls; chip.textContent=c.label; chip.type='button';
-    chip.addEventListener('mousedown', e => {
-      e.preventDefault();
-      const offCodes = ['RS','MC','VL','OVL','HL','CL'];
-      if (c.type==='set') {
-        input.value=c.label; statuses[key]=c.label; input.focus();
-        refreshBlockStyle(block, c.label); updatePreview();
-      } else if (c.type==='suffix') {
-        const base = offCodes.includes(c.code) ? 'OFF DUTY' : (input.value.split(' (')[0]||'');
-        input.value=base ? base+' ('+c.code+')' : c.code;
-        statuses[key]=input.value; input.focus();
-        refreshBlockStyle(block, input.value); updatePreview();
-      } else if (c.type==='datepick') {
-        openDatePicker(c.code, input, key, block);
-      }
-    });
-    chipsRow.appendChild(chip);
+  // Main chips row
+  const chipsRow = document.createElement('div'); chipsRow.className='chips-row';
+  CHIPS_DEF.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className='chip-btn '+c.cls; btn.textContent=c.label; btn.type='button';
+    if (c.type==='set') {
+      btn.addEventListener('mousedown', e => {
+        e.preventDefault();
+        input.value=c.val; statuses[key]=c.val;
+        refreshStyle(block,c.val); leaveChipsEl.classList.remove('open');
+        syncAndPreview();
+      });
+    } else if (c.type==='expand') {
+      btn.addEventListener('mousedown', e => {
+        e.preventDefault();
+        leaveChipsEl.classList.toggle('open');
+      });
+    }
+    chipsRow.appendChild(btn);
   });
   block.appendChild(chipsRow);
-  refreshBlockStyle(block, statuses[key]);
+
+  // Leave sub-chips (collapsed)
+  const leaveChipsEl = document.createElement('div'); leaveChipsEl.className='leave-chips';
+  LEAVE_CHIPS.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className='leave-chip'; btn.textContent=c.label; btn.type='button';
+    btn.addEventListener('mousedown', e => {
+      e.preventDefault();
+      const offCodes=['RS','MC','VL','OVL','HL','CL'];
+      if (c.type==='set') {
+        input.value=c.val; statuses[key]=c.val;
+        refreshStyle(block,c.val); syncAndPreview();
+      } else if (c.type==='suffix') {
+        const base = 'OFF DUTY';
+        input.value=base+' ('+c.code+')'; statuses[key]=input.value;
+        refreshStyle(block,input.value); syncAndPreview();
+      } else if (c.type==='datepick') {
+        openDatePicker(c.code, input, key, block, ()=>{ syncAndPreview(); });
+      }
+      leaveChipsEl.classList.remove('open');
+    });
+    leaveChipsEl.appendChild(btn);
+  });
+  block.appendChild(leaveChipsEl);
+
+  refreshStyle(block, statuses[key]);
   return block;
 }
 
-function render() {
-  const list = document.getElementById('person-list');
-  list.innerHTML = '';
-
-  // Main team section
-  const mainLabel = document.createElement('div');
-  mainLabel.className = 'section-label';
-  mainLabel.textContent = 'Main Team';
-  list.appendChild(mainLabel);
-  mainRoster.forEach(name => list.appendChild(makePersonBlock(name, 'MAIN')));
-
-  // EMS team section
-  const emsLabel = document.createElement('div');
-  emsLabel.className = 'section-label';
-  emsLabel.textContent = 'EMS Team';
-  list.appendChild(emsLabel);
-  emsRoster.forEach(name => list.appendChild(makePersonBlock(name, 'EMS')));
-
-  updatePreview();
-  updateTopbarDate();
+function refreshStyle(block, val) {
+  const v=(val||'').toUpperCase();
+  if (v.startsWith('OFF DUTY')||v==='MC'||v==='RS'||v==='HL') block.classList.add('off-duty');
+  else block.classList.remove('off-duty');
 }
 
+// ═══════════════════════════════════════════════════════════
+// TIME OFF
+// ═══════════════════════════════════════════════════════════
+function allNames() {
+  return [...(roster.MAIN||[]), ...(roster.EMS||[])];
+}
+
+function generateTimeOptions() {
+  const opts = [];
+  for (let h=7; h<=19; h++) {
+    for (let m=0; m<60; m+=30) {
+      if (h===19 && m>0) break;
+      opts.push(h*60+m);
+    }
+  }
+  return opts;
+}
+const TIME_OPTIONS = generateTimeOptions();
+
+function minsToLabel(m) {
+  return `${String(Math.floor(m/60)).padStart(2,'0')}${String(m%60).padStart(2,'0')}`;
+}
+
+function addTimeOffRow() {
+  timeOffRows.push({ name: allNames()[0]||'', from: 8*60, to: 10*60 });
+  renderTimeOffRows();
+  syncAndPreview();
+}
+
+function renderTimeOffRows() {
+  const container = document.getElementById('timeoff-rows');
+  container.innerHTML='';
+  const names = allNames();
+  timeOffRows.forEach((row, idx) => {
+    const rowEl = document.createElement('div'); rowEl.className='timeoff-row';
+
+    // Name select
+    const sel = document.createElement('select'); sel.className='timeoff-name-sel';
+    names.forEach(n => {
+      const opt=document.createElement('option'); opt.value=n; opt.textContent=n;
+      if(n===row.name) opt.selected=true;
+      sel.appendChild(opt);
+    });
+    sel.addEventListener('change', ()=>{ timeOffRows[idx].name=sel.value; syncAndPreview(); });
+
+    // Time range
+    const timeWrap = document.createElement('div'); timeWrap.className='timeoff-time';
+    const fromSel = makeTimeSel(row.from, v=>{ timeOffRows[idx].from=v; syncAndPreview(); });
+    const sep = document.createElement('span'); sep.className='time-sep'; sep.textContent='–';
+    const toSel = makeTimeSel(row.to, v=>{ timeOffRows[idx].to=v; syncAndPreview(); });
+    timeWrap.appendChild(fromSel); timeWrap.appendChild(sep); timeWrap.appendChild(toSel);
+
+    // Delete
+    const del = document.createElement('button'); del.className='timeoff-del'; del.textContent='×';
+    del.addEventListener('click',()=>{ timeOffRows.splice(idx,1); renderTimeOffRows(); syncAndPreview(); });
+
+    rowEl.appendChild(sel); rowEl.appendChild(timeWrap); rowEl.appendChild(del);
+    container.appendChild(rowEl);
+  });
+}
+
+function makeTimeSel(selected, onChange) {
+  const sel = document.createElement('select'); sel.className='time-sel';
+  TIME_OPTIONS.forEach(m => {
+    const opt=document.createElement('option'); opt.value=m;
+    opt.textContent=minsToLabel(m)+'hrs';
+    if(m===selected) opt.selected=true;
+    sel.appendChild(opt);
+  });
+  sel.addEventListener('change',()=>onChange(parseInt(sel.value)));
+  return sel;
+}
+
+// ═══════════════════════════════════════════════════════════
+// PREVIEW
+// ═══════════════════════════════════════════════════════════
 function updatePreview() {
   const date = getSelectedDate();
-  const dateStr = fmtDate(date);
-  const dayName = getDayName(date);
-  const emojiStr = currentEmoji ? ` ${currentEmoji}` : ' (emoji)';
+  const box  = document.getElementById('preview-box');
+  box.innerHTML = '';
 
-  // IC is always first person in main roster
-  const icName = mainRoster[0] ? toTitleCase(mainRoster[0]) : 'LCP IRFAN';
+  function addLine(text, ghost) {
+    const div = document.createElement('div');
+    div.style.fontFamily='var(--mono)';
+    div.style.fontSize='12px';
+    div.style.lineHeight='1.9';
+    div.style.whiteSpace='pre';
+    if (ghost) {
+      div.style.opacity='0.28';
+      div.style.fontStyle='italic';
+    }
+    div.textContent = text;
+    box.appendChild(div);
+  }
 
-  const lines = [
-    'Good Morning Officers ',
-    'OH NSFs Movement Chart for today: ',
-    `${dateStr} ${dayName}`,
-    '——————————',
-    `Rollcall IC : ${mainRoster[0]||'LCP IRFAN'}${emojiStr}`,
-  ];
+  const emojiPart = currentEmoji ? ` ${currentEmoji}` : null;
 
-  mainRoster.forEach(name => {
-    const key = `MAIN-${name}`;
-    const status = (statuses[key]||'').trim();
-    lines.push(`${name} - ${status}`);
+  addLine('Good Morning Officers ');
+  addLine('OH NSFs Movement Chart for today: ');
+  addLine(`${fmtDate(date)} ${getDayName(date)}`);
+  addLine('——————————');
+
+  const ic = roster.MAIN && roster.MAIN[0] ? roster.MAIN[0] : 'LCP IRFAN';
+  if (emojiPart) {
+    addLine(`Rollcall IC : ${ic} ${currentEmoji}`);
+  } else {
+    // Show the placeholder ghosted (visual only, not in copied text)
+    const rcLine = document.createElement('div');
+    rcLine.style.cssText='font-family:var(--mono);font-size:12px;line-height:1.9;white-space:pre;';
+    const mainSpan = document.createElement('span');
+    mainSpan.textContent = `Rollcall IC : ${ic} `;
+    const ghostSpan = document.createElement('span');
+    ghostSpan.textContent = '(emoji)';
+    ghostSpan.style.cssText='opacity:0.25;font-style:italic;';
+    rcLine.appendChild(mainSpan); rcLine.appendChild(ghostSpan);
+    box.appendChild(rcLine);
+  }
+
+  (roster.MAIN||[]).forEach(name => {
+    const key='MAIN-'+name;
+    const st=(statuses[key]||'').trim();
+    addLine(`${name} - ${st}`);
   });
 
-  lines.push('');
-  lines.push('EMS TEAM:');
-  emsRoster.forEach(name => {
-    const key = `EMS-${name}`;
-    const status = (statuses[key]||'').trim();
-    lines.push(`${name} - ${status}`);
+  addLine('');
+  addLine('EMS TEAM:');
+  (roster.EMS||[]).forEach(name => {
+    const key='EMS-'+name;
+    const st=(statuses[key]||'').trim();
+    addLine(`${name} - ${st}`);
   });
 
-  // Time off
-  const timeOff = [];
-  [...mainRoster.map(n=>({n,k:'MAIN-'+n})), ...emsRoster.map(n=>({n,k:'EMS-'+n}))].forEach(({n,k}) => {
-    const v = (statuses[k]||'').toUpperCase();
-    if (v && !v.startsWith('ON DUTY') && v !== '') timeOff.push(n);
-  });
-  lines.push(`*Time off*:${timeOff.length ? ' '+timeOff.join(', ') : ''}`);
-
-  document.getElementById('preview').value = lines.join('\n');
+  // Time off line
+  const toLines = timeOffRows.map(r => `${r.name} ${minsToLabel(r.from)} - ${minsToLabel(r.to)}`);
+  addLine(`*Time off*:${toLines.length ? ' '+toLines.join(', ') : ''}`);
 }
 
-function toTitleCase(str) {
-  return str.replace(/\b\w/g, c => c.toUpperCase()).replace(/\b\w*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+function getPlainText() {
+  // Build the plain text version (without ghost emoji placeholder)
+  const date = getSelectedDate();
+  const lines = [];
+  const ic = roster.MAIN && roster.MAIN[0] ? roster.MAIN[0] : 'LCP IRFAN';
+  lines.push('Good Morning Officers ');
+  lines.push('OH NSFs Movement Chart for today: ');
+  lines.push(`${fmtDate(date)} ${getDayName(date)}`);
+  lines.push('——————————');
+  lines.push(`Rollcall IC : ${ic}${currentEmoji ? ' '+currentEmoji : ''}`);
+  (roster.MAIN||[]).forEach(name => { const st=(statuses['MAIN-'+name]||'').trim(); lines.push(`${name} - ${st}`); });
+  lines.push('');
+  lines.push('EMS TEAM:');
+  (roster.EMS||[]).forEach(name => { const st=(statuses['EMS-'+name]||'').trim(); lines.push(`${name} - ${st}`); });
+  const toLines = timeOffRows.map(r=>`${r.name} ${minsToLabel(r.from)} - ${minsToLabel(r.to)}`);
+  lines.push(`*Time off*:${toLines.length ? ' '+toLines.join(', ') : ''}`);
+  return lines.join('\n');
+}
+
+function syncAndPreview() {
+  updatePreview();
+  fbPush();
+  // Save locally
+  const dateKey = fmtDateKey(getSelectedDate());
+  const local = JSON.parse(localStorage.getItem(STATUSES_KEY)||'{}');
+  local[dateKey] = { statuses, timeOff: timeOffRows, emoji: currentEmoji };
+  localStorage.setItem(STATUSES_KEY, JSON.stringify(local));
 }
 
 function copyMessage() {
-  const text = document.getElementById('preview').value;
+  const text = getPlainText();
   const btn = document.getElementById('copy-btn');
   const ok = () => {
     btn.classList.add('success'); btn.textContent='✓  Copied!';
@@ -1284,129 +1238,141 @@ function copyMessage() {
   });
 }
 
-// ── CONFIG ────────────────────────────────────────────────
-function toggleRosterPanel() {
-  const panel = document.getElementById('roster-panel');
-  const chevron = document.getElementById('roster-chevron');
-  const open = panel.classList.toggle('open');
-  chevron.style.transform = open ? 'rotate(90deg)' : 'rotate(0deg)';
+// ═══════════════════════════════════════════════════════════
+// DATE CONTROLS
+// ═══════════════════════════════════════════════════════════
+function setDateInput(d) {
+  document.getElementById('date-input').value = fmtDateKey(d);
 }
-function toggleConfig() {
-  const slide = document.getElementById('config-slide');
-  const open = slide.classList.toggle('open');
-  document.getElementById('cfg-toggle-text').textContent = open ? 'close' : 'configure';
-  if (open) {
-    document.getElementById('sheet-id-input').value = getSheetId();
-    const panel = document.getElementById('roster-panel');
-    if (!panel.classList.contains('open')) {
-      panel.classList.add('open');
-      document.getElementById('roster-chevron').style.transform = 'rotate(90deg)';
+function shiftDay(delta) {
+  const d = getSelectedDate();
+  d.setDate(d.getDate()+delta);
+  setDateInput(d);
+  onDateChange();
+}
+function goToday() {
+  setDateInput(new Date());
+  onDateChange();
+}
+function onDateChange() {
+  const d = getSelectedDate();
+  const isToday = fmtDateKey(d)===fmtDateKey(new Date());
+  document.getElementById('ctrl-badge').textContent = isToday ? 'TODAY' : 'CUSTOM';
+  document.getElementById('topbar-date').textContent =
+    d.toLocaleDateString('en-SG',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+
+  // Load saved data for this date
+  const dateKey = fmtDateKey(d);
+  todayKey = dateKey;
+  const local = JSON.parse(localStorage.getItem(STATUSES_KEY)||'{}');
+  const saved = local[dateKey];
+  if (saved) {
+    statuses = saved.statuses || {};
+    timeOffRows = saved.timeOff || [];
+    if (saved.emoji) { currentEmoji=saved.emoji; applyLockedEmoji(saved.emoji); }
+    else { currentEmoji=null; resetEmojiDisplay(); }
+  } else {
+    statuses = {}; timeOffRows = []; currentEmoji=null; resetEmojiDisplay();
+  }
+  renderPersonList(); renderTimeOffRows(); updatePreview();
+  if (fbUrl) initFirebase(fbUrl);
+}
+
+// ═══════════════════════════════════════════════════════════
+// EMOJI ROLLER
+// ═══════════════════════════════════════════════════════════
+function resetEmojiDisplay() {
+  document.getElementById('emoji-unknown').style.display='flex';
+  document.getElementById('slot-track').style.display='none';
+  document.getElementById('slot-window').className='slot-window';
+  document.getElementById('roll-count-badge').textContent='not rolled';
+  rollCount=0; rollStreak=0;
+  updateStreakDisplay();
+}
+
+function applyLockedEmoji(emoji) {
+  currentEmoji=emoji;
+  const track=document.getElementById('slot-track');
+  const unknown=document.getElementById('emoji-unknown');
+  // Show the emoji statically in the slot window
+  track.innerHTML='';
+  track.style.display='flex';
+  track.style.transform='translateY(0)';
+  const item=document.createElement('div'); item.className='slot-item'; item.textContent=emoji;
+  track.appendChild(item);
+  unknown.style.display='none';
+  document.getElementById('slot-window').className='slot-window landed';
+}
+
+function rollEmoji() {
+  if (isRolling) return;
+  isRolling=true;
+  const btn=document.getElementById('roll-btn');
+  btn.disabled=true;
+  document.getElementById('emoji-unknown').style.display='none';
+
+  const win=document.getElementById('slot-window');
+  const track=document.getElementById('slot-track');
+  win.className='slot-window rolling';
+  track.style.display='flex';
+
+  // Build reel
+  track.innerHTML='';
+  const pool=[];
+  while(pool.length<100) {
+    const s=[...EMOJI_POOL].sort(()=>Math.random()-0.5);
+    pool.push(...s);
+  }
+  pool.forEach(e=>{
+    const d=document.createElement('div'); d.className='slot-item'; d.textContent=e; track.appendChild(d);
+  });
+  track.style.transition='none'; track.style.transform='translateY(0)';
+
+  const itemH=win.offsetHeight||96;
+  const stopAt=55+Math.floor(Math.random()*20);
+  const totalPx=stopAt*itemH;
+  const duration=2000+Math.random()*800;
+  const startTime=performance.now();
+
+  document.getElementById('roll-flavour').textContent=
+    FLAVOURS_ROLLING[Math.floor(Math.random()*FLAVOURS_ROLLING.length)];
+
+  function animate(now) {
+    const elapsed=now-startTime;
+    const p=Math.min(elapsed/duration,1);
+    let speed;
+    if(p<0.55) speed=itemH*(p/0.55)*1.3;
+    else { const d=(p-0.55)/0.45; speed=itemH*1.3*(1-d*d*d); }
+    speed=Math.max(speed,1.5);
+
+    const cur=parseFloat(track.style.transform.replace('translateY(','').replace('px)',''))||0;
+    let next=cur-speed; // scroll up
+    if(Math.abs(next)>=totalPx) next=-totalPx;
+    track.style.transition='none';
+    track.style.transform=`translateY(${next}px)`;
+
+    if(p<1 && Math.abs(next)<totalPx) { requestAnimationFrame(animate); }
+    else {
+      const idx=Math.round(Math.abs(next)/itemH);
+      track.style.transform=`translateY(${-idx*itemH}px)`;
+      landEmoji(pool[Math.min(idx,pool.length-1)]);
     }
   }
-}
-function saveSheetId() {
-  localStorage.setItem(SHEET_ID_KEY, document.getElementById('sheet-id-input').value.trim());
-  document.getElementById('config-slide').classList.remove('open');
-  document.getElementById('cfg-toggle-text').textContent = 'configure';
-  statuses={}; loadRoster();
+  requestAnimationFrame(animate);
 }
 
-// ── DATE PICKER ───────────────────────────────────────────
-function openDatePicker(code, input, key, block) {
-  const ex=document.getElementById('dp-overlay'); if(ex) ex.remove();
-  const today=new Date();
-  let viewYear=today.getFullYear(), viewMonth=today.getMonth();
-  let pick1=null, pick2=null;
+function landEmoji(emoji) {
+  currentEmoji=emoji;
+  rollCount++; rollStreak++;
+  if(rollStreak>bestStreak) bestStreak=rollStreak;
 
-  const overlay=document.createElement('div'); overlay.className='dp-overlay'; overlay.id='dp-overlay';
-  const modal=document.createElement('div'); modal.className='dp-modal';
-  modal.addEventListener('mousedown',e=>e.stopPropagation());
+  const win=document.getElementById('slot-window');
+  win.className='slot-window landed';
 
-  function fp(d){ return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0'); }
+  // Flash
+  win.style.boxShadow='0 0 24px rgba(52,211,153,0.5)';
+  setTimeout(()=>{ win.style.boxShadow=''; },700);
 
-  function build() {
-    modal.innerHTML='';
-    const hdr=document.createElement('div'); hdr.className='dp-header';
-    const prev=document.createElement('button'); prev.className='dp-nav'; prev.textContent='‹';
-    prev.addEventListener('mousedown',e=>{ e.preventDefault(); viewMonth--; if(viewMonth<0){viewMonth=11;viewYear--;} build(); });
-    const next=document.createElement('button'); next.className='dp-nav'; next.textContent='›';
-    next.addEventListener('mousedown',e=>{ e.preventDefault(); viewMonth++; if(viewMonth>11){viewMonth=0;viewYear++;} build(); });
-    const ttl=document.createElement('span'); ttl.className='dp-title';
-    ttl.textContent=new Date(viewYear,viewMonth,1).toLocaleDateString('en-SG',{month:'long',year:'numeric'});
-    hdr.appendChild(prev); hdr.appendChild(ttl); hdr.appendChild(next); modal.appendChild(hdr);
-
-    const grid=document.createElement('div'); grid.className='dp-grid';
-    ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d=>{ const el=document.createElement('div'); el.className='dp-dow'; el.textContent=d; grid.appendChild(el); });
-    const firstDay=new Date(viewYear,viewMonth,1).getDay();
-    const dim=new Date(viewYear,viewMonth+1,0).getDate();
-    for(let i=0;i<firstDay;i++){ const el=document.createElement('button'); el.className='dp-day empty'; grid.appendChild(el); }
-    for(let d=1;d<=dim;d++){
-      const td=new Date(viewYear,viewMonth,d);
-      const el=document.createElement('button'); el.className='dp-day'; el.textContent=d;
-      const isP1=pick1&&td.toDateString()===pick1.toDateString();
-      const isP2=pick2&&td.toDateString()===pick2.toDateString();
-      const inR=pick1&&pick2&&td>pick1&&td<pick2;
-      const isToday=td.toDateString()===today.toDateString();
-      if(isToday) el.classList.add('today');
-      if(isP1) el.classList.add('selected');
-      else if(isP2) el.classList.add('range-end');
-      else if(inR) el.classList.add('in-range');
-      el.addEventListener('mousedown',e=>{
-        e.preventDefault();
-        if(!pick1){ pick1=td; pick2=null; }
-        else if(!pick2){
-          if(td>pick1) pick2=td;
-          else if(td.toDateString()===pick1.toDateString()) pick1=null;
-          else { pick1=td; pick2=null; }
-        } else { pick1=td; pick2=null; }
-        build();
-      });
-      grid.appendChild(el);
-    }
-    modal.appendChild(grid);
-
-    const hint=document.createElement('div'); hint.className='dp-hint';
-    if(!pick1) hint.textContent='tap a date to select';
-    else if(!pick2) hint.textContent=fp(pick1)+' — tap another for a range';
-    else hint.textContent=code+' ('+fp(pick1)+' - '+fp(pick2)+')';
-    modal.appendChild(hint);
-
-    const acts=document.createElement('div'); acts.className='dp-actions';
-    const canc=document.createElement('button'); canc.className='dp-cancel'; canc.textContent='Cancel';
-    canc.addEventListener('mousedown',e=>{ e.preventDefault(); overlay.remove(); });
-    const conf=document.createElement('button'); conf.className='dp-confirm'; conf.textContent='Confirm';
-    conf.disabled=!pick1;
-    conf.addEventListener('mousedown',e=>{
-      e.preventDefault(); if(!pick1) return;
-      const offCodes=['MC','VL','OVL','CL'];
-      const base = offCodes.includes(code) ? 'OFF DUTY' : (input.value.split(' (')[0]||'');
-      const suf = pick2 ? code+' ('+fp(pick1)+' - '+fp(pick2)+')' : code+' ('+fp(pick1)+')';
-      input.value = base ? base+' '+suf : suf;
-      statuses[key]=input.value;
-      if(block) refreshBlockStyle(block,input.value);
-      updatePreview(); overlay.remove();
-    });
-    acts.appendChild(canc); acts.appendChild(conf); modal.appendChild(acts);
-  }
-
-  build();
-  overlay.appendChild(modal);
-  overlay.addEventListener('mousedown',()=>overlay.remove());
-  document.body.appendChild(overlay);
-}
-
-// ── INIT ──────────────────────────────────────────────────
-function init() {
-  const t = new Date();
-  document.getElementById('date-input').value =
-    `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;
-  tickClock();
-  setInterval(tickClock, 1000);
-  buildSlotTrack();
-  loadRoster();
-}
-
-init();
-</script>
-</body>
-</html>
+  document.getElementById('stat-total').textContent=rollCount;
+  document.getElementById('stat-best').textContent=bestStreak;
+  document.getElementById('roll-count-badge').textContent=`${rollCount} roll${rollCount===1?'':
