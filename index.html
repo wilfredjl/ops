@@ -1,0 +1,1412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>OH Movement Chart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:            #0c0e14;
+  --surface:       #13161f;
+  --surface2:      #191d28;
+  --surface3:      #1f2436;
+  --border:        rgba(255,255,255,0.06);
+  --border2:       rgba(255,255,255,0.11);
+  --border3:       rgba(255,255,255,0.22);
+  --text:          #dde1ed;
+  --text2:         #8e97b4;
+  --text3:         #5a6480;
+  --accent:        #38bdf8;
+  --accent-bg:     rgba(56,189,248,0.10);
+  --accent-glow:   rgba(56,189,248,0.22);
+  --green:         #34d399;
+  --green-bg:      rgba(52,211,153,0.10);
+  --red:           #f87171;
+  --red-bg:        rgba(248,113,113,0.10);
+  --gold:          #fbbf24;
+  --gold-bg:       rgba(251,191,36,0.10);
+  --radius:        10px;
+  --radius-lg:     16px;
+  --radius-xl:     20px;
+  --mono:          'IBM Plex Mono', monospace;
+  --sans:          'IBM Plex Sans', sans-serif;
+  --shadow:        0 4px 24px rgba(0,0,0,0.4);
+  --shadow-lg:     0 8px 48px rgba(0,0,0,0.6);
+}
+
+html { height: 100%; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  min-height: 100%;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* ── TOPBAR ──────────────────────────────────────────────── */
+.topbar {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(19,22,31,0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 20px;
+  height: 52px;
+  display: flex; align-items: center; gap: 12px;
+}
+.topbar-logo {
+  width: 28px; height: 28px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--accent) 0%, #0ea5e9 100%);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 11px; font-weight: 700;
+  color: #000; flex-shrink: 0; box-shadow: 0 2px 8px var(--accent-glow);
+}
+.topbar-title {
+  font-family: var(--mono); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.08em; color: var(--text); text-transform: uppercase;
+}
+.topbar-divider { width: 1px; height: 18px; background: var(--border2); flex-shrink: 0; }
+.topbar-date-str {
+  font-family: var(--mono); font-size: 11px; color: var(--text2);
+  letter-spacing: 0.02em;
+}
+.topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+.topbar-clock {
+  font-family: var(--mono); font-size: 13px; font-weight: 500;
+  color: var(--text); letter-spacing: 0.06em;
+  background: var(--surface2); border: 1px solid var(--border2);
+  padding: 4px 10px; border-radius: 8px;
+}
+@media (max-width: 480px) {
+  .topbar-date-str { display: none; }
+  .topbar { padding: 0 14px; }
+}
+
+/* ── PAGE ──────────────────────────────────────────────────── */
+.page { max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; }
+
+/* ── HOURS BANNER ─────────────────────────────────────────── */
+.hours-banner {
+  position: relative;
+  display: flex; align-items: center; justify-content: space-between;
+  min-height: 100px;
+  padding: 20px 28px;
+  margin-bottom: 16px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.013), rgba(255,255,255,0.027));
+  border: 1px solid var(--border2);
+  border-radius: 18px;
+  overflow: hidden; isolation: isolate;
+  backdrop-filter: blur(10px);
+}
+.hours-banner::after {
+  content: '';
+  position: absolute; inset: 0 0 auto 0; height: 2px;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--green) 100%);
+}
+.banner-side { display: flex; flex-direction: column; gap: 5px; }
+.banner-eyebrow {
+  font-family: var(--mono); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.16em; text-transform: uppercase; color: var(--text3);
+}
+.banner-label {
+  font-family: var(--mono); font-size: 17px; font-weight: 600;
+  line-height: 1.2; letter-spacing: -0.01em; color: var(--text);
+}
+.banner-sub {
+  font-family: var(--mono); font-size: 11px; color: var(--text3);
+  letter-spacing: 0.02em;
+}
+.banner-center {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  pointer-events: none;
+}
+.banner-countdown-label {
+  font-family: var(--mono); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3);
+}
+.banner-countdown {
+  font-family: var(--mono); font-size: clamp(30px, 4vw, 46px); font-weight: 600;
+  letter-spacing: -0.05em; color: var(--text);
+  font-variant-numeric: tabular-nums; font-feature-settings: "tnum";
+}
+.banner-status-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 9px; border-radius: 20px;
+  font-family: var(--mono); font-size: 10px; font-weight: 500;
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+.chip-open  { background: var(--green-bg);  border: 1px solid rgba(52,211,153,0.3);  color: var(--green); }
+.chip-closed { background: var(--red-bg);   border: 1px solid rgba(248,113,113,0.3); color: var(--red); }
+.chip-soon  { background: var(--gold-bg);   border: 1px solid rgba(251,191,36,0.3);  color: var(--gold); }
+.status-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+@media (max-width: 700px) {
+  .hours-banner { flex-direction: column; align-items: stretch; gap: 14px; min-height: auto; padding: 18px; }
+  .banner-center { position: relative; left: auto; top: auto; transform: none; order: -1; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .banner-countdown { font-size: 30px; }
+}
+
+/* ── MAIN GRID ────────────────────────────────────────────── */
+.main-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 12px; align-items: start;
+}
+@media (max-width: 700px) { .main-grid { grid-template-columns: 1fr; } }
+
+/* ── WIDGET ───────────────────────────────────────────────── */
+.widget {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.widget-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2);
+}
+.widget-title {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text2); font-weight: 500;
+}
+.widget-badge {
+  font-family: var(--mono); font-size: 10px; padding: 2px 8px;
+  border-radius: 20px; font-weight: 500; letter-spacing: 0.04em;
+}
+.badge-ok    { background: var(--green-bg); color: var(--green); border: 1px solid rgba(52,211,153,0.3); }
+.badge-err   { background: var(--red-bg);   color: var(--red);   border: 1px solid rgba(248,113,113,0.3); }
+.badge-info  { background: var(--accent-bg); color: var(--accent); border: 1px solid rgba(56,189,248,0.3); }
+.widget-body { padding: 14px 16px; }
+
+/* ── CONTROLS ─────────────────────────────────────────────── */
+.ctrl-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+.ctrl-label { font-family: var(--mono); font-size: 10px; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; min-width: 50px; }
+input[type="date"] {
+  background: var(--surface2); border: 1px solid var(--border2);
+  border-radius: var(--radius); color: var(--text);
+  font-family: var(--mono); font-size: 12px; padding: 6px 10px;
+  outline: none; transition: border-color 0.15s; color-scheme: dark;
+}
+input[type="date"]:focus { border-color: var(--border3); }
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+
+/* ── ROSTER META ──────────────────────────────────────────── */
+.roster-meta {
+  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+  font-family: var(--mono); font-size: 10px; color: var(--text3);
+}
+.rdot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: var(--green); }
+.rdot.loading { background: var(--gold); animation: blink 1s infinite; }
+.rdot.error { background: var(--red); }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+/* ── PERSON BLOCKS ────────────────────────────────────────── */
+.person-block {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); margin-bottom: 6px;
+  transition: border-color 0.15s, box-shadow 0.15s, background 0.2s;
+}
+.person-block:last-child { margin-bottom: 0; }
+.person-block.focused { border-color: var(--border3); box-shadow: 0 0 0 2px rgba(56,189,248,0.08); }
+.person-block.off-duty {
+  background: linear-gradient(90deg, rgba(248,113,113,0.05) 0%, var(--surface2) 100%);
+  border-color: rgba(248,113,113,0.18);
+}
+.person-block.off-duty .person-name { color: var(--text2); }
+.person-block.off-duty .person-rank { color: rgba(248,113,113,0.35); }
+.person-top { display: flex; align-items: center; gap: 10px; padding: 9px 12px; }
+.person-rank {
+  font-family: var(--mono); font-size: 9px; color: var(--text3);
+  width: 14px; text-align: right; flex-shrink: 0;
+}
+.person-name {
+  font-family: var(--mono); font-size: 12px; font-weight: 600;
+  color: var(--text); min-width: 110px; flex-shrink: 0; letter-spacing: 0.02em;
+  -webkit-user-select: none; user-select: none;
+}
+.status-wrap { flex: 1; min-width: 0; }
+.status-input {
+  width: 100%; background: transparent; border: none; outline: none;
+  color: var(--text); font-family: var(--mono); font-size: 12px;
+  padding: 2px 4px; border-radius: 4px; transition: background 0.1s;
+  -webkit-user-select: text; user-select: text;
+}
+.status-input:focus { background: rgba(255,255,255,0.04); }
+
+.chips-row {
+  display: flex; flex-wrap: wrap; gap: 5px;
+  padding: 0 12px 9px; padding-top: 0;
+}
+.chip {
+  padding: 3px 8px; background: var(--surface3);
+  border: 1px solid var(--border2); border-radius: 6px;
+  color: var(--text2); font-family: var(--mono); font-size: 10px;
+  cursor: pointer; transition: all 0.12s; white-space: nowrap;
+  letter-spacing: 0.02em; -webkit-user-select: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.chip:hover { border-color: var(--border3); color: var(--text); background: var(--surface3); }
+.chip.chip-on  { border-color: rgba(52,211,153,0.35); color: var(--green); }
+.chip.chip-on:hover { background: var(--green-bg); }
+.chip.chip-off { border-color: rgba(248,113,113,0.35); color: var(--red); }
+.chip.chip-off:hover { background: var(--red-bg); }
+
+/* ── SECTION DIVIDER IN PERSON LIST ─────────────────────── */
+.section-label {
+  font-family: var(--mono); font-size: 9px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); padding: 10px 0 6px;
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+}
+.section-label:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+
+/* ── TIME OFF FIELD ──────────────────────────────────────── */
+.timeoff-wrap {
+  background: var(--surface2); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 10px 12px; margin-top: 8px;
+}
+.timeoff-label {
+  font-family: var(--mono); font-size: 9px; color: var(--text3);
+  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px;
+}
+.timeoff-input {
+  width: 100%; background: transparent; border: none; outline: none;
+  color: var(--text); font-family: var(--mono); font-size: 12px;
+  resize: none; min-height: 40px; line-height: 1.6;
+}
+
+/* ── EMOJI ROLLER ────────────────────────────────────────── */
+.emoji-section {
+  margin-top: 12px;
+}
+.emoji-card {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+.emoji-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  background: var(--surface2);
+}
+.emoji-title {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text2); font-weight: 500;
+}
+.emoji-roll-count {
+  font-family: var(--mono); font-size: 10px; color: var(--text3);
+  letter-spacing: 0.04em;
+}
+
+.emoji-body { padding: 20px 16px; }
+
+/* The slot machine display */
+.slot-machine {
+  display: flex; flex-direction: column; align-items: center; gap: 12px;
+  margin-bottom: 18px;
+}
+.slot-window {
+  width: 100px; height: 100px;
+  background: var(--surface);
+  border: 2px solid var(--border2);
+  border-radius: 16px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 2px 12px rgba(0,0,0,0.4), 0 0 0 0px var(--accent);
+  transition: box-shadow 0.3s;
+}
+.slot-window.rolling {
+  border-color: var(--accent);
+  box-shadow: inset 0 2px 12px rgba(0,0,0,0.4), 0 0 16px var(--accent-glow);
+}
+.slot-track {
+  position: absolute; width: 100%;
+  display: flex; flex-direction: column; align-items: center;
+  transition: transform 0.06s linear;
+}
+.slot-item {
+  width: 100px; height: 100px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 52px; flex-shrink: 0;
+  line-height: 1;
+}
+.slot-shimmer {
+  position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(180deg,
+    rgba(12,14,20,0.6) 0%,
+    transparent 30%,
+    transparent 70%,
+    rgba(12,14,20,0.6) 100%
+  );
+  border-radius: 14px;
+}
+
+/* Current chosen emoji display (after locked in) */
+.chosen-display {
+  font-size: 48px; line-height: 1;
+  display: flex; align-items: center; justify-content: center;
+  width: 80px; height: 80px;
+  background: var(--surface);
+  border: 2px solid var(--border2);
+  border-radius: 14px;
+  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
+}
+.chosen-display.pop { transform: scale(1.3); }
+
+/* Stats bar */
+.roll-stats {
+  display: flex; gap: 16px; justify-content: center;
+  font-family: var(--mono); font-size: 10px; color: var(--text3);
+  letter-spacing: 0.04em;
+}
+.roll-stat-val { color: var(--text2); font-weight: 600; }
+
+/* Roll button */
+.roll-btn {
+  width: 100%;
+  padding: 14px;
+  border: none; border-radius: var(--radius-lg);
+  background: linear-gradient(135deg, var(--accent) 0%, #0ea5e9 100%);
+  color: #000;
+  font-family: var(--mono); font-size: 14px; font-weight: 700;
+  cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(56,189,248,0.3);
+  position: relative; overflow: hidden;
+}
+.roll-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(56,189,248,0.45); }
+.roll-btn:active { transform: translateY(0); }
+.roll-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+.roll-btn.locked {
+  background: linear-gradient(135deg, var(--green) 0%, #059669 100%);
+  box-shadow: 0 4px 20px rgba(52,211,153,0.3);
+}
+
+/* Streak badge */
+.streak-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 4px 10px; border-radius: 20px; margin-top: 10px;
+  font-family: var(--mono); font-size: 11px; font-weight: 600;
+  background: var(--gold-bg); border: 1px solid rgba(251,191,36,0.35);
+  color: var(--gold); letter-spacing: 0.04em;
+  animation: fadeIn 0.3s ease;
+  display: none;
+}
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+/* Toast */
+.toast {
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: 12px; padding: 10px 18px;
+  font-family: var(--mono); font-size: 12px; color: var(--text);
+  box-shadow: var(--shadow); z-index: 999;
+  opacity: 0; transition: all 0.3s; pointer-events: none;
+  white-space: nowrap; max-width: 90vw;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── PREVIEW ──────────────────────────────────────────────── */
+.preview-box {
+  font-family: var(--mono); font-size: 12px; color: var(--text);
+  white-space: pre; line-height: 1.9;
+  padding: 16px; overflow: auto;
+  background: var(--surface2);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  min-height: 260px;
+  width: 100%; resize: none; cursor: text;
+  -webkit-user-select: text; user-select: text;
+}
+
+/* ── COPY BUTTON ──────────────────────────────────────────── */
+.copy-btn {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  width: 100%; padding: 16px;
+  border-radius: var(--radius-lg); border: none;
+  background: linear-gradient(135deg, var(--accent) 0%, #0ea5e9 100%);
+  color: #000;
+  font-family: var(--mono); font-size: 14px; font-weight: 600;
+  cursor: pointer; letter-spacing: 0.06em;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(56,189,248,0.3);
+  text-transform: uppercase; margin-top: 12px;
+}
+.copy-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(56,189,248,0.45); }
+.copy-btn:active { transform: translateY(0); }
+.copy-btn.success {
+  background: linear-gradient(135deg, var(--green) 0%, #059669 100%);
+  box-shadow: 0 4px 20px rgba(52,211,153,0.35); color: #000;
+}
+
+/* ── CONFIG PANEL ─────────────────────────────────────────── */
+.config-toggle {
+  display: flex; align-items: center; gap: 6px;
+  background: none; border: none; cursor: pointer;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em;
+  color: var(--text3); padding: 0; transition: color 0.15s; text-transform: uppercase;
+}
+.config-toggle:hover { color: var(--text2); }
+.config-slide { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+.config-slide.open { max-height: 600px; }
+.config-inner { padding-top: 12px; }
+.cfg-label {
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--text3); margin-bottom: 6px;
+}
+.cfg-row { display: flex; gap: 8px; align-items: center; }
+.cfg-row input[type="text"] {
+  flex: 1; background: var(--surface2); border: 1px solid var(--border2);
+  border-radius: var(--radius); color: var(--text);
+  font-family: var(--mono); font-size: 12px; padding: 7px 10px; outline: none;
+  transition: border-color 0.15s;
+}
+.cfg-row input[type="text"]:focus { border-color: var(--border3); }
+.cfg-save {
+  padding: 7px 14px; background: var(--green-bg);
+  border: 1px solid rgba(52,211,153,0.4);
+  border-radius: var(--radius); color: var(--green);
+  font-family: var(--mono); font-size: 11px; cursor: pointer;
+  white-space: nowrap; transition: all 0.15s;
+}
+.cfg-save:hover { background: rgba(52,211,153,0.18); }
+.cfg-hint {
+  margin-top: 10px; padding: 10px 12px;
+  background: rgba(0,0,0,0.25); border-radius: var(--radius);
+  border: 1px solid var(--border);
+  font-family: var(--mono); font-size: 10px; color: var(--text3); line-height: 1.9;
+}
+.cfg-hint strong { color: var(--text2); }
+.cfg-hint code { color: var(--accent); }
+
+/* ── SHEETS EMBED ─────────────────────────────────────────── */
+.sheets-embed-wrap {
+  width: 100%; border-radius: var(--radius); overflow: hidden;
+  border: 1px solid var(--border2); background: var(--surface2);
+}
+.sheets-embed-wrap iframe { width: 100%; height: 300px; border: none; display: block; }
+.sheets-placeholder {
+  height: 120px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px;
+  color: var(--text3); font-family: var(--mono); font-size: 11px; text-align: center;
+}
+.sheets-placeholder a { color: var(--accent); text-decoration: none; }
+
+/* ── DATE PICKER ──────────────────────────────────────────── */
+.dp-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
+  display: flex; align-items: flex-start; justify-content: center;
+  padding-top: 40px; z-index: 200; backdrop-filter: blur(4px);
+}
+@media (min-width: 481px) { .dp-overlay { align-items: center; padding-top: 0; } }
+.dp-modal {
+  background: var(--surface); border: 1px solid var(--border2);
+  border-radius: var(--radius-xl); padding: 20px; width: 310px;
+  box-shadow: var(--shadow-lg);
+}
+.dp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+.dp-title { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--text); }
+.dp-nav {
+  background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px;
+  color: var(--text2); font-size: 14px; width: 30px; height: 30px;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s;
+}
+.dp-nav:hover { color: var(--text); border-color: var(--border3); }
+.dp-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; margin-bottom: 12px; }
+.dp-dow { font-family: var(--mono); font-size: 9px; color: var(--text3); text-align: center; padding: 4px 0; letter-spacing: 0.06em; }
+.dp-day {
+  font-family: var(--mono); font-size: 12px; text-align: center;
+  padding: 7px 2px; border-radius: 8px; cursor: pointer;
+  border: 1px solid transparent; transition: all 0.12s; color: var(--text2); background: none;
+}
+.dp-day:hover { background: var(--surface3); color: var(--text); }
+.dp-day.empty { cursor: default; pointer-events: none; }
+.dp-day.today { border-color: rgba(56,189,248,0.45); color: var(--accent); font-weight: 600; }
+.dp-day.selected { background: var(--accent-bg); border-color: rgba(56,189,248,0.5); color: var(--accent); font-weight: 600; }
+.dp-day.in-range { background: rgba(56,189,248,0.06); color: var(--text); }
+.dp-day.range-end { background: var(--accent-bg); border-color: rgba(56,189,248,0.5); color: var(--accent); font-weight: 600; }
+.dp-hint { font-family: var(--mono); font-size: 11px; color: var(--text2); text-align: center; margin-bottom: 14px; min-height: 16px; }
+.dp-actions { display: flex; gap: 8px; justify-content: flex-end; }
+.dp-cancel {
+  background: none; border: 1px solid var(--border2); border-radius: var(--radius);
+  color: var(--text2); font-family: var(--mono); font-size: 11px; padding: 6px 14px; cursor: pointer;
+}
+.dp-cancel:hover { border-color: var(--border3); color: var(--text); }
+.dp-confirm {
+  background: var(--green-bg); border: 1px solid rgba(52,211,153,0.4);
+  border-radius: var(--radius); color: var(--green);
+  font-family: var(--mono); font-size: 11px; padding: 6px 14px; cursor: pointer; transition: all 0.15s;
+}
+.dp-confirm:hover { background: rgba(52,211,153,0.18); }
+.dp-confirm:disabled { opacity: 0.3; cursor: default; }
+
+@media (max-width: 480px) {
+  .page { padding: 14px 12px 48px; }
+  .widget-body { padding: 12px; }
+  .copy-btn { font-size: 13px; padding: 15px; }
+  .dp-modal { width: calc(100vw - 32px); }
+  .main-grid { gap: 10px; }
+  .slot-window { width: 88px; height: 88px; }
+  .slot-item { width: 88px; height: 88px; font-size: 44px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-logo">OH</div>
+  <span class="topbar-title">OH Movement</span>
+  <div class="topbar-divider" style="width:1px;height:18px;background:var(--border2);flex-shrink:0;"></div>
+  <span class="topbar-date-str" id="topbar-date"></span>
+  <div class="topbar-right">
+    <div class="topbar-clock" id="topbar-clock">00:00:00</div>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- HOURS BANNER -->
+  <div class="hours-banner" id="hours-banner">
+    <div class="banner-side">
+      <div class="banner-eyebrow">Office Hours</div>
+      <div class="banner-label" id="banner-hours-label">—</div>
+      <div class="banner-sub" id="banner-hours-sub">Mon – Thu · 0800–1800</div>
+    </div>
+    <div class="banner-center">
+      <div class="banner-countdown-label" id="banner-cdown-label">Opens in</div>
+      <div class="banner-countdown" id="banner-countdown">00:00:00</div>
+      <div class="banner-status-chip chip-closed" id="banner-status-chip">
+        <span class="status-dot"></span>
+        <span id="banner-status-text">Closed</span>
+      </div>
+    </div>
+    <div class="banner-side" style="align-items:flex-end;text-align:right;">
+      <div class="banner-eyebrow">Closes</div>
+      <div class="banner-label" id="banner-close-label">—</div>
+      <div class="banner-sub" id="banner-close-sub">Fri · 0800–1730</div>
+    </div>
+  </div>
+
+  <!-- MAIN GRID -->
+  <div class="main-grid">
+
+    <!-- LEFT COLUMN -->
+    <div style="display:flex;flex-direction:column;gap:12px;">
+
+      <!-- CONTROLS WIDGET -->
+      <div class="widget">
+        <div class="widget-header">
+          <span class="widget-title">Controls</span>
+          <span class="widget-badge badge-info" id="ctrl-badge">TODAY</span>
+        </div>
+        <div class="widget-body">
+          <div class="ctrl-row">
+            <span class="ctrl-label">Date</span>
+            <input type="date" id="date-input" onchange="onDateChange()">
+          </div>
+        </div>
+      </div>
+
+      <!-- PERSONNEL WIDGET -->
+      <div class="widget">
+        <div class="widget-header">
+          <span class="widget-title">Personnel</span>
+          <span class="widget-badge badge-ok" id="roster-badge" style="display:none">loaded</span>
+        </div>
+        <div class="widget-body">
+          <div class="roster-meta">
+            <div class="rdot loading" id="roster-dot"></div>
+            <span id="roster-status-text">loading...</span>
+          </div>
+          <div id="person-list"></div>
+        </div>
+      </div>
+
+      <!-- ROSTER SHEET WIDGET -->
+      <div class="widget">
+        <div class="widget-header" style="cursor:pointer;" onclick="toggleRosterPanel()">
+          <span class="widget-title">Roster Sheet</span>
+          <div style="display:flex;align-items:center;gap:10px;">
+            <button class="config-toggle" onclick="event.stopPropagation();toggleConfig()" style="pointer-events:auto;">
+              ⚙ <span id="cfg-toggle-text">configure</span>
+            </button>
+            <span id="roster-chevron" style="font-family:var(--mono);font-size:12px;color:var(--text3);transition:transform 0.2s;">▸</span>
+          </div>
+        </div>
+        <div class="config-slide" id="roster-panel">
+          <div style="padding:0 16px;">
+            <div class="config-slide" id="config-slide">
+              <div class="config-inner">
+                <div class="cfg-label">Google Sheet ID</div>
+                <div class="cfg-row">
+                  <input type="text" id="sheet-id-input" placeholder="paste Sheet ID here">
+                  <button class="cfg-save" onclick="saveSheetId()">Save</button>
+                </div>
+                <div class="cfg-hint">
+                  <strong>Column A</strong> = Group (MAIN or EMS) &nbsp;·&nbsp; <strong>Column B</strong> = Name<br>
+                  Share → <strong>Anyone with link → Viewer</strong><br>
+                  File → Share → <strong>Publish to web → Sheet → CSV</strong><br>
+                  Sheet ID is the part of the URL between <code>/d/</code> and <code>/edit</code>
+                </div>
+                <div class="divider"></div>
+              </div>
+            </div>
+            <div class="sheets-embed-wrap" id="sheets-embed-wrap" style="margin-bottom:14px;">
+              <div class="sheets-placeholder" id="sheets-placeholder">
+                <span>Configure a Sheet ID above to<br>view and edit your roster here</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div style="display:flex;flex-direction:column;gap:12px;">
+
+      <!-- EMOJI ROLLER -->
+      <div class="widget emoji-section">
+        <div class="widget-header">
+          <span class="emoji-title widget-title">Emoji of the Day</span>
+          <span class="emoji-roll-count" id="roll-count-display">0 rolls</span>
+        </div>
+        <div class="emoji-body widget-body">
+          <div class="slot-machine">
+            <div class="slot-window" id="slot-window">
+              <div class="slot-track" id="slot-track">
+                <!-- populated by JS -->
+              </div>
+              <div class="slot-shimmer"></div>
+            </div>
+            <div class="roll-stats">
+              <span>Best streak: <span class="roll-stat-val" id="stat-streak">0</span></span>
+              <span>Total: <span class="roll-stat-val" id="stat-total">0</span></span>
+            </div>
+            <div class="streak-badge" id="streak-badge">🔥 Streak: <span id="streak-val">0</span></div>
+          </div>
+          <button class="roll-btn" id="roll-btn" onclick="rollEmoji()">🎲 Roll Today's Emoji</button>
+          <div style="margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--text3);text-align:center;letter-spacing:0.04em;" id="roll-flavour"></div>
+        </div>
+      </div>
+
+      <!-- PREVIEW WIDGET -->
+      <div class="widget">
+        <div class="widget-header">
+          <span class="widget-title">Message Preview</span>
+        </div>
+        <div class="widget-body">
+          <textarea class="preview-box" id="preview" readonly spellcheck="false">Loading...</textarea>
+          <button class="copy-btn" id="copy-btn" onclick="copyMessage()">
+            ✦ &nbsp;Copy to Clipboard
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div><!-- /main-grid -->
+</div><!-- /page -->
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ── CONFIGURATION ──────────────────────────────────────────
+const SHEET_ID_KEY = 'oh_rollcall_sheet_id';
+
+// ── PERSONNEL ROSTER (fixed, no rota rotation) ────────────
+const MAIN_TEAM = [
+  'LCP IRFAN','CPL RAZIN','CPL RIZQ','LCP JEFF',
+  'PTE HUZAIFAH','LCP ZACHARIAH','LCP MARCUS',
+  'PTE MAHESH','PTE KHAIRUL','LCP KAR KIT',
+  'PTE FERDINAND','PTE IRYAN','PTE GARRET','PTE MIRZA'
+];
+const EMS_TEAM = [
+  'CPL KHAIRI','PTE DARWISY','PTE CYRUS','LCP ZEN','CPL WEN XUAN'
+];
+
+// ── EMOJI POOL ────────────────────────────────────────────
+const EMOJI_POOL = [
+  '🩻','✌️','😴','🧚‍♂️','🫃','🫠','🐸','🌵','🎯','🦋',
+  '🍄','🎪','🌊','🦆','🏔️','🎭','🔮','🧃','🌸','🐢',
+  '🎵','🌙','🍉','🦀','🧊','🌈','🐙','🎲','🦜','🍜',
+  '🏄','🧸','🌻','🐡','🎺','🦩','🌍','🧩','🍋','🎠',
+  '🦭','🌺','🐻','🎋','🧁','🐝','🌴','🎪','🦊','🐉'
+];
+
+// Flavour texts for roll button
+const FLAVOUR_TEXTS = [
+  'the universe decides...','fate is spinning...','let destiny choose...',
+  'consulting the emoji oracle...','the wheel of fortune turns...',
+  'asking the cosmos...','probability engaged...','rolling for vibes...',
+  'the algorithm speaks...','quantum randomness activated...',
+  'today\'s energy incoming...','channeling the spirits...',
+  'the dice have been cast...','fortune favours the roller...',
+  'commencing sacred roll...'
+];
+
+const WIN_MESSAGES = [
+  '🎯 locked in.','✅ today\'s vibe: set.','🌟 excellent choice.',
+  '💫 the emoji has spoken.','🎰 jackpot energy.','🏆 a worthy selection.',
+  '⚡ vibes confirmed.','🎪 spectacular.','🔮 destiny fulfilled.',
+];
+
+// ── STATE ─────────────────────────────────────────────────
+let statuses = {};
+let mainRoster = [...MAIN_TEAM];
+let emsRoster  = [...EMS_TEAM];
+let currentEmoji = null;
+let isRolling = false;
+let rollCount = 0;
+let rollStreak = 0;
+let bestStreak = 0;
+let rollInterval = null;
+let rollTimeout = null;
+
+// ── DATE HELPERS ──────────────────────────────────────────
+function getSelectedDate() {
+  const v = document.getElementById('date-input').value;
+  if (!v) return new Date();
+  const [y,m,d] = v.split('-').map(Number);
+  return new Date(y,m-1,d);
+}
+function fmtDate(date) {
+  return String(date.getDate()).padStart(2,'0') + '/'
+       + String(date.getMonth()+1).padStart(2,'0') + '/'
+       + String(date.getFullYear());
+}
+function getDayName(date) {
+  return date.toLocaleDateString('en-SG', { weekday: 'long' });
+}
+function isWeekend(date) {
+  const d = date.getDay(); return d === 0 || d === 6;
+}
+function isFriday(date) { return date.getDay() === 5; }
+
+// OH hours: Mon-Thu 0800-1800, Fri 0800-1730
+function getOHHours(date) {
+  if (isWeekend(date)) return null;
+  return { start: 8*60, end: isFriday(date) ? 17*60+30 : 18*60 };
+}
+
+function getSecondsUntil(targetMins) {
+  const now = new Date();
+  const cur = now.getHours()*60 + now.getMinutes();
+  let diff = targetMins - cur;
+  if (diff < 0) diff += 24*60;
+  return diff * 60 - now.getSeconds();
+}
+
+function hhmmss(secs) {
+  if (secs < 0) secs = 0;
+  const h = Math.floor(secs/3600);
+  const m = Math.floor((secs%3600)/60);
+  const s = secs%60;
+  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+// ── CLOCK & BANNER ────────────────────────────────────────
+function tickClock() {
+  const now = new Date();
+  const hh = String(now.getHours()).padStart(2,'0');
+  const mm = String(now.getMinutes()).padStart(2,'0');
+  const ss = String(now.getSeconds()).padStart(2,'0');
+  document.getElementById('topbar-clock').textContent = `${hh}:${mm}:${ss}`;
+  updateBanner();
+}
+
+function updateBanner() {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const hours = getOHHours(today);
+  const curMins = now.getHours()*60 + now.getMinutes();
+
+  const chip = document.getElementById('banner-status-chip');
+  const label = document.getElementById('banner-status-text');
+  const cdLabel = document.getElementById('banner-cdown-label');
+  const cdEl = document.getElementById('banner-countdown');
+  const hoursLabel = document.getElementById('banner-hours-label');
+  const closeSub = document.getElementById('banner-close-sub');
+
+  if (!hours) {
+    // Weekend
+    chip.className='banner-status-chip chip-closed';
+    label.textContent='Weekend';
+    cdLabel.textContent='Next OH in';
+    // Find next Monday
+    const daysUntilMon = (8 - today.getDay()) % 7 || 7;
+    const secsLeft = daysUntilMon * 86400 - (now.getHours()*3600 + now.getMinutes()*60 + now.getSeconds()) + 8*3600;
+    cdEl.textContent = hhmmss(secsLeft);
+    hoursLabel.textContent = 'Weekend';
+    return;
+  }
+
+  const isOpen = curMins >= hours.start && curMins < hours.end;
+  const endTimeStr = isFriday(today) ? '1730' : '1800';
+  hoursLabel.textContent = `0800 – ${endTimeStr}`;
+
+  if (isOpen) {
+    chip.className='banner-status-chip chip-open';
+    label.textContent='Open';
+    cdLabel.textContent='Closes in';
+    cdEl.textContent = hhmmss(getSecondsUntil(hours.end));
+  } else if (curMins < hours.start) {
+    chip.className='banner-status-chip chip-soon';
+    label.textContent='Opens soon';
+    cdLabel.textContent='Opens in';
+    cdEl.textContent = hhmmss(getSecondsUntil(hours.start));
+  } else {
+    chip.className='banner-status-chip chip-closed';
+    label.textContent='Closed';
+    cdLabel.textContent='Opens tomorrow';
+    // Secs until 0800 tomorrow
+    const secsLeft = getSecondsUntil(8*60) || 86400;
+    cdEl.textContent = hhmmss(secsLeft);
+  }
+}
+
+// ── TOPBAR DATE ───────────────────────────────────────────
+function updateTopbarDate() {
+  const d = getSelectedDate();
+  const str = d.toLocaleDateString('en-SG', {weekday:'short', day:'numeric', month:'short', year:'numeric'});
+  document.getElementById('topbar-date').textContent = str;
+  document.getElementById('ctrl-badge').textContent =
+    fmtDate(d) === fmtDate(new Date()) ? 'TODAY' : 'CUSTOM';
+}
+
+// ── EMOJI SLOT MACHINE ────────────────────────────────────
+const SLOT_COLS = 5; // items visible in track padding
+let trackEmojis = [...EMOJI_POOL].sort(() => Math.random()-0.5);
+
+function buildSlotTrack() {
+  const track = document.getElementById('slot-track');
+  track.innerHTML = '';
+  // Pre-fill with shuffled emojis for the reel
+  const pool = [];
+  while (pool.length < 40) {
+    const shuffled = [...EMOJI_POOL].sort(() => Math.random()-0.5);
+    pool.push(...shuffled);
+  }
+  trackEmojis = pool;
+  pool.forEach(e => {
+    const div = document.createElement('div');
+    div.className = 'slot-item'; div.textContent = e;
+    track.appendChild(div);
+  });
+  // Position at item 5 initially
+  const win = document.getElementById('slot-window');
+  const itemH = win.offsetHeight;
+  track.style.transform = `translateY(0px)`;
+}
+
+function rollEmoji() {
+  if (isRolling) return;
+  isRolling = true;
+
+  const btn = document.getElementById('roll-btn');
+  btn.disabled = true;
+  btn.classList.remove('locked');
+
+  const win = document.getElementById('slot-window');
+  const track = document.getElementById('slot-track');
+  const itemH = win.offsetHeight; // slot window height = item height
+
+  // Expand the track with fresh emojis
+  track.innerHTML = '';
+  const pool = [];
+  while (pool.length < 80) {
+    const shuffled = [...EMOJI_POOL].sort(() => Math.random()-0.5);
+    pool.push(...shuffled);
+  }
+  pool.forEach(e => {
+    const div = document.createElement('div');
+    div.className = 'slot-item'; div.textContent = e;
+    track.appendChild(div);
+  });
+  track.style.transition = 'none';
+  track.style.transform = 'translateY(0px)';
+
+  win.classList.add('rolling');
+
+  // Animation phases: fast → slow → stop
+  const totalItems = pool.length;
+  const stopAt = 55 + Math.floor(Math.random() * 15); // land somewhere in middle
+  const totalPx = stopAt * itemH;
+
+  let currentPx = 0;
+  let speed = itemH * 0.4; // initial step
+  const maxSpeed = itemH * 1.2;
+  const duration = 2200 + Math.random() * 800;
+  const startTime = performance.now();
+
+  document.getElementById('roll-flavour').textContent =
+    FLAVOUR_TEXTS[Math.floor(Math.random() * FLAVOUR_TEXTS.length)];
+
+  function animate(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(elapsed / duration, 1);
+
+    // Ease: fast in middle, decelerate at end
+    let step;
+    if (progress < 0.6) {
+      // accelerate
+      step = maxSpeed * (progress / 0.6);
+    } else {
+      // decelerate — ease-out
+      const decel = (progress - 0.6) / 0.4;
+      step = maxSpeed * (1 - decel * decel * decel);
+    }
+    step = Math.max(step, 2);
+
+    currentPx += step;
+
+    // Wrap track if needed
+    if (currentPx > totalPx - itemH * 5) {
+      // snap to final
+      currentPx = totalPx;
+    }
+
+    track.style.transition = 'none';
+    track.style.transform = `translateY(-${currentPx}px)`;
+
+    if (progress < 1 && currentPx < totalPx) {
+      requestAnimationFrame(animate);
+    } else {
+      // Snap to exact item boundary
+      const landedIdx = Math.round(currentPx / itemH);
+      track.style.transform = `translateY(-${landedIdx * itemH}px)`;
+
+      const chosenEmoji = pool[Math.min(landedIdx, pool.length-1)];
+      landEmoji(chosenEmoji);
+    }
+  }
+
+  requestAnimationFrame(animate);
+}
+
+function landEmoji(emoji) {
+  const win = document.getElementById('slot-window');
+  win.classList.remove('rolling');
+
+  currentEmoji = emoji;
+  rollCount++;
+  rollStreak++;
+  if (rollStreak > bestStreak) bestStreak = rollStreak;
+
+  document.getElementById('stat-streak').textContent = bestStreak;
+  document.getElementById('stat-total').textContent = rollCount;
+  document.getElementById('roll-count-display').textContent =
+    rollCount === 1 ? '1 roll' : `${rollCount} rolls`;
+
+  const streakBadge = document.getElementById('streak-badge');
+  if (rollStreak >= 3) {
+    streakBadge.style.display = 'inline-flex';
+    document.getElementById('streak-val').textContent = rollStreak;
+  }
+
+  // Flash border
+  win.style.border = '2px solid var(--green)';
+  win.style.boxShadow = '0 0 20px rgba(52,211,153,0.4)';
+  setTimeout(() => {
+    win.style.border = '';
+    win.style.boxShadow = '';
+  }, 800);
+
+  document.getElementById('roll-flavour').textContent =
+    WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)];
+
+  const btn = document.getElementById('roll-btn');
+  btn.textContent = `🎲 Roll Again (${rollCount})`;
+  btn.disabled = false;
+  btn.classList.add('locked');
+
+  isRolling = false;
+  updatePreview();
+  showToast(`${emoji} locked in as today's emoji!`);
+}
+
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+// ── ROSTER LOADING ────────────────────────────────────────
+function getSheetId() { return localStorage.getItem(SHEET_ID_KEY) || ''; }
+
+async function loadRoster() {
+  const id = getSheetId();
+  const dot = document.getElementById('roster-dot');
+  const txt = document.getElementById('roster-status-text');
+  const badge = document.getElementById('roster-badge');
+
+  if (!id) {
+    dot.className='rdot'; txt.textContent='using built-in roster';
+    badge.style.display=''; badge.className='widget-badge badge-info'; badge.textContent='default';
+    useBuiltInRoster(); renderSheetEmbed(); render(); return;
+  }
+
+  dot.className='rdot loading'; txt.textContent='loading...';
+  const urls = [
+    `https://docs.google.com/spreadsheets/d/${id}/pub?gid=0&single=true&output=csv`,
+    `https://docs.google.com/spreadsheets/d/${id}/export?format=csv`,
+    `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv`,
+  ];
+  let loaded = false;
+  for (const url of urls) {
+    try {
+      const r = await fetch(url, {cache:'no-cache'});
+      if (!r.ok) continue;
+      const csv = await r.text();
+      if (!csv || csv.includes('<!DOCTYPE')) continue;
+      parseRosterCSV(csv);
+      loaded = true; break;
+    } catch(e) { continue; }
+  }
+  if (loaded) {
+    const n = mainRoster.length + emsRoster.length;
+    dot.className='rdot'; txt.textContent=`${n} personnel loaded`;
+    badge.style.display=''; badge.className='widget-badge badge-ok'; badge.textContent='live';
+  } else {
+    dot.className='rdot error'; txt.textContent='sheet error — using built-in roster';
+    badge.style.display=''; badge.className='widget-badge badge-err'; badge.textContent='error';
+    useBuiltInRoster();
+  }
+  renderSheetEmbed(); render();
+}
+
+function parseRosterCSV(csv) {
+  mainRoster=[]; emsRoster=[];
+  csv.trim().split('\n').slice(1).forEach(line => {
+    const cols=(line.match(/(".*?"|[^,]+)/g)||[]).map(c=>c.replace(/^"|"$/g,'').trim().toUpperCase());
+    const group=cols[0], name=cols[1];
+    if(!name) return;
+    if(group==='EMS') emsRoster.push(name);
+    else mainRoster.push(name);
+  });
+  if (!mainRoster.length && !emsRoster.length) useBuiltInRoster();
+}
+
+function useBuiltInRoster() {
+  mainRoster = [...MAIN_TEAM];
+  emsRoster  = [...EMS_TEAM];
+}
+
+function renderSheetEmbed() {
+  const id = getSheetId();
+  const wrap = document.getElementById('sheets-embed-wrap');
+  if (!id) {
+    wrap.innerHTML='<div class="sheets-placeholder"><span>Configure a Sheet ID above to<br>view and edit your roster here</span></div>';
+    return;
+  }
+  const src = `https://docs.google.com/spreadsheets/d/${id}/edit?usp=sharing&rm=minimal&embedded=true`;
+  wrap.innerHTML = `<iframe src="${src}" frameborder="0" allowfullscreen></iframe>`;
+}
+
+// ── OVERRIDES ────────────────────────────────────────────
+function onDateChange() { statuses={}; render(); updateTopbarDate(); }
+
+// ── BLOCK STYLING ─────────────────────────────────────────
+function refreshBlockStyle(block, val) {
+  const v = (val||'').toUpperCase();
+  if (v.startsWith('OFF DUTY') || v==='MC' || v==='RS' || v==='HL') {
+    block.classList.add('off-duty');
+  } else {
+    block.classList.remove('off-duty');
+  }
+}
+
+// ── RENDER ────────────────────────────────────────────────
+const CHIPS = [
+  {label:'ON DUTY',  cls:'chip-on',  type:'set'},
+  {label:'OFF DUTY', cls:'chip-off', type:'set'},
+  {label:'RS',  cls:'', type:'suffix',   code:'RS'},
+  {label:'MC',  cls:'', type:'datepick', code:'MC'},
+  {label:'VL',  cls:'', type:'datepick', code:'VL'},
+  {label:'OVL', cls:'', type:'datepick', code:'OVL'},
+  {label:'HL',  cls:'', type:'datepick', code:'HL'},
+  {label:'CL',  cls:'', type:'datepick', code:'CL'},
+];
+
+function makePersonBlock(name, groupKey) {
+  const key = `${groupKey}-${name}`;
+  if (!statuses[key]) statuses[key] = '';
+
+  const block = document.createElement('div');
+  block.className = 'person-block';
+
+  const top = document.createElement('div');
+  top.className = 'person-top';
+
+  const nameEl = document.createElement('span');
+  nameEl.className = 'person-name';
+  nameEl.textContent = name;
+
+  const wrap = document.createElement('div');
+  wrap.className = 'status-wrap';
+
+  const input = document.createElement('input');
+  input.type='text'; input.className='status-input';
+  input.value=statuses[key]; input.placeholder='status...';
+  input.setAttribute('autocomplete','off');
+  input.setAttribute('autocorrect','off');
+  input.setAttribute('autocapitalize','characters');
+  input.setAttribute('spellcheck','false');
+  input.addEventListener('input',()=>{ statuses[key]=input.value; refreshBlockStyle(block,input.value); updatePreview(); });
+  input.addEventListener('focus',()=> block.classList.add('focused'));
+  input.addEventListener('blur',()=> setTimeout(()=>block.classList.remove('focused'),180));
+
+  wrap.appendChild(input);
+  top.appendChild(nameEl); top.appendChild(wrap);
+  block.appendChild(top);
+
+  const chipsRow = document.createElement('div');
+  chipsRow.className = 'chips-row';
+  CHIPS.forEach(c => {
+    const chip = document.createElement('button');
+    chip.className='chip '+c.cls; chip.textContent=c.label; chip.type='button';
+    chip.addEventListener('mousedown', e => {
+      e.preventDefault();
+      const offCodes = ['RS','MC','VL','OVL','HL','CL'];
+      if (c.type==='set') {
+        input.value=c.label; statuses[key]=c.label; input.focus();
+        refreshBlockStyle(block, c.label); updatePreview();
+      } else if (c.type==='suffix') {
+        const base = offCodes.includes(c.code) ? 'OFF DUTY' : (input.value.split(' (')[0]||'');
+        input.value=base ? base+' ('+c.code+')' : c.code;
+        statuses[key]=input.value; input.focus();
+        refreshBlockStyle(block, input.value); updatePreview();
+      } else if (c.type==='datepick') {
+        openDatePicker(c.code, input, key, block);
+      }
+    });
+    chipsRow.appendChild(chip);
+  });
+  block.appendChild(chipsRow);
+  refreshBlockStyle(block, statuses[key]);
+  return block;
+}
+
+function render() {
+  const list = document.getElementById('person-list');
+  list.innerHTML = '';
+
+  // Main team section
+  const mainLabel = document.createElement('div');
+  mainLabel.className = 'section-label';
+  mainLabel.textContent = 'Main Team';
+  list.appendChild(mainLabel);
+  mainRoster.forEach(name => list.appendChild(makePersonBlock(name, 'MAIN')));
+
+  // EMS team section
+  const emsLabel = document.createElement('div');
+  emsLabel.className = 'section-label';
+  emsLabel.textContent = 'EMS Team';
+  list.appendChild(emsLabel);
+  emsRoster.forEach(name => list.appendChild(makePersonBlock(name, 'EMS')));
+
+  updatePreview();
+  updateTopbarDate();
+}
+
+function updatePreview() {
+  const date = getSelectedDate();
+  const dateStr = fmtDate(date);
+  const dayName = getDayName(date);
+  const emojiStr = currentEmoji ? ` ${currentEmoji}` : ' (emoji)';
+
+  // IC is always first person in main roster
+  const icName = mainRoster[0] ? toTitleCase(mainRoster[0]) : 'LCP IRFAN';
+
+  const lines = [
+    'Good Morning Officers ',
+    'OH NSFs Movement Chart for today: ',
+    `${dateStr} ${dayName}`,
+    '——————————',
+    `Rollcall IC : ${mainRoster[0]||'LCP IRFAN'}${emojiStr}`,
+  ];
+
+  mainRoster.forEach(name => {
+    const key = `MAIN-${name}`;
+    const status = (statuses[key]||'').trim();
+    lines.push(`${name} - ${status}`);
+  });
+
+  lines.push('');
+  lines.push('EMS TEAM:');
+  emsRoster.forEach(name => {
+    const key = `EMS-${name}`;
+    const status = (statuses[key]||'').trim();
+    lines.push(`${name} - ${status}`);
+  });
+
+  // Time off
+  const timeOff = [];
+  [...mainRoster.map(n=>({n,k:'MAIN-'+n})), ...emsRoster.map(n=>({n,k:'EMS-'+n}))].forEach(({n,k}) => {
+    const v = (statuses[k]||'').toUpperCase();
+    if (v && !v.startsWith('ON DUTY') && v !== '') timeOff.push(n);
+  });
+  lines.push(`*Time off*:${timeOff.length ? ' '+timeOff.join(', ') : ''}`);
+
+  document.getElementById('preview').value = lines.join('\n');
+}
+
+function toTitleCase(str) {
+  return str.replace(/\b\w/g, c => c.toUpperCase()).replace(/\b\w*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+}
+
+function copyMessage() {
+  const text = document.getElementById('preview').value;
+  const btn = document.getElementById('copy-btn');
+  const ok = () => {
+    btn.classList.add('success'); btn.textContent='✓  Copied!';
+    setTimeout(()=>{ btn.classList.remove('success'); btn.innerHTML='✦ &nbsp;Copy to Clipboard'; },2500);
+  };
+  navigator.clipboard.writeText(text).then(ok).catch(()=>{
+    const ta=document.createElement('textarea'); ta.value=text;
+    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); ok();
+  });
+}
+
+// ── CONFIG ────────────────────────────────────────────────
+function toggleRosterPanel() {
+  const panel = document.getElementById('roster-panel');
+  const chevron = document.getElementById('roster-chevron');
+  const open = panel.classList.toggle('open');
+  chevron.style.transform = open ? 'rotate(90deg)' : 'rotate(0deg)';
+}
+function toggleConfig() {
+  const slide = document.getElementById('config-slide');
+  const open = slide.classList.toggle('open');
+  document.getElementById('cfg-toggle-text').textContent = open ? 'close' : 'configure';
+  if (open) {
+    document.getElementById('sheet-id-input').value = getSheetId();
+    const panel = document.getElementById('roster-panel');
+    if (!panel.classList.contains('open')) {
+      panel.classList.add('open');
+      document.getElementById('roster-chevron').style.transform = 'rotate(90deg)';
+    }
+  }
+}
+function saveSheetId() {
+  localStorage.setItem(SHEET_ID_KEY, document.getElementById('sheet-id-input').value.trim());
+  document.getElementById('config-slide').classList.remove('open');
+  document.getElementById('cfg-toggle-text').textContent = 'configure';
+  statuses={}; loadRoster();
+}
+
+// ── DATE PICKER ───────────────────────────────────────────
+function openDatePicker(code, input, key, block) {
+  const ex=document.getElementById('dp-overlay'); if(ex) ex.remove();
+  const today=new Date();
+  let viewYear=today.getFullYear(), viewMonth=today.getMonth();
+  let pick1=null, pick2=null;
+
+  const overlay=document.createElement('div'); overlay.className='dp-overlay'; overlay.id='dp-overlay';
+  const modal=document.createElement('div'); modal.className='dp-modal';
+  modal.addEventListener('mousedown',e=>e.stopPropagation());
+
+  function fp(d){ return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0'); }
+
+  function build() {
+    modal.innerHTML='';
+    const hdr=document.createElement('div'); hdr.className='dp-header';
+    const prev=document.createElement('button'); prev.className='dp-nav'; prev.textContent='‹';
+    prev.addEventListener('mousedown',e=>{ e.preventDefault(); viewMonth--; if(viewMonth<0){viewMonth=11;viewYear--;} build(); });
+    const next=document.createElement('button'); next.className='dp-nav'; next.textContent='›';
+    next.addEventListener('mousedown',e=>{ e.preventDefault(); viewMonth++; if(viewMonth>11){viewMonth=0;viewYear++;} build(); });
+    const ttl=document.createElement('span'); ttl.className='dp-title';
+    ttl.textContent=new Date(viewYear,viewMonth,1).toLocaleDateString('en-SG',{month:'long',year:'numeric'});
+    hdr.appendChild(prev); hdr.appendChild(ttl); hdr.appendChild(next); modal.appendChild(hdr);
+
+    const grid=document.createElement('div'); grid.className='dp-grid';
+    ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d=>{ const el=document.createElement('div'); el.className='dp-dow'; el.textContent=d; grid.appendChild(el); });
+    const firstDay=new Date(viewYear,viewMonth,1).getDay();
+    const dim=new Date(viewYear,viewMonth+1,0).getDate();
+    for(let i=0;i<firstDay;i++){ const el=document.createElement('button'); el.className='dp-day empty'; grid.appendChild(el); }
+    for(let d=1;d<=dim;d++){
+      const td=new Date(viewYear,viewMonth,d);
+      const el=document.createElement('button'); el.className='dp-day'; el.textContent=d;
+      const isP1=pick1&&td.toDateString()===pick1.toDateString();
+      const isP2=pick2&&td.toDateString()===pick2.toDateString();
+      const inR=pick1&&pick2&&td>pick1&&td<pick2;
+      const isToday=td.toDateString()===today.toDateString();
+      if(isToday) el.classList.add('today');
+      if(isP1) el.classList.add('selected');
+      else if(isP2) el.classList.add('range-end');
+      else if(inR) el.classList.add('in-range');
+      el.addEventListener('mousedown',e=>{
+        e.preventDefault();
+        if(!pick1){ pick1=td; pick2=null; }
+        else if(!pick2){
+          if(td>pick1) pick2=td;
+          else if(td.toDateString()===pick1.toDateString()) pick1=null;
+          else { pick1=td; pick2=null; }
+        } else { pick1=td; pick2=null; }
+        build();
+      });
+      grid.appendChild(el);
+    }
+    modal.appendChild(grid);
+
+    const hint=document.createElement('div'); hint.className='dp-hint';
+    if(!pick1) hint.textContent='tap a date to select';
+    else if(!pick2) hint.textContent=fp(pick1)+' — tap another for a range';
+    else hint.textContent=code+' ('+fp(pick1)+' - '+fp(pick2)+')';
+    modal.appendChild(hint);
+
+    const acts=document.createElement('div'); acts.className='dp-actions';
+    const canc=document.createElement('button'); canc.className='dp-cancel'; canc.textContent='Cancel';
+    canc.addEventListener('mousedown',e=>{ e.preventDefault(); overlay.remove(); });
+    const conf=document.createElement('button'); conf.className='dp-confirm'; conf.textContent='Confirm';
+    conf.disabled=!pick1;
+    conf.addEventListener('mousedown',e=>{
+      e.preventDefault(); if(!pick1) return;
+      const offCodes=['MC','VL','OVL','CL'];
+      const base = offCodes.includes(code) ? 'OFF DUTY' : (input.value.split(' (')[0]||'');
+      const suf = pick2 ? code+' ('+fp(pick1)+' - '+fp(pick2)+')' : code+' ('+fp(pick1)+')';
+      input.value = base ? base+' '+suf : suf;
+      statuses[key]=input.value;
+      if(block) refreshBlockStyle(block,input.value);
+      updatePreview(); overlay.remove();
+    });
+    acts.appendChild(canc); acts.appendChild(conf); modal.appendChild(acts);
+  }
+
+  build();
+  overlay.appendChild(modal);
+  overlay.addEventListener('mousedown',()=>overlay.remove());
+  document.body.appendChild(overlay);
+}
+
+// ── INIT ──────────────────────────────────────────────────
+function init() {
+  const t = new Date();
+  document.getElementById('date-input').value =
+    `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;
+  tickClock();
+  setInterval(tickClock, 1000);
+  buildSlotTrack();
+  loadRoster();
+}
+
+init();
+</script>
+</body>
+</html>
