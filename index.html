@@ -7,572 +7,342 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0c0e14;--surface:#13161f;--surface2:#191d28;--surface3:#1f2436;
+  --border:rgba(255,255,255,0.06);--border2:rgba(255,255,255,0.11);--border3:rgba(255,255,255,0.22);
+  --text:#dde1ed;--text2:#8e97b4;--text3:#5a6480;
+  --accent:#38bdf8;--accent-bg:rgba(56,189,248,0.10);--accent-glow:rgba(56,189,248,0.22);
+  --green:#34d399;--green-bg:rgba(52,211,153,0.10);
+  --red:#f87171;--red-bg:rgba(248,113,113,0.10);
+  --gold:#fbbf24;--gold-bg:rgba(251,191,36,0.10);
+  --purple:#a78bfa;--purple-bg:rgba(167,139,250,0.10);
+  --radius:10px;--radius-lg:16px;--radius-xl:20px;
+  --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
+  --shadow:0 4px 24px rgba(0,0,0,0.4);--shadow-lg:0 8px 48px rgba(0,0,0,0.6);
+}
+html{height:100%}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100%;
+  background-image:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);
+  background-size:32px 32px}
 
-:root {
-  --bg:            #0c0e14;
-  --surface:       #13161f;
-  --surface2:      #191d28;
-  --surface3:      #1f2436;
-  --border:        rgba(255,255,255,0.06);
-  --border2:       rgba(255,255,255,0.11);
-  --border3:       rgba(255,255,255,0.22);
-  --text:          #dde1ed;
-  --text2:         #8e97b4;
-  --text3:         #5a6480;
-  --accent:        #38bdf8;
-  --accent-bg:     rgba(56,189,248,0.10);
-  --accent-glow:   rgba(56,189,248,0.22);
-  --green:         #34d399;
-  --green-bg:      rgba(52,211,153,0.10);
-  --red:           #f87171;
-  --red-bg:        rgba(248,113,113,0.10);
-  --gold:          #fbbf24;
-  --gold-bg:       rgba(251,191,36,0.10);
-  --radius:        10px;
-  --radius-lg:     16px;
-  --radius-xl:     20px;
-  --mono:          'IBM Plex Mono', monospace;
-  --sans:          'IBM Plex Sans', sans-serif;
-  --shadow:        0 4px 24px rgba(0,0,0,0.4);
-  --shadow-lg:     0 8px 48px rgba(0,0,0,0.6);
-}
+/* TOPBAR */
+.topbar{position:sticky;top:0;z-index:50;background:rgba(19,22,31,0.92);backdrop-filter:blur(16px);
+  -webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 20px;height:52px;
+  display:flex;align-items:center;gap:12px}
+.topbar-logo{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent) 0%,#0ea5e9 100%);
+  display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;font-weight:700;
+  color:#000;flex-shrink:0;box-shadow:0 2px 8px var(--accent-glow)}
+.topbar-title{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:0.08em;color:var(--text);text-transform:uppercase}
+.topbar-div{width:1px;height:18px;background:var(--border2);flex-shrink:0}
+.topbar-date{font-family:var(--mono);font-size:11px;color:var(--text2)}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px}
+.topbar-clock{font-family:var(--mono);font-size:13px;font-weight:500;color:var(--text);letter-spacing:0.06em;
+  background:var(--surface2);border:1px solid var(--border2);padding:4px 10px;border-radius:8px}
+@media(max-width:480px){.topbar-date{display:none}.topbar{padding:0 14px}}
 
-html { height: 100%; }
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: var(--sans);
-  min-height: 100%;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.012) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.012) 1px, transparent 1px);
-  background-size: 32px 32px;
-}
+/* PAGE */
+.page{max-width:1100px;margin:0 auto;padding:20px 16px 60px}
 
-/* ── TOPBAR ──────────────────────────────────────────────── */
-.topbar {
-  position: sticky; top: 0; z-index: 50;
-  background: rgba(19,22,31,0.88);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 20px;
-  height: 52px;
-  display: flex; align-items: center; gap: 12px;
-}
-.topbar-logo {
-  width: 28px; height: 28px; border-radius: 8px;
-  background: linear-gradient(135deg, var(--accent) 0%, #0ea5e9 100%);
-  display: flex; align-items: center; justify-content: center;
-  font-family: var(--mono); font-size: 11px; font-weight: 700;
-  color: #000; flex-shrink: 0; box-shadow: 0 2px 8px var(--accent-glow);
-}
-.topbar-title {
-  font-family: var(--mono); font-size: 12px; font-weight: 600;
-  letter-spacing: 0.08em; color: var(--text); text-transform: uppercase;
-}
-.topbar-divider { width: 1px; height: 18px; background: var(--border2); flex-shrink: 0; }
-.topbar-date-str {
-  font-family: var(--mono); font-size: 11px; color: var(--text2);
-  letter-spacing: 0.02em;
-}
-.topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
-.topbar-clock {
-  font-family: var(--mono); font-size: 13px; font-weight: 500;
-  color: var(--text); letter-spacing: 0.06em;
-  background: var(--surface2); border: 1px solid var(--border2);
-  padding: 4px 10px; border-radius: 8px;
-}
-@media (max-width: 480px) {
-  .topbar-date-str { display: none; }
-  .topbar { padding: 0 14px; }
+/* WEEKEND CARD */
+.weekend-card{background:linear-gradient(135deg,rgba(167,139,250,0.07),rgba(167,139,250,0.02));
+  border:1px solid rgba(167,139,250,0.22);border-radius:18px;padding:36px;text-align:center;margin-bottom:16px}
+.wk-emoji{font-size:52px;margin-bottom:14px}
+.wk-title{font-family:var(--mono);font-size:17px;font-weight:600;color:var(--purple);margin-bottom:8px}
+.wk-sub{font-family:var(--sans);font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:18px}
+.wk-cdown{font-family:var(--mono);font-size:36px;font-weight:700;color:var(--text);letter-spacing:-0.04em;
+  font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.wk-cdown-lbl{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.1em;
+  text-transform:uppercase;margin-top:6px}
+
+/* SHIFT BANNER */
+.shift-banner{position:relative;display:flex;align-items:center;justify-content:space-between;
+  min-height:110px;padding:20px 28px;margin-bottom:12px;
+  background:linear-gradient(135deg,rgba(255,255,255,0.013),rgba(255,255,255,0.027));
+  border:1px solid var(--border2);border-radius:18px;overflow:hidden;isolation:isolate}
+.shift-banner::after{content:'';position:absolute;inset:0 0 auto 0;height:2px;
+  background:linear-gradient(90deg,var(--accent),var(--green))}
+.bn-half{position:relative;z-index:2;display:flex;flex-direction:column;gap:5px;max-width:40%}
+.bn-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text3)}
+.bn-main{font-family:var(--mono);font-size:clamp(13px,2vw,16px);font-weight:600;color:var(--text);line-height:1.25}
+.bn-sub{font-family:var(--mono);font-size:11px;color:var(--text3)}
+.bn-center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  display:flex;flex-direction:column;align-items:center;gap:5px;pointer-events:none;text-align:center}
+.bn-cdown-lbl{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3)}
+.bn-cdown{font-family:var(--mono);font-size:clamp(28px,3.5vw,44px);font-weight:600;letter-spacing:-0.05em;
+  color:var(--text);font-variant-numeric:tabular-nums;font-feature-settings:"tnum"}
+.bn-chip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;
+  font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase}
+.c-open{background:var(--green-bg);border:1px solid rgba(52,211,153,0.3);color:var(--green)}
+.c-closed{background:var(--red-bg);border:1px solid rgba(248,113,113,0.3);color:var(--red)}
+.c-soon{background:var(--gold-bg);border:1px solid rgba(251,191,36,0.3);color:var(--gold)}
+.sdot{width:5px;height:5px;border-radius:50%;background:currentColor}
+@media(max-width:660px){
+  .shift-banner{flex-direction:column;gap:14px;min-height:auto;padding:18px}
+  .bn-center{position:relative;left:auto;top:auto;transform:none;order:-1;
+    padding-bottom:14px;border-bottom:1px solid var(--border);width:100%}
+  .bn-half{max-width:100%}
+  .bn-cdown{font-size:30px}
 }
 
-/* ── PAGE ──────────────────────────────────────────────────── */
-.page { max-width: 1100px; margin: 0 auto; padding: 20px 16px 60px; }
+/* ROLLCALL BAR */
+.rc-bar{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-lg);
+  padding:11px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.rc-lbl{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);flex-shrink:0}
+.rc-pills{display:flex;gap:8px;flex-wrap:wrap;flex:1}
+.rc-pill{font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:20px;
+  border:1px solid var(--border2);color:var(--text2);white-space:nowrap;transition:all 0.2s}
+.rc-pill.next{border-color:rgba(56,189,248,0.5);color:var(--accent);background:var(--accent-bg);font-weight:600}
+.rc-pill.past{color:var(--text3);border-color:var(--border)}
+.rc-cdown{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent);
+  margin-left:auto;letter-spacing:0.04em;white-space:nowrap}
 
-/* ── HOURS BANNER ─────────────────────────────────────────── */
-.hours-banner {
-  position: relative;
-  display: flex; align-items: center; justify-content: space-between;
-  min-height: 100px;
-  padding: 20px 28px;
-  margin-bottom: 16px;
-  background: linear-gradient(135deg, rgba(255,255,255,0.013), rgba(255,255,255,0.027));
-  border: 1px solid var(--border2);
-  border-radius: 18px;
-  overflow: hidden; isolation: isolate;
-  backdrop-filter: blur(10px);
-}
-.hours-banner::after {
-  content: '';
-  position: absolute; inset: 0 0 auto 0; height: 2px;
-  background: linear-gradient(90deg, var(--accent) 0%, var(--green) 100%);
-}
-.banner-side { display: flex; flex-direction: column; gap: 5px; }
-.banner-eyebrow {
-  font-family: var(--mono); font-size: 10px; font-weight: 500;
-  letter-spacing: 0.16em; text-transform: uppercase; color: var(--text3);
-}
-.banner-label {
-  font-family: var(--mono); font-size: 17px; font-weight: 600;
-  line-height: 1.2; letter-spacing: -0.01em; color: var(--text);
-}
-.banner-sub {
-  font-family: var(--mono); font-size: 11px; color: var(--text3);
-  letter-spacing: 0.02em;
-}
-.banner-center {
-  position: absolute; left: 50%; top: 50%;
-  transform: translate(-50%, -50%);
-  display: flex; flex-direction: column; align-items: center; gap: 4px;
-  pointer-events: none;
-}
-.banner-countdown-label {
-  font-family: var(--mono); font-size: 10px; font-weight: 500;
-  letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3);
-}
-.banner-countdown {
-  font-family: var(--mono); font-size: clamp(30px, 4vw, 46px); font-weight: 600;
-  letter-spacing: -0.05em; color: var(--text);
-  font-variant-numeric: tabular-nums; font-feature-settings: "tnum";
-}
-.banner-status-chip {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 3px 9px; border-radius: 20px;
-  font-family: var(--mono); font-size: 10px; font-weight: 500;
-  letter-spacing: 0.06em; text-transform: uppercase;
-}
-.chip-open  { background: var(--green-bg);  border: 1px solid rgba(52,211,153,0.3);  color: var(--green); }
-.chip-closed { background: var(--red-bg);   border: 1px solid rgba(248,113,113,0.3); color: var(--red); }
-.chip-soon  { background: var(--gold-bg);   border: 1px solid rgba(251,191,36,0.3);  color: var(--gold); }
-.status-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+/* GRID */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
 
-@media (max-width: 700px) {
-  .hours-banner { flex-direction: column; align-items: stretch; gap: 14px; min-height: auto; padding: 18px; }
-  .banner-center { position: relative; left: auto; top: auto; transform: none; order: -1; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-  .banner-countdown { font-size: 30px; }
-}
+/* WIDGET */
+.widget{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:12px}
+.widget:last-child{margin-bottom:0}
+.wh{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;
+  border-bottom:1px solid var(--border);background:var(--surface2)}
+.wh-title{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text2);font-weight:500}
+.badge{font-family:var(--mono);font-size:10px;padding:2px 8px;border-radius:20px;font-weight:500;letter-spacing:0.04em}
+.b-ok{background:var(--green-bg);color:var(--green);border:1px solid rgba(52,211,153,0.3)}
+.b-info{background:var(--accent-bg);color:var(--accent);border:1px solid rgba(56,189,248,0.3)}
+.b-warn{background:var(--gold-bg);color:var(--gold);border:1px solid rgba(251,191,36,0.3)}
+.wb{padding:14px 16px}
 
-/* ── MAIN GRID ────────────────────────────────────────────── */
-.main-grid {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 12px; align-items: start;
-}
-@media (max-width: 700px) { .main-grid { grid-template-columns: 1fr; } }
+/* DATE ROW */
+.date-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+input[type=date]{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);
+  color:var(--text);font-family:var(--mono);font-size:12px;padding:6px 10px;outline:none;
+  transition:border-color 0.15s;color-scheme:dark}
+input[type=date]:focus{border-color:var(--border3)}
+.day-btn{padding:5px 12px;background:var(--surface3);border:1px solid var(--border2);
+  border-radius:var(--radius);color:var(--text2);font-family:var(--mono);font-size:11px;
+  cursor:pointer;transition:all 0.15s;-webkit-tap-highlight-color:transparent;white-space:nowrap}
+.day-btn:hover{border-color:var(--border3);color:var(--text)}
+.day-btn.today{border-color:rgba(56,189,248,0.4);color:var(--accent);background:var(--accent-bg)}
 
-/* ── WIDGET ───────────────────────────────────────────────── */
-.widget {
-  background: var(--surface);
-  border: 1px solid var(--border2);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-.widget-header {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  background: var(--surface2);
-}
-.widget-title {
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--text2); font-weight: 500;
-}
-.widget-badge {
-  font-family: var(--mono); font-size: 10px; padding: 2px 8px;
-  border-radius: 20px; font-weight: 500; letter-spacing: 0.04em;
-}
-.badge-ok    { background: var(--green-bg); color: var(--green); border: 1px solid rgba(52,211,153,0.3); }
-.badge-err   { background: var(--red-bg);   color: var(--red);   border: 1px solid rgba(248,113,113,0.3); }
-.badge-info  { background: var(--accent-bg); color: var(--accent); border: 1px solid rgba(56,189,248,0.3); }
-.widget-body { padding: 14px 16px; }
+/* ROSTER META */
+.r-meta{display:flex;align-items:center;gap:8px;margin-bottom:10px;
+  font-family:var(--mono);font-size:10px;color:var(--text3)}
+.rdot{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:var(--green)}
+.rdot.loading{background:var(--gold);animation:blink 1s infinite}
+.rdot.error{background:var(--red)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+.divider{border:none;border-top:1px solid var(--border);margin:12px 0}
 
-/* ── CONTROLS ─────────────────────────────────────────────── */
-.ctrl-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
-.ctrl-label { font-family: var(--mono); font-size: 10px; color: var(--text3); letter-spacing: 0.06em; text-transform: uppercase; min-width: 50px; }
-input[type="date"] {
-  background: var(--surface2); border: 1px solid var(--border2);
-  border-radius: var(--radius); color: var(--text);
-  font-family: var(--mono); font-size: 12px; padding: 6px 10px;
-  outline: none; transition: border-color 0.15s; color-scheme: dark;
-}
-input[type="date"]:focus { border-color: var(--border3); }
+/* PERSON BLOCKS */
+.pblock{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);
+  margin-bottom:5px;transition:border-color 0.15s,box-shadow 0.15s,background 0.2s}
+.pblock:last-child{margin-bottom:0}
+.pblock.focused{border-color:var(--border3);box-shadow:0 0 0 2px rgba(56,189,248,0.08)}
+.pblock.off{background:linear-gradient(90deg,rgba(248,113,113,0.05),var(--surface2));
+  border-color:rgba(248,113,113,0.18)}
+.pblock.off .pname{color:var(--text2)}
+.ptop{display:flex;align-items:center;gap:10px;padding:9px 12px}
+.pname{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--text);
+  min-width:110px;flex-shrink:0;letter-spacing:0.02em;-webkit-user-select:none;user-select:none}
+.swrap{flex:1;min-width:0}
+.sinput{width:100%;background:transparent;border:none;outline:none;color:var(--text);
+  font-family:var(--mono);font-size:12px;padding:2px 4px;border-radius:4px;transition:background 0.1s}
+.sinput:focus{background:rgba(255,255,255,0.04)}
 
-.divider { border: none; border-top: 1px solid var(--border); margin: 12px 0; }
+/* CHIPS */
+.chips{display:flex;flex-wrap:wrap;gap:5px;padding:0 12px 9px}
+.chip{padding:3px 9px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;
+  color:var(--text2);font-family:var(--mono);font-size:10px;cursor:pointer;transition:all 0.12s;
+  white-space:nowrap;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.chip:hover{border-color:var(--border3);color:var(--text)}
+.chip.in{border-color:rgba(52,211,153,0.4);color:var(--green);background:var(--green-bg)}
+.chip.off-expand{border-color:rgba(248,113,113,0.3);color:var(--red)}
+.leave-chips{display:none;flex-wrap:wrap;gap:5px;padding:0 12px 9px}
+.leave-chips.open{display:flex}
+.lchip{padding:3px 9px;background:var(--surface3);border:1px solid rgba(248,113,113,0.25);
+  border-radius:6px;color:var(--red);font-family:var(--mono);font-size:10px;cursor:pointer;
+  transition:all 0.12s;white-space:nowrap;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.lchip:hover{background:var(--red-bg);border-color:rgba(248,113,113,0.5)}
 
-/* ── ROSTER META ──────────────────────────────────────────── */
-.roster-meta {
-  display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
-  font-family: var(--mono); font-size: 10px; color: var(--text3);
-}
-.rdot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; background: var(--green); }
-.rdot.loading { background: var(--gold); animation: blink 1s infinite; }
-.rdot.error { background: var(--red); }
-@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+/* SECTION LABEL */
+.sec-lbl{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--accent);padding:10px 0 6px;
+  border-top:1px solid var(--border);margin-top:4px}
+.sec-lbl:first-child{border-top:none;margin-top:0;padding-top:0}
 
-/* ── PERSON BLOCKS ────────────────────────────────────────── */
-.person-block {
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--radius); margin-bottom: 6px;
-  transition: border-color 0.15s, box-shadow 0.15s, background 0.2s;
-}
-.person-block:last-child { margin-bottom: 0; }
-.person-block.focused { border-color: var(--border3); box-shadow: 0 0 0 2px rgba(56,189,248,0.08); }
-.person-block.off-duty {
-  background: linear-gradient(90deg, rgba(248,113,113,0.05) 0%, var(--surface2) 100%);
-  border-color: rgba(248,113,113,0.18);
-}
-.person-block.off-duty .person-name { color: var(--text2); }
-.person-block.off-duty .person-rank { color: rgba(248,113,113,0.35); }
-.person-top { display: flex; align-items: center; gap: 10px; padding: 9px 12px; }
-.person-rank {
-  font-family: var(--mono); font-size: 9px; color: var(--text3);
-  width: 14px; text-align: right; flex-shrink: 0;
-}
-.person-name {
-  font-family: var(--mono); font-size: 12px; font-weight: 600;
-  color: var(--text); min-width: 110px; flex-shrink: 0; letter-spacing: 0.02em;
-  -webkit-user-select: none; user-select: none;
-}
-.status-wrap { flex: 1; min-width: 0; }
-.status-input {
-  width: 100%; background: transparent; border: none; outline: none;
-  color: var(--text); font-family: var(--mono); font-size: 12px;
-  padding: 2px 4px; border-radius: 4px; transition: background 0.1s;
-  -webkit-user-select: text; user-select: text;
-}
-.status-input:focus { background: rgba(255,255,255,0.04); }
+/* TIME OFF PANEL */
+.to-panel{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:12px;margin-top:10px}
+.to-hdr{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.1em;
+  text-transform:uppercase;margin-bottom:10px}
+.to-rows{display:flex;flex-direction:column;gap:8px}
+.to-row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.to-nsel{background:var(--surface3);border:1px solid var(--border2);border-radius:8px;
+  color:var(--text);font-family:var(--mono);font-size:11px;padding:5px 8px;outline:none;
+  cursor:pointer;min-width:110px;transition:border-color 0.15s}
+.to-nsel:focus{border-color:var(--border3)}
+.to-time{display:flex;align-items:center;gap:5px}
+.tsel{background:var(--surface3);border:1px solid var(--border2);border-radius:8px;
+  color:var(--text);font-family:var(--mono);font-size:11px;padding:5px 6px;outline:none;
+  cursor:pointer;transition:border-color 0.15s}
+.tsel:focus{border-color:var(--border3)}
+.tsep{font-family:var(--mono);font-size:11px;color:var(--text3)}
+.to-del{width:24px;height:24px;background:none;border:1px solid var(--border2);border-radius:6px;
+  color:var(--text3);font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all 0.15s;flex-shrink:0}
+.to-del:hover{border-color:rgba(248,113,113,0.5);color:var(--red)}
+.to-add{display:flex;align-items:center;justify-content:center;gap:6px;padding:6px 12px;
+  background:none;border:1px dashed var(--border2);border-radius:8px;color:var(--text3);
+  font-family:var(--mono);font-size:10px;cursor:pointer;transition:all 0.15s;
+  letter-spacing:0.04em;width:100%;margin-top:4px}
+.to-add:hover{border-color:var(--border3);color:var(--text2)}
 
-.chips-row {
-  display: flex; flex-wrap: wrap; gap: 5px;
-  padding: 0 12px 9px; padding-top: 0;
-}
-.chip {
-  padding: 3px 8px; background: var(--surface3);
-  border: 1px solid var(--border2); border-radius: 6px;
-  color: var(--text2); font-family: var(--mono); font-size: 10px;
-  cursor: pointer; transition: all 0.12s; white-space: nowrap;
-  letter-spacing: 0.02em; -webkit-user-select: none; user-select: none;
-  -webkit-tap-highlight-color: transparent;
-}
-.chip:hover { border-color: var(--border3); color: var(--text); background: var(--surface3); }
-.chip.chip-on  { border-color: rgba(52,211,153,0.35); color: var(--green); }
-.chip.chip-on:hover { background: var(--green-bg); }
-.chip.chip-off { border-color: rgba(248,113,113,0.35); color: var(--red); }
-.chip.chip-off:hover { background: var(--red-bg); }
+/* ROSTER EDITOR */
+.r-editor{display:flex;flex-direction:column;gap:6px}
+.r-grp-lbl{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.14em;
+  text-transform:uppercase;color:var(--accent);padding:8px 0 4px;border-top:1px solid var(--border);margin-top:2px}
+.r-grp-lbl:first-child{border-top:none;margin-top:0;padding-top:0}
+.r-row{display:flex;align-items:center;gap:6px}
+.r-inp{flex:1;background:var(--surface3);border:1px solid var(--border2);border-radius:8px;
+  color:var(--text);font-family:var(--mono);font-size:12px;padding:6px 10px;outline:none;transition:border-color 0.15s}
+.r-inp:focus{border-color:var(--border3)}
+.r-del{width:26px;height:26px;background:none;border:1px solid var(--border2);border-radius:6px;
+  color:var(--text3);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s;flex-shrink:0}
+.r-del:hover{border-color:rgba(248,113,113,0.5);color:var(--red)}
+.r-add{display:flex;align-items:center;justify-content:center;gap:6px;padding:6px 12px;
+  background:none;border:1px dashed var(--border2);border-radius:8px;color:var(--text3);
+  font-family:var(--mono);font-size:10px;cursor:pointer;transition:all 0.15s;width:100%;margin-top:2px}
+.r-add:hover{border-color:var(--border3);color:var(--text2)}
+.r-save{padding:10px 16px;background:var(--green-bg);border:1px solid rgba(52,211,153,0.4);
+  border-radius:var(--radius);color:var(--green);font-family:var(--mono);font-size:11px;font-weight:600;
+  cursor:pointer;letter-spacing:0.04em;transition:all 0.15s;width:100%;margin-top:8px}
+.r-save:hover{background:rgba(52,211,153,0.18)}
 
-/* ── SECTION DIVIDER IN PERSON LIST ─────────────────────── */
-.section-label {
-  font-family: var(--mono); font-size: 9px; font-weight: 600;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--accent); padding: 10px 0 6px;
-  border-top: 1px solid var(--border);
-  margin-top: 4px;
-}
-.section-label:first-child { border-top: none; margin-top: 0; padding-top: 0; }
+/* COLLAPSIBLE */
+.collapsible{max-height:0;overflow:hidden;transition:max-height 0.35s ease}
+.collapsible.open{max-height:1200px}
+.col-hdr{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.chevron{font-family:var(--mono);font-size:12px;color:var(--text3);transition:transform 0.2s;display:inline-block}
 
-/* ── TIME OFF FIELD ──────────────────────────────────────── */
-.timeoff-wrap {
-  background: var(--surface2); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 10px 12px; margin-top: 8px;
-}
-.timeoff-label {
-  font-family: var(--mono); font-size: 9px; color: var(--text3);
-  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px;
-}
-.timeoff-input {
-  width: 100%; background: transparent; border: none; outline: none;
-  color: var(--text); font-family: var(--mono); font-size: 12px;
-  resize: none; min-height: 40px; line-height: 1.6;
-}
+/* EMOJI ROLLER */
+.slot-win{width:96px;height:96px;background:var(--surface3);border:2px solid var(--border2);
+  border-radius:16px;overflow:hidden;position:relative;
+  box-shadow:inset 0 2px 12px rgba(0,0,0,0.4);transition:border-color 0.3s,box-shadow 0.3s;flex-shrink:0}
+.slot-win.rolling{border-color:var(--accent);box-shadow:inset 0 2px 12px rgba(0,0,0,0.4),0 0 18px var(--accent-glow)}
+.slot-win.landed{border-color:var(--green);box-shadow:0 0 18px rgba(52,211,153,0.3)}
+.slot-track{position:absolute;width:100%;display:flex;flex-direction:column;align-items:center}
+.slot-item{width:96px;height:96px;display:flex;align-items:center;justify-content:center;font-size:50px;flex-shrink:0;line-height:1}
+.slot-shimmer{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,rgba(12,14,20,0.65) 0%,transparent 28%,transparent 72%,rgba(12,14,20,0.65) 100%);
+  border-radius:14px}
+.slot-q{width:96px;height:96px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:48px;color:var(--text3);font-weight:600}
 
-/* ── EMOJI ROLLER ────────────────────────────────────────── */
-.emoji-section {
-  margin-top: 12px;
-}
-.emoji-card {
-  background: var(--surface2);
-  border: 1px solid var(--border2);
-  border-radius: var(--radius-lg);
-  overflow: hidden;
-}
-.emoji-header {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: space-between;
-  background: var(--surface2);
-}
-.emoji-title {
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--text2); font-weight: 500;
-}
-.emoji-roll-count {
-  font-family: var(--mono); font-size: 10px; color: var(--text3);
-  letter-spacing: 0.04em;
-}
+.roller-wrap{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.roller-right{flex:1;display:flex;flex-direction:column;gap:8px}
+.roll-stats{display:flex;gap:14px;flex-wrap:wrap}
+.rs-item{font-family:var(--mono);font-size:10px;color:var(--text3)}
+.rs-val{color:var(--text2);font-weight:600}
 
-.emoji-body { padding: 20px 16px; }
+.streak-box{display:flex;align-items:center;gap:8px;padding:8px 12px;
+  background:var(--surface3);border:1px solid var(--border);border-radius:10px;
+  font-family:var(--mono);font-size:11px;color:var(--text2);transition:all 0.3s;min-height:38px}
+.streak-box.s-warm{border-color:rgba(56,189,248,0.3);background:var(--accent-bg);color:var(--accent)}
+.streak-box.s-hot{border-color:rgba(251,191,36,0.4);background:var(--gold-bg);color:var(--gold)}
+.streak-box.s-fire{border-color:rgba(248,113,113,0.4);background:var(--red-bg);color:var(--red);
+  animation:spulse 0.9s ease infinite alternate}
+@keyframes spulse{from{box-shadow:none}to{box-shadow:0 0 14px rgba(248,113,113,0.35)}}
+.streak-icon{font-size:18px;transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1)}
+.streak-icon.pop{transform:scale(1.5)}
 
-/* The slot machine display */
-.slot-machine {
-  display: flex; flex-direction: column; align-items: center; gap: 12px;
-  margin-bottom: 18px;
-}
-.slot-window {
-  width: 100px; height: 100px;
-  background: var(--surface);
-  border: 2px solid var(--border2);
-  border-radius: 16px;
-  overflow: hidden;
-  position: relative;
-  box-shadow: inset 0 2px 12px rgba(0,0,0,0.4), 0 0 0 0px var(--accent);
-  transition: box-shadow 0.3s;
-}
-.slot-window.rolling {
-  border-color: var(--accent);
-  box-shadow: inset 0 2px 12px rgba(0,0,0,0.4), 0 0 16px var(--accent-glow);
-}
-.slot-track {
-  position: absolute; width: 100%;
-  display: flex; flex-direction: column; align-items: center;
-  transition: transform 0.06s linear;
-}
-.slot-item {
-  width: 100px; height: 100px;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 52px; flex-shrink: 0;
-  line-height: 1;
-}
-.slot-shimmer {
-  position: absolute; inset: 0; pointer-events: none;
-  background: linear-gradient(180deg,
-    rgba(12,14,20,0.6) 0%,
-    transparent 30%,
-    transparent 70%,
-    rgba(12,14,20,0.6) 100%
-  );
-  border-radius: 14px;
-}
+.roll-btn{width:100%;padding:13px;border:none;border-radius:var(--radius-lg);
+  background:linear-gradient(135deg,var(--accent),#0ea5e9);color:#000;
+  font-family:var(--mono);font-size:13px;font-weight:700;cursor:pointer;letter-spacing:0.06em;
+  text-transform:uppercase;transition:all 0.2s;box-shadow:0 4px 20px rgba(56,189,248,0.3)}
+.roll-btn:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(56,189,248,0.45)}
+.roll-btn:active{transform:translateY(0)}
+.roll-btn:disabled{opacity:0.45;cursor:not-allowed;transform:none}
+.roll-flavour{font-family:var(--mono);font-size:10px;color:var(--text3);text-align:center;
+  margin-top:8px;letter-spacing:0.04em;min-height:14px;transition:opacity 0.2s}
 
-/* Current chosen emoji display (after locked in) */
-.chosen-display {
-  font-size: 48px; line-height: 1;
-  display: flex; align-items: center; justify-content: center;
-  width: 80px; height: 80px;
-  background: var(--surface);
-  border: 2px solid var(--border2);
-  border-radius: 14px;
-  transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1);
-}
-.chosen-display.pop { transform: scale(1.3); }
+/* PREVIEW */
+.preview-box{font-family:var(--mono);font-size:12px;line-height:1.9;padding:16px;
+  background:var(--surface2);border-radius:var(--radius);border:1px solid var(--border);
+  min-height:400px;max-height:540px;overflow-y:auto;word-break:break-word;white-space:pre-wrap}
 
-/* Stats bar */
-.roll-stats {
-  display: flex; gap: 16px; justify-content: center;
-  font-family: var(--mono); font-size: 10px; color: var(--text3);
-  letter-spacing: 0.04em;
+/* Emoji line flash animation */
+@keyframes emojiFlash{
+  0%  {background:rgba(52,211,153,0.25);transform:scale(1.01)}
+  60% {background:rgba(52,211,153,0.08)}
+  100%{background:transparent;transform:scale(1)}
 }
-.roll-stat-val { color: var(--text2); font-weight: 600; }
+.emoji-flash{animation:emojiFlash 0.6s ease forwards;border-radius:6px;padding:0 4px;margin:0 -4px}
 
-/* Roll button */
-.roll-btn {
-  width: 100%;
-  padding: 14px;
-  border: none; border-radius: var(--radius-lg);
-  background: linear-gradient(135deg, var(--accent) 0%, #0ea5e9 100%);
-  color: #000;
-  font-family: var(--mono); font-size: 14px; font-weight: 700;
-  cursor: pointer; letter-spacing: 0.06em; text-transform: uppercase;
-  transition: all 0.2s;
-  box-shadow: 0 4px 20px rgba(56,189,248,0.3);
-  position: relative; overflow: hidden;
-}
-.roll-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(56,189,248,0.45); }
-.roll-btn:active { transform: translateY(0); }
-.roll-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-.roll-btn.locked {
-  background: linear-gradient(135deg, var(--green) 0%, #059669 100%);
-  box-shadow: 0 4px 20px rgba(52,211,153,0.3);
-}
+/* COPY BTN */
+.copy-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:15px;
+  border-radius:var(--radius-lg);border:none;
+  background:linear-gradient(135deg,var(--accent),#0ea5e9);color:#000;
+  font-family:var(--mono);font-size:14px;font-weight:600;cursor:pointer;letter-spacing:0.06em;
+  transition:all 0.2s;box-shadow:0 4px 20px rgba(56,189,248,0.3);text-transform:uppercase;margin-top:12px}
+.copy-btn:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(56,189,248,0.45)}
+.copy-btn.ok{background:linear-gradient(135deg,var(--green),#059669);
+  box-shadow:0 4px 20px rgba(52,211,153,0.35);color:#000}
 
-/* Streak badge */
-.streak-badge {
-  display: inline-flex; align-items: center; gap: 5px;
-  padding: 4px 10px; border-radius: 20px; margin-top: 10px;
-  font-family: var(--mono); font-size: 11px; font-weight: 600;
-  background: var(--gold-bg); border: 1px solid rgba(251,191,36,0.35);
-  color: var(--gold); letter-spacing: 0.04em;
-  animation: fadeIn 0.3s ease;
-  display: none;
-}
-@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+/* DATE PICKER */
+.dp-ov{position:fixed;inset:0;background:rgba(0,0,0,0.72);display:flex;align-items:center;
+  justify-content:center;z-index:200;backdrop-filter:blur(4px);padding:20px}
+.dp-modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-xl);
+  padding:20px;width:310px;max-width:100%;box-shadow:var(--shadow-lg)}
+.dp-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.dp-title{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--text)}
+.dp-nav{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text2);
+  font-size:14px;width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+.dp-nav:hover{color:var(--text);border-color:var(--border3)}
+.dp-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:12px}
+.dp-dow{font-family:var(--mono);font-size:9px;color:var(--text3);text-align:center;padding:4px 0;letter-spacing:0.06em}
+.dp-day{font-family:var(--mono);font-size:12px;text-align:center;padding:7px 2px;border-radius:8px;
+  cursor:pointer;border:1px solid transparent;transition:all 0.12s;color:var(--text2);background:none}
+.dp-day:hover{background:var(--surface3);color:var(--text)}
+.dp-day.empty{cursor:default;pointer-events:none}
+.dp-day.today{border-color:rgba(56,189,248,0.45);color:var(--accent);font-weight:600}
+.dp-day.sel{background:var(--accent-bg);border-color:rgba(56,189,248,0.5);color:var(--accent);font-weight:600}
+.dp-day.inr{background:rgba(56,189,248,0.06);color:var(--text)}
+.dp-day.sel2{background:var(--accent-bg);border-color:rgba(56,189,248,0.5);color:var(--accent);font-weight:600}
+.dp-hint{font-family:var(--mono);font-size:11px;color:var(--text2);text-align:center;margin-bottom:14px;min-height:16px}
+.dp-acts{display:flex;gap:8px;justify-content:flex-end}
+.dp-cancel{background:none;border:1px solid var(--border2);border-radius:var(--radius);
+  color:var(--text2);font-family:var(--mono);font-size:11px;padding:6px 14px;cursor:pointer}
+.dp-cancel:hover{border-color:var(--border3);color:var(--text)}
+.dp-ok{background:var(--green-bg);border:1px solid rgba(52,211,153,0.4);border-radius:var(--radius);
+  color:var(--green);font-family:var(--mono);font-size:11px;padding:6px 14px;cursor:pointer;transition:all 0.15s}
+.dp-ok:hover{background:rgba(52,211,153,0.18)}
+.dp-ok:disabled{opacity:0.3;cursor:default}
 
-/* Toast */
-.toast {
-  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(20px);
-  background: var(--surface); border: 1px solid var(--border2);
-  border-radius: 12px; padding: 10px 18px;
-  font-family: var(--mono); font-size: 12px; color: var(--text);
-  box-shadow: var(--shadow); z-index: 999;
-  opacity: 0; transition: all 0.3s; pointer-events: none;
-  white-space: nowrap; max-width: 90vw;
-}
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+/* TOAST */
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+  background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:10px 18px;
+  font-family:var(--mono);font-size:12px;color:var(--text);box-shadow:var(--shadow);z-index:999;
+  opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;max-width:90vw}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ── PREVIEW ──────────────────────────────────────────────── */
-.preview-box {
-  font-family: var(--mono); font-size: 12px; color: var(--text);
-  white-space: pre; line-height: 1.9;
-  padding: 16px; overflow: auto;
-  background: var(--surface2);
-  border-radius: var(--radius);
-  border: 1px solid var(--border);
-  min-height: 260px;
-  width: 100%; resize: none; cursor: text;
-  -webkit-user-select: text; user-select: text;
-}
-
-/* ── COPY BUTTON ──────────────────────────────────────────── */
-.copy-btn {
-  display: flex; align-items: center; justify-content: center; gap: 10px;
-  width: 100%; padding: 16px;
-  border-radius: var(--radius-lg); border: none;
-  background: linear-gradient(135deg, var(--accent) 0%, #0ea5e9 100%);
-  color: #000;
-  font-family: var(--mono); font-size: 14px; font-weight: 600;
-  cursor: pointer; letter-spacing: 0.06em;
-  transition: all 0.2s;
-  box-shadow: 0 4px 20px rgba(56,189,248,0.3);
-  text-transform: uppercase; margin-top: 12px;
-}
-.copy-btn:hover { transform: translateY(-1px); box-shadow: 0 6px 28px rgba(56,189,248,0.45); }
-.copy-btn:active { transform: translateY(0); }
-.copy-btn.success {
-  background: linear-gradient(135deg, var(--green) 0%, #059669 100%);
-  box-shadow: 0 4px 20px rgba(52,211,153,0.35); color: #000;
-}
-
-/* ── CONFIG PANEL ─────────────────────────────────────────── */
-.config-toggle {
-  display: flex; align-items: center; gap: 6px;
-  background: none; border: none; cursor: pointer;
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.06em;
-  color: var(--text3); padding: 0; transition: color 0.15s; text-transform: uppercase;
-}
-.config-toggle:hover { color: var(--text2); }
-.config-slide { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-.config-slide.open { max-height: 600px; }
-.config-inner { padding-top: 12px; }
-.cfg-label {
-  font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--text3); margin-bottom: 6px;
-}
-.cfg-row { display: flex; gap: 8px; align-items: center; }
-.cfg-row input[type="text"] {
-  flex: 1; background: var(--surface2); border: 1px solid var(--border2);
-  border-radius: var(--radius); color: var(--text);
-  font-family: var(--mono); font-size: 12px; padding: 7px 10px; outline: none;
-  transition: border-color 0.15s;
-}
-.cfg-row input[type="text"]:focus { border-color: var(--border3); }
-.cfg-save {
-  padding: 7px 14px; background: var(--green-bg);
-  border: 1px solid rgba(52,211,153,0.4);
-  border-radius: var(--radius); color: var(--green);
-  font-family: var(--mono); font-size: 11px; cursor: pointer;
-  white-space: nowrap; transition: all 0.15s;
-}
-.cfg-save:hover { background: rgba(52,211,153,0.18); }
-.cfg-hint {
-  margin-top: 10px; padding: 10px 12px;
-  background: rgba(0,0,0,0.25); border-radius: var(--radius);
-  border: 1px solid var(--border);
-  font-family: var(--mono); font-size: 10px; color: var(--text3); line-height: 1.9;
-}
-.cfg-hint strong { color: var(--text2); }
-.cfg-hint code { color: var(--accent); }
-
-/* ── SHEETS EMBED ─────────────────────────────────────────── */
-.sheets-embed-wrap {
-  width: 100%; border-radius: var(--radius); overflow: hidden;
-  border: 1px solid var(--border2); background: var(--surface2);
-}
-.sheets-embed-wrap iframe { width: 100%; height: 300px; border: none; display: block; }
-.sheets-placeholder {
-  height: 120px; display: flex; flex-direction: column;
-  align-items: center; justify-content: center; gap: 8px;
-  color: var(--text3); font-family: var(--mono); font-size: 11px; text-align: center;
-}
-.sheets-placeholder a { color: var(--accent); text-decoration: none; }
-
-/* ── DATE PICKER ──────────────────────────────────────────── */
-.dp-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.7);
-  display: flex; align-items: flex-start; justify-content: center;
-  padding-top: 40px; z-index: 200; backdrop-filter: blur(4px);
-}
-@media (min-width: 481px) { .dp-overlay { align-items: center; padding-top: 0; } }
-.dp-modal {
-  background: var(--surface); border: 1px solid var(--border2);
-  border-radius: var(--radius-xl); padding: 20px; width: 310px;
-  box-shadow: var(--shadow-lg);
-}
-.dp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
-.dp-title { font-family: var(--mono); font-size: 13px; font-weight: 600; color: var(--text); }
-.dp-nav {
-  background: var(--surface2); border: 1px solid var(--border2); border-radius: 8px;
-  color: var(--text2); font-size: 14px; width: 30px; height: 30px;
-  cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s;
-}
-.dp-nav:hover { color: var(--text); border-color: var(--border3); }
-.dp-grid { display: grid; grid-template-columns: repeat(7,1fr); gap: 2px; margin-bottom: 12px; }
-.dp-dow { font-family: var(--mono); font-size: 9px; color: var(--text3); text-align: center; padding: 4px 0; letter-spacing: 0.06em; }
-.dp-day {
-  font-family: var(--mono); font-size: 12px; text-align: center;
-  padding: 7px 2px; border-radius: 8px; cursor: pointer;
-  border: 1px solid transparent; transition: all 0.12s; color: var(--text2); background: none;
-}
-.dp-day:hover { background: var(--surface3); color: var(--text); }
-.dp-day.empty { cursor: default; pointer-events: none; }
-.dp-day.today { border-color: rgba(56,189,248,0.45); color: var(--accent); font-weight: 600; }
-.dp-day.selected { background: var(--accent-bg); border-color: rgba(56,189,248,0.5); color: var(--accent); font-weight: 600; }
-.dp-day.in-range { background: rgba(56,189,248,0.06); color: var(--text); }
-.dp-day.range-end { background: var(--accent-bg); border-color: rgba(56,189,248,0.5); color: var(--accent); font-weight: 600; }
-.dp-hint { font-family: var(--mono); font-size: 11px; color: var(--text2); text-align: center; margin-bottom: 14px; min-height: 16px; }
-.dp-actions { display: flex; gap: 8px; justify-content: flex-end; }
-.dp-cancel {
-  background: none; border: 1px solid var(--border2); border-radius: var(--radius);
-  color: var(--text2); font-family: var(--mono); font-size: 11px; padding: 6px 14px; cursor: pointer;
-}
-.dp-cancel:hover { border-color: var(--border3); color: var(--text); }
-.dp-confirm {
-  background: var(--green-bg); border: 1px solid rgba(52,211,153,0.4);
-  border-radius: var(--radius); color: var(--green);
-  font-family: var(--mono); font-size: 11px; padding: 6px 14px; cursor: pointer; transition: all 0.15s;
-}
-.dp-confirm:hover { background: rgba(52,211,153,0.18); }
-.dp-confirm:disabled { opacity: 0.3; cursor: default; }
-
-@media (max-width: 480px) {
-  .page { padding: 14px 12px 48px; }
-  .widget-body { padding: 12px; }
-  .copy-btn { font-size: 13px; padding: 15px; }
-  .dp-modal { width: calc(100vw - 32px); }
-  .main-grid { gap: 10px; }
-  .slot-window { width: 88px; height: 88px; }
-  .slot-item { width: 88px; height: 88px; font-size: 44px; }
+@media(max-width:480px){
+  .page{padding:14px 12px 48px}
+  .wb{padding:12px}
+  .copy-btn{font-size:13px;padding:14px}
+  .slot-win{width:80px;height:80px}
+  .slot-item{width:80px;height:80px;font-size:42px}
+  .slot-q{width:80px;height:80px;font-size:42px}
 }
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
 <div class="topbar">
   <div class="topbar-logo">OH</div>
   <span class="topbar-title">OH Movement</span>
-  <div class="topbar-divider" style="width:1px;height:18px;background:var(--border2);flex-shrink:0;"></div>
-  <span class="topbar-date-str" id="topbar-date"></span>
+  <div class="topbar-div"></div>
+  <span class="topbar-date" id="topbar-date"></span>
   <div class="topbar-right">
     <div class="topbar-clock" id="topbar-clock">00:00:00</div>
   </div>
@@ -580,830 +350,770 @@ input[type="date"]:focus { border-color: var(--border3); }
 
 <div class="page">
 
-  <!-- HOURS BANNER -->
-  <div class="hours-banner" id="hours-banner">
-    <div class="banner-side">
-      <div class="banner-eyebrow">Office Hours</div>
-      <div class="banner-label" id="banner-hours-label">—</div>
-      <div class="banner-sub" id="banner-hours-sub">Mon – Thu · 0800–1800</div>
-    </div>
-    <div class="banner-center">
-      <div class="banner-countdown-label" id="banner-cdown-label">Opens in</div>
-      <div class="banner-countdown" id="banner-countdown">00:00:00</div>
-      <div class="banner-status-chip chip-closed" id="banner-status-chip">
-        <span class="status-dot"></span>
-        <span id="banner-status-text">Closed</span>
-      </div>
-    </div>
-    <div class="banner-side" style="align-items:flex-end;text-align:right;">
-      <div class="banner-eyebrow">Closes</div>
-      <div class="banner-label" id="banner-close-label">—</div>
-      <div class="banner-sub" id="banner-close-sub">Fri · 0800–1730</div>
+  <!-- WEEKEND CARD -->
+  <div id="weekend-card" style="display:none">
+    <div class="weekend-card">
+      <div class="wk-emoji" id="wk-emoji">🏖️</div>
+      <div class="wk-title" id="wk-title">Weekend</div>
+      <div class="wk-sub" id="wk-sub">Enjoy the break.</div>
+      <div class="wk-cdown" id="wk-cdown">--:--:--</div>
+      <div class="wk-cdown-lbl">until Monday OH opens</div>
     </div>
   </div>
 
-  <!-- MAIN GRID -->
-  <div class="main-grid">
+  <!-- SHIFT BANNER (weekdays) -->
+  <div id="shift-banner" style="display:none">
+    <div class="shift-banner">
+      <div class="bn-half">
+        <div class="bn-eyebrow">Office Hours</div>
+        <div class="bn-main" id="bn-hours">0800 – 1800</div>
+        <div class="bn-sub" id="bn-day">Monday – Thursday</div>
+      </div>
+      <div class="bn-center">
+        <div class="bn-cdown-lbl" id="bn-cdown-lbl">Closes in</div>
+        <div class="bn-cdown" id="bn-cdown">--:--:--</div>
+        <div class="bn-chip c-open" id="bn-chip"><span class="sdot"></span><span id="bn-chip-txt">Open</span></div>
+      </div>
+      <div class="bn-half" style="align-items:flex-end;text-align:right">
+        <div class="bn-eyebrow">Next Rollcall</div>
+        <div class="bn-main" id="bn-next-rc">—</div>
+        <div class="bn-sub" id="bn-rc-in">—</div>
+      </div>
+    </div>
+    <!-- ROLLCALL BAR -->
+    <div class="rc-bar">
+      <span class="rc-lbl">Rollcalls</span>
+      <div class="rc-pills" id="rc-pills"></div>
+      <div class="rc-cdown" id="rc-cdown"></div>
+    </div>
+  </div>
 
-    <!-- LEFT COLUMN -->
-    <div style="display:flex;flex-direction:column;gap:12px;">
+  <div class="grid">
 
-      <!-- CONTROLS WIDGET -->
+    <!-- LEFT -->
+    <div>
+
+      <!-- DATE WIDGET -->
       <div class="widget">
-        <div class="widget-header">
-          <span class="widget-title">Controls</span>
-          <span class="widget-badge badge-info" id="ctrl-badge">TODAY</span>
+        <div class="wh">
+          <span class="wh-title">Date</span>
+          <span class="badge b-info" id="date-badge">TODAY</span>
         </div>
-        <div class="widget-body">
-          <div class="ctrl-row">
-            <span class="ctrl-label">Date</span>
+        <div class="wb">
+          <div class="date-row">
             <input type="date" id="date-input" onchange="onDateChange()">
+            <button class="day-btn" onclick="shiftDay(-1)">← Prev</button>
+            <button class="day-btn today" onclick="goToday()">Today</button>
+            <button class="day-btn" onclick="shiftDay(1)">Next →</button>
           </div>
         </div>
       </div>
 
       <!-- PERSONNEL WIDGET -->
       <div class="widget">
-        <div class="widget-header">
-          <span class="widget-title">Personnel</span>
-          <span class="widget-badge badge-ok" id="roster-badge" style="display:none">loaded</span>
+        <div class="wh">
+          <span class="wh-title">Personnel</span>
+          <span class="badge b-ok" id="roster-badge">ready</span>
         </div>
-        <div class="widget-body">
-          <div class="roster-meta">
-            <div class="rdot loading" id="roster-dot"></div>
-            <span id="roster-status-text">loading...</span>
-          </div>
+        <div class="wb">
+          <div class="r-meta"><div class="rdot" id="rdot"></div><span id="r-status">loaded</span></div>
           <div id="person-list"></div>
+          <!-- TIME OFF PANEL -->
+          <div class="to-panel">
+            <div class="to-hdr">⏰ Time Off / Partial</div>
+            <div class="to-rows" id="to-rows"></div>
+            <button class="to-add" onclick="addToRow()">+ Add time off entry</button>
+          </div>
         </div>
       </div>
 
-      <!-- ROSTER SHEET WIDGET -->
+      <!-- ROSTER EDITOR -->
       <div class="widget">
-        <div class="widget-header" style="cursor:pointer;" onclick="toggleRosterPanel()">
-          <span class="widget-title">Roster Sheet</span>
-          <div style="display:flex;align-items:center;gap:10px;">
-            <button class="config-toggle" onclick="event.stopPropagation();toggleConfig()" style="pointer-events:auto;">
-              ⚙ <span id="cfg-toggle-text">configure</span>
-            </button>
-            <span id="roster-chevron" style="font-family:var(--mono);font-size:12px;color:var(--text3);transition:transform 0.2s;">▸</span>
-          </div>
+        <div class="wh col-hdr" onclick="toggleCol('roster-body','roster-chev')">
+          <span class="wh-title">Edit Roster</span>
+          <span class="chevron" id="roster-chev">▸</span>
         </div>
-        <div class="config-slide" id="roster-panel">
-          <div style="padding:0 16px;">
-            <div class="config-slide" id="config-slide">
-              <div class="config-inner">
-                <div class="cfg-label">Google Sheet ID</div>
-                <div class="cfg-row">
-                  <input type="text" id="sheet-id-input" placeholder="paste Sheet ID here">
-                  <button class="cfg-save" onclick="saveSheetId()">Save</button>
-                </div>
-                <div class="cfg-hint">
-                  <strong>Column A</strong> = Group (MAIN or EMS) &nbsp;·&nbsp; <strong>Column B</strong> = Name<br>
-                  Share → <strong>Anyone with link → Viewer</strong><br>
-                  File → Share → <strong>Publish to web → Sheet → CSV</strong><br>
-                  Sheet ID is the part of the URL between <code>/d/</code> and <code>/edit</code>
-                </div>
-                <div class="divider"></div>
-              </div>
-            </div>
-            <div class="sheets-embed-wrap" id="sheets-embed-wrap" style="margin-bottom:14px;">
-              <div class="sheets-placeholder" id="sheets-placeholder">
-                <span>Configure a Sheet ID above to<br>view and edit your roster here</span>
-              </div>
-            </div>
+        <div class="collapsible" id="roster-body">
+          <div class="wb" style="padding-top:8px">
+            <div class="r-editor" id="r-editor"></div>
+            <button class="r-save" onclick="saveRoster()">✓ Save Roster</button>
           </div>
         </div>
       </div>
 
     </div>
 
-    <!-- RIGHT COLUMN -->
-    <div style="display:flex;flex-direction:column;gap:12px;">
+    <!-- RIGHT -->
+    <div>
 
       <!-- EMOJI ROLLER -->
-      <div class="widget emoji-section">
-        <div class="widget-header">
-          <span class="emoji-title widget-title">Emoji of the Day</span>
-          <span class="emoji-roll-count" id="roll-count-display">0 rolls</span>
+      <div class="widget">
+        <div class="wh">
+          <span class="wh-title">Emoji of the Day</span>
+          <span class="badge b-info" id="roll-badge">not rolled</span>
         </div>
-        <div class="emoji-body widget-body">
-          <div class="slot-machine">
-            <div class="slot-window" id="slot-window">
-              <div class="slot-track" id="slot-track">
-                <!-- populated by JS -->
-              </div>
+        <div class="wb">
+          <div class="roller-wrap">
+            <div class="slot-win" id="slot-win">
+              <div class="slot-q" id="slot-q">?</div>
+              <div class="slot-track" id="slot-track" style="display:none"></div>
               <div class="slot-shimmer"></div>
             </div>
-            <div class="roll-stats">
-              <span>Best streak: <span class="roll-stat-val" id="stat-streak">0</span></span>
-              <span>Total: <span class="roll-stat-val" id="stat-total">0</span></span>
+            <div class="roller-right">
+              <div class="roll-stats">
+                <div class="rs-item">Rolls: <span class="rs-val" id="stat-rolls">0</span></div>
+                <div class="rs-item">Best: <span class="rs-val" id="stat-best">0</span></div>
+              </div>
+              <div class="streak-box" id="streak-box">
+                <span class="streak-icon" id="streak-icon">💤</span>
+                <span id="streak-msg">No rolls yet</span>
+              </div>
             </div>
-            <div class="streak-badge" id="streak-badge">🔥 Streak: <span id="streak-val">0</span></div>
           </div>
           <button class="roll-btn" id="roll-btn" onclick="rollEmoji()">🎲 Roll Today's Emoji</button>
-          <div style="margin-top:8px;font-family:var(--mono);font-size:10px;color:var(--text3);text-align:center;letter-spacing:0.04em;" id="roll-flavour"></div>
+          <div class="roll-flavour" id="roll-flavour"></div>
         </div>
       </div>
 
-      <!-- PREVIEW WIDGET -->
+      <!-- PREVIEW -->
       <div class="widget">
-        <div class="widget-header">
-          <span class="widget-title">Message Preview</span>
+        <div class="wh">
+          <span class="wh-title">Message Preview</span>
         </div>
-        <div class="widget-body">
-          <textarea class="preview-box" id="preview" readonly spellcheck="false">Loading...</textarea>
-          <button class="copy-btn" id="copy-btn" onclick="copyMessage()">
-            ✦ &nbsp;Copy to Clipboard
-          </button>
+        <div class="wb">
+          <div class="preview-box" id="preview-box"></div>
+          <button class="copy-btn" id="copy-btn" onclick="copyMsg()">✦ &nbsp;Copy to Clipboard</button>
         </div>
       </div>
 
     </div>
-  </div><!-- /main-grid -->
-</div><!-- /page -->
+  </div>
+</div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
 
 <script>
-// ── CONFIGURATION ──────────────────────────────────────────
-const SHEET_ID_KEY = 'oh_rollcall_sheet_id';
+/* ═══════════════════════════════════════
+   CONSTANTS
+═══════════════════════════════════════ */
+const ROSTER_KEY   = 'oh_roster_v2';
+const SAVED_KEY    = 'oh_saved_v2';
 
-// ── PERSONNEL ROSTER (fixed, no rota rotation) ────────────
-const MAIN_TEAM = [
-  'LCP IRFAN','CPL RAZIN','CPL RIZQ','LCP JEFF',
-  'PTE HUZAIFAH','LCP ZACHARIAH','LCP MARCUS',
-  'PTE MAHESH','PTE KHAIRUL','LCP KAR KIT',
-  'PTE FERDINAND','PTE IRYAN','PTE GARRET','PTE MIRZA'
-];
-const EMS_TEAM = [
-  'CPL KHAIRI','PTE DARWISY','PTE CYRUS','LCP ZEN','CPL WEN XUAN'
-];
+const DEFAULT_ROSTER = {
+  MAIN:['LCP IRFAN','CPL RAZIN','CPL RIZQ','LCP JEFF',
+        'PTE HUZAIFAH','LCP ZACHARIAH','LCP MARCUS',
+        'PTE MAHESH','PTE KHAIRUL','LCP KAR KIT',
+        'PTE FERDINAND','PTE IRYAN','PTE GARRET','PTE MIRZA'],
+  EMS: ['CPL KHAIRI','PTE DARWISY','PTE CYRUS','LCP ZEN','CPL WEN XUAN']
+};
 
-// ── EMOJI POOL ────────────────────────────────────────────
 const EMOJI_POOL = [
   '🩻','✌️','😴','🧚‍♂️','🫃','🫠','🐸','🌵','🎯','🦋',
-  '🍄','🎪','🌊','🦆','🏔️','🎭','🔮','🧃','🌸','🐢',
-  '🎵','🌙','🍉','🦀','🧊','🌈','🐙','🎲','🦜','🍜',
-  '🏄','🧸','🌻','🐡','🎺','🦩','🌍','🧩','🍋','🎠',
-  '🦭','🌺','🐻','🎋','🧁','🐝','🌴','🎪','🦊','🐉'
+  '🍄','🌊','🦆','🏔️','🎭','🔮','🧃','🌸','🐢','🎵',
+  '🌙','🍉','🦀','🧊','🌈','🐙','🎲','🦜','🍜','🏄',
+  '🧸','🌻','🐡','🎺','🦩','🌍','🧩','🍋','🦭','🌺',
+  '🐻','🎋','🧁','🐝','🌴','🦊','🐉','🎪','🌟','🍀',
+
+  '🦄','🪼','🦕','🦖','🐿️','🦔','🦦','🦥','🦨','🦬',
+  '🦚','🦢','🪿','🐓','🦤','🦘','🦡','🐇','🐁','🐀',
+  '🐉','🐲','🦎','🐍','🐊','🦈','🐋','🐬','🪲','🐞',
+  '🪰','🪱','🐌','🦗','🕷️','🦂','🐚','🪸','🌼','🌷',
+
+  '🌹','🪻','🌱','🌿','☘️','🍁','🍂','🍃','🌾','🌲',
+  '🌳','🪵','🪨','⛰️','🌋','🏝️','🏕️','🌅','🌄','🌠',
+  '☁️','⛅','⚡','☄️','🔥','💧','❄️','🌪️','🫧','🌌',
+
+  '🍇','🍓','🍒','🥝','🍍','🥥','🥑','🌽','🥕','🫑',
+  '🥨','🧇','🍕','🌮','🍣','🍙','🍤','🥟','🍩','🍪',
+  '🧋','☕','🫖','🍵','🧃','🥤','🧉','🍯','🍦','🍰',
+
+  '🎨','🖌️','🖍️','🧵','🪡','🎹','🥁','🎸','🎻','🎷',
+  '🎮','🕹️','🧠','📚','📼','📷','🎥','📡','🛰️','💿',
+  '🪩','🎇','🎆','🧨','🎈','🎁','🪅','🎊','🎉','🃏',
+
+  '🚀','🛸','🚁','⛵','🚂','🚲','🛹','🛼','🪂','🎢',
+  '🎡','🗺️','🧭','🏕️','🏖️','🏜️','🏟️','🛶','🚦','🗿',
+
+  '⌛','⏳','🕰️','💡','🪞','🧸','🛋️','🪑','🛏️','🧼',
+  '🪥','🧴','🪄','🗝️','🔑','📎','✂️','📌','🧲','⚙️',
+
+  '💎','⚜️','🌀','♟️','🪄','🧿','🪬','🔔','🎐','🕯️',
+  '📿','🧪','⚗️','🔭','🧬','🦠','💫','⭐','🌞','🌛',
+
+  '🙂','😎','🥳','🤠','🧐','😶‍🌫️','🥶','😵‍💫','🤖','👾',
+  '👻','💀','☠️','🎃','😺','😸','😹','🙀','😼','🤡',
+
+  '❤️','🧡','💛','💚','💙','💜','🖤','🤍','🤎','💖',
+  '💘','💝','✨','💫','⚡','🌠','🎆','🫶','🤝','🙌'
 ];
 
-// Flavour texts for roll button
-const FLAVOUR_TEXTS = [
+const FLAVOURS_SPIN = [
   'the universe decides...','fate is spinning...','let destiny choose...',
   'consulting the emoji oracle...','the wheel of fortune turns...',
-  'asking the cosmos...','probability engaged...','rolling for vibes...',
-  'the algorithm speaks...','quantum randomness activated...',
-  'today\'s energy incoming...','channeling the spirits...',
-  'the dice have been cast...','fortune favours the roller...',
-  'commencing sacred roll...'
+  'rolling for vibes...','quantum randomness activated...',
+  'channeling the spirits...','the algorithm speaks...',
+  'today\'s energy incoming...','commencing sacred roll...'
+];
+const FLAVOURS_LAND = [
+  '🎯 locked in.','✅ vibe confirmed.','🌟 excellent choice.',
+  '💫 the emoji has spoken.','🎰 jackpot.','🏆 worthy selection.',
+  '⚡ energy set.','🔮 destiny fulfilled.','🎪 spectacular.','🍀 feeling lucky.'
 ];
 
-const WIN_MESSAGES = [
-  '🎯 locked in.','✅ today\'s vibe: set.','🌟 excellent choice.',
-  '💫 the emoji has spoken.','🎰 jackpot energy.','🏆 a worthy selection.',
-  '⚡ vibes confirmed.','🎪 spectacular.','🔮 destiny fulfilled.',
+const STREAK_LEVELS = [
+  {min:0,  cls:'',       icon:'💤', msg:'No rolls yet'},
+  {min:1,  cls:'',       icon:'🎲', msg:'First roll!'},
+  {min:3,  cls:'s-warm', icon:'🔵', msg:'On a roll — {n} deep'},
+  {min:7,  cls:'s-hot',  icon:'🔥', msg:'Getting hot — {n} rolls!'},
+  {min:12, cls:'s-hot',  icon:'🔥🔥',msg:'Scorching — {n} rolls!!'},
+  {min:18, cls:'s-fire', icon:'💀', msg:'Unhinged. {n} rolls.'},
+  {min:28, cls:'s-fire', icon:'👹', msg:'CURSED ROLLER — {n}!!!!'},
 ];
 
-// ── STATE ─────────────────────────────────────────────────
-let statuses = {};
-let mainRoster = [...MAIN_TEAM];
-let emsRoster  = [...EMS_TEAM];
-let currentEmoji = null;
-let isRolling = false;
+/* OH schedule */
+const OH = {
+  wday:  {start:8*60,    end:18*60},
+  fri:   {start:8*60,    end:17*60+30},
+  rc:    {wday:[8*60,14*60,18*60], fri:[8*60,14*60+30,17*60+30]}
+};
+
+/* ═══════════════════════════════════════
+   STATE
+═══════════════════════════════════════ */
+let roster    = JSON.parse(localStorage.getItem(ROSTER_KEY)||'null') || deepCopy(DEFAULT_ROSTER);
+let statuses  = {};
+let toRows    = [];   // time-off rows
+let curEmoji  = null;
 let rollCount = 0;
-let rollStreak = 0;
-let bestStreak = 0;
-let rollInterval = null;
-let rollTimeout = null;
+let bestRolls = 0;
+let isRolling = false;
 
-// ── DATE HELPERS ──────────────────────────────────────────
-function getSelectedDate() {
-  const v = document.getElementById('date-input').value;
-  if (!v) return new Date();
-  const [y,m,d] = v.split('-').map(Number);
+function deepCopy(o){return JSON.parse(JSON.stringify(o))}
+
+/* ═══════════════════════════════════════
+   DATE HELPERS
+═══════════════════════════════════════ */
+function selDate(){
+  const v=document.getElementById('date-input').value;
+  if(!v)return new Date();
+  const[y,m,d]=v.split('-').map(Number);
   return new Date(y,m-1,d);
 }
-function fmtDate(date) {
-  return String(date.getDate()).padStart(2,'0') + '/'
-       + String(date.getMonth()+1).padStart(2,'0') + '/'
-       + String(date.getFullYear());
+function fmt(d){return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0')+'/'+d.getFullYear()}
+function fmtKey(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function dayName(d){return d.toLocaleDateString('en-SG',{weekday:'long'})}
+function isWknd(d){const w=d.getDay();return w===0||w===6}
+function isFri(d){return d.getDay()===5}
+function ohHours(d){return isFri(d)?OH.fri:OH.wday}
+function rcTimes(d){return isFri(d)?OH.rc.fri:OH.rc.wday}
+function secsUntil(targetMins){
+  const n=new Date(),cur=n.getHours()*60+n.getMinutes();
+  let diff=targetMins-cur;if(diff<0)diff+=24*60;
+  return diff*60-n.getSeconds();
 }
-function getDayName(date) {
-  return date.toLocaleDateString('en-SG', { weekday: 'long' });
+function hms(s){
+  s=Math.max(0,s);
+  return String(Math.floor(s/3600)).padStart(2,'0')+':'+
+    String(Math.floor((s%3600)/60)).padStart(2,'0')+':'+
+    String(s%60).padStart(2,'0');
 }
-function isWeekend(date) {
-  const d = date.getDay(); return d === 0 || d === 6;
-}
-function isFriday(date) { return date.getDay() === 5; }
+function m2s(m){return String(Math.floor(m/60)).padStart(2,'0')+String(m%60).padStart(2,'0')}
 
-// OH hours: Mon-Thu 0800-1800, Fri 0800-1730
-function getOHHours(date) {
-  if (isWeekend(date)) return null;
-  return { start: 8*60, end: isFriday(date) ? 17*60+30 : 18*60 };
-}
-
-function getSecondsUntil(targetMins) {
-  const now = new Date();
-  const cur = now.getHours()*60 + now.getMinutes();
-  let diff = targetMins - cur;
-  if (diff < 0) diff += 24*60;
-  return diff * 60 - now.getSeconds();
-}
-
-function hhmmss(secs) {
-  if (secs < 0) secs = 0;
-  const h = Math.floor(secs/3600);
-  const m = Math.floor((secs%3600)/60);
-  const s = secs%60;
-  return `${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+/* ═══════════════════════════════════════
+   CLOCK + BANNER
+═══════════════════════════════════════ */
+function tick(){
+  const n=new Date();
+  document.getElementById('topbar-clock').textContent=
+    String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0');
+  updateBanner();updateRCBar();
 }
 
-// ── CLOCK & BANNER ────────────────────────────────────────
-function tickClock() {
-  const now = new Date();
-  const hh = String(now.getHours()).padStart(2,'0');
-  const mm = String(now.getMinutes()).padStart(2,'0');
-  const ss = String(now.getSeconds()).padStart(2,'0');
-  document.getElementById('topbar-clock').textContent = `${hh}:${mm}:${ss}`;
-  updateBanner();
+function updateBanner(){
+  const n=new Date(),today=new Date(n.getFullYear(),n.getMonth(),n.getDate());
+  const wknd=isWknd(today);
+  document.getElementById('weekend-card').style.display=wknd?'':'none';
+  document.getElementById('shift-banner').style.display=wknd?'none':'';
+  if(wknd){updateWeekend(n,today);}else{updateShift(n,today);}
 }
 
-function updateBanner() {
-  const now = new Date();
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const hours = getOHHours(today);
-  const curMins = now.getHours()*60 + now.getMinutes();
-
-  const chip = document.getElementById('banner-status-chip');
-  const label = document.getElementById('banner-status-text');
-  const cdLabel = document.getElementById('banner-cdown-label');
-  const cdEl = document.getElementById('banner-countdown');
-  const hoursLabel = document.getElementById('banner-hours-label');
-  const closeSub = document.getElementById('banner-close-sub');
-
-  if (!hours) {
-    // Weekend
-    chip.className='banner-status-chip chip-closed';
-    label.textContent='Weekend';
-    cdLabel.textContent='Next OH in';
-    // Find next Monday
-    const daysUntilMon = (8 - today.getDay()) % 7 || 7;
-    const secsLeft = daysUntilMon * 86400 - (now.getHours()*3600 + now.getMinutes()*60 + now.getSeconds()) + 8*3600;
-    cdEl.textContent = hhmmss(secsLeft);
-    hoursLabel.textContent = 'Weekend';
-    return;
-  }
-
-  const isOpen = curMins >= hours.start && curMins < hours.end;
-  const endTimeStr = isFriday(today) ? '1730' : '1800';
-  hoursLabel.textContent = `0800 – ${endTimeStr}`;
-
-  if (isOpen) {
-    chip.className='banner-status-chip chip-open';
-    label.textContent='Open';
-    cdLabel.textContent='Closes in';
-    cdEl.textContent = hhmmss(getSecondsUntil(hours.end));
-  } else if (curMins < hours.start) {
-    chip.className='banner-status-chip chip-soon';
-    label.textContent='Opens soon';
-    cdLabel.textContent='Opens in';
-    cdEl.textContent = hhmmss(getSecondsUntil(hours.start));
-  } else {
-    chip.className='banner-status-chip chip-closed';
-    label.textContent='Closed';
-    cdLabel.textContent='Opens tomorrow';
-    // Secs until 0800 tomorrow
-    const secsLeft = getSecondsUntil(8*60) || 86400;
-    cdEl.textContent = hhmmss(secsLeft);
-  }
+function updateWeekend(n,today){
+  const dow=today.getDay(),hour=n.getHours();
+  const isSun=dow===0,isSunEvening=isSun&&hour>=18;
+  const em=document.getElementById('wk-emoji');
+  const ti=document.getElementById('wk-title');
+  const su=document.getElementById('wk-sub');
+  if(isSunEvening){em.textContent='📋';ti.textContent='Sunday Night — Prep Mode';su.textContent='New work week starts tomorrow. Get the movement chart ready.';}
+  else if(isSun){em.textContent='☀️';ti.textContent='Sunday';su.textContent='Rest up — one more day until the work week.';}
+  else{em.textContent='🏖️';ti.textContent='Saturday';su.textContent='Weekend. You deserve it.';}
+  const daysToMon=(8-dow)%7||7;
+  const secs=daysToMon*86400-(n.getHours()*3600+n.getMinutes()*60+n.getSeconds())+8*3600;
+  document.getElementById('wk-cdown').textContent=hms(secs);
 }
 
-// ── TOPBAR DATE ───────────────────────────────────────────
-function updateTopbarDate() {
-  const d = getSelectedDate();
-  const str = d.toLocaleDateString('en-SG', {weekday:'short', day:'numeric', month:'short', year:'numeric'});
-  document.getElementById('topbar-date').textContent = str;
-  document.getElementById('ctrl-badge').textContent =
-    fmtDate(d) === fmtDate(new Date()) ? 'TODAY' : 'CUSTOM';
+function updateShift(n,today){
+  const cur=n.getHours()*60+n.getMinutes();
+  const h=ohHours(today),fri=isFri(today);
+  document.getElementById('bn-hours').textContent=fri?'0800 – 1730':'0800 – 1800';
+  document.getElementById('bn-day').textContent=fri?'Friday':'Monday – Thursday';
+  const chip=document.getElementById('bn-chip'),chipTxt=document.getElementById('bn-chip-txt');
+  const lbl=document.getElementById('bn-cdown-lbl'),cd=document.getElementById('bn-cdown');
+  const isOpen=cur>=h.start&&cur<h.end,isBefore=cur<h.start;
+  if(isOpen){chip.className='bn-chip c-open';chipTxt.textContent='Open';lbl.textContent='Closes in';cd.textContent=hms(secsUntil(h.end));}
+  else if(isBefore){chip.className='bn-chip c-soon';chipTxt.textContent='Opens soon';lbl.textContent='Opens in';cd.textContent=hms(secsUntil(h.start));}
+  else{chip.className='bn-chip c-closed';chipTxt.textContent='Closed';lbl.textContent='Opens tomorrow';cd.textContent=hms(secsUntil(8*60));}
+  const rcs=rcTimes(today),next=rcs.find(t=>t>cur);
+  document.getElementById('bn-next-rc').textContent=next!==undefined?m2s(next)+'hrs':'Done today';
+  document.getElementById('bn-rc-in').textContent=next!==undefined?'in '+hms(secsUntil(next)):'';
 }
 
-// ── EMOJI SLOT MACHINE ────────────────────────────────────
-const SLOT_COLS = 5; // items visible in track padding
-let trackEmojis = [...EMOJI_POOL].sort(() => Math.random()-0.5);
-
-function buildSlotTrack() {
-  const track = document.getElementById('slot-track');
-  track.innerHTML = '';
-  // Pre-fill with shuffled emojis for the reel
-  const pool = [];
-  while (pool.length < 40) {
-    const shuffled = [...EMOJI_POOL].sort(() => Math.random()-0.5);
-    pool.push(...shuffled);
-  }
-  trackEmojis = pool;
-  pool.forEach(e => {
-    const div = document.createElement('div');
-    div.className = 'slot-item'; div.textContent = e;
-    track.appendChild(div);
+function updateRCBar(){
+  const n=new Date(),today=new Date(n.getFullYear(),n.getMonth(),n.getDate());
+  if(isWknd(today))return;
+  const cur=n.getHours()*60+n.getMinutes(),rcs=rcTimes(today);
+  const pills=document.getElementById('rc-pills');pills.innerHTML='';
+  const nextIdx=rcs.findIndex(t=>t>cur);
+  rcs.forEach((t,i)=>{
+    const p=document.createElement('div');p.className='rc-pill';
+    if(i===nextIdx)p.classList.add('next');else if(t<=cur)p.classList.add('past');
+    p.textContent=m2s(t)+'hrs';pills.appendChild(p);
   });
-  // Position at item 5 initially
-  const win = document.getElementById('slot-window');
-  const itemH = win.offsetHeight;
-  track.style.transform = `translateY(0px)`;
+  const next=nextIdx>=0?rcs[nextIdx]:undefined;
+  document.getElementById('rc-cdown').textContent=next!==undefined?hms(secsUntil(next))+' to next RC':'All rollcalls done';
 }
 
-function rollEmoji() {
-  if (isRolling) return;
-  isRolling = true;
+/* ═══════════════════════════════════════
+   ROSTER EDITOR
+═══════════════════════════════════════ */
+function toggleCol(bodyId,chevId){
+  const b=document.getElementById(bodyId),c=document.getElementById(chevId);
+  const open=b.classList.toggle('open');
+  c.style.transform=open?'rotate(90deg)':'rotate(0deg)';
+  if(open&&bodyId==='roster-body')buildRosterEditor();
+}
 
-  const btn = document.getElementById('roll-btn');
-  btn.disabled = true;
-  btn.classList.remove('locked');
-
-  const win = document.getElementById('slot-window');
-  const track = document.getElementById('slot-track');
-  const itemH = win.offsetHeight; // slot window height = item height
-
-  // Expand the track with fresh emojis
-  track.innerHTML = '';
-  const pool = [];
-  while (pool.length < 80) {
-    const shuffled = [...EMOJI_POOL].sort(() => Math.random()-0.5);
-    pool.push(...shuffled);
-  }
-  pool.forEach(e => {
-    const div = document.createElement('div');
-    div.className = 'slot-item'; div.textContent = e;
-    track.appendChild(div);
+function buildRosterEditor(){
+  const ed=document.getElementById('r-editor');ed.innerHTML='';
+  ['MAIN','EMS'].forEach(grp=>{
+    const lbl=document.createElement('div');lbl.className='r-grp-lbl';
+    lbl.textContent=grp==='MAIN'?'Main Team':'EMS Team';ed.appendChild(lbl);
+    (roster[grp]||[]).forEach((n,i)=>ed.appendChild(makeRRow(grp,i,n)));
+    const add=document.createElement('button');add.className='r-add';
+    add.textContent='+ Add '+(grp==='MAIN'?'Main':'EMS')+' member';
+    add.onclick=()=>{roster[grp].push('');buildRosterEditor();};
+    ed.appendChild(add);
   });
-  track.style.transition = 'none';
-  track.style.transform = 'translateY(0px)';
-
-  win.classList.add('rolling');
-
-  // Animation phases: fast → slow → stop
-  const totalItems = pool.length;
-  const stopAt = 55 + Math.floor(Math.random() * 15); // land somewhere in middle
-  const totalPx = stopAt * itemH;
-
-  let currentPx = 0;
-  let speed = itemH * 0.4; // initial step
-  const maxSpeed = itemH * 1.2;
-  const duration = 2200 + Math.random() * 800;
-  const startTime = performance.now();
-
-  document.getElementById('roll-flavour').textContent =
-    FLAVOUR_TEXTS[Math.floor(Math.random() * FLAVOUR_TEXTS.length)];
-
-  function animate(now) {
-    const elapsed = now - startTime;
-    const progress = Math.min(elapsed / duration, 1);
-
-    // Ease: fast in middle, decelerate at end
-    let step;
-    if (progress < 0.6) {
-      // accelerate
-      step = maxSpeed * (progress / 0.6);
-    } else {
-      // decelerate — ease-out
-      const decel = (progress - 0.6) / 0.4;
-      step = maxSpeed * (1 - decel * decel * decel);
-    }
-    step = Math.max(step, 2);
-
-    currentPx += step;
-
-    // Wrap track if needed
-    if (currentPx > totalPx - itemH * 5) {
-      // snap to final
-      currentPx = totalPx;
-    }
-
-    track.style.transition = 'none';
-    track.style.transform = `translateY(-${currentPx}px)`;
-
-    if (progress < 1 && currentPx < totalPx) {
-      requestAnimationFrame(animate);
-    } else {
-      // Snap to exact item boundary
-      const landedIdx = Math.round(currentPx / itemH);
-      track.style.transform = `translateY(-${landedIdx * itemH}px)`;
-
-      const chosenEmoji = pool[Math.min(landedIdx, pool.length-1)];
-      landEmoji(chosenEmoji);
-    }
-  }
-
-  requestAnimationFrame(animate);
 }
 
-function landEmoji(emoji) {
-  const win = document.getElementById('slot-window');
-  win.classList.remove('rolling');
-
-  currentEmoji = emoji;
-  rollCount++;
-  rollStreak++;
-  if (rollStreak > bestStreak) bestStreak = rollStreak;
-
-  document.getElementById('stat-streak').textContent = bestStreak;
-  document.getElementById('stat-total').textContent = rollCount;
-  document.getElementById('roll-count-display').textContent =
-    rollCount === 1 ? '1 roll' : `${rollCount} rolls`;
-
-  const streakBadge = document.getElementById('streak-badge');
-  if (rollStreak >= 3) {
-    streakBadge.style.display = 'inline-flex';
-    document.getElementById('streak-val').textContent = rollStreak;
-  }
-
-  // Flash border
-  win.style.border = '2px solid var(--green)';
-  win.style.boxShadow = '0 0 20px rgba(52,211,153,0.4)';
-  setTimeout(() => {
-    win.style.border = '';
-    win.style.boxShadow = '';
-  }, 800);
-
-  document.getElementById('roll-flavour').textContent =
-    WIN_MESSAGES[Math.floor(Math.random() * WIN_MESSAGES.length)];
-
-  const btn = document.getElementById('roll-btn');
-  btn.textContent = `🎲 Roll Again (${rollCount})`;
-  btn.disabled = false;
-  btn.classList.add('locked');
-
-  isRolling = false;
-  updatePreview();
-  showToast(`${emoji} locked in as today's emoji!`);
+function makeRRow(grp,idx,name){
+  const row=document.createElement('div');row.className='r-row';
+  const inp=document.createElement('input');inp.type='text';inp.className='r-inp';
+  inp.value=name;inp.placeholder='RANK NAME';inp.setAttribute('autocapitalize','characters');
+  inp.addEventListener('input',()=>{roster[grp][idx]=inp.value.toUpperCase();});
+  const del=document.createElement('button');del.className='r-del';del.textContent='×';
+  del.onclick=()=>{roster[grp].splice(idx,1);buildRosterEditor();};
+  row.appendChild(inp);row.appendChild(del);return row;
 }
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2800);
+function saveRoster(){
+  roster.MAIN=(roster.MAIN||[]).map(n=>n.trim().toUpperCase()).filter(Boolean);
+  roster.EMS=(roster.EMS||[]).map(n=>n.trim().toUpperCase()).filter(Boolean);
+  localStorage.setItem(ROSTER_KEY,JSON.stringify(roster));
+  statuses={};toRows=[];
+  renderPersonList();renderToRows();updatePreview();
+  showToast('✓ Roster saved!');buildRosterEditor();
 }
 
-// ── ROSTER LOADING ────────────────────────────────────────
-function getSheetId() { return localStorage.getItem(SHEET_ID_KEY) || ''; }
-
-async function loadRoster() {
-  const id = getSheetId();
-  const dot = document.getElementById('roster-dot');
-  const txt = document.getElementById('roster-status-text');
-  const badge = document.getElementById('roster-badge');
-
-  if (!id) {
-    dot.className='rdot'; txt.textContent='using built-in roster';
-    badge.style.display=''; badge.className='widget-badge badge-info'; badge.textContent='default';
-    useBuiltInRoster(); renderSheetEmbed(); render(); return;
-  }
-
-  dot.className='rdot loading'; txt.textContent='loading...';
-  const urls = [
-    `https://docs.google.com/spreadsheets/d/${id}/pub?gid=0&single=true&output=csv`,
-    `https://docs.google.com/spreadsheets/d/${id}/export?format=csv`,
-    `https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv`,
-  ];
-  let loaded = false;
-  for (const url of urls) {
-    try {
-      const r = await fetch(url, {cache:'no-cache'});
-      if (!r.ok) continue;
-      const csv = await r.text();
-      if (!csv || csv.includes('<!DOCTYPE')) continue;
-      parseRosterCSV(csv);
-      loaded = true; break;
-    } catch(e) { continue; }
-  }
-  if (loaded) {
-    const n = mainRoster.length + emsRoster.length;
-    dot.className='rdot'; txt.textContent=`${n} personnel loaded`;
-    badge.style.display=''; badge.className='widget-badge badge-ok'; badge.textContent='live';
-  } else {
-    dot.className='rdot error'; txt.textContent='sheet error — using built-in roster';
-    badge.style.display=''; badge.className='widget-badge badge-err'; badge.textContent='error';
-    useBuiltInRoster();
-  }
-  renderSheetEmbed(); render();
-}
-
-function parseRosterCSV(csv) {
-  mainRoster=[]; emsRoster=[];
-  csv.trim().split('\n').slice(1).forEach(line => {
-    const cols=(line.match(/(".*?"|[^,]+)/g)||[]).map(c=>c.replace(/^"|"$/g,'').trim().toUpperCase());
-    const group=cols[0], name=cols[1];
-    if(!name) return;
-    if(group==='EMS') emsRoster.push(name);
-    else mainRoster.push(name);
-  });
-  if (!mainRoster.length && !emsRoster.length) useBuiltInRoster();
-}
-
-function useBuiltInRoster() {
-  mainRoster = [...MAIN_TEAM];
-  emsRoster  = [...EMS_TEAM];
-}
-
-function renderSheetEmbed() {
-  const id = getSheetId();
-  const wrap = document.getElementById('sheets-embed-wrap');
-  if (!id) {
-    wrap.innerHTML='<div class="sheets-placeholder"><span>Configure a Sheet ID above to<br>view and edit your roster here</span></div>';
-    return;
-  }
-  const src = `https://docs.google.com/spreadsheets/d/${id}/edit?usp=sharing&rm=minimal&embedded=true`;
-  wrap.innerHTML = `<iframe src="${src}" frameborder="0" allowfullscreen></iframe>`;
-}
-
-// ── OVERRIDES ────────────────────────────────────────────
-function onDateChange() { statuses={}; render(); updateTopbarDate(); }
-
-// ── BLOCK STYLING ─────────────────────────────────────────
-function refreshBlockStyle(block, val) {
-  const v = (val||'').toUpperCase();
-  if (v.startsWith('OFF DUTY') || v==='MC' || v==='RS' || v==='HL') {
-    block.classList.add('off-duty');
-  } else {
-    block.classList.remove('off-duty');
-  }
-}
-
-// ── RENDER ────────────────────────────────────────────────
-const CHIPS = [
-  {label:'ON DUTY',  cls:'chip-on',  type:'set'},
-  {label:'OFF DUTY', cls:'chip-off', type:'set'},
-  {label:'RS',  cls:'', type:'suffix',   code:'RS'},
-  {label:'MC',  cls:'', type:'datepick', code:'MC'},
-  {label:'VL',  cls:'', type:'datepick', code:'VL'},
-  {label:'OVL', cls:'', type:'datepick', code:'OVL'},
-  {label:'HL',  cls:'', type:'datepick', code:'HL'},
-  {label:'CL',  cls:'', type:'datepick', code:'CL'},
+/* ═══════════════════════════════════════
+   PERSON BLOCKS
+═══════════════════════════════════════ */
+const LEAVE_DEFS=[
+  {label:'OFF DUTY',type:'set',   val:'OFF DUTY'},
+  {label:'RS',      type:'suffix',code:'RS'},
+  {label:'MC',      type:'dp',    code:'MC'},
+  {label:'VL',      type:'dp',    code:'VL'},
+  {label:'OVL',     type:'dp',    code:'OVL'},
+  {label:'HL',      type:'dp',    code:'HL'},
+  {label:'CL',      type:'dp',    code:'CL'},
 ];
 
-function makePersonBlock(name, groupKey) {
-  const key = `${groupKey}-${name}`;
-  if (!statuses[key]) statuses[key] = '';
-
-  const block = document.createElement('div');
-  block.className = 'person-block';
-
-  const top = document.createElement('div');
-  top.className = 'person-top';
-
-  const nameEl = document.createElement('span');
-  nameEl.className = 'person-name';
-  nameEl.textContent = name;
-
-  const wrap = document.createElement('div');
-  wrap.className = 'status-wrap';
-
-  const input = document.createElement('input');
-  input.type='text'; input.className='status-input';
-  input.value=statuses[key]; input.placeholder='status...';
-  input.setAttribute('autocomplete','off');
-  input.setAttribute('autocorrect','off');
-  input.setAttribute('autocapitalize','characters');
-  input.setAttribute('spellcheck','false');
-  input.addEventListener('input',()=>{ statuses[key]=input.value; refreshBlockStyle(block,input.value); updatePreview(); });
-  input.addEventListener('focus',()=> block.classList.add('focused'));
-  input.addEventListener('blur',()=> setTimeout(()=>block.classList.remove('focused'),180));
-
-  wrap.appendChild(input);
-  top.appendChild(nameEl); top.appendChild(wrap);
-  block.appendChild(top);
-
-  const chipsRow = document.createElement('div');
-  chipsRow.className = 'chips-row';
-  CHIPS.forEach(c => {
-    const chip = document.createElement('button');
-    chip.className='chip '+c.cls; chip.textContent=c.label; chip.type='button';
-    chip.addEventListener('mousedown', e => {
-      e.preventDefault();
-      const offCodes = ['RS','MC','VL','OVL','HL','CL'];
-      if (c.type==='set') {
-        input.value=c.label; statuses[key]=c.label; input.focus();
-        refreshBlockStyle(block, c.label); updatePreview();
-      } else if (c.type==='suffix') {
-        const base = offCodes.includes(c.code) ? 'OFF DUTY' : (input.value.split(' (')[0]||'');
-        input.value=base ? base+' ('+c.code+')' : c.code;
-        statuses[key]=input.value; input.focus();
-        refreshBlockStyle(block, input.value); updatePreview();
-      } else if (c.type==='datepick') {
-        openDatePicker(c.code, input, key, block);
-      }
-    });
-    chipsRow.appendChild(chip);
+function renderPersonList(){
+  const list=document.getElementById('person-list');list.innerHTML='';
+  ['MAIN','EMS'].forEach(grp=>{
+    const lbl=document.createElement('div');lbl.className='sec-lbl';
+    lbl.textContent=grp==='MAIN'?'Main Team':'EMS Team';list.appendChild(lbl);
+    (roster[grp]||[]).forEach(n=>list.appendChild(makePBlock(n,grp)));
   });
-  block.appendChild(chipsRow);
-  refreshBlockStyle(block, statuses[key]);
+}
+
+function makePBlock(name,grp){
+  const key=grp+'-'+name;
+  if(statuses[key]===undefined)statuses[key]='';
+  const block=document.createElement('div');block.className='pblock';
+  const top=document.createElement('div');top.className='ptop';
+  const nameEl=document.createElement('span');nameEl.className='pname';nameEl.textContent=name;
+  const sw=document.createElement('div');sw.className='swrap';
+  const inp=document.createElement('input');inp.type='text';inp.className='sinput';
+  inp.value=statuses[key];inp.placeholder='—';
+  inp.setAttribute('autocomplete','off');inp.setAttribute('autocorrect','off');
+  inp.setAttribute('autocapitalize','characters');inp.setAttribute('spellcheck','false');
+  inp.addEventListener('input',()=>{statuses[key]=inp.value;styleBlock(block,inp.value);saveLocal();updatePreview();});
+  inp.addEventListener('focus',()=>block.classList.add('focused'));
+  inp.addEventListener('blur',()=>setTimeout(()=>block.classList.remove('focused'),180));
+  sw.appendChild(inp);top.appendChild(nameEl);top.appendChild(sw);block.appendChild(top);
+
+  // Main chips
+  const chips=document.createElement('div');chips.className='chips';
+  // IN chip
+  const cin=document.createElement('button');cin.className='chip in';cin.textContent='IN';cin.type='button';
+  cin.addEventListener('mousedown',e=>{e.preventDefault();inp.value='IN';statuses[key]='IN';styleBlock(block,'IN');lc.classList.remove('open');saveLocal();updatePreview();});
+  chips.appendChild(cin);
+  // OFF DUTY expand chip
+  const coff=document.createElement('button');coff.className='chip off-expand';coff.textContent='OFF DUTY ▾';coff.type='button';
+  coff.addEventListener('mousedown',e=>{e.preventDefault();lc.classList.toggle('open');});
+  chips.appendChild(coff);
+  block.appendChild(chips);
+
+  // Leave chips (collapsed)
+  const lc=document.createElement('div');lc.className='leave-chips';
+  LEAVE_DEFS.forEach(def=>{
+    const b=document.createElement('button');b.className='lchip';b.textContent=def.label;b.type='button';
+    b.addEventListener('mousedown',e=>{
+      e.preventDefault();
+      if(def.type==='set'){inp.value=def.val;statuses[key]=def.val;styleBlock(block,def.val);}
+      else if(def.type==='suffix'){inp.value='OFF DUTY ('+def.code+')';statuses[key]=inp.value;styleBlock(block,inp.value);}
+      else if(def.type==='dp'){openDP(def.code,inp,key,block,()=>{saveLocal();updatePreview();});lc.classList.remove('open');return;}
+      lc.classList.remove('open');saveLocal();updatePreview();
+    });
+    lc.appendChild(b);
+  });
+  block.appendChild(lc);
+  styleBlock(block,statuses[key]);
   return block;
 }
 
-function render() {
-  const list = document.getElementById('person-list');
-  list.innerHTML = '';
-
-  // Main team section
-  const mainLabel = document.createElement('div');
-  mainLabel.className = 'section-label';
-  mainLabel.textContent = 'Main Team';
-  list.appendChild(mainLabel);
-  mainRoster.forEach(name => list.appendChild(makePersonBlock(name, 'MAIN')));
-
-  // EMS team section
-  const emsLabel = document.createElement('div');
-  emsLabel.className = 'section-label';
-  emsLabel.textContent = 'EMS Team';
-  list.appendChild(emsLabel);
-  emsRoster.forEach(name => list.appendChild(makePersonBlock(name, 'EMS')));
-
-  updatePreview();
-  updateTopbarDate();
+function styleBlock(block,val){
+  const v=(val||'').toUpperCase();
+  if(v.startsWith('OFF DUTY')||v==='MC'||v==='RS'||v==='HL')block.classList.add('off');
+  else block.classList.remove('off');
 }
 
-function updatePreview() {
-  const date = getSelectedDate();
-  const dateStr = fmtDate(date);
-  const dayName = getDayName(date);
-  const emojiStr = currentEmoji ? ` ${currentEmoji}` : ' (emoji)';
+/* ═══════════════════════════════════════
+   TIME OFF
+═══════════════════════════════════════ */
+function allNames(){return[...(roster.MAIN||[]),...(roster.EMS||[])]}
 
-  // IC is always first person in main roster
-  const icName = mainRoster[0] ? toTitleCase(mainRoster[0]) : 'LCP IRFAN';
+const TIME_OPTS=(()=>{const o=[];for(let h=7;h<=19;h++)for(let m=0;m<60;m+=30){if(h===19&&m>0)break;o.push(h*60+m);}return o;})();
 
-  const lines = [
+function addToRow(){
+  const names=allNames();
+  toRows.push({name:names[0]||'',from:8*60,to:10*60});
+  renderToRows();saveLocal();updatePreview();
+}
+
+function renderToRows(){
+  const c=document.getElementById('to-rows');c.innerHTML='';
+  const names=allNames();
+  toRows.forEach((row,i)=>{
+    const r=document.createElement('div');r.className='to-row';
+    const ns=document.createElement('select');ns.className='to-nsel';
+    names.forEach(n=>{const o=document.createElement('option');o.value=n;o.textContent=n;if(n===row.name)o.selected=true;ns.appendChild(o);});
+    ns.addEventListener('change',()=>{toRows[i].name=ns.value;saveLocal();updatePreview();});
+    const tw=document.createElement('div');tw.className='to-time';
+    const fs=makeTSel(row.from,v=>{toRows[i].from=v;saveLocal();updatePreview();});
+    const sep=document.createElement('span');sep.className='tsep';sep.textContent='–';
+    const ts=makeTSel(row.to,v=>{toRows[i].to=v;saveLocal();updatePreview();});
+    tw.appendChild(fs);tw.appendChild(sep);tw.appendChild(ts);
+    const del=document.createElement('button');del.className='to-del';del.textContent='×';
+    del.addEventListener('click',()=>{toRows.splice(i,1);renderToRows();saveLocal();updatePreview();});
+    r.appendChild(ns);r.appendChild(tw);r.appendChild(del);c.appendChild(r);
+  });
+}
+
+function makeTSel(sel,cb){
+  const s=document.createElement('select');s.className='tsel';
+  TIME_OPTS.forEach(m=>{const o=document.createElement('option');o.value=m;o.textContent=m2s(m)+'hrs';if(m===sel)o.selected=true;s.appendChild(o);});
+  s.addEventListener('change',()=>cb(parseInt(s.value)));
+  return s;
+}
+
+/* ═══════════════════════════════════════
+   PREVIEW — rendered as DOM for ghost emoji
+═══════════════════════════════════════ */
+function updatePreview(flashEmoji){
+  const d=selDate(),box=document.getElementById('preview-box');
+  box.innerHTML='';
+  const ic=(roster.MAIN&&roster.MAIN[0])||'LCP IRFAN';
+
+  function line(text,isEmojiLine,ghost){
+    const div=document.createElement('div');
+    div.style.cssText='font-family:var(--mono);font-size:12px;line-height:1.9;white-space:pre-wrap;word-break:break-word;';
+    if(isEmojiLine){
+      const sp=document.createElement('span');sp.textContent='Rollcall IC : '+ic+' ';div.appendChild(sp);
+      if(curEmoji){
+        const ep=document.createElement('span');ep.textContent=curEmoji;
+        ep.id='preview-emoji-span';
+        if(flashEmoji){ep.classList.add('emoji-flash');}
+        div.appendChild(ep);
+      } else {
+        const gp=document.createElement('span');gp.textContent='(emoji)';
+        gp.style.cssText='opacity:0.22;font-style:italic;';div.appendChild(gp);
+      }
+    } else {
+      if(ghost){div.style.opacity='0.22';div.style.fontStyle='italic';}
+      div.textContent=text;
+    }
+    box.appendChild(div);
+  }
+
+  line('Good Morning Officers ');
+  line('OH NSFs Movement Chart for today: ');
+  line(fmt(d)+' '+dayName(d));
+  line('——————————');
+  line('',true); // emoji line
+  (roster.MAIN||[]).forEach(n=>{const st=(statuses['MAIN-'+n]||'').trim();line(n+' - '+st);});
+  line('');
+  line('EMS TEAM:');
+  (roster.EMS||[]).forEach(n=>{const st=(statuses['EMS-'+n]||'').trim();line(n+' - '+st);});
+  const toParts=toRows.map(r=>r.name+' '+m2s(r.from)+' - '+m2s(r.to));
+  line('*Time off*:'+(toParts.length?' '+toParts.join(', '):''));
+}
+
+function getPlainText(){
+  const d=selDate(),ic=(roster.MAIN&&roster.MAIN[0])||'LCP IRFAN';
+  const lines=[
     'Good Morning Officers ',
     'OH NSFs Movement Chart for today: ',
-    `${dateStr} ${dayName}`,
+    fmt(d)+' '+dayName(d),
     '——————————',
-    `Rollcall IC : ${mainRoster[0]||'LCP IRFAN'}${emojiStr}`,
+    'Rollcall IC : '+ic+(curEmoji?' '+curEmoji:''),
   ];
-
-  mainRoster.forEach(name => {
-    const key = `MAIN-${name}`;
-    const status = (statuses[key]||'').trim();
-    lines.push(`${name} - ${status}`);
-  });
-
-  lines.push('');
-  lines.push('EMS TEAM:');
-  emsRoster.forEach(name => {
-    const key = `EMS-${name}`;
-    const status = (statuses[key]||'').trim();
-    lines.push(`${name} - ${status}`);
-  });
-
-  // Time off
-  const timeOff = [];
-  [...mainRoster.map(n=>({n,k:'MAIN-'+n})), ...emsRoster.map(n=>({n,k:'EMS-'+n}))].forEach(({n,k}) => {
-    const v = (statuses[k]||'').toUpperCase();
-    if (v && !v.startsWith('ON DUTY') && v !== '') timeOff.push(n);
-  });
-  lines.push(`*Time off*:${timeOff.length ? ' '+timeOff.join(', ') : ''}`);
-
-  document.getElementById('preview').value = lines.join('\n');
+  (roster.MAIN||[]).forEach(n=>lines.push(n+' - '+(statuses['MAIN-'+n]||'').trim()));
+  lines.push('');lines.push('EMS TEAM:');
+  (roster.EMS||[]).forEach(n=>lines.push(n+' - '+(statuses['EMS-'+n]||'').trim()));
+  const toParts=toRows.map(r=>r.name+' '+m2s(r.from)+' - '+m2s(r.to));
+  lines.push('*Time off*:'+(toParts.length?' '+toParts.join(', '):''));
+  return lines.join('\n');
 }
 
-function toTitleCase(str) {
-  return str.replace(/\b\w/g, c => c.toUpperCase()).replace(/\b\w*/g, w => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+/* ═══════════════════════════════════════
+   EMOJI ROLLER
+═══════════════════════════════════════ */
+function resetEmoji(){
+  curEmoji=null;rollCount=0;bestRolls=0;
+  document.getElementById('slot-q').style.display='flex';
+  document.getElementById('slot-track').style.display='none';
+  document.getElementById('slot-win').className='slot-win';
+  document.getElementById('roll-badge').textContent='not rolled';
+  document.getElementById('roll-btn').textContent='🎲 Roll Today\'s Emoji';
+  updateStreakUI();updatePreview();
 }
 
-function copyMessage() {
-  const text = document.getElementById('preview').value;
-  const btn = document.getElementById('copy-btn');
-  const ok = () => {
-    btn.classList.add('success'); btn.textContent='✓  Copied!';
-    setTimeout(()=>{ btn.classList.remove('success'); btn.innerHTML='✦ &nbsp;Copy to Clipboard'; },2500);
-  };
-  navigator.clipboard.writeText(text).then(ok).catch(()=>{
-    const ta=document.createElement('textarea'); ta.value=text;
-    document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); ok();
-  });
+function applyEmoji(emoji,flash){
+  curEmoji=emoji;
+  const track=document.getElementById('slot-track');
+  const q=document.getElementById('slot-q');
+  track.innerHTML='';track.style.display='flex';track.style.transform='translateY(0)';
+  const item=document.createElement('div');item.className='slot-item';item.textContent=emoji;
+  track.appendChild(item);q.style.display='none';
+  document.getElementById('slot-win').className='slot-win landed';
+  updatePreview(flash);
 }
 
-// ── CONFIG ────────────────────────────────────────────────
-function toggleRosterPanel() {
-  const panel = document.getElementById('roster-panel');
-  const chevron = document.getElementById('roster-chevron');
-  const open = panel.classList.toggle('open');
-  chevron.style.transform = open ? 'rotate(90deg)' : 'rotate(0deg)';
-}
-function toggleConfig() {
-  const slide = document.getElementById('config-slide');
-  const open = slide.classList.toggle('open');
-  document.getElementById('cfg-toggle-text').textContent = open ? 'close' : 'configure';
-  if (open) {
-    document.getElementById('sheet-id-input').value = getSheetId();
-    const panel = document.getElementById('roster-panel');
-    if (!panel.classList.contains('open')) {
-      panel.classList.add('open');
-      document.getElementById('roster-chevron').style.transform = 'rotate(90deg)';
+function rollEmoji(){
+  if(isRolling)return;
+  isRolling=true;
+  const btn=document.getElementById('roll-btn');
+  btn.disabled=true;
+  document.getElementById('slot-q').style.display='none';
+  const win=document.getElementById('slot-win'),track=document.getElementById('slot-track');
+  win.className='slot-win rolling';track.style.display='flex';track.innerHTML='';
+  // build reel
+  const pool=[];
+  while(pool.length<100){const s=[...EMOJI_POOL].sort(()=>Math.random()-0.5);pool.push(...s);}
+  pool.forEach(e=>{const d=document.createElement('div');d.className='slot-item';d.textContent=e;track.appendChild(d);});
+  track.style.transition='none';track.style.transform='translateY(0)';
+  const itemH=win.offsetHeight||96,stopAt=55+Math.floor(Math.random()*20),totalPx=stopAt*itemH;
+  const dur=2000+Math.random()*800,t0=performance.now();
+  document.getElementById('roll-flavour').textContent=FLAVOURS_SPIN[Math.floor(Math.random()*FLAVOURS_SPIN.length)];
+
+  function step(now){
+    const p=Math.min((now-t0)/dur,1);
+    const speed=p<0.55?itemH*(p/0.55)*1.3:itemH*1.3*(1-Math.pow((p-0.55)/0.45,3));
+    const curPx=Math.abs(parseFloat(track.style.transform.replace(/[^0-9.-]/g,''))||0);
+    let next=curPx+Math.max(speed,1.5);
+    if(next>=totalPx)next=totalPx;
+    track.style.transition='none';
+    track.style.transform='translateY(-'+next+'px)';
+    if(p<1&&next<totalPx){requestAnimationFrame(step);}
+    else{
+      const idx=Math.round(next/itemH);
+      track.style.transform='translateY(-'+(idx*itemH)+'px)';
+      landEmoji(pool[Math.min(idx,pool.length-1)]);
     }
   }
-}
-function saveSheetId() {
-  localStorage.setItem(SHEET_ID_KEY, document.getElementById('sheet-id-input').value.trim());
-  document.getElementById('config-slide').classList.remove('open');
-  document.getElementById('cfg-toggle-text').textContent = 'configure';
-  statuses={}; loadRoster();
+  requestAnimationFrame(step);
 }
 
-// ── DATE PICKER ───────────────────────────────────────────
-function openDatePicker(code, input, key, block) {
-  const ex=document.getElementById('dp-overlay'); if(ex) ex.remove();
-  const today=new Date();
-  let viewYear=today.getFullYear(), viewMonth=today.getMonth();
-  let pick1=null, pick2=null;
+function landEmoji(emoji){
+  rollCount++;if(rollCount>bestRolls)bestRolls=rollCount;
+  win_flash();
+  applyEmoji(emoji,true); // true = flash the preview emoji line
+  document.getElementById('stat-rolls').textContent=rollCount;
+  document.getElementById('stat-best').textContent=bestRolls;
+  document.getElementById('roll-badge').textContent=rollCount+' roll'+(rollCount===1?'':'s');
+  document.getElementById('roll-flavour').textContent=FLAVOURS_LAND[Math.floor(Math.random()*FLAVOURS_LAND.length)];
+  document.getElementById('roll-btn').textContent='🎲 Roll Again';
+  document.getElementById('roll-btn').disabled=false;
+  updateStreakUI();saveLocal();isRolling=false;
+  showToast(emoji+' set as today\'s emoji');
+}
 
-  const overlay=document.createElement('div'); overlay.className='dp-overlay'; overlay.id='dp-overlay';
-  const modal=document.createElement('div'); modal.className='dp-modal';
+function win_flash(){
+  const win=document.getElementById('slot-win');
+  win.style.boxShadow='0 0 28px rgba(52,211,153,0.55)';
+  setTimeout(()=>{win.style.boxShadow='';},800);
+}
+
+function updateStreakUI(){
+  const box=document.getElementById('streak-box'),icon=document.getElementById('streak-icon'),msg=document.getElementById('streak-msg');
+  let lvl=STREAK_LEVELS[0];
+  for(const l of STREAK_LEVELS)if(rollCount>=l.min)lvl=l;
+  box.className='streak-box '+(lvl.cls||'');
+  icon.textContent=lvl.icon;
+  // pop animation
+  icon.classList.add('pop');setTimeout(()=>icon.classList.remove('pop'),400);
+  msg.textContent=lvl.msg.replace('{n}',rollCount);
+}
+
+/* ═══════════════════════════════════════
+   COPY
+═══════════════════════════════════════ */
+function copyMsg(){
+  const text=getPlainText(),btn=document.getElementById('copy-btn');
+  const ok=()=>{btn.classList.add('ok');btn.textContent='✓  Copied!';
+    setTimeout(()=>{btn.classList.remove('ok');btn.innerHTML='✦ &nbsp;Copy to Clipboard';},2500);};
+  navigator.clipboard.writeText(text).then(ok).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=text;
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();
+  });
+}
+
+/* ═══════════════════════════════════════
+   DATE CONTROLS
+═══════════════════════════════════════ */
+function setDateInput(d){document.getElementById('date-input').value=fmtKey(d);}
+function shiftDay(n){const d=selDate();d.setDate(d.getDate()+n);setDateInput(d);onDateChange();}
+function goToday(){setDateInput(new Date());onDateChange();}
+
+function onDateChange(){
+  const d=selDate(),isToday=fmtKey(d)===fmtKey(new Date());
+  document.getElementById('date-badge').textContent=isToday?'TODAY':'CUSTOM';
+  document.getElementById('topbar-date').textContent=d.toLocaleDateString('en-SG',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  loadSaved(d);
+}
+
+/* ═══════════════════════════════════════
+   PERSIST (localStorage per date)
+═══════════════════════════════════════ */
+function saveLocal(){
+  const key=fmtKey(selDate());
+  const all=JSON.parse(localStorage.getItem(SAVED_KEY)||'{}');
+  all[key]={statuses,toRows,emoji:curEmoji,rollCount,bestRolls};
+  localStorage.setItem(SAVED_KEY,JSON.stringify(all));
+}
+
+function loadSaved(d){
+  const key=fmtKey(d);
+  const all=JSON.parse(localStorage.getItem(SAVED_KEY)||'{}');
+  const s=all[key];
+  statuses={};toRows=[];curEmoji=null;rollCount=0;bestRolls=0;
+  if(s){
+    statuses=s.statuses||{};
+    toRows=s.toRows||[];
+    if(s.emoji){curEmoji=s.emoji;rollCount=s.rollCount||1;bestRolls=s.bestRolls||1;}
+  }
+  renderPersonList();renderToRows();
+  if(curEmoji){applyEmoji(curEmoji,false);}else{resetEmoji();}
+  updatePreview();updateStreakUI();
+}
+
+/* ═══════════════════════════════════════
+   DATE PICKER (for leave codes)
+═══════════════════════════════════════ */
+function openDP(code,input,key,block,cb){
+  const ex=document.getElementById('dp-ov');if(ex)ex.remove();
+  const today=new Date();let vY=today.getFullYear(),vM=today.getMonth(),p1=null,p2=null;
+  const ov=document.createElement('div');ov.className='dp-ov';ov.id='dp-ov';
+  const modal=document.createElement('div');modal.className='dp-modal';
   modal.addEventListener('mousedown',e=>e.stopPropagation());
 
-  function fp(d){ return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0'); }
+  function fp(d){return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0');}
 
-  function build() {
+  function build(){
     modal.innerHTML='';
-    const hdr=document.createElement('div'); hdr.className='dp-header';
-    const prev=document.createElement('button'); prev.className='dp-nav'; prev.textContent='‹';
-    prev.addEventListener('mousedown',e=>{ e.preventDefault(); viewMonth--; if(viewMonth<0){viewMonth=11;viewYear--;} build(); });
-    const next=document.createElement('button'); next.className='dp-nav'; next.textContent='›';
-    next.addEventListener('mousedown',e=>{ e.preventDefault(); viewMonth++; if(viewMonth>11){viewMonth=0;viewYear++;} build(); });
-    const ttl=document.createElement('span'); ttl.className='dp-title';
-    ttl.textContent=new Date(viewYear,viewMonth,1).toLocaleDateString('en-SG',{month:'long',year:'numeric'});
-    hdr.appendChild(prev); hdr.appendChild(ttl); hdr.appendChild(next); modal.appendChild(hdr);
-
-    const grid=document.createElement('div'); grid.className='dp-grid';
-    ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d=>{ const el=document.createElement('div'); el.className='dp-dow'; el.textContent=d; grid.appendChild(el); });
-    const firstDay=new Date(viewYear,viewMonth,1).getDay();
-    const dim=new Date(viewYear,viewMonth+1,0).getDate();
-    for(let i=0;i<firstDay;i++){ const el=document.createElement('button'); el.className='dp-day empty'; grid.appendChild(el); }
+    const hdr=document.createElement('div');hdr.className='dp-hdr';
+    const prev=document.createElement('button');prev.className='dp-nav';prev.textContent='‹';
+    prev.addEventListener('mousedown',e=>{e.preventDefault();vM--;if(vM<0){vM=11;vY--;}build();});
+    const next=document.createElement('button');next.className='dp-nav';next.textContent='›';
+    next.addEventListener('mousedown',e=>{e.preventDefault();vM++;if(vM>11){vM=0;vY++;}build();});
+    const ttl=document.createElement('span');ttl.className='dp-title';
+    ttl.textContent=new Date(vY,vM,1).toLocaleDateString('en-SG',{month:'long',year:'numeric'});
+    hdr.appendChild(prev);hdr.appendChild(ttl);hdr.appendChild(next);modal.appendChild(hdr);
+    const grid=document.createElement('div');grid.className='dp-grid';
+    ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d=>{const e=document.createElement('div');e.className='dp-dow';e.textContent=d;grid.appendChild(e);});
+    const fd=new Date(vY,vM,1).getDay(),dim=new Date(vY,vM+1,0).getDate();
+    for(let i=0;i<fd;i++){const e=document.createElement('button');e.className='dp-day empty';grid.appendChild(e);}
     for(let d=1;d<=dim;d++){
-      const td=new Date(viewYear,viewMonth,d);
-      const el=document.createElement('button'); el.className='dp-day'; el.textContent=d;
-      const isP1=pick1&&td.toDateString()===pick1.toDateString();
-      const isP2=pick2&&td.toDateString()===pick2.toDateString();
-      const inR=pick1&&pick2&&td>pick1&&td<pick2;
-      const isToday=td.toDateString()===today.toDateString();
-      if(isToday) el.classList.add('today');
-      if(isP1) el.classList.add('selected');
-      else if(isP2) el.classList.add('range-end');
-      else if(inR) el.classList.add('in-range');
-      el.addEventListener('mousedown',e=>{
-        e.preventDefault();
-        if(!pick1){ pick1=td; pick2=null; }
-        else if(!pick2){
-          if(td>pick1) pick2=td;
-          else if(td.toDateString()===pick1.toDateString()) pick1=null;
-          else { pick1=td; pick2=null; }
-        } else { pick1=td; pick2=null; }
-        build();
-      });
-      grid.appendChild(el);
+      const td=new Date(vY,vM,d);const e=document.createElement('button');e.className='dp-day';e.textContent=d;
+      if(td.toDateString()===today.toDateString())e.classList.add('today');
+      if(p1&&td.toDateString()===p1.toDateString())e.classList.add('sel');
+      else if(p2&&td.toDateString()===p2.toDateString())e.classList.add('sel2');
+      else if(p1&&p2&&td>p1&&td<p2)e.classList.add('inr');
+      e.addEventListener('mousedown',ev=>{ev.preventDefault();
+        if(!p1){p1=td;p2=null;}else if(!p2){if(td>p1)p2=td;else if(td.toDateString()===p1.toDateString())p1=null;else{p1=td;p2=null;}}
+        else{p1=td;p2=null;}build();});
+      grid.appendChild(e);
     }
     modal.appendChild(grid);
-
-    const hint=document.createElement('div'); hint.className='dp-hint';
-    if(!pick1) hint.textContent='tap a date to select';
-    else if(!pick2) hint.textContent=fp(pick1)+' — tap another for a range';
-    else hint.textContent=code+' ('+fp(pick1)+' - '+fp(pick2)+')';
+    const hint=document.createElement('div');hint.className='dp-hint';
+    hint.textContent=!p1?'tap a date to select':!p2?fp(p1)+' — tap another for range':code+' ('+fp(p1)+' - '+fp(p2)+')';
     modal.appendChild(hint);
-
-    const acts=document.createElement('div'); acts.className='dp-actions';
-    const canc=document.createElement('button'); canc.className='dp-cancel'; canc.textContent='Cancel';
-    canc.addEventListener('mousedown',e=>{ e.preventDefault(); overlay.remove(); });
-    const conf=document.createElement('button'); conf.className='dp-confirm'; conf.textContent='Confirm';
-    conf.disabled=!pick1;
-    conf.addEventListener('mousedown',e=>{
-      e.preventDefault(); if(!pick1) return;
+    const acts=document.createElement('div');acts.className='dp-acts';
+    const can=document.createElement('button');can.className='dp-cancel';can.textContent='Cancel';
+    can.addEventListener('mousedown',e=>{e.preventDefault();ov.remove();});
+    const ok=document.createElement('button');ok.className='dp-ok';ok.textContent='Confirm';ok.disabled=!p1;
+    ok.addEventListener('mousedown',e=>{
+      e.preventDefault();if(!p1)return;
       const offCodes=['MC','VL','OVL','CL'];
-      const base = offCodes.includes(code) ? 'OFF DUTY' : (input.value.split(' (')[0]||'');
-      const suf = pick2 ? code+' ('+fp(pick1)+' - '+fp(pick2)+')' : code+' ('+fp(pick1)+')';
-      input.value = base ? base+' '+suf : suf;
-      statuses[key]=input.value;
-      if(block) refreshBlockStyle(block,input.value);
-      updatePreview(); overlay.remove();
+      const base=offCodes.includes(code)?'OFF DUTY':(input.value.split(' (')[0]||'');
+      const suf=p2?code+' ('+fp(p1)+' - '+fp(p2)+')':code+' ('+fp(p1)+')';
+      input.value=base?base+' '+suf:suf;statuses[key]=input.value;
+      if(block)styleBlock(block,input.value);
+      ov.remove();if(cb)cb();
     });
-    acts.appendChild(canc); acts.appendChild(conf); modal.appendChild(acts);
+    acts.appendChild(can);acts.appendChild(ok);modal.appendChild(acts);
   }
-
-  build();
-  overlay.appendChild(modal);
-  overlay.addEventListener('mousedown',()=>overlay.remove());
-  document.body.appendChild(overlay);
+  build();ov.appendChild(modal);ov.addEventListener('mousedown',()=>ov.remove());document.body.appendChild(ov);
 }
 
-// ── INIT ──────────────────────────────────────────────────
-function init() {
-  const t = new Date();
-  document.getElementById('date-input').value =
-    `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;
-  tickClock();
-  setInterval(tickClock, 1000);
-  buildSlotTrack();
-  loadRoster();
+/* ═══════════════════════════════════════
+   TOAST
+═══════════════════════════════════════ */
+function showToast(msg){
+  const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+/* ═══════════════════════════════════════
+   INIT
+═══════════════════════════════════════ */
+function init(){
+  const now=new Date();
+  document.getElementById('date-input').value=fmtKey(now);
+  document.getElementById('topbar-date').textContent=now.toLocaleDateString('en-SG',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  loadSaved(now);
+  tick();setInterval(tick,1000);
 }
 
 init();
