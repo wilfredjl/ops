@@ -1261,7 +1261,7 @@ function updatePreview(flashEmoji){
   ln('——————————');
   ln('',true);
   (roster.MAIN||[]).forEach(n=>ln(n+' - '+(statuses['MAIN-'+n]||'').trim()));
-  ln('');ln('EMS TEAM:');
+  ln('');ln('\nEMS TEAM:\n');
   (roster.EMS||[]).forEach(n=>ln(n+' - '+(statuses['EMS-'+n]||'').trim()));
   const tp=toRows.map(r=>r.name+' '+m2s(r.from)+' - '+m2s(r.to));
   ln('*Time off*:'+(tp.length?' '+tp.join(', '):''));
