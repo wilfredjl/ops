@@ -631,7 +631,12 @@ let curEmoji  = null;
 let rollCount = 0;
 let bestRolls = 0;
 let isRolling = false;
-let fbUrl     = localStorage.getItem(FB_LS) || '';
+// HARDCODE FIREBASE URL
+// let fbUrl     = localStorage.getItem(FB_LS) || '';
+
+fbUrl = 'https://ops-rollcall-default-rtdb.asia-southeast1.firebasedatabase.app/';
+localStorage.setItem(FB_LS, fbUrl);
+
 let fbStream  = null;   // EventSource for SSE
 let curDateKey = '';
 let suppressRemote = false; // prevent remote echo overwriting local mid-type
