@@ -80,13 +80,18 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 
 /* RC BAR */
 .rcbar{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-lg);
-  padding:11px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.rc-lb{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);flex-shrink:0}
-.rc-ps{display:flex;gap:8px;flex-wrap:wrap;flex:1}
-.rc-p{font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid var(--border2);color:var(--text2);white-space:nowrap;transition:all 0.2s}
+  padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.rc-lb{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--text3);flex-shrink:0;width:100%;margin-bottom:2px}
+.rc-ps{display:flex;gap:6px;flex-wrap:wrap;flex:1;align-items:center}
+.rc-p{font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:20px;
+  border:1px solid var(--border2);color:var(--text2);white-space:nowrap;transition:all 0.2s}
 .rc-p.nx{border-color:rgba(56,189,248,0.5);color:var(--accent);background:var(--accent-bg);font-weight:600}
 .rc-p.pa{color:var(--text3);border-color:var(--border)}
-.rc-cd{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent);margin-left:auto;white-space:nowrap}
+.rc-cd{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--accent);
+  white-space:nowrap;margin-left:auto;padding:4px 10px;border-radius:20px;
+  background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.2)}
+@media(max-width:480px){.rc-lb{width:100%;margin-bottom:0}.rcbar{gap:6px}}
 
 /* GRID / WIDGET */
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
@@ -204,20 +209,23 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .topanel{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:12px;margin-top:10px}
 .topanel-hdr{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:10px}
 .to-rows{display:flex;flex-direction:column;gap:8px}
-.to-row{display:flex;align-items:center;gap:8px;padding:8px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:10px;flex-wrap:wrap}
+.to-row{display:flex;align-items:center;gap:6px;padding:8px 10px;background:var(--surface3);
+  border:1px solid var(--border2);border-radius:10px;flex-wrap:nowrap;overflow:hidden}
 .to-name{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text);
-  min-width:100px;cursor:pointer;padding:3px 8px;border-radius:6px;border:1px solid var(--border2);
-  background:var(--surface2);transition:border-color 0.15s;flex-shrink:0}
+  width:110px;min-width:0;flex-shrink:0;cursor:pointer;padding:3px 8px;border-radius:6px;
+  border:1px solid var(--border2);background:var(--surface2);transition:border-color 0.15s;
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .to-name:hover{border-color:var(--border3)}
-.to-times{display:flex;align-items:center;gap:8px;flex:1}
+.to-times{display:flex;align-items:center;gap:5px;flex:1;min-width:0;justify-content:center}
 .to-sep{font-family:var(--mono);font-size:12px;color:var(--text3);flex-shrink:0}
-.to-timebtn{display:flex;align-items:center;gap:6px;padding:5px 10px;background:var(--surface2);
+.to-timebtn{display:flex;align-items:center;gap:4px;padding:4px 8px;background:var(--surface2);
   border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--mono);
-  font-size:12px;font-weight:600;cursor:pointer;transition:all 0.15s;letter-spacing:0.04em;white-space:nowrap}
+  font-size:11px;font-weight:600;cursor:pointer;transition:all 0.15s;letter-spacing:0.02em;
+  white-space:nowrap;flex-shrink:0}
 .to-timebtn:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-bg)}
 .to-del{width:26px;height:26px;background:none;border:1px solid var(--border2);border-radius:6px;
-  color:var(--text3);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:all 0.15s;flex-shrink:0;margin-left:auto}
+  color:var(--text3);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:all 0.15s;flex-shrink:0}
 .to-del:hover{border-color:rgba(248,113,113,0.5);color:var(--red)}
 .to-add{display:flex;align-items:center;justify-content:center;gap:6px;padding:8px;background:none;
   border:1px dashed var(--border2);border-radius:10px;color:var(--text3);font-family:var(--mono);
@@ -619,29 +627,53 @@ function selectCalDay(key){
 function buildCalSummary(key){
   const wrap=document.getElementById('cal-summary');
   const all=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
-  const saved=all[key];
   const d=dateFromKey(key);
   wrap.innerHTML='';
   const div=document.createElement('div');div.className='cal-summary';
   const hdr=document.createElement('div');hdr.className='cal-sum-date';hdr.textContent=fmt(d)+' '+dayName(d);div.appendChild(hdr);
-  if(saved&&saved.statuses){
-    const allNames=[...(roster.MAIN||[]),...(roster.EMS||[])];
-    let any=false;
-    allNames.forEach(n=>{
-      const st=(saved.statuses['MAIN-'+n]||saved.statuses['EMS-'+n]||'').trim();
-      if(st){
-        any=true;
-        const row=document.createElement('div');row.className='cal-sum-row';
-        const nm=document.createElement('span');nm.className='cal-sum-name';nm.textContent=n;
-        const sv=document.createElement('span');sv.className='cal-sum-status';sv.textContent=st;
-        row.appendChild(nm);row.appendChild(sv);div.appendChild(row);
-      }
-    });
-    if(!any){const e=document.createElement('div');e.className='cal-sum-empty';e.textContent='No statuses recorded yet.';div.appendChild(e);}
-  } else {
-    const e=document.createElement('div');e.className='cal-sum-empty';e.textContent='No statuses recorded yet.';div.appendChild(e);
+
+  function renderSummary(saved){
+    div.querySelectorAll('.cal-sum-row,.cal-sum-empty').forEach(e=>e.remove());
+    if(saved&&saved.statuses){
+      const names=[...(roster.MAIN||[]),...(roster.EMS||[])];
+      let any=false;
+      names.forEach(n=>{
+        const st=(saved.statuses['MAIN-'+n]||saved.statuses['EMS-'+n]||'').trim();
+        if(st){
+          any=true;
+          const row=document.createElement('div');row.className='cal-sum-row';
+          const nm=document.createElement('span');nm.className='cal-sum-name';nm.textContent=n;
+          const sv=document.createElement('span');sv.className='cal-sum-status';sv.textContent=st;
+          row.appendChild(nm);row.appendChild(sv);div.appendChild(row);
+        }
+      });
+      if(!any){const e=document.createElement('div');e.className='cal-sum-empty';e.textContent='No statuses recorded yet.';div.appendChild(e);}
+    }else{
+      const e=document.createElement('div');e.className='cal-sum-empty';e.textContent='No statuses recorded yet.';div.appendChild(e);
+    }
   }
+
+  // render immediately from localStorage (instant feedback)
+  renderSummary(all[key]);
   wrap.appendChild(div);
+
+  // if Firebase connected and local data is empty for this date, fetch it
+  if(fbBase()&&(!all[key]||!Object.values(all[key].statuses||{}).some(v=>v&&v.trim()))){
+    const loading=document.createElement('div');loading.className='cal-sum-empty';
+    loading.id='cal-sum-loading';loading.textContent='fetching from Firebase…';div.appendChild(loading);
+    fetch(fbBase()+'/data/'+key+'.json').then(r=>r.ok?r.json():null).then(remote=>{
+      const ld=document.getElementById('cal-sum-loading');if(ld)ld.remove();
+      if(!remote)return;
+      // merge into localStorage
+      if(!all[key])all[key]={statuses:{},toRows:[],emoji:null,rollCount:0,bestRolls:0};
+      if(remote.statuses)Object.entries(remote.statuses).forEach(([sk,sv])=>{
+        if(!all[key].statuses[sk]||all[key].statuses[sk].trim()==='')all[key].statuses[sk]=sv;
+      });
+      localStorage.setItem(SAVED_LS,JSON.stringify(all));
+      renderSummary(all[key]);
+      buildCalendar();
+    }).catch(()=>{const ld=document.getElementById('cal-sum-loading');if(ld)ld.remove();});
+  }
 }
 
 /* ═══════════════════════ FIREBASE ═══════════════════════ */
@@ -684,6 +716,7 @@ function applyRemoteDay(d){
       if(document.activeElement!==inp&&statuses[k]!==undefined){inp.value=statuses[k];const blk=inp.closest('.pb');if(blk)styleBlock(blk,statuses[k]);}
     });
     updatePreview();
+    buildCalendar(); // refresh dots when remote data arrives
   }
 }
 function fbListen(k){
@@ -705,7 +738,43 @@ function connectFb(){
 }
 async function initFb(){
   if(!fbUrl){setSyncUI('offline');return;}setSyncUI('syncing');
-  await fbFetchRoster();renderPersonList();await fbFetch(curDateKey);fbListen(curDateKey);
+  await fbFetchRoster();renderPersonList();
+  await fbFetch(curDateKey);
+  fbListen(curDateKey);
+  fbSyncCalendarDots();
+}
+
+/* Fetch all date keys from Firebase shallow, then fill any missing dates
+   into localStorage so calendar dots show correctly for every user. */
+async function fbSyncCalendarDots(){
+  if(!fbBase())return;
+  try{
+    const r=await fetch(fbBase()+'/data.json?shallow=true');
+    if(!r.ok)return;
+    const keys=await r.json();
+    if(!keys||typeof keys!=='object')return;
+    const all=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
+    const missing=Object.keys(keys).filter(k=>{
+      if(!all[k])return true;
+      return !Object.values(all[k].statuses||{}).some(v=>v&&v.trim());
+    });
+    await Promise.all(missing.map(async k=>{
+      try{
+        const r2=await fetch(fbBase()+'/data/'+k+'.json');
+        if(!r2.ok)return;
+        const d=await r2.json();
+        if(!d)return;
+        if(!all[k])all[k]={statuses:{},toRows:[],emoji:null,rollCount:0,bestRolls:0};
+        if(d.statuses)Object.entries(d.statuses).forEach(([sk,sv])=>{
+          if(!all[k].statuses[sk]||all[k].statuses[sk].trim()==='')all[k].statuses[sk]=sv;
+        });
+        if(d.toRows&&(!all[k].toRows||!all[k].toRows.length))all[k].toRows=d.toRows;
+        if(d.emoji&&!all[k].emoji)all[k].emoji=d.emoji;
+      }catch(_){}
+    }));
+    localStorage.setItem(SAVED_LS,JSON.stringify(all));
+    buildCalendar();
+  }catch(_){}
 }
 function togFbHelp(){const s=document.getElementById('fb-help');const op=s.classList.toggle('op');document.getElementById('fb-help-t').textContent=op?'setup guide ▴':'setup guide ▾';}
 
@@ -729,7 +798,10 @@ function persist(){saveLocal();clearTimeout(persist._t);persist._t=setTimeout(fb
    so existing entries are never overwritten.
    Pushes each affected date to Firebase if connected.
 ─────────────────────────────────────────────────────────── */
-function propagateRangeStatus(key,statusValue,p1,p2){
+/* Propagate a status across a date range.
+   force=true: overwrite existing values (used when setting a new range that should replace old).
+   force=false (default): only fill empty slots (used by initial propagation). */
+function propagateRangeStatus(key,statusValue,p1,p2,force=true){
   if(!p2)return;
   const all=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
   const cursor=new Date(p1);
@@ -738,7 +810,7 @@ function propagateRangeStatus(key,statusValue,p1,p2){
     if(dk!==curDateKey){
       if(!all[dk])all[dk]={statuses:{},toRows:[],emoji:null,rollCount:0,bestRolls:0};
       if(!all[dk].statuses)all[dk].statuses={};
-      if(!all[dk].statuses[key]||all[dk].statuses[key].trim()===''){
+      if(force||!all[dk].statuses[key]||all[dk].statuses[key].trim()===''){
         all[dk].statuses[key]=statusValue;
         if(fbBase()){
           fetch(fbBase()+'/data/'+dk+'.json',{method:'PATCH',
@@ -746,6 +818,42 @@ function propagateRangeStatus(key,statusValue,p1,p2){
             body:JSON.stringify({statuses:all[dk].statuses})
           }).catch(()=>{});
         }
+      }
+    }
+    cursor.setDate(cursor.getDate()+1);
+  }
+  localStorage.setItem(SAVED_LS,JSON.stringify(all));
+}
+
+/* Clear a status across any date range encoded in the status string.
+   Called when a user hits the X clear button. */
+function clearRangeStatus(key,statusValue){
+  if(!statusValue)return;
+  // parse dates like "dd/mm" from the status string
+  const match=statusValue.match(/(\d{2}\/\d{2})\s*-\s*(\d{2}\/\d{2})/);
+  if(!match)return;
+  const now=new Date();
+  function parseDate(s){
+    const[d,m]=s.split('/').map(Number);
+    let y=now.getFullYear();
+    // if month already passed this year, use next year
+    const td=new Date(y,m-1,d);
+    if(td<new Date(now.getFullYear(),now.getMonth()-1,1))y++;
+    return new Date(y,m-1,d);
+  }
+  const p1=parseDate(match[1]),p2=parseDate(match[2]);
+  if(isNaN(p1)||isNaN(p2)||p1>p2)return;
+  const all=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
+  const cursor=new Date(p1);
+  while(cursor<=p2){
+    const dk=fmtKey(cursor);
+    if(dk!==curDateKey&&all[dk]&&all[dk].statuses&&all[dk].statuses[key]){
+      all[dk].statuses[key]='';
+      if(fbBase()){
+        fetch(fbBase()+'/data/'+dk+'.json',{method:'PATCH',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify({statuses:all[dk].statuses})
+        }).catch(()=>{});
       }
     }
     cursor.setDate(cursor.getDate()+1);
@@ -815,9 +923,10 @@ function mkPB(name,grp){
   const clr=document.createElement('button');clr.className='p-clear';clr.innerHTML='✕';clr.type='button';clr.title='Clear';
   clr.addEventListener('mousedown',e=>{
     e.preventDefault();
-    // reset to single mode
+    // Parse any date range from the current value and clear those dates too
+    clearRangeStatus(key, statuses[key]);
     setSingleMode(sw,si,key,blk);
-    statuses[key]='';si.value='';styleBlock(blk,'');persist();updatePreview();
+    statuses[key]='';si.value='';styleBlock(blk,'');persist();updatePreview();buildCalendar();
     lc.classList.remove('op');
   });
 
@@ -877,7 +986,15 @@ function applyLeaf(def,sw,si,key,blk,lc){
   else if(def.type==='sfx'){target.value='OFF DUTY ('+def.code+')';}
   else if(def.type==='bto'){target.value='BTO';}
   else if(def.type==='dp'){
-    openDP(def.code,target,(p1,p2,suf)=>{assembleStatus(sw,si,key);styleBlock(blk,statuses[key]);persist();if(p2)propagateRangeStatus(key,statuses[key],p1,p2);updatePreview();buildCalendar();});
+    openDP(def.code,target,(p1,p2,suf)=>{
+      // prepend "OFF DUTY" so the status reads "OFF DUTY MC (01/06 - 03/06)"
+      const fullVal='OFF DUTY '+suf;
+      target.value=fullVal;
+      assembleStatus(sw,si,key);
+      styleBlock(blk,statuses[key]);persist();
+      if(p2)propagateRangeStatus(key,statuses[key],p1,p2);
+      updatePreview();buildCalendar();
+    });
     lc.classList.remove('op');return;
   }
   assembleStatus(sw,si,key);styleBlock(blk,statuses[key]);lc.classList.remove('op');persist();updatePreview();
