@@ -1047,7 +1047,7 @@ function updatePreview(flashEmoji){
   }
   ln('Good Morning Officers ');ln('OH NSFs Movement Chart for today: ');ln(fmt(d)+' '+dayName(d));ln('——————————');ln('',true);
   (roster.MAIN||[]).forEach(n=>ln(n+' - '+(statuses['MAIN-'+n]||'').trim()));
-  ln('');ln('\nEMS TEAM:'\n);ln('');
+  ln('');ln('\nEMS TEAM:\n');ln('');
   (roster.EMS||[]).forEach(n=>ln(n+' - '+(statuses['EMS-'+n]||'').trim()));
   const tp=toRows.map(r=>r.name+' '+m2s(r.from)+' - '+m2s(r.to));
   ln('*Time off*:'+(tp.length?' '+tp.join(', '):''));
