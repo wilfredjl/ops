@@ -662,22 +662,19 @@ function buildCalSummary(key){
   renderSummary(all[key]);
   wrap.appendChild(div);
 
-  // if Firebase connected and local data is empty for this date, fetch it
-  if(fbBase()&&(!all[key]||!Object.values(all[key].statuses||{}).some(v=>v&&v.trim()))){
-    const loading=document.createElement('div');loading.className='cal-sum-empty';
-    loading.id='cal-sum-loading';loading.textContent='fetching from Firebase…';div.appendChild(loading);
+  // Always fetch from Firebase if connected — remote is source of truth for summary
+  if(fbBase()){
     fetch(fbBase()+'/data/'+key+'.json').then(r=>r.ok?r.json():null).then(remote=>{
-      const ld=document.getElementById('cal-sum-loading');if(ld)ld.remove();
       if(!remote)return;
-      // merge into localStorage
       if(!all[key])all[key]={statuses:{},toRows:[],emoji:null,rollCount:0,bestRolls:0};
-      if(remote.statuses)Object.entries(remote.statuses).forEach(([sk,sv])=>{
-        if(!all[key].statuses[sk]||all[key].statuses[sk].trim()==='')all[key].statuses[sk]=sv;
-      });
+      // Remote overwrites local for this date
+      if(remote.statuses)all[key].statuses={...all[key].statuses,...remote.statuses};
+      if(remote.toRows&&remote.toRows.length)all[key].toRows=remote.toRows;
+      if(remote.emoji)all[key].emoji=remote.emoji;
       localStorage.setItem(SAVED_LS,JSON.stringify(all));
       renderSummary(all[key]);
       buildCalendar();
-    }).catch(()=>{const ld=document.getElementById('cal-sum-loading');if(ld)ld.remove();});
+    }).catch(()=>{});
   }
 }
 
@@ -716,12 +713,31 @@ function applyRemoteDay(d){
   if(d.toRows){toRows=d.toRows;renderToRows();}
   if(d.emoji&&d.emoji!==curEmoji){curEmoji=d.emoji;rollCount=d.rollCount||1;bestRolls=d.bestRolls||1;applyEmoji(d.emoji,true);updateStreakUI();}
   if(changed){
+    // Update single-mode inputs
     document.querySelectorAll('[data-sk]').forEach(inp=>{
       const k=inp.getAttribute('data-sk');
-      if(document.activeElement!==inp&&statuses[k]!==undefined){inp.value=statuses[k];const blk=inp.closest('.pb');if(blk)styleBlock(blk,statuses[k]);}
+      if(document.activeElement!==inp&&statuses[k]!==undefined){
+        inp.value=statuses[k];
+        const blk=inp.closest('.pb');if(blk)styleBlock(blk,statuses[k]);
+      }
+    });
+    // Update AM/PM split inputs
+    document.querySelectorAll('.pb').forEach(blk=>{
+      const sw=blk.querySelector('.sw');if(!sw||!sw.classList.contains('split'))return;
+      const key=blk.getAttribute('data-key');if(!key)return;
+      const val=statuses[key]||'';
+      const amMatch=val.match(/^AM\s*(.*?)\s*PM\s*(.*?)$/);
+      if(amMatch){
+        const parts=sw.querySelectorAll('.sw-part input');
+        if(parts[0]&&document.activeElement!==parts[0])parts[0].value=amMatch[1];
+        if(parts[1]&&document.activeElement!==parts[1])parts[1].value=amMatch[2];
+      }
+      styleBlock(blk,val);
     });
     updatePreview();
-    buildCalendar(); // refresh dots when remote data arrives
+    saveLocal();
+    buildCalendar();
+    if(calSelectedKey===curDateKey)buildCalSummary(curDateKey);
   }
 }
 function fbListen(k){
@@ -750,8 +766,9 @@ async function initFb(){
   fbSyncCalendarDots();
 }
 
-/* Fetch all date keys from Firebase shallow, then fill any missing dates
-   into localStorage so calendar dots show correctly for every user. */
+/* Fetch all date keys from Firebase, overwrite local with remote data (remote is source of truth).
+   Also opens a live SSE stream on /data so calendar dots stay in sync across devices. */
+let fbCalStream=null;
 async function fbSyncCalendarDots(){
   if(!fbBase())return;
   try{
@@ -760,26 +777,67 @@ async function fbSyncCalendarDots(){
     const keys=await r.json();
     if(!keys||typeof keys!=='object')return;
     const all=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
-    const missing=Object.keys(keys).filter(k=>{
-      if(!all[k])return true;
-      return !Object.values(all[k].statuses||{}).some(v=>v&&v.trim());
-    });
-    await Promise.all(missing.map(async k=>{
+    // Fetch all known remote keys (not just missing ones — remote is truth)
+    await Promise.all(Object.keys(keys).map(async k=>{
       try{
         const r2=await fetch(fbBase()+'/data/'+k+'.json');
         if(!r2.ok)return;
         const d=await r2.json();
         if(!d)return;
         if(!all[k])all[k]={statuses:{},toRows:[],emoji:null,rollCount:0,bestRolls:0};
-        if(d.statuses)Object.entries(d.statuses).forEach(([sk,sv])=>{
-          if(!all[k].statuses[sk]||all[k].statuses[sk].trim()==='')all[k].statuses[sk]=sv;
-        });
-        if(d.toRows&&(!all[k].toRows||!all[k].toRows.length))all[k].toRows=d.toRows;
-        if(d.emoji&&!all[k].emoji)all[k].emoji=d.emoji;
+        // Overwrite with remote (remote wins)
+        if(d.statuses)all[k].statuses={...all[k].statuses,...d.statuses};
+        if(d.toRows&&d.toRows.length)all[k].toRows=d.toRows;
+        if(d.emoji)all[k].emoji=d.emoji;
       }catch(_){}
     }));
     localStorage.setItem(SAVED_LS,JSON.stringify(all));
     buildCalendar();
+    buildCalSummary(calSelectedKey);
+  }catch(_){}
+
+  // Live SSE on the whole /data node — fires when any date changes on any device
+  if(fbCalStream){fbCalStream.close();fbCalStream=null;}
+  try{
+    const es=new EventSource(fbBase()+'/data.json?stream=true',{withCredentials:false});
+    fbCalStream=es;
+    es.addEventListener('put',e=>{try{
+      const d=JSON.parse(e.data);
+      if(!d||!d.data)return;
+      const all=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
+      // d.path is like '/2026-06-01', d.data is the day object
+      if(d.path&&d.path.length>1&&d.data&&typeof d.data==='object'&&d.data.statuses){
+        const k=d.path.replace(/^\//,'');
+        if(!all[k])all[k]={statuses:{},toRows:[],emoji:null,rollCount:0,bestRolls:0};
+        all[k].statuses={...all[k].statuses,...d.data.statuses};
+        if(d.data.toRows&&d.data.toRows.length)all[k].toRows=d.data.toRows;
+        if(d.data.emoji)all[k].emoji=d.data.emoji;
+        localStorage.setItem(SAVED_LS,JSON.stringify(all));
+        buildCalendar();
+        if(calSelectedKey===k)buildCalSummary(k);
+      }
+    }catch(_){}});
+    es.addEventListener('patch',e=>{try{
+      const d=JSON.parse(e.data);
+      if(!d||!d.data)return;
+      const all=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
+      if(d.path&&d.path.length>1){
+        const parts=d.path.replace(/^\//,'').split('/');
+        const k=parts[0];
+        if(!all[k])all[k]={statuses:{},toRows:[],emoji:null,rollCount:0,bestRolls:0};
+        if(parts[1]==='statuses'&&typeof d.data==='object')all[k].statuses={...all[k].statuses,...d.data};
+        else if(parts[1]==='toRows')all[k].toRows=d.data;
+        else if(parts[1]==='emoji')all[k].emoji=d.data;
+        else if(d.data&&typeof d.data==='object'){
+          if(d.data.statuses)all[k].statuses={...all[k].statuses,...d.data.statuses};
+          if(d.data.toRows&&d.data.toRows.length)all[k].toRows=d.data.toRows;
+          if(d.data.emoji)all[k].emoji=d.data.emoji;
+        }
+        localStorage.setItem(SAVED_LS,JSON.stringify(all));
+        buildCalendar();
+        if(calSelectedKey===k)buildCalSummary(k);
+      }
+    }catch(_){}});
   }catch(_){}
 }
 function togFbHelp(){const s=document.getElementById('fb-help');const op=s.classList.toggle('op');document.getElementById('fb-help-t').textContent=op?'setup guide ▴':'setup guide ▾';}
@@ -907,7 +965,7 @@ function renderPersonList(){
 function mkPB(name,grp){
   const key=grp+'-'+name;
   if(statuses[key]===undefined)statuses[key]='';
-  const blk=document.createElement('div');blk.className='pb';
+  const blk=document.createElement('div');blk.className='pb';blk.setAttribute('data-key',key);
 
   // top row: name | status area | clear X
   const top=document.createElement('div');top.className='ptop';
@@ -1209,7 +1267,7 @@ function updatePreview(flashEmoji){
   }
   ln('Good Morning Officers ');ln('OH NSFs Movement Chart for today: ');ln(fmt(d)+' '+dayName(d));ln('——————————');ln('',true);
   (roster.MAIN||[]).forEach(n=>ln(n+' - '+(statuses['MAIN-'+n]||'').trim()));
-  ln('');ln('/nEMS TEAM:/n');ln('');
+  ln('');ln('\nEMS TEAM:\n');ln('');
   (roster.EMS||[]).forEach(n=>ln(n+' - '+(statuses['EMS-'+n]||'').trim()));
   const tp=toRows.map(r=>r.name+' '+m2s(r.from)+' - '+m2s(r.to));
   ln('*Time off*:'+(tp.length?' '+tp.join(', '):''));
