@@ -438,8 +438,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
           <div class="wb" style="padding-top:8px">
             <div class="red" id="red"></div>
             <button class="rsave" onclick="saveRoster()">✓ Save & Sync Roster</button>
-            <!-- HARDCODED FIREBASE: firebase input UI hidden (delete comment tags to restore) -->
-            <!-- <div class="fb-sect">
+            <div class="fb-sect">
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
                 <div class="fb-lbl" style="margin-bottom:0">Firebase Sync</div>
                 <button style="background:none;border:none;font-family:var(--mono);font-size:10px;color:var(--text3);cursor:pointer" onclick="togFbHelp()"><span id="fb-help-t">setup guide ▾</span></button>
@@ -459,8 +458,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
                   <strong>No expiry</strong> — free tier is permanent. Test mode rules last 30 days but the DB doesn't. Just set rules to <code>{ "rules": { ".read": true, ".write": true } }</code> after 30 days.
                 </div>
               </div>
-            </div> -->
-            <!-- END HARDCODED FIREBASE -->
+            </div>
           </div>
         </div>
       </div>
@@ -503,10 +501,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 <script>
 /* ═══════════════════════ CONSTANTS ═══════════════════════ */
 const ROSTER_LS='oh_roster_v3',SAVED_LS='oh_saved_v3',FB_LS='oh_fb_url';
-// ── HARDCODED FIREBASE (delete this block to revert) ──────────────────────────
-const HARDCODED_FB='https://ops-rollcall-default-rtdb.asia-southeast1.firebasedatabase.app/';
-// const HARDCODED_FB=''; // <-- original: paste your Firebase URL here to hardcode it
-// ──────────────────────────────────────────────────────────────────────────────
+const HARDCODED_FB=''; // <-- paste your Firebase URL here to hardcode it
 
 const DEFAULT_ROSTER={
   MAIN:['LCP IRFAN','CPL RAZIN','CPL RIZQ','LCP JEFF','PTE HUZAIFAH','LCP ZACHARIAH','LCP MARCUS',
@@ -704,10 +699,9 @@ function fbListen(k){
   }catch(e){setSyncUI('error');}
 }
 function connectFb(){
-  const fbin=document.getElementById('fb-in');if(!fbin)return;
-  const val=fbin.value.trim();fbUrl=val;localStorage.setItem(FB_LS,val);
-  if(val){fbin.classList.add('connected');initFb();showToast('🔗 Firebase connected!');}
-  else{fbin.classList.remove('connected');setSyncUI('offline');showToast('Firebase disconnected');}
+  const val=document.getElementById('fb-in').value.trim();fbUrl=val;localStorage.setItem(FB_LS,val);
+  if(val){document.getElementById('fb-in').classList.add('connected');initFb();showToast('🔗 Firebase connected!');}
+  else{document.getElementById('fb-in').classList.remove('connected');setSyncUI('offline');showToast('Firebase disconnected');}
 }
 async function initFb(){
   if(!fbUrl){setSyncUI('offline');return;}setSyncUI('syncing');
@@ -727,6 +721,37 @@ function loadLocal(d){
   if(s){statuses=s.statuses||{};toRows=s.toRows||[];if(s.emoji){curEmoji=s.emoji;rollCount=s.rollCount||1;bestRolls=s.bestRolls||1;}}
 }
 function persist(){saveLocal();clearTimeout(persist._t);persist._t=setTimeout(fbPush,800);}
+
+/* ── RANGE PROPAGATION ───────────────────────────────────────
+   When a ranged leave (e.g. MC 01/06 - 03/06) is confirmed,
+   write the same status to every date in the range.
+   Only fills dates where that person has no status yet,
+   so existing entries are never overwritten.
+   Pushes each affected date to Firebase if connected.
+─────────────────────────────────────────────────────────── */
+function propagateRangeStatus(key,statusValue,p1,p2){
+  if(!p2)return;
+  const all=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
+  const cursor=new Date(p1);
+  while(cursor<=p2){
+    const dk=fmtKey(cursor);
+    if(dk!==curDateKey){
+      if(!all[dk])all[dk]={statuses:{},toRows:[],emoji:null,rollCount:0,bestRolls:0};
+      if(!all[dk].statuses)all[dk].statuses={};
+      if(!all[dk].statuses[key]||all[dk].statuses[key].trim()===''){
+        all[dk].statuses[key]=statusValue;
+        if(fbBase()){
+          fetch(fbBase()+'/data/'+dk+'.json',{method:'PATCH',
+            headers:{'Content-Type':'application/json'},
+            body:JSON.stringify({statuses:all[dk].statuses})
+          }).catch(()=>{});
+        }
+      }
+    }
+    cursor.setDate(cursor.getDate()+1);
+  }
+  localStorage.setItem(SAVED_LS,JSON.stringify(all));
+}
 
 /* ═══════════════════════ ROSTER EDITOR ═══════════════════════ */
 function togCol(bi,ci){const b=document.getElementById(bi),c=document.getElementById(ci);const op=b.classList.toggle('op');c.style.transform=op?'rotate(90deg)':'';if(op&&bi==='red-body')buildRED();}
@@ -852,7 +877,7 @@ function applyLeaf(def,sw,si,key,blk,lc){
   else if(def.type==='sfx'){target.value='OFF DUTY ('+def.code+')';}
   else if(def.type==='bto'){target.value='BTO';}
   else if(def.type==='dp'){
-    openDP(def.code,target,()=>{assembleStatus(sw,si,key);styleBlock(blk,statuses[key]);persist();updatePreview();});
+    openDP(def.code,target,(p1,p2,suf)=>{assembleStatus(sw,si,key);styleBlock(blk,statuses[key]);persist();if(p2)propagateRangeStatus(key,statuses[key],p1,p2);updatePreview();buildCalendar();});
     lc.classList.remove('op');return;
   }
   assembleStatus(sw,si,key);styleBlock(blk,statuses[key]);lc.classList.remove('op');persist();updatePreview();
@@ -1047,7 +1072,7 @@ function updatePreview(flashEmoji){
   }
   ln('Good Morning Officers ');ln('OH NSFs Movement Chart for today: ');ln(fmt(d)+' '+dayName(d));ln('——————————');ln('',true);
   (roster.MAIN||[]).forEach(n=>ln(n+' - '+(statuses['MAIN-'+n]||'').trim()));
-  ln('');ln('\nEMS TEAM:\n');ln('');
+  ln('');ln('EMS TEAM:');ln('');
   (roster.EMS||[]).forEach(n=>ln(n+' - '+(statuses['EMS-'+n]||'').trim()));
   const tp=toRows.map(r=>r.name+' '+m2s(r.from)+' - '+m2s(r.to));
   ln('*Time off*:'+(tp.length?' '+tp.join(', '):''));
@@ -1157,7 +1182,11 @@ function openDP(code,targetInp,cb){
     ok.addEventListener('mousedown',e=>{
       e.preventDefault();if(!p1)return;
       const suf=p2?code+' ('+fp(p1)+' - '+fp(p2)+')':code+' ('+fp(p1)+')';
-      targetInp.value=suf;ov.remove();if(cb)cb();
+      targetInp.value=suf;
+      // snapshot p1/p2 before overlay removal clears them
+      const _p1=p1,_p2=p2;
+      ov.remove();
+      if(cb)cb(_p1,_p2,suf);
     });
     ac.appendChild(ca);ac.appendChild(ok);modal.appendChild(ac);
   }
@@ -1203,7 +1232,7 @@ function init(){
   if(curEmoji)applyEmoji(curEmoji,false);else resetEmoji();
   updatePreview();updateStreakUI();buildCalendar();buildCalSummary(curDateKey);
   tick();setInterval(tick,1000);
-  if(fbUrl){const fbin=document.getElementById('fb-in');if(fbin){fbin.value=fbUrl;fbin.classList.add('connected');}initFb();}
+  if(fbUrl){document.getElementById('fb-in').value=fbUrl;document.getElementById('fb-in').classList.add('connected');initFb();}
   else setSyncUI('offline');
 }
 init();
