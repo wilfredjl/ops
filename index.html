@@ -446,7 +446,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
           <div class="wb" style="padding-top:8px">
             <div class="red" id="red"></div>
             <button class="rsave" onclick="saveRoster()">✓ Save & Sync Roster</button>
-            <div class="fb-sect">
+            <!-- HARDCODED FIREBASE: firebase input UI hidden (delete comment tags to restore) -->
+            <!--<div class="fb-sect">
               <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
                 <div class="fb-lbl" style="margin-bottom:0">Firebase Sync</div>
                 <button style="background:none;border:none;font-family:var(--mono);font-size:10px;color:var(--text3);cursor:pointer" onclick="togFbHelp()"><span id="fb-help-t">setup guide ▾</span></button>
@@ -466,7 +467,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
                   <strong>No expiry</strong> — free tier is permanent. Test mode rules last 30 days but the DB doesn't. Just set rules to <code>{ "rules": { ".read": true, ".write": true } }</code> after 30 days.
                 </div>
               </div>
-            </div>
+            </div>-->
+            <!-- END HARDCODED FIREBASE -->
           </div>
         </div>
       </div>
@@ -509,7 +511,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 <script>
 /* ═══════════════════════ CONSTANTS ═══════════════════════ */
 const ROSTER_LS='oh_roster_v3',SAVED_LS='oh_saved_v3',FB_LS='oh_fb_url';
-const HARDCODED_FB=''; // <-- paste your Firebase URL here to hardcode it
+// ── HARDCODED FIREBASE (delete this block to revert) ──────────────────────────
+const HARDCODED_FB='https://ops-rollcall-default-rtdb.asia-southeast1.firebasedatabase.app/';
+// const HARDCODED_FB=''; // <-- original: paste your Firebase URL here to hardcode it
+// ──────────────────────────────────────────────────────────────────────────────
 
 const DEFAULT_ROSTER={
   MAIN:['LCP IRFAN','CPL RAZIN','CPL RIZQ','LCP JEFF','PTE HUZAIFAH','LCP ZACHARIAH','LCP MARCUS',
@@ -732,9 +737,10 @@ function fbListen(k){
   }catch(e){setSyncUI('error');}
 }
 function connectFb(){
-  const val=document.getElementById('fb-in').value.trim();fbUrl=val;localStorage.setItem(FB_LS,val);
-  if(val){document.getElementById('fb-in').classList.add('connected');initFb();showToast('🔗 Firebase connected!');}
-  else{document.getElementById('fb-in').classList.remove('connected');setSyncUI('offline');showToast('Firebase disconnected');}
+  const fbin=document.getElementById('fb-in');if(!fbin)return;
+  const val=fbin.value.trim();fbUrl=val;localStorage.setItem(FB_LS,val);
+  if(val){fbin.classList.add('connected');initFb();showToast('🔗 Firebase connected!');}
+  else{fbin.classList.remove('connected');setSyncUI('offline');showToast('Firebase disconnected');}
 }
 async function initFb(){
   if(!fbUrl){setSyncUI('offline');return;}setSyncUI('syncing');
@@ -1119,7 +1125,7 @@ function openTP(label,initialMins,onConfirm){
   const ex=document.getElementById('tp-ov');if(ex)ex.remove();
   let selH=Math.floor(initialMins/60),selM=initialMins%60;
   selM=selM<15?0:selM<45?30:0;
-  const HOURS=Array.from({length:24},(_,i)=>i),MINS=[0,30],ITEM_H=56;
+  const HOURS=Array.from({length:24},(_,i)=>i),MINS=[0,30];
   const ov=document.createElement('div');ov.className='tp-ov';ov.id='tp-ov';
   const modal=document.createElement('div');modal.className='tp-modal';modal.addEventListener('mousedown',e=>e.stopPropagation());
   const title=document.createElement('div');title.className='tp-title';title.textContent=label+' Time';
@@ -1136,28 +1142,42 @@ function openTP(label,initialMins,onConfirm){
     const selBar=document.createElement('div');selBar.className='tp-drum-sel';
     const track=document.createElement('div');track.className='tp-drum-track';
     const PAD=1;const padded=[...Array(PAD).fill(null),...values,...Array(PAD).fill(null)];
-    padded.forEach((v,i)=>{const item=document.createElement('div');item.className='tp-drum-item';item.textContent=(v===null)?'':String(v).padStart(2,'0');if(v===initVal)item.classList.add('sel');track.appendChild(item);});
-    let curIdx=values.indexOf(initVal)+PAD,offsetY=-(curIdx*ITEM_H-ITEM_H);
+    padded.forEach((v,i)=>{const item=document.createElement('div');item.className='tp-drum-item';item.textContent=(v===null)?'':String(v).padStart(2,'0');track.appendChild(item);});
+    // Read ITEM_H from DOM after append so mobile CSS overrides are respected
+    let ITEM_H=56;
+    let curIdx=values.indexOf(initVal)+PAD;
+    let offsetY=0;
+    function getItemH(){return track.firstChild?track.firstChild.getBoundingClientRect().height||ITEM_H:ITEM_H;}
+    function updateSel(y){
+      const ih=ITEM_H;
+      // center slot index = 1 (PAD), selected item sits at visual center (slot 1 of 3 visible)
+      const ni=Math.round(-y/ih);
+      track.querySelectorAll('.tp-drum-item').forEach((el,i)=>el.classList.toggle('sel',i===ni+PAD));
+      const ri=ni,v=values[Math.max(0,Math.min(values.length-1,ri))];onChange(v);
+    }
     function setOff(y,anim){
-      y=Math.max(-((padded.length-3)*ITEM_H),Math.min(0,y));
+      y=Math.max(-((values.length-1)*ITEM_H),Math.min(0,y));
       track.style.transition=anim?'transform 0.25s cubic-bezier(0.25,0.46,0.45,0.94)':'none';
       track.style.transform='translateY('+y+'px)';offsetY=y;
-      const ni=Math.round(-y/ITEM_H);
-      track.querySelectorAll('.tp-drum-item').forEach((el,i)=>el.classList.toggle('sel',i===ni+1));
-      const ri=ni-PAD+1,v=values[Math.max(0,Math.min(values.length-1,ri))];onChange(v);
+      updateSel(y);
     }
-    function snapTo(val,anim){const vi=values.indexOf(val)+PAD;setOff(-(vi*ITEM_H-ITEM_H),anim);}
-    snapTo(initVal,false);
+    function snapTo(val,anim){const vi=values.indexOf(val);setOff(-(vi*ITEM_H),anim);}
+    // Init after DOM insertion so we can measure real height
+    win.appendChild(selBar);win.appendChild(track);wrap.appendChild(win);
+    requestAnimationFrame(()=>{
+      ITEM_H=getItemH()||ITEM_H;
+      snapTo(initVal,false);
+    });
     let dragY=null,startOff=null;
     win.addEventListener('mousedown',e=>{dragY=e.clientY;startOff=offsetY;e.preventDefault();});
     window.addEventListener('mousemove',e=>{if(dragY===null)return;setOff(startOff+(e.clientY-dragY),false);});
-    window.addEventListener('mouseup',()=>{if(dragY===null)return;dragY=null;const ni=Math.round(-offsetY/ITEM_H),ri=ni-PAD+1;snapTo(values[Math.max(0,Math.min(values.length-1,ri))],true);});
+    window.addEventListener('mouseup',()=>{if(dragY===null)return;dragY=null;const ni=Math.round(-offsetY/ITEM_H);snapTo(values[Math.max(0,Math.min(values.length-1,ni))],true);});
     let touchY=null,touchOff=null;
     win.addEventListener('touchstart',e=>{touchY=e.touches[0].clientY;touchOff=offsetY;},{passive:true});
     win.addEventListener('touchmove',e=>{if(touchY===null)return;setOff(touchOff+(e.touches[0].clientY-touchY),false);e.preventDefault();},{passive:false});
-    win.addEventListener('touchend',()=>{touchY=null;const ni=Math.round(-offsetY/ITEM_H),ri=ni-PAD+1;snapTo(values[Math.max(0,Math.min(values.length-1,ri))],true);});
-    win.addEventListener('wheel',e=>{e.preventDefault();const ni=Math.round(-offsetY/ITEM_H),ri=ni-PAD+1,delta=e.deltaY>0?1:-1;snapTo(values[Math.max(0,Math.min(values.length-1,ri+delta))],true);},{passive:false});
-    win.appendChild(selBar);win.appendChild(track);wrap.appendChild(win);return wrap;
+    win.addEventListener('touchend',()=>{touchY=null;const ni=Math.round(-offsetY/ITEM_H);snapTo(values[Math.max(0,Math.min(values.length-1,ni))],true);});
+    win.addEventListener('wheel',e=>{e.preventDefault();const ni=Math.round(-offsetY/ITEM_H),delta=e.deltaY>0?1:-1;snapTo(values[Math.max(0,Math.min(values.length-1,ni+delta))],true);},{passive:false});
+    return wrap;
   }
   const hDrum=makeDrum(HOURS,selH,v=>selHour=v);
   const colon=document.createElement('div');colon.className='tp-colon';colon.textContent=':';
@@ -1189,7 +1209,7 @@ function updatePreview(flashEmoji){
   }
   ln('Good Morning Officers ');ln('OH NSFs Movement Chart for today: ');ln(fmt(d)+' '+dayName(d));ln('——————————');ln('',true);
   (roster.MAIN||[]).forEach(n=>ln(n+' - '+(statuses['MAIN-'+n]||'').trim()));
-  ln('');ln('EMS TEAM:');ln('');
+  ln('');ln('/nEMS TEAM:/n');ln('');
   (roster.EMS||[]).forEach(n=>ln(n+' - '+(statuses['EMS-'+n]||'').trim()));
   const tp=toRows.map(r=>r.name+' '+m2s(r.from)+' - '+m2s(r.to));
   ln('*Time off*:'+(tp.length?' '+tp.join(', '):''));
@@ -1349,7 +1369,7 @@ function init(){
   if(curEmoji)applyEmoji(curEmoji,false);else resetEmoji();
   updatePreview();updateStreakUI();buildCalendar();buildCalSummary(curDateKey);
   tick();setInterval(tick,1000);
-  if(fbUrl){document.getElementById('fb-in').value=fbUrl;document.getElementById('fb-in').classList.add('connected');initFb();}
+  if(fbUrl){const fbin=document.getElementById('fb-in');if(fbin){fbin.value=fbUrl;fbin.classList.add('connected');}initFb();}
   else setSyncUI('offline');
 }
 init();
