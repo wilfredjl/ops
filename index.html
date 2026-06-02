@@ -521,7 +521,46 @@ const DEFAULT_ROSTER={
         'PTE MAHESH','PTE KHAIRUL','LCP KAR KIT','PTE FERDINAND','PTE IRYAN','PTE GARRET','PTE MIRZA'],
   EMS:['CPL KHAIRI','PTE DARWISY','PTE CYRUS','LCP ZEN','CPL WEN XUAN']
 };
-const EMOJI_POOL=['🩻','✌️','😴','🧚\u200d♂️','🫃','🫠','🐸','🌵','🎯','🦋','🍄','🌊','🦆','🏔️','🎭','🔮','🧃','🌸','🐢','🎵','🌙','🍉','🦀','🧊','🌈','🐙','🎲','🦜','🍜','🏄','🧸','🌻','🐡','🎺','🦩','🌍','🧩','🍋','🦭','🌺','🐻','🎋','🧁','🐝','🌴','🦊','🐉','🎪','🌟','🍀'];
+const EMOJI_POOL = [
+  '🩻','✌️','😴','🧚‍♂️','🫃','🫠','🐸','🌵','🎯','🦋',
+  '🍄','🌊','🦆','🏔️','🎭','🔮','🧃','🌸','🐢','🎵',
+  '🌙','🍉','🦀','🧊','🌈','🐙','🎲','🦜','🍜','🏄',
+  '🧸','🌻','🐡','🎺','🦩','🌍','🧩','🍋','🦭','🌺',
+  '🐻','🎋','🧁','🐝','🌴','🦊','🐉','🎪','🌟','🍀',
+
+  '🦄','🪼','🦕','🦖','🐿️','🦔','🦦','🦥','🦨','🦬',
+  '🦚','🦢','🪿','🐓','🦤','🦘','🦡','🐇','🐁','🐀',
+  '🐉','🐲','🦎','🐍','🐊','🦈','🐋','🐬','🪲','🐞',
+  '🪰','🪱','🐌','🦗','🕷️','🦂','🐚','🪸','🌼','🌷',
+
+  '🌹','🪻','🌱','🌿','☘️','🍁','🍂','🍃','🌾','🌲',
+  '🌳','🪵','🪨','⛰️','🌋','🏝️','🏕️','🌅','🌄','🌠',
+  '☁️','⛅','⚡','☄️','🔥','💧','❄️','🌪️','🫧','🌌',
+
+  '🍇','🍓','🍒','🥝','🍍','🥥','🥑','🌽','🥕','🫑',
+  '🥨','🧇','🍕','🌮','🍣','🍙','🍤','🥟','🍩','🍪',
+  '🧋','☕','🫖','🍵','🧃','🥤','🧉','🍯','🍦','🍰',
+
+  '🎨','🖌️','🖍️','🧵','🪡','🎹','🥁','🎸','🎻','🎷',
+  '🎮','🕹️','🧠','📚','📼','📷','🎥','📡','🛰️','💿',
+  '🪩','🎇','🎆','🧨','🎈','🎁','🪅','🎊','🎉','🃏',
+
+  '🚀','🛸','🚁','⛵','🚂','🚲','🛹','🛼','🪂','🎢',
+  '🎡','🗺️','🧭','🏕️','🏖️','🏜️','🏟️','🛶','🚦','🗿',
+
+  '⌛','⏳','🕰️','💡','🪞','🧸','🛋️','🪑','🛏️','🧼',
+  '🪥','🧴','🪄','🗝️','🔑','📎','✂️','📌','🧲','⚙️',
+
+  '💎','⚜️','🌀','♟️','🪄','🧿','🪬','🔔','🎐','🕯️',
+  '📿','🧪','⚗️','🔭','🧬','🦠','💫','⭐','🌞','🌛',
+
+  '🙂','😎','🥳','🤠','🧐','😶‍🌫️','🥶','😵‍💫','🤖','👾',
+  '👻','💀','☠️','🎃','😺','😸','😹','🙀','😼','🤡',
+
+  '❤️','🧡','💛','💚','💙','💜','🖤','🤍','🤎','💖',
+  '💘','💝','✨','💫','⚡','🌠','🎆','🫶','🤝','🙌'
+];
+
 const SPIN_LINES=['the universe decides...','fate is spinning...','let destiny choose...','consulting the emoji oracle...','the wheel of fortune turns...','rolling for vibes...','quantum randomness activated...','channeling the spirits...','the algorithm speaks...',"today's energy incoming...",'commencing sacred roll...'];
 const LAND_LINES=['🎯 locked in.','✅ vibe confirmed.','🌟 excellent choice.','💫 the emoji has spoken.','🎰 jackpot.','🏆 worthy selection.','⚡ energy set.','🔮 destiny fulfilled.','🎪 spectacular.','🍀 feeling lucky.'];
 const STREAK_LVL=[{min:0,cls:'',icon:'💤',msg:'No rolls yet'},{min:1,cls:'',icon:'🎲',msg:'First roll!'},{min:3,cls:'s-warm',icon:'🔵',msg:'On a roll — {n} deep'},{min:7,cls:'s-hot',icon:'🔥',msg:'Getting hot — {n} rolls!'},{min:12,cls:'s-hot',icon:'🔥🔥',msg:'Scorching — {n} rolls!!'},{min:18,cls:'s-fire',icon:'💀',msg:'Unhinged. {n} rolls.'},{min:28,cls:'s-fire',icon:'👹',msg:'CURSED ROLLER — {n}!!!!'}];
@@ -746,11 +785,66 @@ function fbListen(k){
   try{
     const es=new EventSource(fbBase()+'/data/'+k+'.json?stream=true',{withCredentials:false});
     fbStream=es;
-    es.addEventListener('put',e=>{try{const d=JSON.parse(e.data);if(d&&d.data)applyRemoteDay(d.data);}catch(_){}});
-    es.addEventListener('patch',e=>{try{const d=JSON.parse(e.data);if(d&&d.data)applyRemoteDay(d.data);}catch(_){}});
+    es.addEventListener('put',e=>{try{
+      const d=JSON.parse(e.data);
+      if(d&&d.data)applyRemoteDay(d.data);
+    }catch(_){}});
+    es.addEventListener('patch',e=>{try{
+      const d=JSON.parse(e.data);
+      if(!d||!d.data)return;
+      // Firebase patch path tells us which subfield changed
+      const path=(d.path||'').replace(/^\//,'');
+      let wrapped={};
+      if(!path||path===''){
+        // root patch — data is the full day object or partial
+        wrapped=d.data;
+      } else if(path==='statuses'){
+        wrapped={statuses:d.data};
+      } else if(path==='toRows'){
+        wrapped={toRows:d.data};
+      } else if(path==='emoji'){
+        wrapped={emoji:d.data};
+      } else if(path.startsWith('statuses/')){
+        // single field: statuses/MAIN-LCP IRFAN
+        const field=path.replace('statuses/','');
+        wrapped={statuses:{[field]:d.data}};
+      } else {
+        wrapped=d.data;
+      }
+      applyRemoteDay(wrapped);
+    }catch(_){}});
     es.onopen=()=>setSyncUI('online');
     es.onerror=()=>{setSyncUI('offline');setTimeout(()=>fbListen(k),5000);};
   }catch(e){setSyncUI('error');}
+}
+
+// Live roster sync — stream /roster.json so all devices pick up roster changes immediately
+let fbRosterStream=null;
+function fbListenRoster(){
+  if(fbRosterStream){fbRosterStream.close();fbRosterStream=null;}
+  if(!fbBase())return;
+  try{
+    const es=new EventSource(fbBase()+'/roster.json?stream=true',{withCredentials:false});
+    fbRosterStream=es;
+    es.addEventListener('put',e=>{try{
+      const d=JSON.parse(e.data);
+      if(d&&d.data&&(d.data.MAIN||d.data.EMS)){
+        roster=d.data;localStorage.setItem(ROSTER_LS,JSON.stringify(roster));
+        renderPersonList();updatePreview();buildCalendar();
+        showToast('📋 Roster updated by another user');
+      }
+    }catch(_){}});
+    es.addEventListener('patch',e=>{try{
+      const d=JSON.parse(e.data);
+      if(d&&d.data){
+        if(d.data.MAIN)roster.MAIN=d.data.MAIN;
+        if(d.data.EMS)roster.EMS=d.data.EMS;
+        localStorage.setItem(ROSTER_LS,JSON.stringify(roster));
+        renderPersonList();updatePreview();buildCalendar();
+        showToast('📋 Roster updated by another user');
+      }
+    }catch(_){}});
+  }catch(_){}
 }
 function connectFb(){
   const fbin=document.getElementById('fb-in');if(!fbin)return;
@@ -764,6 +858,7 @@ async function initFb(){
   await fbFetch(curDateKey);
   fbListen(curDateKey);
   fbSyncCalendarDots();
+  fbListenRoster();
 }
 
 /* Fetch all date keys from Firebase, overwrite local with remote data (remote is source of truth).
