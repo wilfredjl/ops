@@ -367,6 +367,76 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
   .tp-drum-item{height:50px;font-size:20px}.tp-drum-item.sel{font-size:24px}
   .tp-drum-sel{top:50px;height:50px}
 }
+
+/* ── BOOKMARKLET GUIDE ─────────────────────────────────── */
+.bm-guide{background:var(--surface2);border:1px solid rgba(56,189,248,0.18);border-radius:var(--radius);padding:14px 16px;margin-top:12px}
+.bm-guide-hdr{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+.bm-steps{display:flex;flex-direction:column;gap:8px}
+.bm-step{display:flex;gap:10px;align-items:flex-start}
+.bm-step-n{font-family:var(--mono);font-size:9px;font-weight:700;color:var(--accent);background:var(--accent-bg);border:1px solid rgba(56,189,248,0.25);border-radius:20px;width:18px;height:18px;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+.bm-step-t{font-family:var(--mono);font-size:11px;color:var(--text2);line-height:1.6}
+.bm-step-t b{color:var(--text)}
+.bm-drag{display:inline-flex;align-items:center;gap:7px;padding:6px 13px;background:linear-gradient(135deg,var(--accent),#0ea5e9);color:#000;border-radius:8px;font-family:var(--mono);font-size:11px;font-weight:700;cursor:grab;border:none;letter-spacing:0.04em;box-shadow:0 2px 10px rgba(56,189,248,0.3);user-select:none;text-decoration:none;white-space:nowrap}
+.bm-drag:active{cursor:grabbing}
+.bm-warn{font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:10px;padding-top:10px;border-top:1px solid var(--border);line-height:1.6}
+.bm-warn b{color:var(--gold)}
+
+
+.imp-wrap{max-width:1100px;margin:0 auto;padding:0 16px 60px}
+.imp-toggle{display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--surface2);
+  border:1px solid var(--border2);border-radius:var(--radius-lg);cursor:pointer;
+  transition:border-color 0.15s,background 0.15s;-webkit-tap-highlight-color:transparent;
+  user-select:none}
+.imp-toggle:hover{border-color:var(--border3);background:var(--surface3)}
+.imp-toggle-icon{width:24px;height:24px;border-radius:7px;background:rgba(167,139,250,0.15);
+  border:1px solid rgba(167,139,250,0.3);display:flex;align-items:center;justify-content:center;
+  font-size:13px;flex-shrink:0}
+.imp-toggle-lbl{font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:0.08em;
+  text-transform:uppercase;color:var(--text2);flex:1}
+.imp-toggle-sub{font-family:var(--mono);font-size:10px;color:var(--text3)}
+.imp-chev{font-family:var(--mono);font-size:12px;color:var(--text3);transition:transform 0.25s;flex-shrink:0}
+.imp-chev.open{transform:rotate(90deg)}
+.imp-body{overflow:hidden;max-height:0;transition:max-height 0.35s cubic-bezier(0.4,0,0.2,1)}
+.imp-body.open{max-height:2000px}
+.imp-inner{padding:14px 0 0}
+.imp-card{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);overflow:hidden}
+.imp-sect{padding:14px 16px;border-bottom:1px solid var(--border)}
+.imp-sect:last-child{border-bottom:none}
+.imp-lbl{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--text3);margin-bottom:8px}
+.imp-ta{width:100%;min-height:160px;background:var(--surface2);border:1px solid var(--border2);
+  border-radius:var(--radius);color:var(--text);font-family:var(--mono);font-size:11px;
+  padding:12px;resize:vertical;outline:none;transition:border-color 0.15s;line-height:1.7}
+.imp-ta:focus{border-color:rgba(167,139,250,0.5)}
+.imp-ta::placeholder{color:var(--text3)}
+.imp-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.imp-btn{padding:8px 16px;border:none;border-radius:var(--radius);font-family:var(--mono);
+  font-size:11px;font-weight:600;letter-spacing:0.06em;cursor:pointer;transition:all 0.15s;
+  text-transform:uppercase}
+.imp-btn-parse{background:linear-gradient(135deg,var(--purple),#7c3aed);color:#fff;
+  box-shadow:0 2px 12px rgba(167,139,250,0.25)}
+.imp-btn-parse:hover{transform:translateY(-1px);box-shadow:0 4px 18px rgba(167,139,250,0.4)}
+.imp-btn-copy{background:linear-gradient(135deg,var(--green),#059669);color:#000;
+  box-shadow:0 2px 12px rgba(52,211,153,0.25)}
+.imp-btn-copy:hover{transform:translateY(-1px);box-shadow:0 4px 18px rgba(52,211,153,0.35)}
+.imp-btn-copy.ok{background:linear-gradient(135deg,var(--accent),#0ea5e9);color:#000}
+.imp-btn-clear{background:none;border:1px solid var(--border2);color:var(--text3)}
+.imp-btn-clear:hover{border-color:var(--border3);color:var(--text)}
+.imp-status{font-family:var(--mono);font-size:10px;color:var(--text3);margin-left:4px}
+.imp-status.ok{color:var(--green)}.imp-status.err{color:var(--red)}
+.imp-table-wrap{overflow-x:auto}
+.imp-table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11px}
+.imp-table th{padding:7px 12px;text-align:left;background:var(--surface2);
+  border:1px solid var(--border);color:var(--text3);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;
+  white-space:nowrap;font-weight:600}
+.imp-table th:first-child{position:sticky;left:0;z-index:2;background:var(--surface2)}
+.imp-table td{padding:7px 12px;border:1px solid var(--border);color:var(--text2);white-space:nowrap}
+.imp-table td:first-child{position:sticky;left:0;z-index:1;background:var(--surface);
+  color:var(--text);font-weight:600;border-right-color:var(--border2)}
+.imp-table tr:hover td{background:var(--surface2)}
+.imp-table tr:hover td:first-child{background:var(--surface2)}
+.imp-table .s-in{color:var(--green)}.imp-table .s-out{color:var(--red)}
+.imp-table .s-part{color:var(--gold)}.imp-table .s-empty{color:var(--text3)}
 </style>
 </head>
 <body>
@@ -502,6 +572,64 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
         <div class="wb">
           <div class="prev-box" id="prev-box"></div>
           <button class="cbtn" id="cbtn" onclick="copyMsg()">✦ &nbsp;Copy to Clipboard</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- ══ IMPORT PANEL ══════════════════════════════════════════ -->
+<div class="imp-wrap">
+  <div class="imp-toggle" onclick="togImp()">
+    <div class="imp-toggle-icon">⬇</div>
+    <span class="imp-toggle-lbl">Import Messages</span>
+    <span class="imp-toggle-sub">paste → parse → copy for Excel</span>
+    <span class="imp-chev" id="imp-chev">▸</span>
+  </div>
+  <div class="imp-body" id="imp-body">
+    <div class="imp-inner">
+      <div class="imp-card">
+        <div class="imp-sect">
+          <div class="imp-lbl">Paste finalized daily messages (one or more days)</div>
+          <textarea class="imp-ta" id="imp-ta" placeholder="Paste the last WhatsApp message(s) of each day here. Multiple days are fine — just paste them one after another."></textarea>
+        </div>
+        <div class="imp-sect">
+          <div class="imp-actions">
+            <button class="imp-btn imp-btn-parse" onclick="impParse()">⚡ Parse</button>
+            <button class="imp-btn imp-btn-copy" id="imp-copy-btn" onclick="impCopy()" style="display:none">⬇ Copy as TSV</button>
+            <button class="imp-btn imp-btn-clear" onclick="impClear()">✕ Clear</button>
+            <span class="imp-status" id="imp-status"></span>
+          </div>
+        </div>
+        <div class="imp-sect" id="imp-table-sect" style="display:none">
+          <div class="imp-lbl" style="margin-bottom:10px">Preview — paste directly into Excel</div>
+          <div class="imp-table-wrap">
+            <table class="imp-table" id="imp-table"></table>
+          </div>
+        </div>
+        <!-- BOOKMARKLET GUIDE -->
+        <div class="imp-sect">
+          <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer" onclick="togBmGuide()">
+            <div class="imp-lbl" style="margin-bottom:0">WhatsApp Web Scraper</div>
+            <span class="imp-chev" id="bm-chev" style="font-family:var(--mono);font-size:11px;color:var(--text3);transition:transform 0.25s">▸</span>
+          </div>
+          <div class="coll" id="bm-guide-body">
+            <div class="bm-guide">
+              <div class="bm-guide-hdr">⚡ One-time setup — drag to bookmarks bar</div>
+              <div class="bm-steps">
+                <div class="bm-step"><div class="bm-step-n">1</div><div class="bm-step-t">Make sure your browser <b>bookmarks bar is visible</b> (Ctrl+Shift+B)</div></div>
+                <div class="bm-step"><div class="bm-step-n">2</div><div class="bm-step-t"><b>Drag this button</b> into your bookmarks bar:</div></div>
+              </div>
+              <div style="margin:12px 0 4px">
+                <a id="bm-link" class="bm-drag" href="#" title="Drag me to your bookmarks bar">📋 Grab OH Messages</a>
+              </div>
+              <div class="bm-steps" style="margin-top:12px">
+                <div class="bm-step"><div class="bm-step-n">3</div><div class="bm-step-t">Open <b>WhatsApp Web</b>, open the <b>officers group chat</b>, and scroll up so the days you need are loaded</div></div>
+                <div class="bm-step"><div class="bm-step-n">4</div><div class="bm-step-t">Click <b>Grab OH Messages</b> from your bookmarks bar — it copies all last-messages-per-day to your clipboard</div></div>
+                <div class="bm-step"><div class="bm-step-n">5</div><div class="bm-step-t">Come back here and <b>paste into the textarea above</b>, then hit ⚡ Parse</div></div>
+              </div>
+              <div class="bm-warn"><b>Note:</b> WhatsApp Web must be open in the same tab when you click the bookmark. If it stops working after a WhatsApp update, come back here — a refreshed bookmarklet link will be here.</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -1509,6 +1637,301 @@ function selectCalDay(key){
 
 /* ═══════════════════════ TOAST ═══════════════════════ */
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2800);}
+
+/* ═══════════════════════ IMPORT ═══════════════════════ */
+let impData=null; // {dates:[], rows:{name:[statuses]}}
+
+function togImp(){
+  const body=document.getElementById('imp-body'),chev=document.getElementById('imp-chev');
+  const open=body.classList.toggle('open');
+  chev.classList.toggle('open',open);
+}
+
+function impClear(){
+  document.getElementById('imp-ta').value='';
+  document.getElementById('imp-status').textContent='';
+  document.getElementById('imp-status').className='imp-status';
+  document.getElementById('imp-table-sect').style.display='none';
+  document.getElementById('imp-copy-btn').style.display='none';
+  document.getElementById('imp-table').innerHTML='';
+  impData=null;
+}
+
+function stripNoise(s){
+  // Remove ticks (✅✓✔), emojis (general unicode ranges), extra whitespace
+  return s
+    .replace(/[\u2705\u2713\u2714\u{1F3E5}\u{1F6CF}\u{1F4CB}]/gu,'')
+    .replace(/[\uFE0F\u200D]/g,'')
+    .replace(/[\u{1F000}-\u{1FFFF}]/gu,'')
+    .replace(/[\u2600-\u27BF]/g,'')
+    .replace(/[✅✓✔☑]/g,'')
+    .replace(/\s{2,}/g,' ')
+    .trim();
+}
+
+function parseDate(line){
+  // Matches DD/MM/YYYY
+  const m=line.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if(m) return {day:parseInt(m[1]),month:parseInt(m[2]),year:parseInt(m[3]),key:`${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`,label:m[1]};
+  return null;
+}
+
+function parseStatus(raw){
+  if(!raw) return '';
+  let s=stripNoise(raw).toUpperCase().trim();
+  // Collapse known patterns
+  if(/^IN/.test(s)) return 'IN';
+  if(/^MC/.test(s)) return 'MC';
+  if(/^RS/.test(s)) return 'RS';
+  if(/^HL/.test(s)) return 'HL';
+  if(/^OFF\s*DUTY/.test(s)||/^OFF$/.test(s)) return 'OFF';
+  if(/^OVL/.test(s)) return 'OVL';
+  if(/^VL/.test(s)){
+    // check for date in parens
+    const d=raw.match(/\(.*?\)/);
+    return d?`VL ${d[0]}`:'VL';
+  }
+  if(/^CCL/.test(s)) return 'CCL';
+  if(/^CDA/.test(s)) return 'CDA';
+  if(/^AM\s/.test(s)||/^PM\s/.test(s)) return s; // keep AM/PM splits
+  // fallback: return cleaned
+  return s.split(' ').slice(0,4).join(' ');
+}
+
+function parseName(raw){
+  // Expect format like "LCP IRFAN", "CPL RAZIN", etc.
+  return raw.trim().toUpperCase();
+}
+
+function statusClass(s){
+  if(!s) return 's-empty';
+  const u=s.toUpperCase();
+  if(u==='IN') return 's-in';
+  if(/^(MC|RS|HL|OVL|OFF|VL|CCL|CDA)/.test(u)) return 's-out';
+  if(/^(AM|PM)/.test(u)) return 's-part';
+  return '';
+}
+
+function impParse(){
+  const raw=document.getElementById('imp-ta').value.trim();
+  const status=document.getElementById('imp-status');
+  if(!raw){status.textContent='Nothing pasted.';status.className='imp-status err';return;}
+
+  // Strip base64 image blobs (long lines of base64 chars — from WhatsApp MC photo pastes)
+  const cleanedRaw=raw.split('\n').filter(line=>{
+    const t=line.trim();
+    // base64 lines: mostly alphanumeric + /+=, longer than 40 chars, no spaces
+    if(t.length>40 && /^[A-Za-z0-9+/=]{40,}$/.test(t)) return false;
+    return true;
+  }).join('\n');
+
+  // Split into blocks by date line
+  const lines=cleanedRaw.split('\n');
+  const blocks=[];
+  let cur=null;
+
+  for(const line of lines){
+    const d=parseDate(line);
+    if(d){
+      if(cur) blocks.push(cur);
+      cur={date:d,lines:[]};
+    } else if(cur){
+      cur.lines.push(line);
+    }
+  }
+  if(cur) blocks.push(cur);
+
+  if(!blocks.length){
+    status.textContent='No dates found (need DD/MM/YYYY format).';
+    status.className='imp-status err';
+    return;
+  }
+
+  // Collect all names in order (preserve first-seen order)
+  const nameOrder=[];
+  const nameSet=new Set();
+  // Parse each block
+  const parsed={}; // {dateKey: {name: status}}
+
+  // Rank/title prefixes
+  const RANK=/^(CPL|LCP|PTE|SGT|SSG|MSG|WO[12]?|LTA|CPT|MAJ|LTC|COL|EMS|ME\d?)\s+/i;
+
+  for(const block of blocks){
+    const dk=block.date.key;
+    parsed[dk]={};
+    let inSection=false;
+
+    for(const line of block.lines){
+      const clean=line.trim();
+      if(!clean) continue;
+      // Skip section headers (all caps label lines, dividers, rollcall IC lines)
+      if(/^[-—═]+$/.test(clean)) continue;
+      if(/rollcall\s*ic/i.test(clean)) continue;
+      if(/^(EMS TEAM|MAIN|OH NSF|OFFICERS?|TIME OFF)\s*:?$/i.test(clean)) continue;
+      if(/^good (morning|afternoon|evening)/i.test(clean)) continue;
+      if(/movement chart/i.test(clean)) continue;
+
+      // Try to parse as "NAME - STATUS" or "NAME : STATUS"
+      const sep=clean.match(/^(.+?)\s*[-–:]\s*(.+)$/);
+      if(sep && RANK.test(sep[1].trim())){
+        const name=parseName(sep[1]);
+        const stat=parseStatus(sep[2]);
+        parsed[dk][name]=stat;
+        if(!nameSet.has(name)){nameSet.add(name);nameOrder.push(name);}
+      }
+    }
+  }
+
+  const dates=blocks.map(b=>b.date).sort((a,b)=>a.key.localeCompare(b.key));
+
+  // Build table
+  const table=document.getElementById('imp-table');
+  table.innerHTML='';
+
+  // Header row
+  const thead=table.createTHead();
+  const hr=thead.insertRow();
+  const th0=document.createElement('th');th0.textContent='Name';hr.appendChild(th0);
+  for(const d of dates){
+    const th=document.createElement('th');
+    th.textContent=d.day; // just the day number
+    hr.appendChild(th);
+  }
+
+  // Data rows
+  const tbody=table.createTBody();
+  for(const name of nameOrder){
+    const tr=tbody.insertRow();
+    const td0=tr.insertCell();td0.textContent=name;
+    for(const d of dates){
+      const td=tr.insertCell();
+      const s=(parsed[d.key]&&parsed[d.key][name])||'';
+      td.textContent=s||'—';
+      td.className=statusClass(s);
+    }
+  }
+
+  impData={dates,names:nameOrder,parsed};
+
+  document.getElementById('imp-table-sect').style.display='';
+  document.getElementById('imp-copy-btn').style.display='';
+  status.textContent=`✓ ${dates.length} day${dates.length>1?'s':''}, ${nameOrder.length} personnel`;
+  status.className='imp-status ok';
+}
+
+function impCopy(){
+  if(!impData) return;
+  const {dates,names,parsed}=impData;
+  const rows=[];
+  // header: blank + day numbers
+  rows.push(['',...dates.map(d=>d.day)].join('\t'));
+  for(const name of names){
+    const cols=[name,...dates.map(d=>(parsed[d.key]&&parsed[d.key][name])||'')];
+    rows.push(cols.join('\t'));
+  }
+  const tsv=rows.join('\n');
+  const btn=document.getElementById('imp-copy-btn');
+  const ok=()=>{btn.classList.add('ok');btn.textContent='✓ Copied!';setTimeout(()=>{btn.classList.remove('ok');btn.textContent='⬇ Copy as TSV';},2500);};
+  navigator.clipboard.writeText(tsv).then(ok).catch(()=>{const ta=document.createElement('textarea');ta.value=tsv;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();});
+}
+
+function togBmGuide(){
+  const body=document.getElementById('bm-guide-body'),chev=document.getElementById('bm-chev');
+  const open=body.classList.toggle('open');
+  chev.style.transform=open?'rotate(90deg)':'';
+}
+
+function buildBookmarklet(){
+  // The actual scraper code, minified inline
+  const code=`(function(){
+  var out=[];
+  // Try to find all message rows
+  var msgs=Array.from(document.querySelectorAll('[data-testid="msg-container"]'));
+  if(!msgs.length) msgs=Array.from(document.querySelectorAll('.message-in,.message-out'));
+  if(!msgs.length){alert('Could not find messages. Make sure WhatsApp Web is open and a chat is visible.');return;}
+
+  // Date separators — WA renders these as aria-label on a row or a specific div
+  // Strategy: walk all children of the chat panel in DOM order, track current date
+  var panel=document.querySelector('[data-testid="conversation-panel-messages"]')
+    ||document.querySelector('#main .copyable-area')
+    ||document.querySelector('#main');
+  if(!panel){alert('Could not find chat panel.');return;}
+
+  var children=Array.from(panel.querySelectorAll('[data-testid="msg-container"],[data-testid="conversation-info-header-chat-title"],[class*="focusable-list-item"]'));
+
+  // Walk ALL direct and nested nodes to find date rows + message rows
+  var allRows=Array.from(panel.querySelectorAll('*')).filter(function(el){
+    var tid=el.getAttribute('data-testid')||'';
+    if(tid==='msg-container') return true;
+    // date dividers often have role=row and contain a time string, or have class with 'date' 
+    if(el.tagName==='DIV'&&el.getAttribute('data-testid')==='conv-msg-true-date') return true;
+    return false;
+  });
+
+  // Simpler approach: get messages with their timestamp attr, group by date
+  var allMsgs=Array.from(document.querySelectorAll('[data-testid="msg-container"]'));
+  if(!allMsgs.length){
+    allMsgs=Array.from(document.querySelectorAll('.copyable-text'));
+  }
+
+  // Each msg-container has a .copyable-text with data-pre-plain-text="[HH:MM, DD/MM/YYYY] Name: "
+  var byDate={};
+  var dateOrder=[];
+
+  allMsgs.forEach(function(el){
+    var ct=el.querySelector('[data-pre-plain-text]');
+    if(!ct) ct=el.closest('[data-pre-plain-text]')||el.querySelector('.copyable-text');
+    var meta=ct?ct.getAttribute('data-pre-plain-text'):'';
+    var dateMatch=meta.match(/(\d{1,2}\/\d{1,2}\/\d{4})/);
+    var dateKey=dateMatch?dateMatch[1]:'unknown';
+    var text=(el.innerText||el.textContent||'').trim();
+    if(!text) return;
+    if(!byDate[dateKey]){byDate[dateKey]=[];dateOrder.push(dateKey);}
+    byDate[dateKey].push(text);
+  });
+
+  // Dedupe dateOrder
+  dateOrder=dateOrder.filter(function(v,i){return dateOrder.indexOf(v)===i;});
+
+  // For each date, get last message that starts with 'Good Morning'
+  var results=[];
+  dateOrder.forEach(function(dk){
+    var msgs=byDate[dk];
+    // find last msg containing 'Good Morning'
+    var found=null;
+    for(var i=msgs.length-1;i>=0;i--){
+      if(/good\\s*morning/i.test(msgs[i])){found=msgs[i];break;}
+    }
+    if(found) results.push(found);
+  });
+
+  if(!results.length){
+    alert('No "Good Morning Officers" messages found in the visible chat. Try scrolling up to load more messages, then click again.');
+    return;
+  }
+
+  var combined=results.join('\\n\\n---\\n\\n');
+  navigator.clipboard.writeText(combined).then(function(){
+    var d=document.createElement('div');
+    d.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e293b;color:#38bdf8;font-family:monospace;font-size:13px;padding:10px 20px;border-radius:10px;border:1px solid #38bdf8;z-index:99999;box-shadow:0 4px 20px rgba(0,0,0,0.5)';
+    d.textContent='✓ Copied '+results.length+' day'+(results.length>1?'s':'')+' to clipboard';
+    document.body.appendChild(d);setTimeout(function(){d.remove();},3000);
+  }).catch(function(){
+    var ta=document.createElement('textarea');
+    ta.value=combined;ta.style.position='fixed';ta.style.top='-9999px';
+    document.body.appendChild(ta);ta.select();document.execCommand('copy');
+    document.body.removeChild(ta);
+    alert('Copied '+results.length+' day(s) to clipboard!');
+  });
+})();`;
+
+  const min=code.replace(/\n\s*/g,' ');
+  document.getElementById('bm-link').href='javascript:'+encodeURIComponent(min);
+}
+
+// Build on load
+document.addEventListener('DOMContentLoaded',buildBookmarklet);
+setTimeout(buildBookmarklet,500); // fallback
 
 /* ═══════════════════════ INIT ═══════════════════════ */
 function init(){
