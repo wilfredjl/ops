@@ -610,9 +610,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
         <div class="imp-sect">
           <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer" onclick="togBmGuide()">
             <div class="imp-lbl" style="margin-bottom:0">WhatsApp Web Scraper</div>
-            <span class="imp-chev" id="bm-chev" style="font-family:var(--mono);font-size:11px;color:var(--text3);transition:transform 0.25s">▸</span>
+            <span class="imp-chev" id="bm-chev">▸</span>
           </div>
-          <div class="coll" id="bm-guide-body">
+          <div class="imp-body" id="bm-guide-body">
             <div class="bm-guide">
               <div class="bm-guide-hdr">⚡ One-time setup — drag to bookmarks bar</div>
               <div class="bm-steps">
@@ -1838,7 +1838,7 @@ function impCopy(){
 function togBmGuide(){
   const body=document.getElementById('bm-guide-body'),chev=document.getElementById('bm-chev');
   const open=body.classList.toggle('open');
-  chev.style.transform=open?'rotate(90deg)':'';
+  chev.classList.toggle('open',open);
 }
 
 function buildBookmarklet(){
