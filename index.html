@@ -435,8 +435,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
   color:var(--text);font-weight:600;border-right-color:var(--border2)}
 .imp-table tr:hover td{background:var(--surface2)}
 .imp-table tr:hover td:first-child{background:var(--surface2)}
-.imp-table .s-in{color:var(--green)}.imp-table .s-out{color:var(--red)}
-.imp-table .s-part{color:var(--gold)}.imp-table .s-empty{color:var(--text3)}
+.imp-table .s-in{color:var(--green)}
+.imp-table .s-out{color:var(--red)}
+.imp-table .s-part{color:var(--gold)}
+.imp-table .s-empty{color:var(--text3)}
+.imp-table .s-warn{color:#f59e0b;background:rgba(245,158,11,0.12);border-radius:4px;padding:1px 5px;outline:1px solid rgba(245,158,11,0.35);font-weight:700}
 .imp-live{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;min-height:20px}
 .imp-live-tag{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:20px;
   background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.25);color:var(--purple);letter-spacing:0.04em}
@@ -1681,40 +1684,67 @@ function parseDate(line){
   return null;
 }
 
+// Known clean statuses — anything else is flagged for manual verification
+const KNOWN=['IN','MC','RS','HL','OVL','VL','CCL','CL','DB','CDA','OFF'];
+
+function normaliseOne(tok){
+  // tok is already uppercase, noise-stripped
+  // "OFF DUTY HL (...)" → extract real status after OFF DUTY
+  const offDuty=tok.match(/^OFF\s*DUTY\s+([A-Z]+)/);
+  if(offDuty) return offDuty[1]; // e.g. "HL"
+  if(/^OFF$/.test(tok)) return 'OFF';
+  // Strip trailing date ranges like "(14/05 - 25/06)" or "03/06-04/06"
+  const base=tok.replace(/\(.*?\)/g,'').replace(/\d{1,2}\/\d{1,2}.*$/,'').trim();
+  if(!base) return tok;
+  // Match known prefixes
+  for(const k of KNOWN) if(base===k||base.startsWith(k+' ')) return k;
+  // IN with qualifier: "IN (LATE)", "IN LATE" → IN
+  if(/^IN/.test(base)) return 'IN';
+  // Return cleaned base (unknown = warn)
+  return base.split(' ').slice(0,3).join(' ');
+}
+
 function parseStatus(raw){
   if(!raw) return '';
-  let s=stripNoise(raw).toUpperCase().trim();
-  // Collapse known patterns
-  if(/^IN/.test(s)) return 'IN';
-  if(/^MC/.test(s)) return 'MC';
-  if(/^RS/.test(s)) return 'RS';
-  if(/^HL/.test(s)) return 'HL';
-  if(/^OFF\s*DUTY/.test(s)||/^OFF$/.test(s)) return 'OFF';
-  if(/^OVL/.test(s)) return 'OVL';
-  if(/^VL/.test(s)){
-    // check for date in parens
-    const d=raw.match(/\(.*?\)/);
-    return d?`VL ${d[0]}`:'VL';
+  const s=stripNoise(raw).toUpperCase().trim();
+  // AM/PM split: "AM X PM Y"
+  const ampm=s.match(/^AM\s+(\S+(?:\s+\S+)?)\s+PM\s+(\S+(?:\s+\S+)?)$/);
+  if(ampm){
+    const a=normaliseOne(ampm[1]);
+    const p=normaliseOne(ampm[2]);
+    return 'AM '+a+' PM '+p;
   }
-  if(/^CCL/.test(s)) return 'CCL';
-  if(/^CDA/.test(s)) return 'CDA';
-  if(/^AM\s/.test(s)||/^PM\s/.test(s)) return s; // keep AM/PM splits
-  // fallback: return cleaned
-  return s.split(' ').slice(0,4).join(' ');
+  // PM only
+  const pmOnly=s.match(/^PM\s+(.+)$/);
+  if(pmOnly) return 'PM '+normaliseOne(pmOnly[1]);
+  // AM only
+  const amOnly=s.match(/^AM\s+(.+)$/);
+  if(amOnly) return 'AM '+normaliseOne(amOnly[1]);
+  return normaliseOne(s);
 }
 
 function parseName(raw){
-  // Expect format like "LCP IRFAN", "CPL RAZIN", etc.
   return raw.trim().toUpperCase();
 }
 
+function isKnown(tok){
+  return KNOWN.includes(tok);
+}
+
 function statusClass(s){
-  if(!s) return 's-empty';
-  const u=s.toUpperCase();
+  if(!s||s==='—') return 's-empty';
+  const u=s.toUpperCase().trim();
   if(u==='IN') return 's-in';
-  if(/^(MC|RS|HL|OVL|OFF|VL|CCL|CDA)/.test(u)) return 's-out';
-  if(/^(AM|PM)/.test(u)) return 's-part';
-  return '';
+  // AM/PM split
+  if(/^AM\s+\S+\s+PM\s+\S+$/.test(u)){
+    const parts=u.match(/^AM\s+(\S+)\s+PM\s+(\S+)$/);
+    if(parts&&isKnown(parts[1])&&isKnown(parts[2])) return 's-part';
+    return 's-warn'; // one half is non-standard
+  }
+  if(/^AM\s/.test(u)||/^PM\s/.test(u)) return 's-part';
+  if(KNOWN.includes(u.split(' ')[0])) return 's-out';
+  // Unknown status — needs manual verification
+  return 's-warn';
 }
 
 function cleanRaw(raw){
