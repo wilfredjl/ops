@@ -1842,92 +1842,42 @@ function togBmGuide(){
 }
 
 function buildBookmarklet(){
-  // The actual scraper code, minified inline
-  const code=`(function(){
-  var out=[];
-  // Try to find all message rows
-  var msgs=Array.from(document.querySelectorAll('[data-testid="msg-container"]'));
-  if(!msgs.length) msgs=Array.from(document.querySelectorAll('.message-in,.message-out'));
-  if(!msgs.length){alert('Could not find messages. Make sure WhatsApp Web is open and a chat is visible.');return;}
-
-  // Date separators — WA renders these as aria-label on a row or a specific div
-  // Strategy: walk all children of the chat panel in DOM order, track current date
-  var panel=document.querySelector('[data-testid="conversation-panel-messages"]')
-    ||document.querySelector('#main .copyable-area')
-    ||document.querySelector('#main');
-  if(!panel){alert('Could not find chat panel.');return;}
-
-  var children=Array.from(panel.querySelectorAll('[data-testid="msg-container"],[data-testid="conversation-info-header-chat-title"],[class*="focusable-list-item"]'));
-
-  // Walk ALL direct and nested nodes to find date rows + message rows
-  var allRows=Array.from(panel.querySelectorAll('*')).filter(function(el){
-    var tid=el.getAttribute('data-testid')||'';
-    if(tid==='msg-container') return true;
-    // date dividers often have role=row and contain a time string, or have class with 'date' 
-    if(el.tagName==='DIV'&&el.getAttribute('data-testid')==='conv-msg-true-date') return true;
-    return false;
-  });
-
-  // Simpler approach: get messages with their timestamp attr, group by date
-  var allMsgs=Array.from(document.querySelectorAll('[data-testid="msg-container"]'));
-  if(!allMsgs.length){
-    allMsgs=Array.from(document.querySelectorAll('.copyable-text'));
-  }
-
-  // Each msg-container has a .copyable-text with data-pre-plain-text="[HH:MM, DD/MM/YYYY] Name: "
-  var byDate={};
-  var dateOrder=[];
-
-  allMsgs.forEach(function(el){
-    var ct=el.querySelector('[data-pre-plain-text]');
-    if(!ct) ct=el.closest('[data-pre-plain-text]')||el.querySelector('.copyable-text');
-    var meta=ct?ct.getAttribute('data-pre-plain-text'):'';
-    var dateMatch=meta.match(/(\d{1,2}\/\d{1,2}\/\d{4})/);
-    var dateKey=dateMatch?dateMatch[1]:'unknown';
-    var text=(el.innerText||el.textContent||'').trim();
-    if(!text) return;
-    if(!byDate[dateKey]){byDate[dateKey]=[];dateOrder.push(dateKey);}
-    byDate[dateKey].push(text);
-  });
-
-  // Dedupe dateOrder
-  dateOrder=dateOrder.filter(function(v,i){return dateOrder.indexOf(v)===i;});
-
-  // For each date, get last message that starts with 'Good Morning'
-  var results=[];
-  dateOrder.forEach(function(dk){
-    var msgs=byDate[dk];
-    // find last msg containing 'Good Morning'
-    var found=null;
-    for(var i=msgs.length-1;i>=0;i--){
-      if(/good\\s*morning/i.test(msgs[i])){found=msgs[i];break;}
-    }
-    if(found) results.push(found);
-  });
-
-  if(!results.length){
-    alert('No "Good Morning Officers" messages found in the visible chat. Try scrolling up to load more messages, then click again.');
-    return;
-  }
-
-  var combined=results.join('\\n\\n---\\n\\n');
-  navigator.clipboard.writeText(combined).then(function(){
-    var d=document.createElement('div');
-    d.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e293b;color:#38bdf8;font-family:monospace;font-size:13px;padding:10px 20px;border-radius:10px;border:1px solid #38bdf8;z-index:99999;box-shadow:0 4px 20px rgba(0,0,0,0.5)';
-    d.textContent='✓ Copied '+results.length+' day'+(results.length>1?'s':'')+' to clipboard';
-    document.body.appendChild(d);setTimeout(function(){d.remove();},3000);
-  }).catch(function(){
-    var ta=document.createElement('textarea');
-    ta.value=combined;ta.style.position='fixed';ta.style.top='-9999px';
-    document.body.appendChild(ta);ta.select();document.execCommand('copy');
-    document.body.removeChild(ta);
-    alert('Copied '+results.length+' day(s) to clipboard!');
-  });
-})();`;
-
-  const min=code.replace(/\n\s*/g,' ');
-  document.getElementById('bm-link').href='javascript:'+encodeURIComponent(min);
+  var s='';
+  s+='(function(){';
+  s+='var stamps=Array.from(document.querySelectorAll("[data-pre-plain-text]"));'
+  s+='if(!stamps.length){alert("No messages found. Open a WhatsApp Web chat first.");return;}'
+  s+='var byDate={},order=[];';
+  s+='stamps.forEach(function(stamp){';
+  s+='var meta=stamp.getAttribute("data-pre-plain-text")||"";'
+  s+='var dm=meta.match(/\\d+\\/\\d+\\/\\d+/);';
+  s+='if(!dm)return;';
+  s+='var dk=dm[0];';
+  s+='var bubble=stamp.closest("[data-testid=\\"msg-container\\"]");'
+  s+='if(!bubble)bubble=stamp.parentElement;';
+  s+='var txt=(bubble?bubble.innerText||bubble.textContent:stamp.innerText||stamp.textContent)||"";'
+  s+='txt=txt.trim();';
+  s+='if(!txt)return;';
+  s+='if(!byDate[dk]){byDate[dk]=[];order.push(dk);}';
+  s+='byDate[dk].push(txt);';
+  s+='});';
+  s+='order=order.filter(function(v,i){return order.indexOf(v)===i;});';
+  s+='var results=[];';
+  s+='order.forEach(function(dk){';
+  s+='var list=byDate[dk];';
+  s+='for(var i=list.length-1;i>=0;i--){';
+  s+='if(/good.morning/i.test(list[i])){results.push(list[i]);break;}';
+  s+='}';
+  s+='});';
+  s+='if(!results.length){alert("No Good Morning Officers messages found. Scroll up to load more days then try again.");return;}'
+  s+='var nl=String.fromCharCode(10);';
+  s+='var combined=results.join(nl+nl+"---"+nl+nl);'
+  s+='function toast(n){var d=document.createElement("div");d.setAttribute("style","position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#1e293b;color:#38bdf8;font-family:monospace;font-size:13px;padding:10px 20px;border-radius:10px;border:1px solid #38bdf8;z-index:99999");d.textContent="Copied "+n+" day"+(n>1?"s":"")+" - paste into the tool";document.body.appendChild(d);setTimeout(function(){if(d.parentNode)d.parentNode.removeChild(d);},3500);}'
+  s+='function fb(){var t=document.createElement("textarea");t.value=combined;t.setAttribute("style","position:fixed;top:-9999px");document.body.appendChild(t);t.select();document.execCommand("copy");document.body.removeChild(t);toast(results.length);}'
+  s+='if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(combined).then(function(){toast(results.length);}).catch(fb);}else{fb();}';
+  s+='})();';
+  document.getElementById('bm-link').href='javascript:'+s;
 }
+
 
 // Build on load
 document.addEventListener('DOMContentLoaded',buildBookmarklet);
