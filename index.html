@@ -1694,7 +1694,7 @@ function normaliseOne(tok){
   if(offDuty) return offDuty[1]; // e.g. "HL"
   if(/^OFF$/.test(tok)) return 'OFF';
   // Strip trailing date ranges like "(14/05 - 25/06)" or "03/06-04/06"
-  const base=tok.replace(/\(.*?\)/g,'').replace(/\d{1,2}\/\d{1,2}.*$/,'').trim();
+  const base=tok.replace(/\(.*?\)/g,'').replace(/\d{1,2}\/\d{1,2}.*$/,'').replace(/\.+$/,'').trim();
   if(!base) return tok;
   // Match known prefixes
   for(const k of KNOWN) if(base===k||base.startsWith(k+' ')) return k;
@@ -1706,7 +1706,7 @@ function normaliseOne(tok){
 
 function parseStatus(raw){
   if(!raw) return '';
-  const s=stripNoise(raw).toUpperCase().trim();
+  const s=stripNoise(raw).replace(/,/g,' ').replace(/\s{2,}/g,' ').toUpperCase().trim();
   // AM/PM split: "AM X PM Y"
   const ampm=s.match(/^AM\s+(\S+(?:\s+\S+)?)\s+PM\s+(\S+(?:\s+\S+)?)$/);
   if(ampm){
@@ -1790,42 +1790,74 @@ function impParse(){
   if(!raw){status.textContent='Nothing pasted.';status.className='imp-status err';return;}
 
   const blocks=extractBlocks(raw);
-
   if(!blocks.length){
     status.textContent='No dates found (need DD/MM/YYYY format).';
     status.className='imp-status err';
     return;
   }
 
-  const nameOrder=[];
+  // Build known section ordering from roster
+  const rosterMain=(roster&&roster.MAIN||[]).map(n=>n.trim().toUpperCase());
+  const rosterEMS=(roster&&roster.EMS||[]).map(n=>n.trim().toUpperCase());
+  const rosterAll=[...rosterMain,...rosterEMS];
+
   const nameSet=new Set();
+  // Track section per name: 'MAIN' or 'EMS' — for ordering new names correctly
+  const nameSection={};
   const parsed={};
 
-  const RANK=/^(CPL|LCP|PTE|SGT|SSG|MSG|WO[12]?|LTA|CPT|MAJ|LTC|COL|EMS|ME\d?)\s+/i;
+  const RANK=/^(CPL|LCP|PTE|SGT|SSG|MSG|WO[12]?|LTA|CPT|MAJ|LTC|COL|ME\d?)\s+/i;
+  const TIMEOFF=/^\*?time\s*off\*?\s*:?$/i;
+  const EMS_HDR=/^EMS\s*TEAM\s*:?$/i;
 
   for(const block of blocks){
     const dk=block.date.key;
     parsed[dk]={};
+    let inEMS=false;
+    let pastTimeOff=false;
+
     for(const line of block.lines){
       const clean=line.trim();
       if(!clean)continue;
+      if(TIMEOFF.test(clean)){pastTimeOff=true;continue;}
+      if(pastTimeOff)continue; // stop parsing statuses once in Time off section
       if(/^[-—═]+$/.test(clean))continue;
       if(/rollcall\s*ic/i.test(clean))continue;
-      if(/^(EMS TEAM|MAIN|OH NSF|OFFICERS?|TIME OFF|TAKING TIME OFF)\s*:?$/i.test(clean))continue;
       if(/^good (morning|afternoon|evening)/i.test(clean))continue;
       if(/movement chart/i.test(clean))continue;
       if(/^OH NSF/i.test(clean))continue;
-      // Skip timestamp lines (e.g. "18:18") and sender names (no rank prefix, short, no dash)
       if(/^\d{1,2}:\d{2}$/.test(clean))continue;
+      if(EMS_HDR.test(clean)){inEMS=true;continue;}
+      if(/^(MAIN|OFFICERS?)\s*:?$/i.test(clean)){inEMS=false;continue;}
+
       const sep=clean.match(/^(.+?)\s*[-–]\s*(.+)$/);
       if(sep&&RANK.test(sep[1].trim())){
         const name=parseName(sep[1]);
         const stat=parseStatus(sep[2]);
-        parsed[dk][name]=stat;
-        if(!nameSet.has(name)){nameSet.add(name);nameOrder.push(name);}
+        // Only keep first (authoritative) status per name per day — don't overwrite with Time off line
+        if(!parsed[dk][name]) parsed[dk][name]=stat;
+        if(!nameSet.has(name)){
+          nameSet.add(name);
+          nameSection[name]=inEMS?'EMS':'MAIN';
+        }
       }
     }
   }
+
+  // Build ordered name list: roster order first, then new names by section
+  const newMain=[], newEMS=[];
+  for(const name of nameSet){
+    if(!rosterAll.includes(name)){
+      if(nameSection[name]==='EMS') newEMS.push(name);
+      else newMain.push(name);
+    }
+  }
+  const nameOrder=[
+    ...rosterMain.filter(n=>nameSet.has(n)),
+    ...newMain,
+    ...rosterEMS.filter(n=>nameSet.has(n)),
+    ...newEMS
+  ];
 
   const dates=blocks.map(b=>b.date).sort((a,b)=>a.key.localeCompare(b.key));
 
@@ -1837,10 +1869,7 @@ function impParse(){
   const th0=document.createElement('th');th0.textContent='Name';hr.appendChild(th0);
   for(const d of dates){
     const th=document.createElement('th');
-    // Show DD/MM so cross-month dates are unambiguous
-    const dd=String(d.day).padStart(2,'0');
-    const mm=String(d.month).padStart(2,'0');
-    th.textContent=dd+'/'+mm;
+    th.textContent=String(d.day).padStart(2,'0')+'/'+String(d.month).padStart(2,'0');
     hr.appendChild(th);
   }
 
@@ -1857,22 +1886,48 @@ function impParse(){
   }
 
   impData={dates,names:nameOrder,parsed};
-
   document.getElementById('imp-table-sect').style.display='';
   document.getElementById('imp-copy-btn').style.display='';
   status.textContent=`✓ ${dates.length} day${dates.length>1?'s':''}, ${nameOrder.length} personnel`;
   status.className='imp-status ok';
 }
-
 function impCopy(){
   if(!impData)return;
   const{dates,names,parsed}=impData;
-  // Statuses only — no name column, no date header row
-  const rows=names.map(name=>dates.map(d=>(parsed[d.key]&&parsed[d.key][name])||'').join('\t'));
-  const tsv=rows.join('\n');
   const btn=document.getElementById('imp-copy-btn');
   const ok=()=>{btn.classList.add('ok');btn.textContent='✓ Copied!';setTimeout(()=>{btn.classList.remove('ok');btn.textContent='⬇ Copy as TSV';},2500);};
-  navigator.clipboard.writeText(tsv).then(ok).catch(()=>{const ta=document.createElement('textarea');ta.value=tsv;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();});
+
+  // Build HTML table for clipboard — Excel respects inline styles on paste
+  // Short statuses (≤3 chars): Calibri 11pt. Longer (AM/PM etc): Calibri 8pt.
+  let html='<table>';
+  for(const name of names){
+    html+='<tr>';
+    for(const d of dates){
+      const s=(parsed[d.key]&&parsed[d.key][name])||'';
+      const long=s.length>3;
+      const fs=long?'8pt':'11pt';
+      html+=`<td style="font-family:Calibri;font-size:${fs};mso-style-name:Normal">${s}</td>`;
+    }
+    html+='</tr>';
+  }
+  html+='</table>';
+
+  // Plain TSV fallback
+  const tsv=names.map(name=>dates.map(d=>(parsed[d.key]&&parsed[d.key][name])||'').join('\t')).join('\n');
+
+  if(window.ClipboardItem){
+    const item=new ClipboardItem({
+      'text/html':new Blob([html],{type:'text/html'}),
+      'text/plain':new Blob([tsv],{type:'text/plain'})
+    });
+    navigator.clipboard.write([item]).then(ok).catch(()=>{
+      navigator.clipboard.writeText(tsv).then(ok);
+    });
+  } else {
+    navigator.clipboard.writeText(tsv).then(ok).catch(()=>{
+      const ta=document.createElement('textarea');ta.value=tsv;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();
+    });
+  }
 }
 
 function togBmGuide(){
