@@ -441,6 +441,17 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .imp-table .s-empty{color:var(--text3)}
 .imp-table .s-warn{color:#f59e0b;background:rgba(245,158,11,0.12);border-radius:4px;padding:1px 5px;outline:1px solid rgba(245,158,11,0.35);font-weight:700}
 .imp-live{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px;min-height:20px}
+.ap-dialog{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
+.ap-box{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:22px 24px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,0.5)}
+.ap-title{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;letter-spacing:0.04em}
+.ap-body{font-family:var(--mono);font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:16px}
+.ap-check{display:flex;align-items:center;gap:8px;margin-bottom:18px;cursor:pointer}
+.ap-check input{accent-color:var(--purple);width:13px;height:13px;cursor:pointer}
+.ap-check span{font-family:var(--mono);font-size:10px;color:var(--text3)}
+.ap-btns{display:flex;gap:8px;justify-content:flex-end}
+.ap-btn{padding:7px 16px;border:none;border-radius:var(--radius);font-family:var(--mono);font-size:11px;font-weight:600;cursor:pointer;letter-spacing:0.04em}
+.ap-yes{background:linear-gradient(135deg,var(--purple),#7c3aed);color:#fff}
+.ap-no{background:var(--surface2);border:1px solid var(--border2);color:var(--text2)}
 .imp-live-tag{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:20px;
   background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.25);color:var(--purple);letter-spacing:0.04em}
 .imp-live-none{font-family:var(--mono);font-size:10px;color:var(--text3);font-style:italic}
@@ -597,7 +608,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
       <div class="imp-card">
         <div class="imp-sect">
           <div class="imp-lbl">Paste finalized daily messages (one or more days)</div>
-          <textarea class="imp-ta" id="imp-ta" placeholder="Paste the last WhatsApp message(s) of each day here. Multiple days are fine — just paste them one after another." oninput="impLivePreview()"></textarea>
+          <textarea class="imp-ta" id="imp-ta" placeholder="Paste the last WhatsApp message(s) of each day here. Multiple days are fine — just paste them one after another." oninput="impLivePreview()" onpaste="impHandlePaste(event)"></textarea>
           <div class="imp-live" id="imp-live"><span class="imp-live-none">Detected days will appear here as you paste...</span></div>
         </div>
         <div class="imp-sect">
@@ -647,6 +658,18 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
           </div>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+<!-- AUTO-PARSE DIALOG -->
+<div class="ap-dialog" id="ap-dialog" style="display:none">
+  <div class="ap-box">
+    <div class="ap-title">⚡ Auto-parse on paste?</div>
+    <div class="ap-body">Parse detected messages automatically every time you paste?</div>
+    <label class="ap-check"><input type="checkbox" id="ap-dontask"><span>Don't ask again until page refresh</span></label>
+    <div class="ap-btns">
+      <button class="ap-btn ap-no" onclick="apResolve(false)">Just preview</button>
+      <button class="ap-btn ap-yes" onclick="apResolve(true)">Yes, auto-parse</button>
     </div>
   </div>
 </div>
@@ -1955,6 +1978,32 @@ function buildBookmarklet(){
 // Build on load
 document.addEventListener('DOMContentLoaded',buildBookmarklet);
 setTimeout(buildBookmarklet,500); // fallback
+
+/* ═══════════════════════ AUTO-PARSE ═══════════════════════ */
+var apPref=null; // null=not set, true=always, false=never (resets on refresh)
+var apResolveCallback=null;
+
+function apResolve(yes){
+  document.getElementById('ap-dialog').style.display='none';
+  if(document.getElementById('ap-dontask').checked){
+    apPref=yes;
+  }
+  if(apResolveCallback) apResolveCallback(yes);
+  apResolveCallback=null;
+}
+
+function impHandlePaste(e){
+  // Let the paste complete first, then handle
+  setTimeout(function(){
+    impLivePreview();
+    if(apPref===true){ impParse(); return; }
+    if(apPref===false){ return; }
+    // Ask
+    document.getElementById('ap-dontask').checked=false;
+    document.getElementById('ap-dialog').style.display='flex';
+    apResolveCallback=function(yes){ if(yes) impParse(); };
+  },50);
+}
 
 /* ═══════════════════════ INIT ═══════════════════════ */
 function init(){
