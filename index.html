@@ -19,12 +19,215 @@
   --radius:10px;--radius-lg:16px;--radius-xl:20px;
   --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
   --shadow:0 4px 24px rgba(0,0,0,0.4);--shadow-lg:0 8px 48px rgba(0,0,0,0.6);
+  --topbar-bg:rgba(19,22,31,0.92);
+  --overlay-bg:rgba(0,0,0,0.72);
+  --surface-lift:linear-gradient(135deg,rgba(255,255,255,0.013),rgba(255,255,255,0.027));
+  --input-focus-bg:rgba(255,255,255,0.04);
+  --slot-shim:linear-gradient(180deg,rgba(12,14,20,0.65) 0%,transparent 28%,transparent 72%,rgba(12,14,20,0.65) 100%);
+  --fb-hint-bg:rgba(0,0,0,0.25);
 }
 html{height:100%}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100%;
   background-image:linear-gradient(rgba(255,255,255,0.012) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.012) 1px,transparent 1px);
-  background-size:32px 32px}
-.topbar{position:sticky;top:0;z-index:50;background:rgba(19,22,31,0.92);backdrop-filter:blur(16px);
+  background-size:32px 32px;transition:background-color 0.25s,color 0.25s}
+
+/* ── LIGHT MODE ─────────────────────────────────────────────── */
+body.light{
+  /* Page & surface hierarchy — warm whites with blue-grey tint */
+  --bg:#eef0f5;
+  --surface:#ffffff;
+  --surface2:#f4f5f9;
+  --surface3:#e8eaf2;
+
+  /* Borders — subtle ink, not stark black */
+  --border:rgba(60,70,110,0.09);
+  --border2:rgba(60,70,110,0.15);
+  --border3:rgba(60,70,110,0.30);
+
+  /* Typography — near-black navy, not pure black */
+  --text:#1c2035;
+  --text2:#505878;
+  --text3:#929bbf;
+
+  /* Accents — deeper, more saturated for legibility on white */
+  --accent:#0369a1;
+  --accent-bg:rgba(3,105,161,0.08);
+  --accent-glow:rgba(3,105,161,0.18);
+  --green:#047857;
+  --green-bg:rgba(4,120,87,0.08);
+  --red:#b91c1c;
+  --red-bg:rgba(185,28,28,0.08);
+  --gold:#92400e;
+  --gold-bg:rgba(146,64,14,0.08);
+  --purple:#5b21b6;
+  --purple-bg:rgba(91,33,182,0.09);
+
+  /* Shadows — soft, warm, directional (not just opacity scaled) */
+  --shadow:0 1px 3px rgba(30,40,80,0.08),0 4px 16px rgba(30,40,80,0.07);
+  --shadow-lg:0 2px 8px rgba(30,40,80,0.08),0 12px 40px rgba(30,40,80,0.12);
+
+  /* RDR shift colours — warmer, more muted on white */
+  --day:#c2410c;--day-bg:rgba(194,65,12,0.08);--day-glow:rgba(194,65,12,0.14);
+  --night:#4338ca;--night-bg:rgba(67,56,202,0.08);--night-glow:rgba(67,56,202,0.14);
+  --r1:#b91c1c;--r1-bg:rgba(185,28,28,0.08);--r1-border:rgba(185,28,28,0.25);
+  --r2:#4338ca;--r2-bg:rgba(67,56,202,0.08);--r2-border:rgba(67,56,202,0.25);
+  --r3:#047857;--r3-bg:rgba(4,120,87,0.08);--r3-border:rgba(4,120,87,0.25);
+
+  /* Override computed vars */
+  --topbar-bg:rgba(255,255,255,0.88);
+  --overlay-bg:rgba(20,25,50,0.4);
+  --surface-lift:linear-gradient(135deg,rgba(255,255,255,0.95),rgba(244,245,249,0.9));
+  --input-focus-bg:rgba(3,105,161,0.05);
+  --slot-shim:linear-gradient(180deg,rgba(238,240,245,0.75) 0%,transparent 28%,transparent 72%,rgba(238,240,245,0.75) 100%);
+  --fb-hint-bg:rgba(60,70,110,0.05);
+}
+
+/* Page background — barely-there dot grid, not lines */
+body.light{
+  background-color:var(--bg);
+  background-image:radial-gradient(circle,rgba(60,70,110,0.12) 1px,transparent 1px);
+  background-size:28px 28px}
+
+/* ── TOPBAR: frosted white, not just variable swap ── */
+body.light .topbar{
+  background:rgba(255,255,255,0.88);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(60,70,110,0.12);
+  box-shadow:0 1px 0 rgba(60,70,110,0.06),0 2px 12px rgba(30,40,80,0.06)}
+
+/* ── CARDS & WIDGETS ── */
+body.light .widget{
+  background:var(--surface);
+  border-color:var(--border2);
+  box-shadow:var(--shadow)}
+body.light .wh{background:var(--surface2)}
+
+/* ── BANNERS: proper light card feel, no glow ── */
+body.light .sbanner{
+  background:linear-gradient(135deg,rgba(255,255,255,0.9),rgba(244,245,249,0.9));
+  border-color:var(--border2);
+  box-shadow:var(--shadow)}
+body.light .sbanner::before{
+  background:linear-gradient(90deg,rgba(3,105,161,0.04) 0%,transparent 32%,transparent 68%,rgba(4,120,87,0.04) 100%)}
+body.light .sbanner::after{
+  background:linear-gradient(90deg,var(--accent),var(--green))}
+
+body.light .shift-banner{
+  background:linear-gradient(135deg,rgba(255,255,255,0.9),rgba(244,245,249,0.9));
+  border-color:var(--border2);
+  box-shadow:var(--shadow)}
+body.light .shift-banner::before{
+  background:linear-gradient(90deg,rgba(67,56,202,0.04) 0%,transparent 32%,transparent 68%,rgba(194,65,12,0.04) 100%)}
+body.light .shift-banner::after{
+  background:linear-gradient(90deg,var(--night) 0%,var(--night) 50%,var(--day) 50%,var(--day) 100%)}
+
+/* ── RC BAR / CCTV BAR ── */
+body.light .rcbar,body.light .cctv-bar{
+  background:var(--surface2);border-color:var(--border)}
+
+/* ── PERSON BLOCKS ── */
+body.light .pb,body.light .person-block{
+  background:var(--surface2);border-color:var(--border2)}
+body.light .pb.foc,body.light .person-block.focused{
+  border-color:rgba(3,105,161,0.4);
+  box-shadow:0 0 0 3px rgba(3,105,161,0.07)}
+body.light .pb.off,body.light .person-block.off-duty{
+  background:linear-gradient(90deg,rgba(185,28,28,0.04),var(--surface2));
+  border-color:rgba(185,28,28,0.18)}
+
+/* ── INPUTS ── */
+body.light .si,body.light .status-input{
+  background:transparent;color:var(--text)}
+body.light .si:focus,body.light .status-input:focus{
+  background:rgba(3,105,161,0.05)}
+body.light input[type="date"]{
+  background:var(--surface);color:var(--text);border-color:var(--border2)}
+
+/* ── CHIPS ── */
+body.light .chip,body.light .lc,body.light .lchip,body.light .pill{
+  background:var(--surface);border-color:var(--border2);color:var(--text2)}
+body.light .chip:hover{background:var(--surface3);color:var(--text)}
+
+/* ── CALENDAR ── */
+body.light .cal-nav-btn{background:var(--surface2);border-color:var(--border2)}
+body.light .cal-day{color:var(--text2)}
+body.light .cal-day:hover{background:var(--surface2);color:var(--text)}
+body.light .cal-day.today{border-color:rgba(3,105,161,0.45);color:var(--accent)}
+body.light .cal-day.selected{background:rgba(3,105,161,0.09);border-color:rgba(3,105,161,0.4);color:var(--accent)}
+body.light .cal-summary{background:var(--surface2);border-color:var(--border)}
+body.light .cal-dbn,body.light .dbn{
+  background:var(--surface2);border-color:var(--border2);color:var(--text2)}
+body.light .cal-dbn:hover,body.light .dbn:hover{background:var(--surface3);color:var(--text)}
+body.light .cal-dbn.today,body.light .dbn.today{
+  background:rgba(3,105,161,0.08);border-color:rgba(3,105,161,0.3);color:var(--accent)}
+body.light .cal-export-btn{
+  background:linear-gradient(135deg,rgba(4,120,87,0.08),rgba(4,120,87,0.04));
+  border-color:rgba(4,120,87,0.25);color:var(--green)}
+
+/* ── IMPORT PANEL ── */
+body.light .imp-panel{background:var(--surface);border-color:var(--border2)}
+body.light .imp-panel-hdr{background:var(--surface2)}
+body.light .imp-ta{
+  background:var(--surface2);color:var(--text);border-color:var(--border2)}
+body.light .imp-ta:focus{border-color:rgba(91,33,182,0.4);background:var(--surface)}
+body.light .imp-ta::placeholder{color:var(--text3)}
+body.light .preview-box{background:var(--surface2);color:var(--text);border-color:var(--border)}
+
+/* Import table */
+body.light .imp-table th{background:var(--surface2);color:var(--text3);border-color:var(--border)}
+body.light .imp-table td{border-color:var(--border);color:var(--text2)}
+body.light .imp-table td:first-child{background:var(--surface);color:var(--text)}
+body.light .imp-table tr:hover td{background:var(--surface2)}
+body.light .imp-table tr:hover td:first-child{background:var(--surface2)}
+
+/* ── TIME OFF PANEL ── */
+body.light .topanel{background:var(--surface2);border-color:var(--border)}
+body.light .to-row{background:var(--surface);border-color:var(--border2)}
+body.light .to-name{background:var(--surface2);border-color:var(--border2);color:var(--text)}
+body.light .to-timebtn{background:var(--surface2);border-color:var(--border2);color:var(--text)}
+
+/* ── WEEKEND CARD ── */
+body.light .wkcard{
+  background:linear-gradient(135deg,rgba(91,33,182,0.06),rgba(91,33,182,0.02));
+  border-color:rgba(91,33,182,0.18)}
+
+body.light .ex-box{background:var(--surface);border-color:rgba(91,33,182,0.2);box-shadow:var(--shadow-lg),0 8px 48px rgba(91,33,182,0.08)}
+body.light .ex-box::before{background:linear-gradient(90deg,var(--purple),rgba(91,33,182,0.2))}
+body.light .ex-title{color:var(--purple)}
+body.light .ex-src-btn.active-both{background:rgba(91,33,182,0.07);border-color:rgba(91,33,182,0.3);color:var(--purple)}
+body.light .ex-cal-day:not(.no-data):not(.empty){background:var(--surface2);border-color:var(--border2)}
+body.light .ex-cal-day:not(.no-data):not(.empty):hover{border-color:rgba(91,33,182,0.4);background:rgba(91,33,182,0.06);color:var(--purple)}
+body.light .ex-cal-day.range-start,body.light .ex-cal-day.range-end{background:rgba(91,33,182,0.12);border-color:rgba(91,33,182,0.5);color:var(--purple)}
+body.light .ex-cal-day.in-range{background:rgba(91,33,182,0.06);border-color:rgba(91,33,182,0.2);color:var(--purple)}
+body.light .ex-hint.ok{color:var(--purple);background:rgba(91,33,182,0.06);border-color:rgba(91,33,182,0.2)}
+body.light .ex-dialog,body.light .ic-dialog,body.light .ap-dialog,body.light .dp-overlay{
+  background:rgba(20,25,50,0.4)}
+body.light .ex-box,body.light .ic-box,body.light .ap-box,body.light .dp-modal{
+  background:var(--surface);border-color:var(--border2);box-shadow:var(--shadow-lg)}
+
+/* ── TOGGLE SWITCH (rota chips) ── */
+body.light .toggle-track{background:var(--surface3);border-color:var(--border2)}
+body.light .toggle-thumb{background:var(--text3)}
+
+/* ── RDR COPY BUTTON ── */
+body.light .copy-btn-rdr{
+  background:linear-gradient(135deg,#c2410c,#ea580c);
+  box-shadow:0 4px 18px rgba(194,65,12,0.22)}
+
+/* ── SLOT SHIM ── */
+body.light .slot-shim{
+  background:linear-gradient(180deg,rgba(238,240,245,0.7) 0%,transparent 28%,transparent 72%,rgba(238,240,245,0.7) 100%)}
+
+/* ── FB HINT ── */
+body.light .fb-hint{background:var(--surface2);border-color:var(--border)}
+
+/* ── WEEK CARD COUNTDOWN ── */
+body.light .wk-cd{color:var(--text)}
+
+/* Smooth all transitions */
+body.light *{transition-property:background-color,border-color,color,box-shadow;transition-duration:0.2s;transition-timing-function:ease}
+.topbar{position:sticky;top:0;z-index:50;background:var(--topbar-bg);backdrop-filter:blur(16px);
   -webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 20px;height:52px;
   display:flex;align-items:center;gap:12px}
 .t-logo{width:28px;height:28px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#0ea5e9);
@@ -59,7 +262,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 /* SHIFT BANNER — shared metrics between OH & RDR */
 .sbanner{position:relative;display:flex;align-items:center;justify-content:space-between;
   min-height:116px;padding:22px 28px;margin-bottom:12px;
-  background:linear-gradient(135deg,rgba(255,255,255,0.013),rgba(255,255,255,0.027));
+  background:var(--surface-lift);
   border:1px solid var(--border2);border-radius:18px;overflow:hidden;isolation:isolate;
   backdrop-filter:blur(10px)}
 .sbanner::before{content:'';position:absolute;inset:0;
@@ -112,11 +315,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 
 /* CALENDAR WIDGET – full-width above grid */
 #calendar-widget{margin-bottom:12px}
-/* RDR inner grid: stretch columns so they match height */
-#rdr-col .grid{align-items:stretch}
-#rdr-col .grid > div{display:flex;flex-direction:column}
-#rdr-col .grid > div .widget{flex:1}
-#rdr-col .grid > div .widget:not(:last-child){flex:none}
+/* Unified grid — RDR uses same layout rules as OH, no stretch overrides */
+#rdr-col .grid{align-items:start}
+#rdr-col .grid > div{display:block}
+#rdr-col .grid > div .widget{flex:none}
 
 .cal-wrap{user-select:none}
 .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
@@ -148,6 +350,21 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .cal-sum-name{color:var(--text);font-weight:600;min-width:100px;flex-shrink:0}
 .cal-sum-status{color:var(--text2)}
 .cal-sum-empty{font-family:var(--mono);font-size:11px;color:var(--text3);font-style:italic}
+/* Compact summary styles */
+.cal-sum-section{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:2px}
+.cal-sum-section-lbl{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;flex-shrink:0}
+.cal-sum-section-lbl.oh{color:var(--accent)}
+.cal-sum-section-lbl.rdr{color:var(--day)}
+.cal-sum-chips{display:flex;flex-wrap:wrap;gap:4px;flex:1}
+.cal-sum-chip{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:20px;white-space:nowrap;cursor:default}
+.cal-sum-chip.s-out{background:var(--red-bg);border:1px solid rgba(248,113,113,0.25);color:var(--red)}
+.cal-sum-chip.s-part{background:var(--gold-bg);border:1px solid rgba(251,191,36,0.25);color:var(--gold)}
+.cal-sum-chip.s-other{background:var(--surface3);border:1px solid var(--border2);color:var(--text2)}
+.cal-sum-more{font-family:var(--mono);font-size:9px;padding:2px 7px;border-radius:20px;background:var(--surface3);border:1px solid var(--border2);color:var(--text3);cursor:pointer;transition:all 0.15s;white-space:nowrap}
+.cal-sum-more:hover{color:var(--text);border-color:var(--border3)}
+.cal-sum-all{display:none;width:100%;padding-top:4px}
+.cal-sum-all.open{display:block}
+.cal-sum-all .cal-sum-row{font-size:10px;padding:1px 0}
 
 /* prev/today/next row */
 .dbn-row{display:flex;gap:6px;margin-top:10px}
@@ -156,6 +373,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
   -webkit-tap-highlight-color:transparent;white-space:nowrap;flex:1;text-align:center}
 .dbn:hover{border-color:var(--border3);color:var(--text)}
 .dbn.today{border-color:rgba(56,189,248,0.4);color:var(--accent);background:var(--accent-bg)}
+
+.cal-export-row{margin-top:8px}
+.cal-export-btn{width:100%;padding:7px 14px;background:linear-gradient(135deg,rgba(52,211,153,0.12),rgba(52,211,153,0.06));
+  border:1px solid rgba(52,211,153,0.25);border-radius:var(--radius);
+  color:var(--green);font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.07em;
+  text-transform:uppercase;cursor:pointer;transition:all 0.15s}
+.cal-export-btn:hover{background:linear-gradient(135deg,rgba(52,211,153,0.2),rgba(52,211,153,0.1));
+  border-color:rgba(52,211,153,0.45);}
 
 /* ROSTER META */
 .rmeta{display:flex;align-items:center;gap:8px;margin-bottom:10px;font-family:var(--mono);font-size:10px;color:var(--text3)}
@@ -178,7 +403,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 /* single input mode */
 .si{flex:1;background:transparent;border:none;outline:none;color:var(--text);
   font-family:var(--mono);font-size:12px;padding:2px 4px;border-radius:4px;transition:background 0.1s;min-width:0}
-.si:focus{background:rgba(255,255,255,0.04)}
+.si:focus{background:var(--input-focus-bg)}
 /* split AM/PM mode */
 .sw.split{gap:4px}
 .sw-part{display:flex;align-items:center;gap:3px;flex:1;min-width:0;max-width:50%}
@@ -246,7 +471,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .to-add:hover{border-color:var(--border3);color:var(--text2)}
 
 /* TIME PICKER DRUM */
-.tp-ov{position:fixed;inset:0;background:rgba(0,0,0,0.75);display:flex;align-items:center;justify-content:center;z-index:300;backdrop-filter:blur(6px);padding:20px}
+.tp-ov{position:fixed;inset:0;background:var(--overlay-bg);display:flex;align-items:center;justify-content:center;z-index:300;backdrop-filter:blur(6px);padding:20px}
 .tp-modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-xl);padding:24px;width:320px;max-width:100%;box-shadow:var(--shadow-lg)}
 .tp-title{font-family:var(--mono);font-size:12px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text2);margin-bottom:6px;text-align:center}
 .tp-sub{font-family:var(--mono);font-size:10px;color:var(--text3);text-align:center;margin-bottom:20px}
@@ -293,7 +518,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .fb-in.connected{border-color:rgba(52,211,153,0.4)}
 .fb-save{padding:7px 14px;background:var(--accent-bg);border:1px solid rgba(56,189,248,0.4);border-radius:var(--radius);color:var(--accent);font-family:var(--mono);font-size:11px;cursor:pointer;white-space:nowrap;transition:all 0.15s;font-weight:600}
 .fb-save:hover{background:rgba(56,189,248,0.18)}
-.fb-hint{margin-top:10px;padding:10px 12px;background:rgba(0,0,0,0.25);border-radius:10px;border:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--text3);line-height:1.9}
+.fb-hint{margin-top:10px;padding:10px 12px;background:var(--fb-hint-bg);border-radius:10px;border:1px solid var(--border);font-family:var(--mono);font-size:10px;color:var(--text3);line-height:1.9}
 .fb-hint code{color:var(--accent)}.fb-hint strong{color:var(--text2)}
 
 /* COLLAPSIBLE */
@@ -308,7 +533,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .slot-win.landed{border-color:var(--green);box-shadow:0 0 18px rgba(52,211,153,0.3)}
 .slot-track{position:absolute;width:100%;display:flex;flex-direction:column;align-items:center}
 .slot-item{width:96px;height:96px;display:flex;align-items:center;justify-content:center;font-size:50px;flex-shrink:0;line-height:1}
-.slot-shim{position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(12,14,20,0.65) 0%,transparent 28%,transparent 72%,rgba(12,14,20,0.65) 100%);border-radius:14px}
+.slot-shim{position:absolute;inset:0;pointer-events:none;background:var(--slot-shim);border-radius:14px}
 .slot-q{width:96px;height:96px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:48px;color:var(--text3);font-weight:600}
 .roller-wrap{display:flex;align-items:center;gap:16px;margin-bottom:14px}
 .roller-r{flex:1;display:flex;flex-direction:column;gap:8px}
@@ -330,7 +555,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 
 /* PREVIEW */
 .prev-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.prev-box{font-family:var(--mono);font-size:12px;line-height:1.9;padding:16px;background:var(--surface2);border-radius:var(--radius);border:1px solid var(--border);min-height:320px;max-height:540px;overflow-y:auto;word-break:break-word;white-space:pre-wrap}
+.prev-box{font-family:var(--mono);font-size:12px;line-height:1.9;padding:16px;background:var(--surface2);border-radius:var(--radius);border:1px solid var(--border);overflow-y:auto;word-break:break-word;white-space:pre-wrap}
 .blank-btn{padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text3);font-family:var(--mono);font-size:10px;cursor:pointer;transition:all 0.15s;white-space:nowrap;letter-spacing:0.04em}
 .blank-btn:hover{border-color:var(--border3);color:var(--text)}
 .blank-btn.ok{color:var(--green);border-color:rgba(52,211,153,0.4)}
@@ -341,7 +566,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .cbtn.ok{background:linear-gradient(135deg,var(--green),#059669);box-shadow:0 4px 20px rgba(52,211,153,0.35);color:#000}
 
 /* DATE PICKER (leave codes) */
-.dp-ov{position:fixed;inset:0;background:rgba(0,0,0,0.72);display:flex;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(4px);padding:20px}
+.dp-ov{position:fixed;inset:0;background:var(--overlay-bg);display:flex;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(4px);padding:20px}
 .dp-m{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-xl);padding:20px;width:310px;max-width:100%;box-shadow:var(--shadow-lg)}
 .dp-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .dp-ti{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--text)}
@@ -372,62 +597,177 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:10px 18px;font-family:var(--mono);font-size:12px;color:var(--text);box-shadow:var(--shadow);z-index:999;opacity:0;transition:all 0.3s;pointer-events:none;white-space:nowrap;max-width:90vw}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
+/* ── UNIFIED RESPONSIVE LAYOUT ───────────────────────────────────────
+   All layout tokens are set once here and apply identically to both
+   OH and RDR modes. Nothing mode-specific should override spacing,
+   padding, widget sizing, or grid breakpoints.
+─────────────────────────────────────────────────────────────────── */
+
+/* Shared layout token: inner widget body padding */
+.wb{padding:14px 16px}
+
+/* Both grids: consistent gap and breakpoint */
+.grid{gap:12px}
+#oh-grid, #rdr-col > .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+@media(max-width:700px){
+  #oh-grid,#rdr-col > .grid{grid-template-columns:1fr}
+}
+
+/* Widgets: identical in both modes */
+.widget{border-radius:var(--radius-lg);margin-bottom:12px}
+.widget:last-child{margin-bottom:0}
+.wh{padding:12px 16px}
+
+/* Page padding — identical regardless of mode */
+.page{padding:20px 16px 60px}
+@media(max-width:700px){
+  .page{padding:16px 14px 56px}
+}
 @media(max-width:480px){
-  .page{padding:14px 12px 48px}.wb{padding:12px}.cbtn{font-size:13px;padding:14px}
-  .slot-win{width:80px;height:80px}.slot-item{width:80px;height:80px;font-size:42px}
+  .page{padding:12px 10px 48px}
+  /* Widget body: slightly tighter on small screens */
+  .wb{padding:12px 12px}
+  .wh{padding:10px 12px}
+  /* Banners */
+  .sbanner{padding:14px;border-radius:14px}
+  .shift-banner{padding:14px;border-radius:14px}
+  .rcbar,.cctv-bar{gap:8px;padding:10px 12px}
+  /* Copy buttons */
+  .cbtn,.copy-btn-rdr{font-size:13px;padding:14px}
+  /* Emoji roller */
+  .slot-win{width:80px;height:80px}
+  .slot-item{width:80px;height:80px;font-size:42px}
   .slot-q{width:80px;height:80px;font-size:42px}
-  .tp-drum-wrap{width:70px}.tp-drum-win{height:150px}
-  .tp-drum-item{height:50px;font-size:20px}.tp-drum-item.sel{font-size:24px}
+  /* Time picker drum */
+  .tp-drum-wrap{width:70px}
+  .tp-drum-win{height:150px}
+  .tp-drum-item{height:50px;font-size:20px}
+  .tp-drum-item.sel{font-size:24px}
   .tp-drum-sel{top:50px;height:50px}
 }
+
+/* Person blocks: identical structure in both OH (.pb) and RDR (.person-block) */
+.pb,.person-block{border-radius:var(--radius);margin-bottom:5px}
+.pb:last-child,.person-block:last-child{margin-bottom:0}
+.ptop,.person-top{padding:8px 10px 8px 12px;min-height:40px}
+/* OH .pn and RDR .person-name: same width */
+.pn,.person-name{min-width:110px;font-size:12px}
+
+/* Preview boxes: same min-height and sizing in both modes */
+.prev-box,.preview-box{min-height:280px;max-height:480px}
+@media(max-width:700px){
+  .prev-box,.preview-box{min-height:200px;max-height:360px}
+}
+
+/* Banner areas: same bottom margin so grid starts at same vertical position */
+#oh-banner-area,#rdr-banner-area{margin-bottom:0}
+.sbanner,.shift-banner{margin-bottom:12px}
+.rcbar,.cctv-bar{margin-bottom:16px}
 
 
 
 /* ── IMPORT PANEL (inside calendar widget) ──────── */
 .imp-panel{border-top:1px solid var(--border);margin-top:2px}
 .imp-panel-hdr{display:flex;align-items:center;gap:10px;padding:11px 14px;cursor:pointer;
-  transition:background 0.15s;-webkit-tap-highlight-color:transparent;user-select:none}
+  background:transparent;transition:background 0.15s;-webkit-tap-highlight-color:transparent}
 .imp-panel-hdr:hover{background:rgba(167,139,250,0.04)}
 .imp-panel-icon{width:20px;height:20px;border-radius:6px;background:rgba(167,139,250,0.15);
-  border:1px solid rgba(167,139,250,0.28);display:flex;align-items:center;justify-content:center;
-  font-size:11px;flex-shrink:0;transition:all 0.2s}
+  display:flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0;
+  border:1px solid rgba(167,139,250,0.35);transition:all 0.2s}
 .imp-panel-hdr.has-pending .imp-panel-icon{background:rgba(167,139,250,0.3);border-color:rgba(167,139,250,0.7);
-  box-shadow:0 0 8px rgba(167,139,250,0.4);animation:pulse-icon 1.5s ease-in-out infinite}
-@keyframes pulse-icon{0%,100%{box-shadow:0 0 0 0 rgba(167,139,250,0.5)}50%{box-shadow:0 0 0 5px rgba(167,139,250,0)}}
+  box-shadow:0 0 8px rgba(167,139,250,0.4)}
 .imp-panel-lbl{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.08em;
   text-transform:uppercase;color:var(--text2);flex:1}
 .imp-panel-hint{font-family:var(--mono);font-size:9px;color:var(--text3)}
 .imp-panel-chev{font-family:var(--mono);font-size:11px;color:var(--text3);transition:transform 0.25s;flex-shrink:0}
 .imp-panel-chev.open{transform:rotate(90deg)}
 .imp-body{overflow:hidden;max-height:0;transition:max-height 0.38s cubic-bezier(0.4,0,0.2,1)}
-.imp-body.open{max-height:2400px}
+.imp-body.open{max-height:3200px}
 .imp-inner{padding:0 14px 14px}
 .imp-lbl{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;
   color:var(--text3);margin-bottom:7px}
-.imp-ta{width:100%;min-height:130px;background:var(--surface2);border:1px solid var(--border2);
+
+/* Paste area row */
+.imp-paste-row{position:relative;margin-bottom:8px}
+.imp-ta{width:100%;min-height:100px;background:var(--surface2);border:1px solid var(--border2);
   border-radius:var(--radius);color:var(--text);font-family:var(--mono);font-size:11px;
-  padding:10px 12px;resize:vertical;outline:none;transition:border-color 0.15s;line-height:1.7;margin-bottom:8px}
-.imp-ta:focus{border-color:rgba(167,139,250,0.5)}
+  padding:10px 12px;resize:vertical;outline:none;transition:border-color 0.15s,box-shadow 0.15s;line-height:1.7}
+.imp-ta:focus{border-color:rgba(167,139,250,0.5);box-shadow:0 0 0 3px rgba(167,139,250,0.08)}
 .imp-ta::placeholder{color:var(--text3)}
-.imp-live{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:10px;min-height:16px}
+/* Paste button — overlaid bottom-right of textarea */
+.imp-paste-btn{position:absolute;bottom:10px;right:10px;display:flex;align-items:center;gap:6px;
+  padding:6px 12px;border-radius:8px;border:1px solid var(--border2);
+  background:var(--surface);color:var(--text2);font-family:var(--mono);font-size:10px;font-weight:600;
+  letter-spacing:0.05em;cursor:pointer;transition:all 0.15s;
+  box-shadow:0 2px 8px rgba(0,0,0,0.15)}
+.imp-paste-btn:hover{border-color:rgba(167,139,250,0.5);color:var(--purple);background:var(--surface)}
+.imp-paste-btn.pasting{border-color:rgba(167,139,250,0.6);color:var(--purple);
+  background:var(--purple-bg);box-shadow:0 2px 12px rgba(167,139,250,0.2)}
+.imp-paste-btn.done{border-color:rgba(52,211,153,0.5);color:var(--green);background:var(--green-bg)}
+
+/* Detected tags row */
+.imp-live{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;min-height:16px}
 .imp-live-tag{font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:20px;
   background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.25);color:var(--purple);letter-spacing:0.04em}
 .imp-live-none{font-family:var(--mono);font-size:9px;color:var(--text3);font-style:italic}
-.imp-actions{display:flex;gap:6px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
-.imp-btn{padding:6px 13px;border:none;border-radius:var(--radius);font-family:var(--mono);
-  font-size:10px;font-weight:600;letter-spacing:0.06em;cursor:pointer;transition:all 0.15s;text-transform:uppercase}
-.imp-btn-parse{background:linear-gradient(135deg,var(--purple),#7c3aed);color:#fff;box-shadow:0 2px 10px rgba(167,139,250,0.2)}
-.imp-btn-parse:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(167,139,250,0.35)}
-.imp-btn-tocal{background:linear-gradient(135deg,rgba(167,139,250,0.25),rgba(124,58,237,0.25));
-  border:1px solid rgba(167,139,250,0.5);color:var(--purple)}
-.imp-btn-tocal:hover{border-color:rgba(167,139,250,0.8);background:linear-gradient(135deg,rgba(167,139,250,0.35),rgba(124,58,237,0.35))}
-.imp-btn-copy{background:linear-gradient(135deg,var(--green),#059669);color:#000;box-shadow:0 2px 10px rgba(52,211,153,0.2)}
-.imp-btn-copy:hover{transform:translateY(-1px);box-shadow:0 4px 16px rgba(52,211,153,0.3)}
-.imp-btn-copy.ok{background:linear-gradient(135deg,var(--accent),#0ea5e9);color:#000}
-.imp-btn-clear{background:none;border:1px solid var(--border2);color:var(--text3)}
-.imp-btn-clear:hover{border-color:var(--border3);color:var(--text)}
+
+/* Action row */
+.imp-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
+.imp-btn-parse{
+  background:linear-gradient(135deg,#6d28d9,#7c3aed);color:#fff;
+  padding:9px 18px;border-radius:var(--radius);border:none;
+  font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:0.06em;
+  cursor:pointer;transition:all 0.15s;text-transform:uppercase;
+  box-shadow:0 3px 14px rgba(109,40,217,0.4);
+  display:flex;align-items:center;gap:6px}
+.imp-btn-parse:hover{transform:translateY(-1px);box-shadow:0 5px 20px rgba(109,40,217,0.55)}
+.imp-actions-divider{width:1px;height:28px;background:var(--border2);flex-shrink:0;display:none}
+.imp-actions-divider.visible{display:block}
+.imp-btn-copy{
+  background:var(--surface3);color:var(--text2);
+  padding:9px 14px;border-radius:var(--radius);border:1px solid var(--border2);
+  font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.06em;
+  cursor:pointer;transition:all 0.15s;text-transform:uppercase}
+.imp-btn-copy:hover{border-color:var(--border3);color:var(--text)}
+.imp-btn-copy.ok{background:var(--accent-bg);border-color:rgba(56,189,248,0.4);color:var(--accent)}
+.imp-btn-clear{
+  background:none;color:var(--text3);
+  padding:9px 12px;border-radius:var(--radius);border:1px solid transparent;
+  font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:0.04em;
+  cursor:pointer;transition:all 0.15s;text-transform:uppercase;margin-left:auto}
+.imp-btn-clear:hover{border-color:rgba(248,113,113,0.3);color:var(--red);background:var(--red-bg)}
 .imp-status{font-family:var(--mono);font-size:9px;color:var(--text3);margin-left:2px}
 .imp-status.ok{color:var(--green)}.imp-status.err{color:var(--red)}
+
+/* Inline confirm panel — replaces modal */
+.imp-confirm{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);
+  padding:12px 14px;margin-bottom:10px;animation:fadeUp 0.18s ease;display:none}
+.imp-confirm.visible{display:block}
+.imp-confirm-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.imp-confirm-title{font-family:var(--mono);font-size:10px;font-weight:700;letter-spacing:0.06em;
+  text-transform:uppercase;color:var(--text)}
+.imp-confirm-days{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px}
+.imp-confirm-day{font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:20px;
+  background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.3);color:var(--purple)}
+.imp-confirm-day.has-existing{background:rgba(251,191,36,0.12);border-color:rgba(251,191,36,0.35);color:var(--gold)}
+.imp-confirm-warn{font-family:var(--mono);font-size:9px;color:var(--gold);margin-bottom:10px;
+  padding:6px 10px;background:rgba(251,191,36,0.07);border:1px solid rgba(251,191,36,0.2);
+  border-radius:8px;display:none}
+.imp-confirm-warn.visible{display:block}
+.imp-confirm-btns{display:flex;gap:8px;align-items:center}
+.imp-confirm-go{
+  background:linear-gradient(135deg,#047857,#34d399);color:#000;
+  padding:8px 18px;border-radius:var(--radius);border:none;
+  font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:0.06em;
+  cursor:pointer;transition:all 0.15s;text-transform:uppercase;
+  box-shadow:0 3px 12px rgba(52,211,153,0.3)}
+.imp-confirm-go:hover{transform:translateY(-1px);box-shadow:0 5px 18px rgba(52,211,153,0.45)}
+.imp-confirm-cancel{background:none;border:1px solid var(--border2);color:var(--text3);
+  padding:8px 14px;border-radius:var(--radius);font-family:var(--mono);font-size:10px;
+  cursor:pointer;transition:all 0.15s}
+.imp-confirm-cancel:hover{border-color:var(--border3);color:var(--text)}
+
+/* Preview table */
 .imp-table-wrap{overflow-x:auto;margin-top:4px}
 .imp-table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11px}
 .imp-table th{padding:6px 10px;text-align:left;background:var(--surface2);border:1px solid var(--border);
@@ -438,86 +778,22 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .imp-table tr:hover td{background:var(--surface2)}
 .imp-table tr:hover td:first-child{background:var(--surface2)}
 .imp-table .s-in{color:var(--green)}.imp-table .s-out{color:var(--red)}
-.imp-table .s-part{color:var(--gold)}.imp-table .s-empty{color:var(--text3)}
+.imp-table .s-ado{color:var(--accent)}.imp-table .s-part{color:var(--gold)}.imp-table .s-empty{color:var(--text3)}
 .imp-table .s-warn{color:#f59e0b;background:rgba(245,158,11,0.12);border-radius:4px;padding:1px 5px;outline:1px solid rgba(245,158,11,0.35);font-weight:700}
-/* ── CALENDAR PENDING STATE ──────────────────────── */
-.cal-day.pending{background:rgba(167,139,250,0.18)!important;border-color:rgba(167,139,250,0.55)!important;
-  color:var(--purple)!important;font-weight:700}
-.cal-day.pending::before{content:'';position:absolute;inset:0;border-radius:7px;
-  box-shadow:inset 0 0 0 1px rgba(167,139,250,0.4);pointer-events:none}
-.cal-day.has-data::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);
-  width:4px;height:4px;border-radius:50%;background:var(--green)}
-/* ── EXPORT BUTTON ───────────────────────────────── */
-.cal-export-row{display:flex;gap:6px;margin-top:8px}
-.cal-export-btn{flex:1;padding:7px 10px;border:none;border-radius:var(--radius);font-family:var(--mono);
-  font-size:10px;font-weight:700;letter-spacing:0.06em;cursor:pointer;transition:all 0.15s;text-transform:uppercase;
-  display:flex;align-items:center;justify-content:center;gap:5px;
-  background:linear-gradient(135deg,rgba(52,211,153,0.12),rgba(5,150,105,0.12));
-  border:1px solid rgba(52,211,153,0.28);color:var(--green)}
-.cal-export-btn:hover{background:linear-gradient(135deg,rgba(52,211,153,0.22),rgba(5,150,105,0.22));border-color:rgba(52,211,153,0.5)}
-/* ── EXPORT INLINE PICKER (inside modal) ─────────── */
-.ex-dialog{position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:9997;display:flex;
-  align-items:center;justify-content:center;backdrop-filter:blur(5px)}
-.ex-box{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);
-  padding:20px 22px;max-width:360px;width:94%;box-shadow:var(--shadow-lg)}
-.ex-title{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;letter-spacing:0.04em}
-.ex-sub{font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:14px;line-height:1.6}
-/* reuse calendar styles for export picker */
-.ex-cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.ex-cal-month{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--text)}
-.ex-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:10px}
-.ex-cal-dow{font-family:var(--mono);font-size:9px;color:var(--text3);text-align:center;padding:2px 0;letter-spacing:0.04em}
-.ex-cal-day{font-family:var(--mono);font-size:11px;text-align:center;padding:5px 2px;border-radius:7px;
-  cursor:pointer;border:1px solid transparent;transition:all 0.1s;color:var(--text3);background:none;position:relative;
-  -webkit-tap-highlight-color:transparent;user-select:none}
-.ex-cal-day.has-data{color:var(--text2)}
-.ex-cal-day.has-data:hover{background:var(--surface3);color:var(--text);border-color:var(--border2)}
-.ex-cal-day.empty{pointer-events:none}
-.ex-cal-day.no-data{color:var(--text3);opacity:0.4;cursor:default;pointer-events:none}
-.ex-cal-day.range-start{background:rgba(52,211,153,0.25)!important;border-color:rgba(52,211,153,0.6)!important;color:var(--green)!important;font-weight:700}
-.ex-cal-day.range-end{background:rgba(52,211,153,0.25)!important;border-color:rgba(52,211,153,0.6)!important;color:var(--green)!important;font-weight:700}
-.ex-cal-day.in-range{background:rgba(52,211,153,0.08);border-color:rgba(52,211,153,0.2);color:var(--text2)}
-.ex-cal-day.has-data.in-range{color:var(--text)}
-.ex-cal-day.has-data::after{content:'';position:absolute;bottom:1px;left:50%;transform:translateX(-50%);
-  width:3px;height:3px;border-radius:50%;background:var(--green)}
-.ex-hint{font-family:var(--mono);font-size:9px;color:var(--text3);text-align:center;margin-bottom:10px;min-height:14px}
-.ex-hint.ok{color:var(--green)}.ex-hint.warn{color:var(--gold)}
-.ex-btns{display:flex;gap:8px;justify-content:flex-end}
-.ex-btn{padding:7px 16px;border:none;border-radius:var(--radius);font-family:var(--mono);font-size:11px;font-weight:600;cursor:pointer;letter-spacing:0.04em}
-.ex-copy{background:linear-gradient(135deg,var(--green),#059669);color:#000}
-.ex-copy:disabled{opacity:0.35;cursor:not-allowed}
-.ex-cancel{background:var(--surface2);border:1px solid var(--border2);color:var(--text2)}
-/* ── IMPORT CONFIRM MODAL ────────────────────────── */
-.ic-dialog{position:fixed;inset:0;background:rgba(0,0,0,0.65);z-index:9998;display:flex;
-  align-items:center;justify-content:center;backdrop-filter:blur(5px)}
-.ic-box{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);
-  padding:20px 22px;max-width:380px;width:94%;box-shadow:var(--shadow-lg);max-height:80vh;overflow-y:auto}
-.ic-title{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px}
-.ic-sub{font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:12px;line-height:1.6}
-.ic-days{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:12px}
-.ic-day-tag{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:20px;
-  background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.3);color:var(--purple)}
-.ic-day-tag.has-existing{background:rgba(251,191,36,0.12);border-color:rgba(251,191,36,0.35);color:var(--gold)}
-.ic-warn{font-family:var(--mono);font-size:10px;color:var(--gold);margin-bottom:12px;padding:8px 10px;
-  background:rgba(251,191,36,0.07);border:1px solid rgba(251,191,36,0.2);border-radius:var(--radius)}
-.ic-btns{display:flex;gap:8px;justify-content:flex-end}
-.ic-btn{padding:7px 16px;border:none;border-radius:var(--radius);font-family:var(--mono);font-size:11px;font-weight:600;cursor:pointer;letter-spacing:0.04em}
-.ic-yes{background:linear-gradient(135deg,var(--purple),#7c3aed);color:#fff}
-.ic-no{background:var(--surface2);border:1px solid var(--border2);color:var(--text2)}
-.ap-dialog{position:fixed;inset:0;background:rgba(0,0,0,0.55);z-index:9999;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(3px)}
-.ap-box{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:22px 24px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,0.5)}
-.ap-title{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--text);margin-bottom:8px;letter-spacing:0.04em}
-.ap-body{font-family:var(--mono);font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:16px}
-.ap-check{display:flex;align-items:center;gap:8px;margin-bottom:18px;cursor:pointer}
-.ap-check input{accent-color:var(--purple);width:13px;height:13px;cursor:pointer}
-.ap-check span{font-family:var(--mono);font-size:10px;color:var(--text3)}
-.ap-btns{display:flex;gap:8px;justify-content:flex-end}
-.ap-btn{padding:7px 16px;border:none;border-radius:var(--radius);font-family:var(--mono);font-size:11px;font-weight:600;cursor:pointer;letter-spacing:0.04em}
-.ap-yes{background:linear-gradient(135deg,var(--purple),#7c3aed);color:#fff}
-.ap-no{background:var(--surface2);border:1px solid var(--border2);color:var(--text2)}
-.imp-live-tag{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:20px;
-  background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.25);color:var(--purple);letter-spacing:0.04em}
-.imp-live-none{font-family:var(--mono);font-size:10px;color:var(--text3);font-style:italic}
+
+/* Calendar pending-import overlay */
+.cal-day.pending{background:rgba(167,139,250,0.13)!important;border-color:rgba(167,139,250,0.5)!important;
+  box-shadow:0 0 0 2px rgba(167,139,250,0.18)!important;color:var(--purple)!important}
+.cal-day.pending .cal-day-num{color:var(--purple)}
+
+/* Calendar flash animation for newly imported days */
+@keyframes calFlash{0%{background:rgba(52,211,153,0.4);box-shadow:0 0 0 3px rgba(52,211,153,0.4)}
+  60%{background:rgba(52,211,153,0.15);box-shadow:0 0 0 1px rgba(52,211,153,0.2)}
+  100%{background:transparent;box-shadow:none}}
+.cal-day.just-imported{animation:calFlash 1.4s ease forwards!important}
+
+/* ic/ap dialog kept in DOM but hidden — override to never show */
+.ic-dialog,.ap-dialog{display:none!important}
 
 /* ═══ RDR + MERGE ADDITIONS ════════════════════════════════ */
 :root {
@@ -528,10 +804,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
   --r3:#34d399;--r3-bg:rgba(52,211,153,0.12);--r3-border:rgba(52,211,153,0.35);
 }
 .mode-toggle{display:flex;gap:2px;background:var(--surface3);border:1px solid var(--border2);border-radius:10px;padding:3px;margin-left:4px}
-.mode-btn{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:3px 10px;border-radius:7px;border:none;cursor:pointer;background:none;color:var(--text3);transition:all 0.2s;-webkit-tap-highlight-color:transparent}
+.mode-btn{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:3px 10px;border-radius:7px;border:1px solid transparent;cursor:pointer;background:none;color:var(--text3);transition:all 0.2s;-webkit-tap-highlight-color:transparent}
 .mode-btn.active-oh{background:var(--accent-bg);color:var(--accent);border:1px solid rgba(56,189,248,0.35)}
 .mode-btn.active-rdr{background:var(--day-bg);color:var(--day);border:1px solid rgba(245,166,35,0.35)}
-.shift-banner{position:relative;display:flex;align-items:center;justify-content:space-between;min-height:116px;padding:22px 28px;margin-bottom:12px;background:linear-gradient(135deg,rgba(255,255,255,0.013),rgba(255,255,255,0.027));border:1px solid var(--border2);border-radius:18px;overflow:hidden;isolation:isolate;backdrop-filter:blur(10px)}
+.shift-banner{position:relative;display:flex;align-items:center;justify-content:space-between;min-height:116px;padding:22px 28px;margin-bottom:12px;background:var(--surface-lift);border:1px solid var(--border2);border-radius:18px;overflow:hidden;isolation:isolate;backdrop-filter:blur(10px)}
 .shift-banner::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(129,140,248,0.05) 0%,transparent 32%,transparent 68%,rgba(245,166,35,0.05) 100%);pointer-events:none}
 .shift-banner::after{content:'';position:absolute;inset:0 0 auto 0;height:2px;background:linear-gradient(90deg,var(--night) 0%,var(--night) 50%,var(--day) 50%,var(--day) 100%)}
 .banner-half{position:relative;z-index:2;display:flex;flex-direction:column;gap:8px;max-width:38%}
@@ -575,12 +851,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .person-block.off-duty{background:linear-gradient(90deg,rgba(248,113,113,0.055),var(--surface2));border-color:rgba(248,113,113,0.18)}
 .person-block.off-duty .person-name{color:var(--text2)}
 .person-block.off-duty .person-rank{color:rgba(248,113,113,0.4)}
-.person-top{display:flex;align-items:center;gap:10px;padding:9px 12px}
+.person-top{display:flex;align-items:center;gap:8px;padding:8px 10px 8px 12px;min-height:40px}
 .person-rank{font-family:var(--mono);font-size:9px;color:var(--text3);width:14px;text-align:right;flex-shrink:0}
-.person-name{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--text);min-width:100px;flex-shrink:0;letter-spacing:0.02em;-webkit-user-select:none;user-select:none}
+.person-name{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--text);min-width:110px;flex-shrink:0;letter-spacing:0.02em;-webkit-user-select:none;user-select:none}
 .status-wrap{flex:1;min-width:0}
 .status-input{width:100%;background:transparent;border:none;outline:none;color:var(--text);font-family:var(--mono);font-size:12px;padding:2px 4px;border-radius:4px;transition:background 0.1s}
-.status-input:focus{background:rgba(255,255,255,0.04)}
+.status-input:focus{background:var(--input-focus-bg)}
 .chips-row{display:none;flex-wrap:wrap;gap:5px;padding:0 12px 9px}
 .person-block.focused .chips-row{display:flex}
 .chip.chip-on{border-color:rgba(52,211,153,0.4);color:var(--green);background:var(--green-bg)}
@@ -596,7 +872,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .rota-slbl{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;padding:10px 0 6px;border-top:1px solid var(--border);margin-top:4px}
 .rota-slbl:first-child{border-top:none;margin-top:0;padding-top:0}
 .rota-slbl.r1{color:var(--r1)}.rota-slbl.r2{color:var(--r2)}.rota-slbl.r3{color:var(--r3)}
-.preview-box{font-family:var(--mono);font-size:12px;color:var(--text);white-space:pre;line-height:1.9;padding:16px;overflow:auto;background:var(--surface2);border-radius:var(--radius);border:1px solid var(--border);min-height:320px;width:100%;resize:none;cursor:text;-webkit-user-select:text;user-select:text}
+.preview-box{font-family:var(--mono);font-size:12px;color:var(--text);white-space:pre;line-height:1.9;padding:16px;overflow:auto;background:var(--surface2);border-radius:var(--radius);border:1px solid var(--border);width:100%;resize:none;cursor:text;-webkit-user-select:text;user-select:text}
 .preview-label{font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:4px}
 .copy-btn-rdr{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px;border-radius:var(--radius-lg);border:none;background:linear-gradient(135deg,#f5a623,#e8670a);color:#000;font-family:var(--mono);font-size:14px;font-weight:600;cursor:pointer;letter-spacing:0.06em;transition:all 0.2s;box-shadow:0 4px 20px rgba(245,166,35,0.3);text-transform:uppercase;margin-top:12px}
 .copy-btn-rdr:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(245,166,35,0.45)}
@@ -627,7 +903,80 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .ex-src-btn.active-oh{background:var(--accent-bg);border-color:rgba(56,189,248,0.4);color:var(--accent)}
 .ex-src-btn.active-rdr{background:var(--day-bg);border-color:rgba(245,166,35,0.4);color:var(--day)}
 .ex-src-btn.active-both{background:var(--green-bg);border-color:rgba(52,211,153,0.4);color:var(--green)}
-.dp-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.72);display:flex;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(4px);padding:20px}
+
+/* Export modal — purple accent */
+.ex-dialog{position:fixed;inset:0;background:var(--overlay-bg);z-index:9997;display:flex;
+  align-items:center;justify-content:center;backdrop-filter:blur(8px);padding:20px}
+.ex-box{background:var(--surface);border:1px solid rgba(167,139,250,0.25);border-radius:var(--radius-xl);
+  padding:22px 24px;max-width:400px;width:100%;box-shadow:0 8px 48px rgba(167,139,250,0.15),var(--shadow-lg);
+  max-height:90vh;overflow-y:auto;position:relative}
+.ex-box::before{content:'';position:absolute;inset:0 0 auto 0;height:2px;border-radius:var(--radius-xl) var(--radius-xl) 0 0;
+  background:linear-gradient(90deg,var(--purple),rgba(167,139,250,0.3))}
+.ex-title-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.ex-title{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--purple);letter-spacing:0.04em}
+.ex-close-btn{background:none;border:1px solid var(--border2);border-radius:6px;color:var(--text3);
+  width:24px;height:24px;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;
+  transition:all 0.15s}
+.ex-close-btn:hover{border-color:rgba(248,113,113,0.4);color:var(--red)}
+.ex-sub{font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:10px;line-height:1.6}
+/* Source toggle */
+.ex-src-row{display:flex;gap:4px;margin-bottom:12px;background:var(--surface2);padding:3px;border-radius:10px;border:1px solid var(--border)}
+.ex-src-btn{flex:1;padding:5px 8px;border-radius:7px;font-family:var(--mono);font-size:9px;font-weight:700;
+  letter-spacing:0.1em;text-transform:uppercase;border:none;background:none;color:var(--text3);cursor:pointer;transition:all 0.18s}
+.ex-src-btn:hover{color:var(--text2)}
+.ex-src-btn.active-oh{background:var(--accent-bg);border:1px solid rgba(56,189,248,0.4);color:var(--accent)}
+.ex-src-btn.active-rdr{background:var(--day-bg);border:1px solid rgba(245,166,35,0.4);color:var(--day)}
+.ex-src-btn.active-both{background:var(--purple-bg);border:1px solid rgba(167,139,250,0.4);color:var(--purple)}
+/* Range display */
+.ex-range-display{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:8px 12px;
+  background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius)}
+.ex-range-slot{display:flex;flex-direction:column;gap:2px;flex:1}
+.ex-range-lbl{font-family:var(--mono);font-size:8px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3)}
+.ex-range-val{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--purple);letter-spacing:0.02em}
+.ex-range-val.empty{color:var(--text3);font-weight:400}
+.ex-range-arrow{font-family:var(--mono);font-size:14px;color:var(--purple);opacity:0.5;flex-shrink:0}
+.ex-range-clear{background:none;border:none;color:var(--text3);cursor:pointer;font-size:11px;
+  padding:2px 5px;border-radius:4px;transition:all 0.15s;flex-shrink:0;display:none}
+.ex-range-clear.visible{display:block}
+.ex-range-clear:hover{color:var(--red)}
+/* Calendar nav */
+.ex-cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ex-cal-month{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text);letter-spacing:0.04em}
+.ex-nav-btn{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text2);
+  width:26px;height:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all 0.15s}
+.ex-nav-btn:hover{border-color:rgba(167,139,250,0.4);color:var(--purple)}
+/* Calendar grid */
+.ex-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:12px}
+.ex-cal-dow{font-family:var(--mono);font-size:9px;color:var(--text3);text-align:center;padding:3px 0;letter-spacing:0.06em}
+.ex-cal-day{font-family:var(--mono);font-size:11px;text-align:center;padding:6px 2px;
+  border-radius:6px;border:1px solid transparent;transition:all 0.12s;line-height:1;cursor:pointer;position:relative}
+.ex-cal-day.no-data{color:var(--text3);cursor:default}
+.ex-cal-day.no-data:hover{background:none}
+.ex-cal-day:not(.no-data):not(.empty){color:var(--text);border-color:var(--border2);background:var(--surface2)}
+.ex-cal-day:not(.no-data):not(.empty):hover{border-color:rgba(167,139,250,0.45);background:var(--purple-bg);color:var(--purple)}
+.ex-cal-day.empty{border:none;cursor:default;pointer-events:none}
+.ex-cal-day.today-ex{box-shadow:0 0 0 1px rgba(167,139,250,0.4)}
+.ex-cal-day.range-start{background:rgba(167,139,250,0.25);border-color:rgba(167,139,250,0.7);color:var(--purple);font-weight:700;box-shadow:0 0 0 2px rgba(167,139,250,0.2)}
+.ex-cal-day.range-end{background:rgba(167,139,250,0.25);border-color:rgba(167,139,250,0.7);color:var(--purple);font-weight:700;box-shadow:0 0 0 2px rgba(167,139,250,0.2)}
+.ex-cal-day.in-range{background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.25);color:var(--purple)}
+.ex-cal-day.has-dot::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);
+  width:3px;height:3px;border-radius:50%;background:var(--purple);opacity:0.7}
+/* Hint */
+.ex-hint{font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:14px;
+  padding:7px 10px;background:var(--surface2);border-radius:8px;border:1px solid var(--border)}
+.ex-hint.ok{color:var(--purple);background:var(--purple-bg);border-color:rgba(167,139,250,0.3)}
+.ex-hint.warn{color:var(--gold);background:var(--gold-bg);border-color:rgba(251,191,36,0.25)}
+/* Buttons */
+.ex-btns{display:flex;gap:8px;justify-content:flex-end}
+.ex-btn{padding:8px 18px;border-radius:var(--radius);font-family:var(--mono);font-size:11px;
+  font-weight:600;cursor:pointer;letter-spacing:0.04em;transition:all 0.15s;border:none}
+.ex-cancel{background:var(--surface3);border:1px solid var(--border2);color:var(--text2)}
+.ex-cancel:hover{border-color:var(--border3);color:var(--text)}
+.ex-copy{background:linear-gradient(135deg,#7c3aed,#a78bfa);color:#fff;border:none}
+.ex-copy:hover{transform:translateY(-1px);box-shadow:0 4px 18px rgba(167,139,250,0.4)}
+.ex-copy.success{background:linear-gradient(135deg,var(--green),#059669);color:#000}
+.ex-copy:disabled{opacity:0.35;pointer-events:none;transform:none;box-shadow:none}
+.dp-overlay{position:fixed;inset:0;background:var(--overlay-bg);display:flex;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(4px);padding:20px}
 .dp-modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-xl);padding:20px;width:310px;max-width:100%;box-shadow:var(--shadow-lg)}
 .dp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
 .dp-title{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--text)}
@@ -651,6 +1000,12 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .dp-confirm:disabled{opacity:0.3;cursor:default}
 input[type="date"]{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);color:var(--text);font-family:var(--mono);font-size:12px;padding:6px 10px;outline:none;transition:border-color 0.15s;color-scheme:dark}
 input[type="date"]:focus{border-color:var(--border3)}
+
+/* ── THEME TOGGLE BUTTON ─────────────────────────────────────── */
+.theme-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--border2);
+  background:var(--surface2);color:var(--text2);cursor:pointer;display:flex;align-items:center;
+  justify-content:center;font-size:14px;transition:all 0.2s;flex-shrink:0;line-height:1}
+.theme-btn:hover{border-color:var(--border3);color:var(--text);background:var(--surface3)}
 
 /* ── ROTA CHIPS TOGGLE ─────────────────────────────────────── */
 .rota-toggle-row{display:flex;align-items:center;margin-bottom:10px}
@@ -677,6 +1032,7 @@ input[type="date"]:focus{border-color:var(--border3)}
   </div>
   <div class="t-right">
     <div class="sync-pill offline" id="sync-pill"><span class="sdot2"></span><span id="sync-txt">local</span></div>
+    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle light/dark mode">🌙</button>
     <div class="t-clock" id="t-clock">00:00:00</div>
   </div>
 </div>
@@ -730,15 +1086,14 @@ input[type="date"]:focus{border-color:var(--border3)}
   <!-- CALENDAR WIDGET – full-width, always visible -->
   <div class="widget" id="calendar-widget">
 
-        <div class="wh"><span class="wh-t">Date</span><span class="badge b-in" id="date-badge">TODAY</span></div>
+        <div class="wh"><span class="wh-t">Date</span>
+          <label class="toggle-switch" id="rota-toggle-row" style="margin-left:auto;margin-right:8px">
+            <input type="checkbox" id="rota-toggle-input" onchange="toggleRotaChips()">
+            <div class="toggle-track"><div class="toggle-thumb"></div></div>
+            <span class="toggle-lbl">Show RDR Shifts</span>
+          </label>
+          <span class="badge b-in" id="date-badge">TODAY</span></div>
         <div class="wb">
-          <div class="rota-toggle-row">
-            <label class="toggle-switch">
-              <input type="checkbox" id="rota-toggle-input" onchange="toggleRotaChips()">
-              <div class="toggle-track"><div class="toggle-thumb"></div></div>
-              <span class="toggle-lbl">Show RDR Shifts</span>
-            </label>
-          </div>
           <div class="cal-wrap">
             <div class="cal-nav">
               <button class="cal-nav-btn" onclick="calShiftMonth(-1)">‹</button>
@@ -799,24 +1154,37 @@ input[type="date"]:focus{border-color:var(--border3)}
         <div class="imp-panel">
           <div class="imp-panel-hdr" id="imp-panel-hdr" onclick="togImp()">
             <div class="imp-panel-icon">⬇</div>
-            <span class="imp-panel-lbl">Import Messages</span>
-            <span class="imp-panel-hint" id="imp-panel-hint">paste WhatsApp → calendar</span>
+            <span class="imp-panel-lbl">Import OH Messages</span>
+            <span class="imp-panel-hint" id="imp-panel-hint">paste → calendar</span>
             <span class="imp-panel-chev" id="imp-chev">▸</span>
           </div>
           <div class="imp-body" id="imp-body">
             <div class="imp-inner">
-              <div class="imp-lbl">Paste finalized daily messages</div>
-              <textarea class="imp-ta" id="imp-ta" placeholder="Paste one or more days here. Multiple days are fine." oninput="impLivePreview()" onpaste="impHandlePaste(event)"></textarea>
+              <div class="imp-lbl">Paste one or more finalized daily messages</div>
+              <div class="imp-paste-row">
+                <textarea class="imp-ta" id="imp-ta" placeholder="Good Morning Officers&#10;OH NSFs Movement Chart for today:&#10;08/06/2026 Monday&#10;——————————&#10;Rollcall IC : LCP NAME&#10;LCP NAME - IN&#10;..." oninput="impLivePreview()" onpaste="impHandlePaste(event)"></textarea>
+                <button class="imp-paste-btn" id="imp-paste-btn" onclick="impDoPaste()">📋 Paste</button>
+              </div>
               <div class="imp-live" id="imp-live"><span class="imp-live-none">Detected days appear here...</span></div>
               <div class="imp-actions">
-                <button class="imp-btn imp-btn-parse" onclick="impParse()">⚡ Parse</button>
-                <button class="imp-btn imp-btn-tocal" id="imp-to-cal-btn" onclick="openImportModal()" style="display:none">📅 Import to Calendar</button>
-                <button class="imp-btn imp-btn-copy" id="imp-copy-btn" onclick="impCopy()" style="display:none">⬇ Copy TSV</button>
-                <button class="imp-btn imp-btn-clear" onclick="impClear()">✕ Clear</button>
+                <button class="imp-btn-copy" id="imp-copy-btn" onclick="impCopy()" style="display:none">⬇ Copy TSV</button>
+                <button class="imp-btn-clear" onclick="impClear()">✕ Clear</button>
                 <span class="imp-status" id="imp-status"></span>
               </div>
+              <!-- Inline confirm (replaces modal) -->
+              <div class="imp-confirm" id="imp-confirm">
+                <div class="imp-confirm-hdr">
+                  <span class="imp-confirm-title">Save to Calendar</span>
+                </div>
+                <div class="imp-confirm-days" id="imp-confirm-days"></div>
+                <div class="imp-confirm-warn" id="imp-confirm-warn">⚠ Highlighted dates already have data and will be overwritten.</div>
+                <div class="imp-confirm-btns">
+                  <button class="imp-confirm-go" onclick="confirmImport()">✓ Confirm Import</button>
+                  <button class="imp-confirm-cancel" onclick="dismissImpConfirm()">Cancel</button>
+                </div>
+              </div>
               <div id="imp-table-sect" style="display:none">
-                <div class="imp-lbl" style="margin-bottom:8px">Preview</div>
+                <div class="imp-lbl" style="margin-bottom:8px">Parsed breakdown</div>
                 <div class="imp-table-wrap">
                   <table class="imp-table" id="imp-table"></table>
                 </div>
@@ -829,22 +1197,35 @@ input[type="date"]:focus{border-color:var(--border3)}
           <div class="imp-panel-hdr" id="rdr-imp-panel-hdr" onclick="togRdrImp()">
             <div class="imp-panel-icon" style="color:var(--day)">⬇</div>
             <span class="imp-panel-lbl">Import RDR Messages</span>
-            <span class="imp-panel-hint" id="rdr-imp-panel-hint">paste attendance → calendar</span>
+            <span class="imp-panel-hint" id="rdr-imp-panel-hint">paste → calendar</span>
             <span class="imp-panel-chev" id="rdr-imp-chev">▸</span>
           </div>
           <div class="imp-body" id="rdr-imp-body">
             <div class="imp-inner">
               <div class="imp-lbl">Paste RDR attendance messages (one or more blocks)</div>
-              <textarea class="imp-ta" id="rdr-imp-ta" placeholder="Attendance and Roll Call&#10;Rota 3 AM Shift 07/06/26&#10;NAME - ON DUTY ✅&#10;..." oninput="rdrImpLivePreview()" onpaste="rdrImpHandlePaste(event)"></textarea>
+              <div class="imp-paste-row">
+                <textarea class="imp-ta" id="rdr-imp-ta" placeholder="Attendance and Roll Call&#10;Rota 3 AM Shift 07/06/26&#10;NAME - ON DUTY ✅&#10;..." oninput="rdrImpLivePreview()" onpaste="rdrImpHandlePaste(event)"></textarea>
+                <button class="imp-paste-btn" id="rdr-imp-paste-btn" onclick="rdrImpDoPaste()">📋 Paste</button>
+              </div>
               <div class="imp-live" id="rdr-imp-live"><span class="imp-live-none">Detected blocks appear here...</span></div>
               <div class="imp-actions">
-                <button class="imp-btn imp-btn-parse" onclick="rdrImpParse()">⚡ Parse</button>
-                <button class="imp-btn imp-btn-tocal" id="rdr-imp-to-cal-btn" onclick="rdrImpOpenModal()" style="display:none">📅 Import to Calendar</button>
-                <button class="imp-btn imp-btn-clear" onclick="rdrImpClear()">✕ Clear</button>
+                <button class="imp-btn-clear" onclick="rdrImpClear()">✕ Clear</button>
                 <span class="imp-status" id="rdr-imp-status"></span>
               </div>
+              <!-- Inline confirm (replaces modal) -->
+              <div class="imp-confirm" id="rdr-imp-confirm">
+                <div class="imp-confirm-hdr">
+                  <span class="imp-confirm-title">Save RDR to Calendar</span>
+                </div>
+                <div class="imp-confirm-days" id="rdr-imp-confirm-days"></div>
+                <div class="imp-confirm-warn" id="rdr-imp-confirm-warn">⚠ Highlighted dates already have RDR data and will be overwritten.</div>
+                <div class="imp-confirm-btns">
+                  <button class="imp-confirm-go" style="background:linear-gradient(135deg,#c2410c,#ea580c);box-shadow:0 3px 12px rgba(194,65,12,0.3)" onclick="confirmRdrImport()">✓ Confirm Import</button>
+                  <button class="imp-confirm-cancel" onclick="dismissRdrImpConfirm()">Cancel</button>
+                </div>
+              </div>
               <div id="rdr-imp-table-sect" style="display:none">
-                <div class="imp-lbl" style="margin-bottom:8px">Preview</div>
+                <div class="imp-lbl" style="margin-bottom:8px">Parsed breakdown</div>
                 <div class="imp-table-wrap">
                   <table class="imp-table" id="rdr-imp-table"></table>
                 </div>
@@ -853,7 +1234,6 @@ input[type="date"]:focus{border-color:var(--border3)}
           </div>
         </div>
   </div><!-- /calendar-widget -->
-
   <div class="grid" id="oh-grid">
     <div>
       <!-- PERSONNEL WIDGET -->
@@ -938,8 +1318,6 @@ input[type="date"]:focus{border-color:var(--border3)}
       </div>
     </div>
   </div>
-</div><!-- right col end -->
-
     <!-- RDR COLUMN (personnel + preview, visible in RDR mode) -->
     <div id="rdr-col" style="display:none">
       <div class="grid">
@@ -956,17 +1334,6 @@ input[type="date"]:focus{border-color:var(--border3)}
               <div id="rdr-person-list"></div>
             </div>
           </div>
-        </div>
-        <div>
-          <!-- RDR Preview widget -->
-          <div class="widget">
-            <div class="wh"><span class="wh-t">Message Preview &mdash; RDR</span></div>
-            <div class="wb">
-              <div class="preview-label" id="rdr-preview-label"></div>
-              <textarea class="preview-box" id="rdr-preview-box" readonly spellcheck="false">Loading...</textarea>
-              <button class="copy-btn-rdr" id="rdr-copy-btn" onclick="rdrCopyMsg()">&#10022;&nbsp;&nbsp;Copy to Clipboard</button>
-            </div>
-          </div>
           <!-- RDR Roster editor -->
           <div class="widget">
             <div class="wh col-hdr" onclick="togCol('rdr-red-body','rdr-red-chev')">
@@ -980,69 +1347,70 @@ input[type="date"]:focus{border-color:var(--border3)}
             </div>
           </div>
         </div>
+        <div>
+          <!-- Emoji of the Day (shared widget, shown in RDR mode too) -->
+          <div class="widget" id="rdr-emoji-widget">
+            <div class="wh"><span class="wh-t">Emoji of the Day</span><span class="badge b-in" id="rdr-roll-badge">not rolled</span></div>
+            <div class="wb">
+              <div class="roller-wrap">
+                <div class="slot-win" id="rdr-slot-win">
+                  <div class="slot-q" id="rdr-slot-q">?</div>
+                  <div class="slot-track" id="rdr-slot-track" style="display:none"></div>
+                  <div class="slot-shim"></div>
+                </div>
+                <div class="roller-r">
+                  <div class="rs"><div class="rs-i">Rolls: <span class="rs-v" id="rdr-s-rolls">0</span></div><div class="rs-i">Best: <span class="rs-v" id="rdr-s-best">0</span></div></div>
+                  <div class="sbox" id="rdr-sbox"><span class="si-icon" id="rdr-si-icon">💤</span><span id="rdr-s-msg">No rolls yet</span></div>
+                </div>
+              </div>
+              <button class="rbtn" id="rdr-rbtn" onclick="rdrRollEmoji()">🎲 Roll Today's Emoji</button>
+              <div class="rfla" id="rdr-rfla"></div>
+            </div>
+          </div>
+          <!-- RDR Preview widget -->
+          <div class="widget">
+            <div class="wh"><span class="wh-t">Message Preview &mdash; RDR</span></div>
+            <div class="wb">
+              <div class="preview-label" id="rdr-preview-label"></div>
+              <textarea class="preview-box" id="rdr-preview-box" readonly spellcheck="false">Loading...</textarea>
+              <button class="copy-btn-rdr" id="rdr-copy-btn" onclick="rdrCopyMsg()">&#10022;&nbsp;&nbsp;Copy to Clipboard</button>
+            </div>
+          </div>
+        </div>
       </div>
     </div><!-- /rdr-col -->
-
-  </div>
-</div>
-<!-- IMPORT CONFIRM MODAL -->
-<div class="ic-dialog" id="ic-dialog" style="display:none">
-  <div class="ic-box">
-    <div class="ic-title">⬇ Import to Calendar</div>
-    <div class="ic-sub" id="ic-sub">The following days will be imported and will <b>override</b> any existing data:</div>
-    <div class="ic-days" id="ic-days"></div>
-    <div class="ic-warn" id="ic-warn" style="display:none">⚠ Yellow dates already have data and will be overwritten.</div>
-    <div class="ic-btns">
-      <button class="ic-btn ic-no" onclick="closeImportModal()">Cancel</button>
-      <button class="ic-btn ic-yes" onclick="confirmImport()">Import & Override</button>
-    </div>
-  </div>
-</div>
-<!-- RDR IMPORT CONFIRM MODAL -->
-<div class="ic-dialog" id="rdr-ic-dialog" style="display:none">
-  <div class="ic-box">
-    <div class="ic-title" style="color:var(--day)">⬇ Import RDR to Calendar</div>
-    <div class="ic-sub">The following days will be updated with RDR statuses:</div>
-    <div class="ic-days" id="rdr-ic-days"></div>
-    <div class="ic-warn" id="rdr-ic-warn" style="display:none">⚠ Yellow dates already have RDR data and will be overwritten.</div>
-    <div class="ic-btns">
-      <button class="ic-btn ic-no" onclick="closeRdrImportModal()">Cancel</button>
-      <button class="ic-btn ic-yes" onclick="confirmRdrImport()">Import & Save</button>
-    </div>
+</div><!-- right col end -->
   </div>
 </div>
 <!-- EXPORT MODAL with inline calendar picker -->
 <div class="ex-dialog" id="ex-dialog" style="display:none">
   <div class="ex-box">
-    <div class="ex-title">&#8679; Export to TSV</div>
+    <div class="ex-title-row">
+      <span class="ex-title">⬆ Export Data</span>
+      <button class="ex-close-btn" onclick="closeExportModal()" title="Close">✕</button>
+    </div>
     <div class="ex-src-row">
-      <button class="ex-src-btn active-oh" id="ex-src-oh" onclick="setExSrc('oh')">OH only</button>
-      <button class="ex-src-btn" id="ex-src-rdr" onclick="setExSrc('rdr')">RDR only</button>
+      <button class="ex-src-btn" id="ex-src-oh" onclick="setExSrc('oh')">OH</button>
+      <button class="ex-src-btn" id="ex-src-rdr" onclick="setExSrc('rdr')">RDR</button>
       <button class="ex-src-btn" id="ex-src-both" onclick="setExSrc('both')">Both</button>
     </div>
-    <div class="ex-sub" id="ex-sub">Click a date to set start, click another to set end.</div>
+    <div class="ex-range-display" id="ex-range-display">
+      <div class="ex-range-slot" id="ex-range-start"><span class="ex-range-lbl">FROM</span><span class="ex-range-val" id="ex-start-val">—</span></div>
+      <div class="ex-range-arrow">→</div>
+      <div class="ex-range-slot" id="ex-range-end"><span class="ex-range-lbl">TO</span><span class="ex-range-val" id="ex-end-val">—</span></div>
+      <button class="ex-range-clear" id="ex-range-clear-btn" onclick="exClearRange()" title="Clear range">✕</button>
+    </div>
+    <div class="ex-sub" id="ex-sub">Click to set start date, then end date.</div>
     <div class="ex-cal-nav">
-      <button class="cal-nav-btn" onclick="exShiftMonth(-1)">‹</button>
+      <button class="cal-nav-btn ex-nav-btn" onclick="exShiftMonth(-1)">‹</button>
       <div class="ex-cal-month" id="ex-cal-month"></div>
-      <button class="cal-nav-btn" onclick="exShiftMonth(1)">›</button>
+      <button class="cal-nav-btn ex-nav-btn" onclick="exShiftMonth(1)">›</button>
     </div>
     <div class="ex-cal-grid" id="ex-cal-grid"></div>
     <div class="ex-hint" id="ex-hint">No dates selected</div>
     <div class="ex-btns">
       <button class="ex-btn ex-cancel" onclick="closeExportModal()">Cancel</button>
-      <button class="ex-btn ex-copy" id="ex-copy-btn" onclick="exCopy()" disabled>Copy TSV</button>
-    </div>
-  </div>
-</div>
-<!-- AUTO-PARSE DIALOG -->
-<div class="ap-dialog" id="ap-dialog" style="display:none">
-  <div class="ap-box">
-    <div class="ap-title">⚡ Auto-parse on paste?</div>
-    <div class="ap-body">Parse detected messages automatically every time you paste?</div>
-    <label class="ap-check"><input type="checkbox" id="ap-dontask"><span>Don't ask again until page refresh</span></label>
-    <div class="ap-btns">
-      <button class="ap-btn ap-no" onclick="apResolve(false)">Just preview</button>
-      <button class="ap-btn ap-yes" onclick="apResolve(true)">Yes, auto-parse</button>
+      <button class="ex-btn ex-copy" id="ex-copy-btn" onclick="exCopy()" disabled>⬆ Copy TSV</button>
     </div>
   </div>
 </div>
@@ -2067,8 +2435,9 @@ function impClear(){
   document.getElementById('imp-status').className='imp-status';
   document.getElementById('imp-table-sect').style.display='none';
   document.getElementById('imp-copy-btn').style.display='none';
-  document.getElementById('imp-to-cal-btn').style.display='none';
   document.getElementById('imp-table').innerHTML='';
+  const impDiv = document.getElementById('imp-div'); if(impDiv) impDiv.classList.remove('visible');
+  dismissImpConfirm();
   impData=null;
 }
 
@@ -2092,39 +2461,33 @@ function parseDate(line){
 }
 
 // Known clean statuses — anything else is flagged for manual verification
-const KNOWN=['IN','MC','RS','HL','OVL','VL','CCL','CL','DB','CDA','OFF'];
+const KNOWN=['IN','ADO','MC','RS','HL','OVL','VL','CCL','CL','DB','CDA','OFF','BTO'];
+// Statuses that mean absent/out (red)
+const KNOWN_OUT=['MC','RS','HL','OVL','VL','CCL','CL','DB','CDA','OFF','BTO'];
 
 function normaliseOne(tok){
-  // tok is already uppercase, noise-stripped
-  // "OFF DUTY HL (...)" → extract real status after OFF DUTY
   const offDuty=tok.match(/^OFF\s*DUTY\s+([A-Z]+)/);
-  if(offDuty) return offDuty[1]; // e.g. "HL"
+  if(offDuty) return offDuty[1];
   if(/^OFF$/.test(tok)) return 'OFF';
-  // Strip trailing date ranges like "(14/05 - 25/06)" or "03/06-04/06"
   const base=tok.replace(/\(.*?\)/g,'').replace(/\d{1,2}\/\d{1,2}.*$/,'').replace(/\.+$/,'').trim();
   if(!base) return tok;
-  // Match known prefixes
+  if(/^ADO/.test(base)) return 'ADO';
   for(const k of KNOWN) if(base===k||base.startsWith(k+' ')) return k;
-  // IN with qualifier: "IN (LATE)", "IN LATE" → IN
   if(/^IN/.test(base)) return 'IN';
-  // Return cleaned base (unknown = warn)
   return base.split(' ').slice(0,3).join(' ');
 }
 
 function parseStatus(raw){
   if(!raw) return '';
   const s=stripNoise(raw).replace(/,/g,' ').replace(/\s{2,}/g,' ').toUpperCase().trim();
-  // AM/PM split: "AM X PM Y"
   const ampm=s.match(/^AM\s+(\S+(?:\s+\S+)?)\s+PM\s+(\S+(?:\s+\S+)?)$/);
   if(ampm){
     const a=normaliseOne(ampm[1]);
     const p=normaliseOne(ampm[2]);
     return 'AM '+a+' PM '+p;
   }
-  // PM only
   const pmOnly=s.match(/^PM\s+(.+)$/);
   if(pmOnly) return 'PM '+normaliseOne(pmOnly[1]);
-  // AM only
   const amOnly=s.match(/^AM\s+(.+)$/);
   if(amOnly) return 'AM '+normaliseOne(amOnly[1]);
   return normaliseOne(s);
@@ -2142,15 +2505,16 @@ function statusClass(s){
   if(!s||s==='—') return 's-empty';
   const u=s.toUpperCase().trim();
   if(u==='IN') return 's-in';
+  if(u==='ADO') return 's-ado';
   // AM/PM split
   if(/^AM\s+\S+\s+PM\s+\S+$/.test(u)){
     const parts=u.match(/^AM\s+(\S+)\s+PM\s+(\S+)$/);
     if(parts&&isKnown(parts[1])&&isKnown(parts[2])) return 's-part';
-    return 's-warn'; // one half is non-standard
+    return 's-warn';
   }
   if(/^AM\s/.test(u)||/^PM\s/.test(u)) return 's-part';
+  if(KNOWN_OUT.includes(u.split(' ')[0])) return 's-out';
   if(KNOWN.includes(u.split(' ')[0])) return 's-out';
-  // Unknown status — needs manual verification
   return 's-warn';
 }
 
@@ -2308,9 +2672,10 @@ function impParse(){
   impData={dates,names:nameOrder,nameSection,parsed};
   document.getElementById('imp-table-sect').style.display='';
   document.getElementById('imp-copy-btn').style.display='';
-  document.getElementById('imp-to-cal-btn').style.display='';
+  const impDiv = document.getElementById('imp-div'); if(impDiv) impDiv.classList.add('visible');
   status.textContent=`✓ ${dates.length} day${dates.length>1?'s':''}, ${nameOrder.length} personnel`;
   status.className='imp-status ok';
+  showImpConfirm();
 }
 function impCopy(){
   if(!impData)return;
@@ -2367,7 +2732,7 @@ document.addEventListener('DOMContentLoaded',buildBookmarklet);
 setTimeout(buildBookmarklet,500); // fallback
 
 /* ═══════════════════════ IMPORT TO CALENDAR ════════════════════ */
-var _pendingImportData=null; // {dates, names, nameSection, parsed} from parser
+var _pendingImportData=null;
 
 function openImportPanel(){
   const body=document.getElementById('imp-body'),chev=document.getElementById('imp-chev');
@@ -2377,10 +2742,10 @@ function openImportPanel(){
   setTimeout(()=>document.getElementById('imp-ta').focus(),350);
 }
 
-function openImportModal(){
-  if(!impData||!impData.dates||!impData.dates.length){showToast('Nothing parsed yet — paste and parse first.');return;}
+function showImpConfirm(){
+  if(!impData||!impData.dates||!impData.dates.length) return;
   const all=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
-  const container=document.getElementById('ic-days');
+  const container=document.getElementById('imp-confirm-days');
   container.innerHTML='';
   let hasExisting=false;
   impData.dates.forEach(d=>{
@@ -2388,15 +2753,23 @@ function openImportModal(){
     const dd=String(d.day).padStart(2,'0'),mm=String(d.month).padStart(2,'0');
     tag.textContent=dd+'/'+mm;
     const existing=all[d.key]&&all[d.key].statuses&&Object.values(all[d.key].statuses).some(v=>v&&v.trim());
-    if(existing){tag.className='ic-day-tag has-existing';hasExisting=true;}
-    else tag.className='ic-day-tag';
+    if(existing){tag.className='imp-confirm-day has-existing';hasExisting=true;}
+    else tag.className='imp-confirm-day';
     container.appendChild(tag);
   });
-  document.getElementById('ic-warn').style.display=hasExisting?'':'none';
-  document.getElementById('ic-dialog').style.display='flex';
+  const warn=document.getElementById('imp-confirm-warn');
+  if(warn)warn.classList.toggle('visible',hasExisting);
+  document.getElementById('imp-confirm').classList.add('visible');
+  document.getElementById('imp-confirm').scrollIntoView({behavior:'smooth',block:'nearest'});
 }
 
-function closeImportModal(){document.getElementById('ic-dialog').style.display='none';}
+function dismissImpConfirm(){
+  document.getElementById('imp-confirm').classList.remove('visible');
+}
+
+// Keep these stubs so any old onclick references don't error
+function openImportModal(){ showImpConfirm(); }
+function closeImportModal(){ dismissImpConfirm(); }
 
 function confirmImport(){
   if(!impData)return;
@@ -2408,12 +2781,9 @@ function confirmImport(){
   impData.dates.forEach(d=>{
     const dk=d.key;
     if(!all[dk])all[dk]={statuses:{},toRows:[],emoji:null,rollCount:0,bestRolls:0};
-    // Override: clear existing statuses for this day first
     all[dk].statuses={};
-    // Write each person's status using same key format as manual entry
     impData.names.forEach(name=>{
       const section=impData.nameSection&&impData.nameSection[name];
-      // Determine section from roster if not tracked
       let sec='MAIN';
       if(section==='EMS'||rosterEMS.includes(name))sec='EMS';
       const storeKey=sec+'-'+name;
@@ -2425,39 +2795,86 @@ function confirmImport(){
 
   localStorage.setItem(SAVED_LS,JSON.stringify(all));
 
-  // Push each day to Firebase if connected
   if(fbBase()){
     pushedKeys.forEach(dk=>{
       fetch(fbBase()+'/data/'+dk+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(all[dk])}).catch(()=>{});
     });
   }
 
-  // Clear preview dots, reset import button
+  // Clear pending highlights
   _impPreviewKeys.forEach(k=>{const el=document.querySelector(`.cal-day[data-key="${k}"]`);if(el)el.classList.remove('pending');});
   _impPreviewKeys=[];
   const hdrEl=document.getElementById('imp-panel-hdr');
   if(hdrEl)hdrEl.classList.remove('has-pending');
 
-  closeImportModal();
+  dismissImpConfirm();
+
+  // Rebuild calendar so dots appear immediately
   rdrBuildCalendar();
   if(calSelectedKey&&pushedKeys.includes(calSelectedKey))buildCalSummary(calSelectedKey);
-  showToast(`✓ Imported ${pushedKeys.length} day${pushedKeys.length>1?'s':''} to calendar`);
+
+  // Flash imported cells green — the visual confirmation, no toast needed
+  pushedKeys.forEach(dk=>{
+    const el=document.querySelector(`.cal-day[data-key="${dk}"]`);
+    if(el){
+      el.classList.remove('just-imported');
+      void el.offsetWidth;
+      el.classList.add('just-imported');
+      setTimeout(()=>el.classList.remove('just-imported'),1600);
+    }
+  });
+
+  // Update hint text briefly
+  const hint=document.getElementById('imp-panel-hint');
+  if(hint){hint.textContent=pushedKeys.length+' day'+(pushedKeys.length>1?'s':'')+' saved ✓';
+    setTimeout(()=>{hint.textContent='paste → calendar';},3000);}
 }
 
 /* ═══════════════════════ EXPORT TSV ══════════════════════════ */
-var exPickStart=null,exPickEnd=null,exViewMonth=null,exViewYear=null;
+/* ═══════════════════════ EXPORT TSV (unified — purple datepicker) ═══════════════════════ */
+var exPickStart=null,exPickEnd=null,exViewMonth=null,exViewYear=null,exSrc='oh';
+
+function exFmtDisplay(key){
+  if(!key)return'—';
+  const[y,m,d]=key.split('-');
+  return String(d).padStart(2,'0')+'/'+String(m).padStart(2,'0')+'/'+y;
+}
+function exUpdateRangeDisplay(){
+  const sv=document.getElementById('ex-start-val'),ev=document.getElementById('ex-end-val');
+  const clrBtn=document.getElementById('ex-range-clear-btn');
+  if(sv){sv.textContent=exPickStart?exFmtDisplay(exPickStart):'—';sv.className='ex-range-val'+(exPickStart?'':' empty');}
+  if(ev){ev.textContent=exPickEnd?exFmtDisplay(exPickEnd):'—';ev.className='ex-range-val'+(exPickEnd?'':' empty');}
+  if(clrBtn)clrBtn.className='ex-range-clear'+(exPickStart?' visible':'');
+}
+function exClearRange(){exPickStart=null;exPickEnd=null;exBuildPicker();}
+
+function exHasDataForKey(key){
+  const ohAll=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
+  const rdrAll=JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
+  const ohHas=!!(ohAll[key]&&ohAll[key].statuses&&Object.values(ohAll[key].statuses).some(v=>v&&v.trim()));
+  const rdrHas=!!(rdrAll[key]&&rdrAll[key].statuses&&Object.values(rdrAll[key].statuses).some(v=>v&&v.trim()&&v.trim()!=='ON DUTY'));
+  return(exSrc==='oh'&&ohHas)||(exSrc==='rdr'&&rdrHas)||(exSrc==='both'&&(ohHas||rdrHas));
+}
+
+function setExSrc(s){
+  exSrc=s;
+  ['oh','rdr','both'].forEach(x=>{
+    const btn=document.getElementById('ex-src-'+x);
+    if(btn)btn.className='ex-src-btn'+(x===s?' active-'+s:'');
+  });
+  exBuildPicker();
+}
 
 function openExportModal(){
-  const all=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
-  const keys=Object.keys(all).filter(k=>all[k]&&all[k].statuses&&Object.values(all[k].statuses).some(v=>v&&v.trim())).sort();
-  if(!keys.length){showToast('No calendar data to export yet.');return;}
+  const ohAll=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
+  const rdrAll=JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
+  const allKeys=[...new Set([...Object.keys(ohAll),...Object.keys(rdrAll)])].sort();
+  if(!allKeys.length){showToast('No calendar data to export yet.');return;}
   exPickStart=null;exPickEnd=null;
-  // Default view to month of most recent data
-  const lastKey=keys[keys.length-1];
-  const ld=dateFromKey(lastKey);
+  const ld=dateFromKey(allKeys[allKeys.length-1]);
   exViewMonth=ld.getMonth();exViewYear=ld.getFullYear();
   document.getElementById('ex-dialog').style.display='flex';
-  exBuildPicker();
+  setExSrc(currentMode==='rdr'?'rdr':'oh');
 }
 
 function closeExportModal(){
@@ -2473,129 +2890,228 @@ function exShiftMonth(d){
 }
 
 function exBuildPicker(){
-  const all=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
+  const today=new Date(),todayKey=fmtKey(today);
   const firstDay=new Date(exViewYear,exViewMonth,1);
   document.getElementById('ex-cal-month').textContent=firstDay.toLocaleDateString('en-SG',{month:'long',year:'numeric'});
   const grid=document.getElementById('ex-cal-grid');grid.innerHTML='';
   ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d=>{const e=document.createElement('div');e.className='ex-cal-dow';e.textContent=d;grid.appendChild(e);});
   const startDow=firstDay.getDay(),dim=new Date(exViewYear,exViewMonth+1,0).getDate();
   for(let i=0;i<startDow;i++){const e=document.createElement('div');e.className='ex-cal-day empty';grid.appendChild(e);}
+  const s=exPickStart&&exPickEnd?(exPickStart<exPickEnd?exPickStart:exPickEnd):exPickStart;
+  const e2=exPickStart&&exPickEnd?(exPickStart<exPickEnd?exPickEnd:exPickStart):null;
   for(let d=1;d<=dim;d++){
     const td=new Date(exViewYear,exViewMonth,d),key=fmtKey(td);
-    const hasData=!!(all[key]&&all[key].statuses&&Object.values(all[key].statuses).some(v=>v&&v.trim()));
+    const hasData=exHasDataForKey(key);
     const el=document.createElement('div');
-    el.className='ex-cal-day'+(hasData?' has-data':' no-data');
+    el.className='ex-cal-day'+(hasData?'':' no-data');
     el.textContent=d;el.setAttribute('data-key',key);
-    // Range highlight
-    if(exPickStart&&exPickEnd){
-      const s=exPickStart<exPickEnd?exPickStart:exPickEnd;
-      const e=exPickStart<exPickEnd?exPickEnd:exPickStart;
+    if(key===todayKey)el.classList.add('today-ex');
+    if(hasData)el.classList.add('has-dot');
+    // Range highlights — apply regardless of hasData so range is visible across empty days
+    if(s&&e2){
       if(key===s)el.classList.add('range-start');
-      else if(key===e)el.classList.add('range-end');
-      else if(key>s&&key<e)el.classList.add('in-range');
-    } else if(exPickStart&&key===exPickStart){
+      else if(key===e2)el.classList.add('range-end');
+      else if(key>s&&key<e2)el.classList.add('in-range');
+    } else if(s&&key===s){
       el.classList.add('range-start');
     }
-    if(hasData)el.addEventListener('click',()=>exPickDay(key));
+    // All days are clickable — empty days just extend the range (included as blank cols in TSV)
+    el.addEventListener('click',()=>exPickDay(key));
     grid.appendChild(el);
   }
+  exUpdateRangeDisplay();
   exUpdateHint();
 }
 
 function exPickDay(key){
   if(!exPickStart||exPickEnd){
-    // Start fresh
     exPickStart=key;exPickEnd=null;
+    document.getElementById('ex-sub').textContent='Now click the end date (or same date for single day).';
   } else if(key===exPickStart){
-    // Deselect
-    exPickStart=null;
-  } else {
+    // Single day — treat as both start and end
     exPickEnd=key;
+  } else {
+    // Always sort so start ≤ end regardless of click order
+    if(key<exPickStart){exPickEnd=exPickStart;exPickStart=key;}
+    else exPickEnd=key;
+    document.getElementById('ex-sub').textContent='Range selected. Click ⬆ Copy TSV to export.';
   }
   exBuildPicker();
 }
 
 function exUpdateHint(){
-  const hint=document.getElementById('ex-hint');
-  const btn=document.getElementById('ex-copy-btn');
-  if(!exPickStart){hint.textContent='Click a date to start';hint.className='ex-hint';btn.disabled=true;return;}
+  const hint=document.getElementById('ex-hint'),btn=document.getElementById('ex-copy-btn');
+  if(!exPickStart){hint.textContent='Click any date to start your range';hint.className='ex-hint';btn.disabled=true;return;}
   if(!exPickEnd){hint.textContent='Now click the end date';hint.className='ex-hint';btn.disabled=true;return;}
   const s=exPickStart<exPickEnd?exPickStart:exPickEnd;
   const e=exPickStart<exPickEnd?exPickEnd:exPickStart;
-  const all=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
   let withData=0,total=0;
   const cursor=new Date(s+'T00:00:00'),end=new Date(e+'T00:00:00');
   while(cursor<=end){
     const k=fmtKey(cursor);total++;
-    if(all[k]&&all[k].statuses&&Object.values(all[k].statuses).some(v=>v&&v.trim()))withData++;
+    if(exHasDataForKey(k))withData++;
     cursor.setDate(cursor.getDate()+1);
   }
-  if(!withData){hint.textContent='No data in selected range';hint.className='ex-hint warn';btn.disabled=true;return;}
+  if(!withData){hint.textContent='No '+exSrc.toUpperCase()+' data in selected range';hint.className='ex-hint warn';btn.disabled=true;return;}
   const missing=total-withData;
-  hint.textContent=`${withData} day${withData>1?'s':''} with data${missing?' · '+missing+' empty (blank cols)':''}`;
-  hint.className=missing?'ex-hint warn':'ex-hint ok';
+  hint.textContent=`${withData} day${withData>1?'s':''} with data${missing?' · '+missing+' empty':''} · ${total} total`;
+  hint.className='ex-hint ok';
   btn.disabled=false;
+}
+
+/* Helper: display name for a storeKey (strips group prefix) */
+function exDisplayName(sk){
+  // MAIN-LCP IRFAN → LCP IRFAN
+  // EMS-CPL KHAIRI → CPL KHAIRI
+  // R1-SYAHIR → SYAHIR
+  return sk.replace(/^(?:MAIN|EMS|R[123])-/,'');
+}
+
+/* Helper: get the export cell value for a store key + date */
+function exCellValue(sk, dk, ohAll, rdrAll){
+  if(sk.startsWith('R1-')||sk.startsWith('R2-')||sk.startsWith('R3-')){
+    const raw=(rdrAll[dk]&&rdrAll[dk].statuses&&rdrAll[dk].statuses[sk])||'';
+    return rdrDisplayStatus(raw);
+  }
+  return (ohAll[dk]&&ohAll[dk].statuses&&ohAll[dk].statuses[sk])||'';
 }
 
 function exCopy(){
   if(!exPickStart||!exPickEnd)return;
   const s=exPickStart<exPickEnd?exPickStart:exPickEnd;
   const e=exPickStart<exPickEnd?exPickEnd:exPickStart;
-  const all=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
-  const rosterMain=(roster&&roster.MAIN||[]).map(n=>n.trim().toUpperCase());
-  const rosterEMS=(roster&&roster.EMS||[]).map(n=>n.trim().toUpperCase());
+  const ohAll=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
+  const rdrAll=JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
   const dates=[];
   const cursor=new Date(s+'T00:00:00'),end=new Date(e+'T00:00:00');
   while(cursor<=end){dates.push(fmtKey(new Date(cursor)));cursor.setDate(cursor.getDate()+1);}
-  const extraNames=new Set();
-  dates.forEach(dk=>{
-    const day=all[dk];if(!day||!day.statuses)return;
-    Object.keys(day.statuses).forEach(k=>{const name=k.replace(/^(MAIN|EMS)-/,'');if(!rosterMain.includes(name)&&!rosterEMS.includes(name))extraNames.add(k);});
-  });
-  const nameKeys=[...rosterMain.map(n=>'MAIN-'+n),...rosterEMS.map(n=>'EMS-'+n),...Array.from(extraNames)];
-  let html='<table>';const tsvRows=[];
-  nameKeys.forEach(sk=>{
-    html+='<tr>';
-    const cols=dates.map(dk=>{
-      const sv=(all[dk]&&all[dk].statuses&&all[dk].statuses[sk])||'';
-      html+=`<td style="font-family:Calibri;font-size:${sv.length>3?'8pt':'11pt'}">${sv}</td>`;
-      return sv;
+
+  // ── Build ordered row groups ──────────────────────────────
+  // Each entry: { sk (store key), name (display) }
+  const ohRows=[], rdrRows=[];
+
+  if(exSrc==='oh'||exSrc==='both'){
+    const seen=new Set();
+    [...(roster.MAIN||[])].forEach(n=>{const k='MAIN-'+n;if(!seen.has(k)){seen.add(k);ohRows.push(k);}});
+    [...(roster.EMS||[])].forEach(n=>{const k='EMS-'+n;if(!seen.has(k)){seen.add(k);ohRows.push(k);}});
+    // extras from saved data not in current roster
+    dates.forEach(dk=>{if(!ohAll[dk]||!ohAll[dk].statuses)return;
+      Object.keys(ohAll[dk].statuses).forEach(k=>{if(!seen.has(k)&&(k.startsWith('MAIN-')||k.startsWith('EMS-'))){seen.add(k);ohRows.push(k);}});
     });
-    html+='</tr>';tsvRows.push(cols.join('\t'));
+  }
+
+  if(exSrc==='rdr'||exSrc==='both'){
+    const seen=new Set();
+    ['R1','R2','R3'].forEach(r=>{(rdrRoster[r]||[]).forEach(n=>{const k=r+'-'+n;if(!seen.has(k)){seen.add(k);rdrRows.push(k);}});});
+    dates.forEach(dk=>{if(!rdrAll[dk]||!rdrAll[dk].statuses)return;
+      Object.keys(rdrAll[dk].statuses).forEach(k=>{if(!seen.has(k)&&/^R[123]-/.test(k)){seen.add(k);rdrRows.push(k);}});
+    });
+  }
+
+  // ── Assemble rows array (with blank separator for "both") ─
+  // Each item is either a storeKey string or null (blank row separator)
+  const allRows=[];
+  if(exSrc==='both'){
+    ohRows.forEach(k=>allRows.push(k));
+    allRows.push(null); // blank separator row
+    rdrRows.forEach(k=>allRows.push(k));
+  } else if(exSrc==='oh'){
+    ohRows.forEach(k=>allRows.push(k));
+  } else {
+    rdrRows.forEach(k=>allRows.push(k));
+  }
+
+  // ── Build HTML table (for rich paste into Excel) ──────────
+  // Column A = name, then one column per date
+  const CELL_STYLE='font-family:Calibri;font-size:11pt;vertical-align:middle;text-align:center';
+  const NAME_STYLE='font-family:Calibri;font-size:11pt;vertical-align:middle;text-align:left';
+
+  let html='<table>';
+  const tsvRows=[];
+
+  allRows.forEach(sk=>{
+    if(sk===null){
+      // blank separator row — empty name + empty status cells
+      const emptyCols='\t'.repeat(dates.length);
+      tsvRows.push(emptyCols);
+      html+='<tr><td></td>'+dates.map(()=>'<td></td>').join('')+'</tr>';
+      return;
+    }
+    const name=exDisplayName(sk);
+    html+=`<tr><td style="${NAME_STYLE}">${name}</td>`;
+    const tsvCols=[name];
+    dates.forEach(dk=>{
+      const sv=exCellValue(sk,dk,ohAll,rdrAll);
+      // Smaller font for long values (AM/PM splits), standard for short
+      const fs=sv.length>5?'9pt':'11pt';
+      html+=`<td style="${CELL_STYLE};font-size:${fs}">${sv}</td>`;
+      tsvCols.push(sv);
+    });
+    html+='</tr>';
+    tsvRows.push(tsvCols.join('\t'));
   });
+
   html+='</table>';
   const tsv=tsvRows.join('\n');
+
   const btn=document.getElementById('ex-copy-btn');
-  const ok=()=>{btn.textContent='✓ Copied!';setTimeout(()=>{btn.textContent='Copy TSV';closeExportModal();},1800);};
+  const ok=()=>{
+    btn.classList.add('success');btn.textContent='✓ Copied!';
+    setTimeout(()=>{btn.classList.remove('success');btn.innerHTML='⬆ Copy TSV';closeExportModal();},1800);
+  };
   if(window.ClipboardItem){
-    navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([tsv],{type:'text/plain'})})]).then(ok).catch(()=>navigator.clipboard.writeText(tsv).then(ok));
-  }else{navigator.clipboard.writeText(tsv).then(ok).catch(()=>{const ta=document.createElement('textarea');ta.value=tsv;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();});}
-}
-
-/* ═══════════════════════ AUTO-PARSE ═══════════════════════ */
-var apPref=null; // null=not set, true=always, false=never (resets on refresh)
-var apResolveCallback=null;
-
-function apResolve(yes){
-  document.getElementById('ap-dialog').style.display='none';
-  if(document.getElementById('ap-dontask').checked){
-    apPref=yes;
+    navigator.clipboard.write([new ClipboardItem({
+      'text/html':new Blob([html],{type:'text/html'}),
+      'text/plain':new Blob([tsv],{type:'text/plain'})
+    })]).then(ok).catch(()=>navigator.clipboard.writeText(tsv).then(ok));
+  }else{
+    navigator.clipboard.writeText(tsv).then(ok).catch(()=>{
+      const ta=document.createElement('textarea');ta.value=tsv;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();
+    });
   }
-  if(apResolveCallback) apResolveCallback(yes);
-  apResolveCallback=null;
 }
 
+/* ═══════════════════════ PASTE & AUTO-PARSE ═══════════════════════ */
+// Paste button: reads clipboard and pastes into textarea, then parses
+async function impDoPaste(){
+  const btn = document.getElementById('imp-paste-btn');
+  const ta = document.getElementById('imp-ta');
+  try {
+    btn.classList.add('pasting');
+    const text = await navigator.clipboard.readText();
+    ta.value = text;
+    impLivePreview();
+    setTimeout(() => { impParse(); btn.classList.remove('pasting'); btn.classList.add('done'); setTimeout(() => btn.classList.remove('done'), 1400); }, 80);
+  } catch(e) {
+    btn.classList.remove('pasting');
+    // Fallback: focus textarea so user can Ctrl+V
+    ta.focus();
+    showToast('Click the text area and press Ctrl+V / ⌘V to paste.');
+  }
+}
+
+async function rdrImpDoPaste(){
+  const btn = document.getElementById('rdr-imp-paste-btn');
+  const ta = document.getElementById('rdr-imp-ta');
+  try {
+    btn.classList.add('pasting');
+    const text = await navigator.clipboard.readText();
+    ta.value = text;
+    rdrImpLivePreview();
+    setTimeout(() => { rdrImpParse(); btn.classList.remove('pasting'); btn.classList.add('done'); setTimeout(() => btn.classList.remove('done'), 1400); }, 80);
+  } catch(e) {
+    btn.classList.remove('pasting');
+    ta.focus();
+    showToast('Click the text area and press Ctrl+V / ⌘V to paste.');
+  }
+}
+
+// On manual paste into textarea, auto-parse after a short delay
 function impHandlePaste(e){
-  // Let the paste complete first, then handle
   setTimeout(function(){
     impLivePreview();
-    if(apPref===true){ impParse(); return; }
-    if(apPref===false){ return; }
-    // Ask
-    document.getElementById('ap-dontask').checked=false;
-    document.getElementById('ap-dialog').style.display='flex';
-    apResolveCallback=function(yes){ if(yes) impParse(); };
-  },50);
+    impParse();
+  }, 80);
 }
 
 /* ═══════════════════════ INIT ═══════════════════════ */
@@ -2704,7 +3220,7 @@ function applyMode() {
   if (ohGrid) ohGrid.style.display = isOH ? '' : 'none';
   document.getElementById('rdr-col').style.display = !isOH ? '' : 'none';
   // Hide rota toggle in RDR mode (chips always on there), show in OH mode
-  const rotaToggleRow = document.querySelector('.rota-toggle-row');
+  const rotaToggleRow = document.getElementById('rota-toggle-row');
   if (rotaToggleRow) rotaToggleRow.style.display = !isOH ? 'none' : '';
   // RDR shift controls inside calendar
   const rdrCtrl = document.getElementById('rdr-shift-ctrl-section');
@@ -2884,7 +3400,6 @@ function tick() {
   else{rdrUpdateCards();}
 }
 
-/* ── PATCH buildCalSummary to show BOTH OH and RDR ───────────── */
 function buildCalSummary(key) {
   rdrBuildCalSummary(key);
 }
@@ -2899,31 +3414,72 @@ function rdrBuildCalSummary(key) {
   const hdr = document.createElement('div'); hdr.className = 'cal-sum-date';
   hdr.textContent = fmt(d)+' '+dayName(d); div.appendChild(hdr);
 
-  // OH section
-  const ohHdr = document.createElement('div'); ohHdr.className = 'cal-sum-oh-hdr'; ohHdr.textContent = 'OH'; div.appendChild(ohHdr);
+  // Helper: classify status for chip colour
+  function chipClass(st) {
+    if (!st) return 's-other';
+    const u = st.toUpperCase();
+    if (/\bOFF\b|MC|HL|LOA|CSE|OFF DUTY/.test(u)) return 's-out';
+    if (/AM|PM|PARTIAL|HALF/.test(u)) return 's-part';
+    return 's-other';
+  }
+
+  // Helper: build a compact section
+  function buildSection(entries, sectionClass, label) {
+    if (!entries.length) return;
+    const row = document.createElement('div'); row.className = 'cal-sum-section';
+    const lbl = document.createElement('span'); lbl.className = 'cal-sum-section-lbl ' + sectionClass;
+    lbl.textContent = label; row.appendChild(lbl);
+    const chipsWrap = document.createElement('div'); chipsWrap.className = 'cal-sum-chips';
+    const MAX_SHOW = 3;
+    entries.slice(0, MAX_SHOW).forEach(([name, st]) => {
+      const chip = document.createElement('span');
+      chip.className = 'cal-sum-chip ' + chipClass(st);
+      chip.title = name + ': ' + st;
+      // Shorten name to first word only for compactness
+      chip.textContent = name.split(' ')[0] + (st && st !== 'ON DUTY' ? ' · ' + st.split(' ').slice(0,2).join(' ') : '');
+      chipsWrap.appendChild(chip);
+    });
+    if (entries.length > MAX_SHOW) {
+      const more = document.createElement('button'); more.className = 'cal-sum-more';
+      more.textContent = '+' + (entries.length - MAX_SHOW) + ' more';
+      const allDiv = document.createElement('div'); allDiv.className = 'cal-sum-all';
+      entries.slice(MAX_SHOW).forEach(([name, st]) => {
+        const r = document.createElement('div'); r.className = 'cal-sum-row';
+        const nm = document.createElement('span'); nm.className = 'cal-sum-name'; nm.textContent = name;
+        const sv = document.createElement('span'); sv.className = 'cal-sum-status'; sv.textContent = st;
+        r.appendChild(nm); r.appendChild(sv); allDiv.appendChild(r);
+      });
+      more.addEventListener('click', () => {
+        const open = allDiv.classList.toggle('open');
+        more.textContent = open ? 'show less' : '+' + (entries.length - MAX_SHOW) + ' more';
+      });
+      chipsWrap.appendChild(more);
+      row.appendChild(chipsWrap); div.appendChild(row); div.appendChild(allDiv);
+    } else {
+      row.appendChild(chipsWrap); div.appendChild(row);
+    }
+  }
+
+  // OH entries
   const ohSaved = ohAll[key];
-  let ohAny = false;
+  const ohEntries = [];
   if (ohSaved && ohSaved.statuses) {
     const names = [...(roster.MAIN||[]),...(roster.EMS||[])];
     names.forEach(n => {
       const grp = (roster.EMS||[]).includes(n) ? 'EMS' : 'MAIN';
       const st = (ohSaved.statuses[grp+'-'+n]||'').trim();
-      if (st) {
-        ohAny = true;
-        const row=document.createElement('div');row.className='cal-sum-row';
-        const nm=document.createElement('span');nm.className='cal-sum-name';nm.textContent=n;
-        const sv=document.createElement('span');sv.className='cal-sum-status';sv.textContent=st;
-        row.appendChild(nm);row.appendChild(sv);div.appendChild(row);
-      }
+      if (st) ohEntries.push([n, st]);
     });
   }
-  if (!ohAny) { const e=document.createElement('div');e.className='cal-sum-empty';e.textContent='No statuses recorded.';div.appendChild(e); }
+  if (ohEntries.length) buildSection(ohEntries, 'oh', 'OH');
+  else { const e=document.createElement('div');e.className='cal-sum-empty';e.style.fontSize='10px';e.textContent='OH: no statuses.';div.appendChild(e); }
 
-  // Divider + RDR section
+  // Divider
   const divEl = document.createElement('div'); divEl.className = 'cal-sum-divider'; div.appendChild(divEl);
-  const rdrHdr = document.createElement('div'); rdrHdr.className = 'cal-sum-rdr-hdr'; rdrHdr.textContent = 'RDR'; div.appendChild(rdrHdr);
+
+  // RDR entries (off-duty only)
   const rdrSaved = rdrAll[key];
-  let rdrAny = false;
+  const rdrEntries = [];
   if (rdrSaved && rdrSaved.statuses) {
     const seen = new Set();
     ['R1','R2','R3'].forEach(r => {
@@ -2931,17 +3487,13 @@ function rdrBuildCalSummary(key) {
         const k = r+'-'+n;
         if (seen.has(k)) return; seen.add(k);
         const st = (rdrSaved.statuses[k]||'').trim();
-        if (st && st !== 'ON DUTY') {
-          rdrAny = true;
-          const row=document.createElement('div');row.className='cal-sum-row';
-          const nm=document.createElement('span');nm.className='cal-sum-name';nm.textContent=n+' ('+r+')';
-          const sv=document.createElement('span');sv.className='cal-sum-status';sv.textContent=st;
-          row.appendChild(nm);row.appendChild(sv);div.appendChild(row);
-        }
+        if (st && st !== 'ON DUTY') rdrEntries.push([n+' ('+r+')', st]);
       });
     });
   }
-  if (!rdrAny) { const e=document.createElement('div');e.className='cal-sum-empty';e.textContent='No off-duty statuses.';div.appendChild(e); }
+  if (rdrEntries.length) buildSection(rdrEntries, 'rdr', 'RDR');
+  else { const e=document.createElement('div');e.className='cal-sum-empty';e.style.fontSize='10px';e.textContent='RDR: all on duty.';div.appendChild(e); }
+
   wrap.appendChild(div);
 }
 
@@ -3228,96 +3780,6 @@ function rdrOpenDatePicker(code,input,key,block){
   build();overlay.appendChild(modal);overlay.addEventListener('mousedown',()=>overlay.remove());document.body.appendChild(overlay);
 }
 
-/* ── PATCH export to support OH+RDR source ───────────────────── */
-let exSrc = 'oh';
-function setExSrc(s){
-  exSrc=s;
-  ['oh','rdr','both'].forEach(x=>{
-    const btn=document.getElementById('ex-src-'+x);
-    if(btn)btn.className='ex-src-btn'+(x===s?' active-'+s:'');
-  });
-  exBuildPicker();
-}
-
-/* Patch openExportModal to accept both data sources */
-function openExportModal(){
-  const ohAll=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
-  const rdrAll=JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
-  const allKeys=[...new Set([...Object.keys(ohAll),...Object.keys(rdrAll)])].sort();
-  if(!allKeys.length){showToast('No calendar data to export yet.');return;}
-  exPickStart=null;exPickEnd=null;
-  const ld=dateFromKey(allKeys[allKeys.length-1]);
-  exViewMonth=ld.getMonth();exViewYear=ld.getFullYear();
-  document.getElementById('ex-dialog').style.display='flex';
-  setExSrc(exSrc);
-}
-
-/* Patch exBuildPicker to use exSrc */
-function exBuildPicker(){
-  const ohAll=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
-  const rdrAll=JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
-  const firstDay=new Date(exViewYear,exViewMonth,1);
-  document.getElementById('ex-cal-month').textContent=firstDay.toLocaleDateString('en-SG',{month:'long',year:'numeric'});
-  const grid=document.getElementById('ex-cal-grid');grid.innerHTML='';
-  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d=>{const e=document.createElement('div');e.className='ex-cal-dow';e.textContent=d;grid.appendChild(e);});
-  const startDow=firstDay.getDay(),dim=new Date(exViewYear,exViewMonth+1,0).getDate();
-  for(let i=0;i<startDow;i++){const e=document.createElement('div');e.className='ex-cal-day empty';grid.appendChild(e);}
-  for(let d=1;d<=dim;d++){
-    const td=new Date(exViewYear,exViewMonth,d),key=fmtKey(td);
-    const ohHas=!!(ohAll[key]&&ohAll[key].statuses&&Object.values(ohAll[key].statuses).some(v=>v&&v.trim()));
-    const rdrHas=!!(rdrAll[key]&&rdrAll[key].statuses&&Object.values(rdrAll[key].statuses).some(v=>v&&v.trim()&&v.trim()!=='ON DUTY'));
-    const hasData=(exSrc==='oh'&&ohHas)||(exSrc==='rdr'&&rdrHas)||(exSrc==='both'&&(ohHas||rdrHas));
-    const el=document.createElement('div');el.className='ex-cal-day'+(hasData?' has-data':' no-data');el.textContent=d;el.setAttribute('data-key',key);
-    if(exPickStart&&exPickEnd){const s=exPickStart<exPickEnd?exPickStart:exPickEnd,e2=exPickStart<exPickEnd?exPickEnd:exPickStart;if(key===s)el.classList.add('range-start');else if(key===e2)el.classList.add('range-end');else if(key>s&&key<e2)el.classList.add('in-range');}
-    else if(exPickStart&&key===exPickStart)el.classList.add('range-start');
-    if(hasData)el.addEventListener('click',()=>exPickDay(key));
-    grid.appendChild(el);
-  }
-  exUpdateHint();
-}
-
-/* Patch exUpdateHint for mixed sources */
-function exUpdateHint(){
-  const hint=document.getElementById('ex-hint'),btn=document.getElementById('ex-copy-btn');
-  if(!exPickStart){hint.textContent='Click a date to start';hint.className='ex-hint';btn.disabled=true;return;}
-  if(!exPickEnd){hint.textContent='Now click the end date';hint.className='ex-hint';btn.disabled=true;return;}
-  const s=exPickStart<exPickEnd?exPickStart:exPickEnd,e=exPickStart<exPickEnd?exPickEnd:exPickStart;
-  const ohAll=JSON.parse(localStorage.getItem(SAVED_LS)||'{}'),rdrAll=JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
-  let withData=0,total=0;const cursor=new Date(s+'T00:00:00'),end=new Date(e+'T00:00:00');
-  while(cursor<=end){const k=fmtKey(cursor);total++;
-    const ohHas=!!(ohAll[k]&&ohAll[k].statuses&&Object.values(ohAll[k].statuses).some(v=>v&&v.trim()));
-    const rdrHas=!!(rdrAll[k]&&rdrAll[k].statuses&&Object.values(rdrAll[k].statuses).some(v=>v&&v.trim()&&v.trim()!=='ON DUTY'));
-    if((exSrc==='oh'&&ohHas)||(exSrc==='rdr'&&rdrHas)||(exSrc==='both'&&(ohHas||rdrHas)))withData++;
-    cursor.setDate(cursor.getDate()+1);}
-  if(!withData){hint.textContent='No data in selected range';hint.className='ex-hint warn';btn.disabled=true;return;}
-  const missing=total-withData;hint.textContent=`${withData} day${withData>1?'s':''} with data${missing?' · '+missing+' empty':''}`;
-  hint.className=missing?'ex-hint warn':'ex-hint ok';btn.disabled=false;
-}
-
-/* Patch exCopy for mixed sources */
-function exCopy(){
-  if(!exPickStart||!exPickEnd)return;
-  const s=exPickStart<exPickEnd?exPickStart:exPickEnd,e=exPickStart<exPickEnd?exPickEnd:exPickStart;
-  const ohAll=JSON.parse(localStorage.getItem(SAVED_LS)||'{}'),rdrAll=JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
-  const dates=[];const cursor=new Date(s+'T00:00:00'),end=new Date(e+'T00:00:00');
-  while(cursor<=end){dates.push(fmtKey(new Date(cursor)));cursor.setDate(cursor.getDate()+1);}
-  const nameKeys=[];
-  if(exSrc==='oh'||exSrc==='both'){[...(roster.MAIN||[])].forEach(n=>nameKeys.push('MAIN-'+n));[...(roster.EMS||[])].forEach(n=>nameKeys.push('EMS-'+n));}
-  if(exSrc==='rdr'||exSrc==='both'){['R1','R2','R3'].forEach(r=>{(rdrRoster[r]||[]).forEach(n=>{const k=r+'-'+n;if(!nameKeys.includes(k))nameKeys.push(k);});});}
-  let html='<table>';const tsvRows=[];
-  nameKeys.forEach(sk=>{html+='<tr>';const cols=dates.map(dk=>{
-    let sv='';
-    if(sk.startsWith('R1-')||sk.startsWith('R2-')||sk.startsWith('R3-')){sv=(rdrAll[dk]&&rdrAll[dk].statuses&&rdrAll[dk].statuses[sk])||'';}
-    else{sv=(ohAll[dk]&&ohAll[dk].statuses&&ohAll[dk].statuses[sk])||'';}
-    html+=`<td style="font-family:Calibri;font-size:${sv.length>3?'8pt':'11pt'}">${sv}</td>`;return sv;
-  });html+='</tr>';tsvRows.push(cols.join('\t'));});
-  html+='</table>';const tsv=tsvRows.join('\n');
-  const btn=document.getElementById('ex-copy-btn');
-  const ok=()=>{btn.textContent='✓ Copied!';setTimeout(()=>{btn.textContent='Copy TSV';closeExportModal();},1800);};
-  if(window.ClipboardItem){navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([tsv],{type:'text/plain'})})]).then(ok).catch(()=>navigator.clipboard.writeText(tsv).then(ok));}
-  else{navigator.clipboard.writeText(tsv).then(ok).catch(()=>{const ta=document.createElement('textarea');ta.value=tsv;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();});}
-}
-
 /* ═══════════════════════ RDR IMPORT ════════════════════════ */
 var rdrImpData = null;
 var _rdrImpPreviewKeys = [];
@@ -3336,8 +3798,9 @@ function rdrImpClear() {
   document.getElementById('rdr-imp-status').textContent = '';
   document.getElementById('rdr-imp-status').className = 'imp-status';
   document.getElementById('rdr-imp-table-sect').style.display = 'none';
-  document.getElementById('rdr-imp-to-cal-btn').style.display = 'none';
   document.getElementById('rdr-imp-table').innerHTML = '';
+  const rdrDiv = document.getElementById('rdr-imp-div'); if(rdrDiv) rdrDiv.classList.remove('visible');
+  dismissRdrImpConfirm();
   _rdrImpPreviewKeys.forEach(k => { const el = document.querySelector(`.cal-day[data-key="${k}"]`); if (el) el.classList.remove('pending'); });
   _rdrImpPreviewKeys = [];
   const hdr = document.getElementById('rdr-imp-panel-hdr');
@@ -3347,7 +3810,9 @@ function rdrImpClear() {
   rdrImpData = null;
 }
 
-function rdrImpHandlePaste(e) { setTimeout(() => rdrImpLivePreview(), 0); }
+function rdrImpHandlePaste(e) {
+  setTimeout(() => { rdrImpLivePreview(); rdrImpParse(); }, 80);
+}
 
 function rdrStripEmoji(s) {
   return s
@@ -3489,30 +3954,40 @@ function rdrImpParse() {
   }
   rdrImpData = { dates, rowKeys, parsed };
   document.getElementById('rdr-imp-table-sect').style.display = '';
-  document.getElementById('rdr-imp-to-cal-btn').style.display = '';
   status.textContent = '✓ ' + dates.length + ' day' + (dates.length > 1 ? 's' : '') + ', ' + rowKeys.length + ' entries';
   status.className = 'imp-status ok';
+  // Show inline confirm panel
+  showRdrImpConfirm();
 }
 
-function rdrImpOpenModal() {
-  if (!rdrImpData || !rdrImpData.dates || !rdrImpData.dates.length) { showToast('Nothing parsed yet — paste and parse first.'); return; }
+function showRdrImpConfirm() {
+  if (!rdrImpData || !rdrImpData.dates || !rdrImpData.dates.length) return;
   const all = JSON.parse(localStorage.getItem(RDR_SAVED_LS) || '{}');
-  const container = document.getElementById('rdr-ic-days');
+  const container = document.getElementById('rdr-imp-confirm-days');
   container.innerHTML = '';
   let hasExisting = false;
   rdrImpData.dates.forEach(d => {
     const tag = document.createElement('span');
     tag.textContent = String(d.day).padStart(2,'0') + '/' + String(d.month).padStart(2,'0');
     const existing = all[d.key] && all[d.key].statuses && Object.values(all[d.key].statuses).some(v => v && v.trim());
-    tag.className = existing ? 'ic-day-tag has-existing' : 'ic-day-tag';
+    tag.className = existing ? 'imp-confirm-day has-existing' : 'imp-confirm-day';
     if (existing) hasExisting = true;
     container.appendChild(tag);
   });
-  document.getElementById('rdr-ic-warn').style.display = hasExisting ? '' : 'none';
-  document.getElementById('rdr-ic-dialog').style.display = 'flex';
+  const warn = document.getElementById('rdr-imp-confirm-warn');
+  if (warn) warn.classList.toggle('visible', hasExisting);
+  const panel = document.getElementById('rdr-imp-confirm');
+  if (panel) { panel.classList.add('visible'); panel.scrollIntoView({behavior:'smooth',block:'nearest'}); }
 }
 
-function closeRdrImportModal() { document.getElementById('rdr-ic-dialog').style.display = 'none'; }
+function dismissRdrImpConfirm() {
+  const panel = document.getElementById('rdr-imp-confirm');
+  if (panel) panel.classList.remove('visible');
+}
+
+// Stubs for any remaining old references
+function rdrImpOpenModal() { showRdrImpConfirm(); }
+function closeRdrImportModal() { dismissRdrImpConfirm(); }
 
 function confirmRdrImport() {
   if (!rdrImpData) return;
@@ -3521,7 +3996,6 @@ function confirmRdrImport() {
   rdrImpData.dates.forEach(d => {
     const dk = d.key;
     if (!all[dk]) all[dk] = { statuses: {} };
-    // Merge incoming over existing (same rota entries overwritten, other rotas preserved)
     const incoming = {};
     rdrImpData.rowKeys.forEach(rk => {
       const val = (rdrImpData.parsed[dk] && rdrImpData.parsed[dk][rk]) || '';
@@ -3531,20 +4005,31 @@ function confirmRdrImport() {
     pushedKeys.push(dk);
   });
   localStorage.setItem(RDR_SAVED_LS, JSON.stringify(all));
-  // Push to Firebase
   if (rdrFbBase()) {
     pushedKeys.forEach(dk => {
-      fetch(rdrFbBase() + '/rdr/data/' + dk + '.json', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(all[dk]) }).catch(() => {});
+      fetch(rdrFbBase() + '/data/' + dk + '.json', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(all[dk]) }).catch(() => {});
     });
   }
   _rdrImpPreviewKeys.forEach(k => { const el = document.querySelector(`.cal-day[data-key="${k}"]`); if (el) el.classList.remove('pending'); });
   _rdrImpPreviewKeys = [];
   const hdrEl = document.getElementById('rdr-imp-panel-hdr');
   if (hdrEl) hdrEl.classList.remove('has-pending');
-  closeRdrImportModal();
+  dismissRdrImpConfirm();
   rdrBuildCalendar();
   if (calSelectedKey && pushedKeys.includes(calSelectedKey)) buildCalSummary(calSelectedKey);
-  showToast('✓ Imported ' + pushedKeys.length + ' day' + (pushedKeys.length > 1 ? 's' : '') + ' to RDR calendar');
+  // Flash imported cells — visual confirmation, no toast
+  pushedKeys.forEach(dk => {
+    const el = document.querySelector(`.cal-day[data-key="${dk}"]`);
+    if (el) {
+      el.classList.remove('just-imported');
+      void el.offsetWidth;
+      el.classList.add('just-imported');
+      setTimeout(() => el.classList.remove('just-imported'), 1600);
+    }
+  });
+  const hint = document.getElementById('rdr-imp-panel-hint');
+  if (hint) { hint.textContent = pushedKeys.length + ' day' + (pushedKeys.length > 1 ? 's' : '') + ' saved ✓';
+    setTimeout(() => { hint.textContent = 'paste attendance → calendar'; }, 3000); }
 }
 
 /* ── RDR INIT (called from merged init) ──────────────────────── */
@@ -3591,6 +4076,24 @@ function init(){
     rdrBuildRED();
   });
 }
+
+/* ── THEME TOGGLE ────────────────────────────────────────────── */
+(function(){
+  const THEME_KEY = 'oh-theme';
+  function applyTheme(light) {
+    document.body.classList.toggle('light', light);
+    const btn = document.getElementById('theme-btn');
+    if (btn) btn.textContent = light ? '☀️' : '🌙';
+  }
+  window.toggleTheme = function() {
+    const isLight = document.body.classList.contains('light');
+    localStorage.setItem(THEME_KEY, isLight ? 'dark' : 'light');
+    applyTheme(!isLight);
+  };
+  // Apply saved preference immediately (before init)
+  const saved = localStorage.getItem(THEME_KEY);
+  if (saved === 'light') applyTheme(true);
+})();
 
 init();
 </script>
