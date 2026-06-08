@@ -2683,10 +2683,27 @@ function impCopy(){
   const btn=document.getElementById('imp-copy-btn');
   const ok=()=>{btn.classList.add('ok');btn.textContent='✓ Copied!';setTimeout(()=>{btn.classList.remove('ok');btn.textContent='⬇ Copy as TSV';},2500);};
 
+  // Build output order from the CURRENT roster (which may already include newly confirmed
+  // people), then append any extras not yet in roster in their original message order.
+  // This ensures the row order always matches the roster — consistent with Export TSV.
+  const rMain=(roster&&roster.MAIN||[]).map(n=>n.trim().toUpperCase());
+  const rEMS=(roster&&roster.EMS||[]).map(n=>n.trim().toUpperCase());
+  const rAllSet=new Set([...rMain,...rEMS]);
+  const nameSet=new Set(names);
+  // Extras: new people from the message not yet saved to roster (pre-confirm)
+  const extrasMain=names.filter(n=>!rAllSet.has(n)&&!(impData.nameSection&&impData.nameSection[n]==='EMS'));
+  const extrasEMS=names.filter(n=>!rAllSet.has(n)&&impData.nameSection&&impData.nameSection[n]==='EMS');
+  const orderedNames=[
+    ...rMain.filter(n=>nameSet.has(n)),
+    ...extrasMain,
+    ...rEMS.filter(n=>nameSet.has(n)),
+    ...extrasEMS,
+  ];
+
   // Build HTML table for clipboard — Excel respects inline styles on paste
   // Short statuses (≤3 chars): Calibri 11pt. Longer (AM/PM etc): Calibri 8pt.
   let html='<table>';
-  for(const name of names){
+  for(const name of orderedNames){
     html+='<tr>';
     for(const d of dates){
       const s=(parsed[d.key]&&parsed[d.key][name])||'';
@@ -2699,7 +2716,7 @@ function impCopy(){
   html+='</table>';
 
   // Plain TSV fallback
-  const tsv=names.map(name=>dates.map(d=>(parsed[d.key]&&parsed[d.key][name])||'').join('\t')).join('\n');
+  const tsv=orderedNames.map(name=>dates.map(d=>(parsed[d.key]&&parsed[d.key][name])||'').join('\t')).join('\n');
 
   if(window.ClipboardItem){
     const item=new ClipboardItem({
@@ -2799,6 +2816,30 @@ function confirmImport(){
     pushedKeys.forEach(dk=>{
       fetch(fbBase()+'/data/'+dk+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(all[dk])}).catch(()=>{});
     });
+  }
+
+  // ── Auto-update roster with any new personnel found in the import ──────────
+  // Iterate impData.names in order to preserve WA-message ordering within each section
+  {
+    const currentMain=new Set((roster.MAIN||[]).map(n=>n.trim().toUpperCase()));
+    const currentEMS=new Set((roster.EMS||[]).map(n=>n.trim().toUpperCase()));
+    const addedMain=[],addedEMS=[];
+    impData.names.forEach(name=>{
+      if(!currentMain.has(name)&&!currentEMS.has(name)){
+        if(impData.nameSection&&impData.nameSection[name]==='EMS') addedEMS.push(name);
+        else addedMain.push(name);
+      }
+    });
+    if(addedMain.length||addedEMS.length){
+      roster.MAIN=[...(roster.MAIN||[]),...addedMain];
+      roster.EMS=[...(roster.EMS||[]),...addedEMS];
+      localStorage.setItem(ROSTER_LS,JSON.stringify(roster));
+      fbPushRoster();
+      renderPersonList();
+      updatePreview();
+      const allAdded=[...addedMain,...addedEMS];
+      showToast('📋 '+allAdded.length+' new person'+(allAdded.length>1?'nel':'')+' added to roster: '+allAdded.join(', '));
+    }
   }
 
   // Clear pending highlights
