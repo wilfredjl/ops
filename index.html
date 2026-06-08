@@ -878,22 +878,9 @@ body.light *{transition-property:background-color,border-color,color,box-shadow;
 .copy-btn-rdr:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(245,166,35,0.45)}
 .copy-btn-rdr.success{background:linear-gradient(135deg,var(--green),#059669);box-shadow:0 4px 20px rgba(52,211,153,0.35);color:#000}
 .rgl.rdr-grp{color:var(--day)}
-.cal-ctrl-section{border-top:1px solid var(--border);margin-top:10px;padding-top:8px}
-.cal-ctrl-toggle{display:flex;align-items:center;justify-content:space-between;background:none;border:none;width:100%;cursor:pointer;padding:2px 0 6px;-webkit-tap-highlight-color:transparent}
-.cal-ctrl-toggle-label{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);font-weight:500}
-.cal-ctrl-body{display:none}
-.cal-ctrl-body.open{display:block}
-.cal-ctrl-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
-.cal-ctrl-label{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;min-width:44px}
-.pill-group{display:flex;gap:6px;flex-wrap:wrap}
-.pill{padding:5px 12px;border:1px solid var(--border2);border-radius:20px;background:transparent;color:var(--text2);font-family:var(--mono);font-size:11px;cursor:pointer;transition:all 0.15s;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
-.pill:hover{border-color:var(--border3);color:var(--text)}
-.pill.pill-r1{background:var(--r1-bg);border-color:var(--r1-border);color:var(--r1)}
-.pill.pill-r2{background:var(--r2-bg);border-color:var(--r2-border);color:var(--r2)}
-.pill.pill-r3{background:var(--r3-bg);border-color:var(--r3-border);color:var(--r3)}
-.pill.p-day{background:var(--day-bg);border-color:rgba(245,166,35,0.4);color:var(--day)}
-.pill.p-night{background:var(--night-bg);border-color:rgba(129,140,248,0.4);color:var(--night)}
-.pill.p-neutral{background:var(--surface3);border-color:var(--border3);color:var(--text)}
+/* unconfirmed RDR person block — no import data yet */
+.person-block.unconfirmed .status-input{color:var(--text3)}
+.person-block.unconfirmed{opacity:0.6}
 .cal-dbn-row{display:flex;gap:6px;margin-top:8px}
 .cal-dbn{padding:5px 12px;background:var(--surface3);border:1px solid var(--border2);border-radius:var(--radius);color:var(--text2);font-family:var(--mono);font-size:11px;cursor:pointer;transition:all 0.15s;-webkit-tap-highlight-color:transparent;white-space:nowrap;flex:1;text-align:center}
 .cal-dbn:hover{border-color:var(--border3);color:var(--text)}
@@ -1114,41 +1101,7 @@ input[type="date"]:focus{border-color:var(--border3)}
           <input type="date" id="date-in" style="display:none" onchange="onDC()">
           <!-- RDR date input (for shift controls) -->
           <input type="date" id="rdr-date-input" style="display:none" onchange="rdrOnDateChange()">
-          <!-- RDR SHIFT CONTROLS (visible only in RDR mode) -->
-          <div class="cal-ctrl-section" id="rdr-shift-ctrl-section" style="display:none">
-            <button class="cal-ctrl-toggle" onclick="rdrToggleCalCtrl()">
-              <span class="cal-ctrl-toggle-label">Shift Controls</span>
-              <span class="col-chevron" id="cal-ctrl-chevron">&#9658;</span>
-            </button>
-            <div class="cal-ctrl-body" id="cal-ctrl-body">
-              <div class="cal-ctrl-row">
-                <span class="cal-ctrl-label">Date</span>
-                <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
-                  <input type="date" id="rdr-date-input-vis" onchange="rdrDateInputChange()">
-                  <button class="cal-dbn" onclick="rdrShiftDay(-1)">&#8592;</button>
-                  <button class="cal-dbn today" onclick="rdrGoToday()">Today</button>
-                  <button class="cal-dbn" onclick="rdrShiftDay(1)">&#8594;</button>
-                </div>
-              </div>
-              <div class="cal-ctrl-row">
-                <span class="cal-ctrl-label">Rota</span>
-                <div class="pill-group">
-                  <button class="pill" id="pill-R1" onclick="setRotaOverride('R1')">Rota 1</button>
-                  <button class="pill" id="pill-R2" onclick="setRotaOverride('R2')">Rota 2</button>
-                  <button class="pill" id="pill-R3" onclick="setRotaOverride('R3')">Rota 3</button>
-                </div>
-              </div>
-              <div class="cal-ctrl-row">
-                <span class="cal-ctrl-label">Shift</span>
-                <div class="pill-group">
-                  <button class="pill" id="pill-Day" onclick="setShiftOverride('Day')">AM</button>
-                  <button class="pill" id="pill-Night" onclick="setShiftOverride('Night')">PM</button>
-                  <button class="pill p-neutral" id="pill-auto" onclick="setShiftOverride('auto')">Auto</button>
-                </div>
-              </div>
-              <div id="ctrl-sublabel" style="display:none;font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.04em;line-height:1.5;padding:4px 0 6px"></div>
-            </div>
-          </div>
+
         </div>
         <!-- IMPORT PANEL embedded in calendar widget -->
         <div class="imp-panel">
@@ -1326,9 +1279,9 @@ input[type="date"]:focus{border-color:var(--border3)}
           <div class="widget" id="rdr-personnel-widget">
             <div class="wh">
               <span class="wh-t">Personnel &mdash; <span id="rdr-rota-label" class="rota-r1">—</span></span>
-              <span class="badge" id="rdr-ctrl-badge">AUTO</span>
+
             </div>
-            <div id="rdr-ctrl-sublabel-top" style="padding:6px 16px 0;font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.04em;line-height:1.5;display:none"></div>
+
             <div class="wb">
               <div class="rmeta"><div class="rdot" id="rdr-rdot"></div><span id="rdr-roster-status-text">loading&hellip;</span></div>
               <div id="rdr-person-list"></div>
@@ -2893,7 +2846,7 @@ function exHasDataForKey(key){
   const ohAll=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
   const rdrAll=JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
   const ohHas=!!(ohAll[key]&&ohAll[key].statuses&&Object.values(ohAll[key].statuses).some(v=>v&&v.trim()));
-  const rdrHas=!!(rdrAll[key]&&rdrAll[key].statuses&&Object.values(rdrAll[key].statuses).some(v=>v&&v.trim()&&v.trim()!=='ON DUTY'));
+  const rdrHas=!!(rdrAll[key]&&rdrAll[key].statuses&&Object.values(rdrAll[key].statuses).some(v=>v&&v.trim()));
   return(exSrc==='oh'&&ohHas)||(exSrc==='rdr'&&rdrHas)||(exSrc==='both'&&(ohHas||rdrHas));
 }
 
@@ -3206,7 +3159,7 @@ let rdrRoster = JSON.parse(localStorage.getItem(RDR_ROSTER_LS)||'null') || JSON.
 let rdrStatuses = {};
 let rdrFbUrl = RDR_HARDCODED_FB;
 let rdrFbStream = null, rdrSuppressRemote = false;
-let rdrOverrideRota = null, rdrOverrideShift = 'auto';
+
 
 /* ── ROTA CHIP TOGGLE STATE ─────────────────────────────────── */
 let rdrShowChips = false; // OFF by default in OH mode; ON by default in RDR mode
@@ -3263,9 +3216,6 @@ function applyMode() {
   // Hide rota toggle in RDR mode (chips always on there), show in OH mode
   const rotaToggleRow = document.getElementById('rota-toggle-row');
   if (rotaToggleRow) rotaToggleRow.style.display = !isOH ? 'none' : '';
-  // RDR shift controls inside calendar
-  const rdrCtrl = document.getElementById('rdr-shift-ctrl-section');
-  if (rdrCtrl) rdrCtrl.style.display = !isOH ? '' : 'none';
   // Rebuild calendar (both modes show unified calendar in col 0 of grid which is always visible)
   rdrBuildCalendar();
   // Rebuild summaries
@@ -3277,11 +3227,7 @@ function applyMode() {
     if (rdrFbUrl) {
       rdrFbFetch(curDateKey).then(() => rdrFbListen(curDateKey));
     }
-    // Set visible date input to current date
-    const vis = document.getElementById('rdr-date-input-vis');
-    if (vis) vis.value = curDateKey;
-    const hid = document.getElementById('rdr-date-input');
-    if (hid) hid.value = curDateKey;
+
   }
 }
 
@@ -3322,7 +3268,7 @@ function rdrBuildCalendar() {
     el.classList.remove('has-rdr-data');
     if (rdrAll[key]) {
       const s = rdrAll[key].statuses||{};
-      if (Object.values(s).some(v=>v&&v.trim()&&v.trim()!=='ON DUTY')) {
+      if (Object.values(s).some(v=>v&&v.trim())) {
         el.classList.add('has-rdr-data');
       }
     }
@@ -3356,25 +3302,17 @@ function rdrFmtShort(date){
 function rdrGetInfo() {
   const date = dateFromKey(curDateKey);
   const now = new Date(), hour = now.getHours();
-  const autoShift = rdrDetectShift(hour);
   const sched = rdrGetSchedule(date);
   let rota, shift;
-  if (rdrOverrideRota || rdrOverrideShift !== 'auto') {
-    shift = rdrOverrideShift !== 'auto' ? rdrOverrideShift : autoShift;
-    rota = rdrOverrideRota || (shift==='Day' ? sched.day : sched.night);
+  if (hour >= 7 && hour < 18) {
+    rota = sched.day; shift = 'Day';
+  } else if (hour >= 18) {
+    rota = sched.night; shift = 'Night';
   } else {
-    shift = autoShift;
-    if (hour >= 7 && hour < 18) {
-      rota = sched.day; shift = 'Day';
-    } else if (hour >= 18) {
-      rota = sched.night; shift = 'Night';
-    } else {
-      const yesterday = new Date(date); yesterday.setDate(yesterday.getDate()-1);
-      rota = rdrGetSchedule(yesterday).night; shift = 'Night';
-    }
+    const yesterday = new Date(date); yesterday.setDate(yesterday.getDate()-1);
+    rota = rdrGetSchedule(yesterday).night; shift = 'Night';
   }
-  const isAuto = !rdrOverrideRota && rdrOverrideShift === 'auto';
-  return {rota, shift, date, sched, isAuto};
+  return {rota, shift, date, sched, isAuto:true};
 }
 
 /* ── RDR BANNER UPDATES (called from main tick) ─────────────── */
@@ -3477,7 +3415,7 @@ function rdrBuildCalSummary(key) {
       chip.className = 'cal-sum-chip ' + chipClass(st);
       chip.title = name + ': ' + st;
       // Shorten name to first word only for compactness
-      chip.textContent = name.split(' ')[0] + (st && st !== 'ON DUTY' ? ' · ' + st.split(' ').slice(0,2).join(' ') : '');
+      chip.textContent = name.split(' ')[0] + (st ? ' · ' + st.split(' ').slice(0,2).join(' ') : '');
       chipsWrap.appendChild(chip);
     });
     if (entries.length > MAX_SHOW) {
@@ -3528,12 +3466,12 @@ function rdrBuildCalSummary(key) {
         const k = r+'-'+n;
         if (seen.has(k)) return; seen.add(k);
         const st = (rdrSaved.statuses[k]||'').trim();
-        if (st && st !== 'ON DUTY') rdrEntries.push([n+' ('+r+')', st]);
+        if (st) rdrEntries.push([n+' ('+r+')', st]);
       });
     });
   }
   if (rdrEntries.length) buildSection(rdrEntries, 'rdr', 'RDR');
-  else { const e=document.createElement('div');e.className='cal-sum-empty';e.style.fontSize='10px';e.textContent='RDR: all on duty.';div.appendChild(e); }
+  else { const e=document.createElement('div');e.className='cal-sum-empty';e.style.fontSize='10px';e.textContent='RDR: no import data.';div.appendChild(e); }
 
   wrap.appendChild(div);
 }
@@ -3546,8 +3484,7 @@ function navigateToDate(key) {
   if (currentMode === 'rdr') {
     rdrRender();
     if (rdrFbUrl) rdrFbFetch(key).then(() => rdrFbListen(key));
-    const vis = document.getElementById('rdr-date-input-vis');
-    if (vis) vis.value = key;
+
   }
 }
 
@@ -3627,51 +3564,44 @@ async function rdrFbSyncCalendarDots() {
 
 /* ── RDR RENDER ─────────────────────────────────────────────── */
 function rdrRender() {
-  const{rota,shift,date,sched,isAuto}=rdrGetInfo();
+  const{rota,shift,date,sched}=rdrGetInfo();
   const roNum=rota.replace('R',''), shiftLabel=shift==='Day'?'AM':'PM';
-  // Badge
-  const badge=document.getElementById('rdr-ctrl-badge');
-  if(badge){badge.textContent=isAuto?'AUTO':'OVERRIDE';badge.className='badge '+(isAuto?(shift==='Day'?'b-in':'b-ov'):'b-ov');}
-  // Sublabel
-  const subl=document.getElementById('rdr-ctrl-sublabel-top');
-  if(subl){
-    if(!isAuto&&rdrOverrideShift!=='auto'){
-      subl.textContent=rdrFmtShort(date)+' · AM → Rota '+sched.day.replace('R','')+' · PM → Rota '+sched.night.replace('R','');
-      subl.style.display='';
-    }else subl.style.display='none';
-  }
-  // Rota label
+  // Rota label in widget header
   const rl=document.getElementById('rdr-rota-label');
   if(rl){rl.textContent='Rota '+roNum+' · '+shiftLabel;rl.className='rota-r'+roNum;}
-  // Pills
-  ['R1','R2','R3'].forEach(r=>{const btn=document.getElementById('pill-'+r);if(btn){const cc=r==='R1'?'pill-r1':r==='R2'?'pill-r2':'pill-r3';btn.className='pill'+(rdrOverrideRota===r?' '+cc:'');}});
-  const dBtn=document.getElementById('pill-Day'),nBtn=document.getElementById('pill-Night'),aBtn=document.getElementById('pill-auto');
-  if(dBtn)dBtn.className='pill'+(rdrOverrideShift==='Day'?' p-day':'');
-  if(nBtn)nBtn.className='pill'+(rdrOverrideShift==='Night'?' p-night':'');
-  if(aBtn)aBtn.className='pill'+(rdrOverrideShift==='auto'?' p-neutral':'');
-  // ctrl-sublabel (inside shift controls)
-  const cs=document.getElementById('ctrl-sublabel');
-  if(cs){
-    if(!isAuto&&rdrOverrideShift!=='auto'){cs.textContent=rdrFmtShort(date)+' · AM → Rota '+sched.day.replace('R','')+' · PM → Rota '+sched.night.replace('R','');cs.style.display='';}
-    else cs.style.display='none';
+  // Determine current and incoming rotas (same logic as banner)
+  {
+    const _now=new Date(),_h=_now.getHours();
+    var curRota,incRota,curSL,incSL;
+    if(_h>=8&&_h<18){
+      curRota=sched.day;curSL='AM';incRota=sched.night;incSL='PM';
+    } else if(_h>=18){
+      curRota=sched.night;curSL='PM';
+      const _tom=new Date(date);_tom.setDate(_tom.getDate()+1);
+      const _ts=rdrGetSchedule(_tom);incRota=_ts.day;incSL='AM';
+    } else {
+      const _y=new Date(date);_y.setDate(_y.getDate()-1);
+      const _ys=rdrGetSchedule(_y);curRota=_ys.night;curSL='PM';
+      incRota=sched.day;incSL='AM';
+    }
   }
-  // Person list
+  // Person list — only the 2 relevant rotas
   const list=document.getElementById('rdr-person-list');if(!list)return;
   list.innerHTML='';
-  ['R1','R2','R3'].forEach(r=>{
+  [[curRota,curSL,'active'],[incRota,incSL,'incoming']].forEach(([r,sl,role])=>{
     const people=rdrRoster[r]||[];if(!people.length)return;
     const lbl=document.createElement('div');lbl.className='rota-slbl '+r.toLowerCase();
-    lbl.textContent='Rota '+r.replace('R','')+(r===rota?' · '+shiftLabel+' (active)':'');
+    lbl.textContent='Rota '+r.replace('R','')+' · '+sl+' ('+role+')';
     list.appendChild(lbl);
     people.forEach((name,idx)=>{
-      const key=r+'-'+name;if(!rdrStatuses[key])rdrStatuses[key]='ON DUTY';
+      const key=r+'-'+name;
       const block=document.createElement('div');block.className='person-block';
       const top=document.createElement('div');top.className='person-top';
       const rank=document.createElement('span');rank.className='person-rank';rank.textContent=idx+1;
       const nameEl=document.createElement('span');nameEl.className='person-name';nameEl.textContent=name;
       const wrap=document.createElement('div');wrap.className='status-wrap';
       const input=document.createElement('input');input.type='text';input.className='status-input';
-      input.value=rdrStatuses[key];input.placeholder='status…';
+      input.value=rdrStatuses[key]||'';input.placeholder='not confirmed';
       input.setAttribute('autocomplete','off');input.setAttribute('autocorrect','off');
       input.setAttribute('autocapitalize','characters');input.setAttribute('spellcheck','false');
       input.addEventListener('input',()=>{rdrSuppressRemote=true;rdrStatuses[key]=input.value;rdrRefreshBlockStyle(block,input.value);rdrUpdatePreview();clearTimeout(input._sr);input._sr=setTimeout(()=>rdrSuppressRemote=false,2000);});
@@ -3704,7 +3634,12 @@ function rdrRender() {
   });
   rdrUpdatePreview();
 }
-function rdrRefreshBlockStyle(block,val){const v=(val||'').toUpperCase();if(v==='ON DUTY')block.classList.remove('off-duty');else if(v.startsWith('OFF DUTY')||v==='MC'||v==='RS'||v==='HL')block.classList.add('off-duty');else block.classList.remove('off-duty');}
+function rdrRefreshBlockStyle(block,val){
+  const v=(val||'').toUpperCase();
+  block.classList.remove('off-duty','unconfirmed');
+  if(!v){block.classList.add('unconfirmed');}
+  else if(v.startsWith('OFF DUTY')||v==='MC'||v==='RS'||v==='HL'){block.classList.add('off-duty');}
+}
 
 /* Convert stored RDR status → compact TSV/display value
    ON DUTY            → IN
@@ -3731,7 +3666,7 @@ function rdrUpdatePreview(){
   const{rota,shift,date}=rdrGetInfo();
   const roNum=rota.replace('R',''),shiftLabel=shift==='Day'?'AM':'PM';
   const lines=['Attendance and Roll Call','',`Rota ${roNum} ${shiftLabel} Shift ${rdrFmtShort(date)}`];
-  (rdrRoster[rota]||[]).forEach(name=>{const key=rota+'-'+name;lines.push(`${name} - ${(rdrStatuses[key]||'ON DUTY').trim()}`);});
+  (rdrRoster[rota]||[]).forEach(name=>{const key=rota+'-'+name;const st=(rdrStatuses[key]||'').trim();if(st)lines.push(`${name} - ${st}`);});
   const box=document.getElementById('rdr-preview-box');if(box)box.value=lines.join('\n');
   const lbl=document.getElementById('rdr-preview-label');if(lbl)lbl.textContent='Rota '+roNum+' · '+shiftLabel+' · '+rdrFmtShort(date);
   rdrSaveLocal();rdrBuildCalendar();
@@ -3743,14 +3678,7 @@ function rdrCopyMsg(){
   navigator.clipboard.writeText(text).then(ok).catch(()=>{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();});
 }
 
-/* ── SHIFT CONTROLS ─────────────────────────────────────────── */
-function rdrToggleCalCtrl(){const b=document.getElementById('cal-ctrl-body'),c=document.getElementById('cal-ctrl-chevron');const open=b.classList.toggle('open');c.style.transform=open?'rotate(90deg)':'rotate(0deg)';}
-function setRotaOverride(r){rdrOverrideRota=rdrOverrideRota===r?null:r;rdrLoadLocal(dateFromKey(curDateKey));rdrRender();}
-function setShiftOverride(s){rdrOverrideShift=s;rdrLoadLocal(dateFromKey(curDateKey));rdrRender();}
 function rdrOnDateChange(){}
-function rdrDateInputChange(){const v=document.getElementById('rdr-date-input-vis').value;if(v)selectCalDay(v);}
-function rdrShiftDay(n){const d=dateFromKey(curDateKey);d.setDate(d.getDate()+n);selectCalDay(fmtKey(d));}
-function rdrGoToday(){selectCalDay(fmtKey(new Date()));}
 
 /* ── RDR ROSTER EDITOR ──────────────────────────────────────── */
 function rdrBuildRED(){
