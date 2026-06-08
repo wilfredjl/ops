@@ -56,43 +56,47 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .wk-cd{font-family:var(--mono);font-size:36px;font-weight:700;color:var(--text);letter-spacing:-0.04em;font-variant-numeric:tabular-nums}
 .wk-lb{font-family:var(--mono);font-size:10px;color:var(--text3);letter-spacing:0.1em;text-transform:uppercase;margin-top:6px}
 
-/* SHIFT BANNER */
+/* SHIFT BANNER — shared metrics between OH & RDR */
 .sbanner{position:relative;display:flex;align-items:center;justify-content:space-between;
-  min-height:110px;padding:20px 28px;margin-bottom:12px;
+  min-height:116px;padding:22px 28px;margin-bottom:12px;
   background:linear-gradient(135deg,rgba(255,255,255,0.013),rgba(255,255,255,0.027));
-  border:1px solid var(--border2);border-radius:18px;overflow:hidden;isolation:isolate}
+  border:1px solid var(--border2);border-radius:18px;overflow:hidden;isolation:isolate;
+  backdrop-filter:blur(10px)}
+.sbanner::before{content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,rgba(56,189,248,0.05) 0%,transparent 32%,transparent 68%,rgba(52,211,153,0.05) 100%);
+  pointer-events:none}
 .sbanner::after{content:'';position:absolute;inset:0 0 auto 0;height:2px;background:linear-gradient(90deg,var(--accent),var(--green))}
 .bn-h{position:relative;z-index:2;display:flex;flex-direction:column;gap:5px;max-width:40%}
-.bn-ey{font-family:var(--mono);font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:var(--text3)}
-.bn-m{font-family:var(--mono);font-size:clamp(13px,2vw,16px);font-weight:600;color:var(--text);line-height:1.25}
+.bn-ey{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--text3)}
+.bn-m{font-family:var(--mono);font-size:clamp(13px,2vw,18px);font-weight:600;color:var(--text);line-height:1.25;letter-spacing:-0.02em}
 .bn-s{font-family:var(--mono);font-size:11px;color:var(--text3)}
 .bn-c{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:5px;pointer-events:none;text-align:center}
-.bn-cl{font-family:var(--mono);font-size:10px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3)}
-.bn-cd{font-family:var(--mono);font-size:clamp(28px,3.5vw,44px);font-weight:600;letter-spacing:-0.05em;color:var(--text);font-variant-numeric:tabular-nums}
+.bn-cl{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+.bn-cd{font-family:var(--mono);font-size:clamp(28px,3.5vw,44px);font-weight:600;letter-spacing:-0.06em;color:var(--text);font-variant-numeric:tabular-nums}
 .bchip{display:inline-flex;align-items:center;gap:5px;padding:3px 9px;border-radius:20px;font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase}
 .c-op{background:var(--green-bg);border:1px solid rgba(52,211,153,0.3);color:var(--green)}
 .c-cl{background:var(--red-bg);border:1px solid rgba(248,113,113,0.3);color:var(--red)}
 .c-so{background:var(--gold-bg);border:1px solid rgba(251,191,36,0.3);color:var(--gold)}
 .sdot{width:5px;height:5px;border-radius:50%;background:currentColor}
-@media(max-width:640px){.sbanner{flex-direction:column;gap:14px;min-height:auto;padding:16px;width:100%;border-radius:14px}
-  .bn-c{position:relative;left:auto;top:auto;transform:none;order:-1;padding-bottom:14px;border-bottom:1px solid var(--border);width:100%}
-  .bn-h{max-width:100%}.bn-cd{font-size:30px}}
-@media(max-width:480px){.sbanner{padding:14px;border-radius:12px}.rcbar{border-radius:12px;width:100%;box-sizing:border-box}}
+@media(max-width:700px){
+  .sbanner{flex-direction:column;gap:18px;min-height:auto;padding:18px}
+  .bn-c{position:relative;left:auto;top:auto;transform:none;order:-1;padding-bottom:16px;margin-bottom:2px;border-bottom:1px solid var(--border);width:100%}
+  .bn-h{max-width:100%}.bn-cd{font-size:34px}}
+@media(max-width:480px){.sbanner{padding:14px;border-radius:14px}}
 
 /* RC BAR */
 .rcbar{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-lg);
-  padding:10px 16px;margin-bottom:16px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  padding:11px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
 .rc-lb{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;
-  color:var(--text3);flex-shrink:0;width:100%;margin-bottom:2px}
-.rc-ps{display:flex;gap:6px;flex-wrap:wrap;flex:1;align-items:center}
+  color:var(--text3);flex-shrink:0}
+.rc-ps{display:flex;gap:8px;flex-wrap:wrap;flex:1;align-items:center}
 .rc-p{font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:20px;
   border:1px solid var(--border2);color:var(--text2);white-space:nowrap;transition:all 0.2s}
 .rc-p.nx{border-color:rgba(56,189,248,0.5);color:var(--accent);background:var(--accent-bg);font-weight:600}
 .rc-p.pa{color:var(--text3);border-color:var(--border)}
-.rc-cd{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--accent);
-  white-space:nowrap;margin-left:auto;padding:4px 10px;border-radius:20px;
-  background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.2)}
-@media(max-width:480px){.rc-lb{width:100%;margin-bottom:0}.rcbar{gap:6px}}
+.rc-cd{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--accent);
+  white-space:nowrap;margin-left:auto;letter-spacing:0.04em}
+@media(max-width:480px){.rcbar{gap:8px;padding:10px 14px}}
 
 /* GRID / WIDGET */
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
@@ -106,7 +110,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .b-in{background:var(--accent-bg);color:var(--accent);border:1px solid rgba(56,189,248,0.3)}
 .wb{padding:14px 16px}
 
-/* ── INLINE CALENDAR ─────────────────────────── */
+/* CALENDAR WIDGET – full-width above grid */
+#calendar-widget{margin-bottom:12px}
+/* RDR inner grid: stretch columns so they match height */
+#rdr-col .grid{align-items:stretch}
+#rdr-col .grid > div{display:flex;flex-direction:column}
+#rdr-col .grid > div .widget{flex:1}
+#rdr-col .grid > div .widget:not(:last-child){flex:none}
+
 .cal-wrap{user-select:none}
 .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .cal-month{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--text)}
@@ -319,7 +330,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 
 /* PREVIEW */
 .prev-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
-.prev-box{font-family:var(--mono);font-size:12px;line-height:1.9;padding:16px;background:var(--surface2);border-radius:var(--radius);border:1px solid var(--border);min-height:400px;max-height:540px;overflow-y:auto;word-break:break-word;white-space:pre-wrap}
+.prev-box{font-family:var(--mono);font-size:12px;line-height:1.9;padding:16px;background:var(--surface2);border-radius:var(--radius);border:1px solid var(--border);min-height:320px;max-height:540px;overflow-y:auto;word-break:break-word;white-space:pre-wrap}
 .blank-btn{padding:4px 10px;background:var(--surface3);border:1px solid var(--border2);border-radius:6px;color:var(--text3);font-family:var(--mono);font-size:10px;cursor:pointer;transition:all 0.15s;white-space:nowrap;letter-spacing:0.04em}
 .blank-btn:hover{border-color:var(--border3);color:var(--text)}
 .blank-btn.ok{color:var(--green);border-color:rgba(52,211,153,0.4)}
@@ -507,6 +518,151 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 .imp-live-tag{font-family:var(--mono);font-size:10px;padding:3px 9px;border-radius:20px;
   background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.25);color:var(--purple);letter-spacing:0.04em}
 .imp-live-none{font-family:var(--mono);font-size:10px;color:var(--text3);font-style:italic}
+
+/* ═══ RDR + MERGE ADDITIONS ════════════════════════════════ */
+:root {
+  --day:#f5a623;--day-bg:rgba(245,166,35,0.10);--day-glow:rgba(245,166,35,0.20);
+  --night:#818cf8;--night-bg:rgba(129,140,248,0.10);--night-glow:rgba(129,140,248,0.20);
+  --r1:#f87171;--r1-bg:rgba(248,113,113,0.12);--r1-border:rgba(248,113,113,0.35);
+  --r2:#818cf8;--r2-bg:rgba(129,140,248,0.12);--r2-border:rgba(129,140,248,0.35);
+  --r3:#34d399;--r3-bg:rgba(52,211,153,0.12);--r3-border:rgba(52,211,153,0.35);
+}
+.mode-toggle{display:flex;gap:2px;background:var(--surface3);border:1px solid var(--border2);border-radius:10px;padding:3px;margin-left:4px}
+.mode-btn{font-family:var(--mono);font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;padding:3px 10px;border-radius:7px;border:none;cursor:pointer;background:none;color:var(--text3);transition:all 0.2s;-webkit-tap-highlight-color:transparent}
+.mode-btn.active-oh{background:var(--accent-bg);color:var(--accent);border:1px solid rgba(56,189,248,0.35)}
+.mode-btn.active-rdr{background:var(--day-bg);color:var(--day);border:1px solid rgba(245,166,35,0.35)}
+.shift-banner{position:relative;display:flex;align-items:center;justify-content:space-between;min-height:116px;padding:22px 28px;margin-bottom:12px;background:linear-gradient(135deg,rgba(255,255,255,0.013),rgba(255,255,255,0.027));border:1px solid var(--border2);border-radius:18px;overflow:hidden;isolation:isolate;backdrop-filter:blur(10px)}
+.shift-banner::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(129,140,248,0.05) 0%,transparent 32%,transparent 68%,rgba(245,166,35,0.05) 100%);pointer-events:none}
+.shift-banner::after{content:'';position:absolute;inset:0 0 auto 0;height:2px;background:linear-gradient(90deg,var(--night) 0%,var(--night) 50%,var(--day) 50%,var(--day) 100%)}
+.banner-half{position:relative;z-index:2;display:flex;flex-direction:column;gap:8px;max-width:38%}
+.banner-current{align-items:flex-start;text-align:left}
+.banner-incoming{align-items:flex-end;text-align:right;margin-left:auto}
+.banner-incoming-night{align-items:flex-end;text-align:right;margin-left:auto}
+.banner-eyebrow{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:0.16em;text-transform:uppercase;color:var(--text3)}
+.banner-current .banner-eyebrow{color:var(--night)}
+.banner-incoming .banner-eyebrow,.banner-incoming-night .banner-eyebrow{color:var(--day)}
+.banner-rota{font-family:var(--mono);font-size:clamp(13px,2vw,18px);font-weight:600;line-height:1.25;letter-spacing:-0.02em;color:var(--text);white-space:nowrap}
+.banner-divider{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
+.banner-countdown-label{font-family:var(--mono);font-size:10px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);margin-bottom:8px}
+.banner-countdown{font-family:var(--mono);font-size:clamp(28px,3.5vw,44px);font-weight:600;letter-spacing:-0.06em;color:var(--text);font-variant-numeric:tabular-nums}
+.rota-r1{color:var(--r1)}.rota-r2{color:var(--r2)}.rota-r3{color:var(--r3)}
+@media(max-width:700px){.shift-banner{flex-direction:column;gap:18px;min-height:auto;padding:18px}.banner-half,.banner-incoming,.banner-incoming-night{max-width:100%;align-items:flex-start;text-align:left;margin-left:0}.banner-divider{position:relative;left:auto;top:auto;transform:none;order:-1;padding-bottom:16px;margin-bottom:2px;border-bottom:1px solid var(--border)}.banner-countdown{font-size:34px}}
+@media(max-width:480px){.shift-banner{padding:14px;border-radius:14px}}
+.cctv-bar{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius-lg);padding:11px 18px;margin-bottom:16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cctv-lbl{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;color:var(--text3);flex-shrink:0}
+.cctv-pills{display:flex;gap:8px;flex-wrap:wrap;flex:1}
+.cctv-pill{font-family:var(--mono);font-size:11px;padding:4px 10px;border-radius:20px;border:1px solid var(--border2);color:var(--text2);white-space:nowrap;transition:all 0.2s}
+.cctv-pill.next{border-color:rgba(245,166,35,0.5);color:var(--day);background:var(--day-bg);font-weight:600}
+.cctv-pill.next-night{border-color:rgba(129,140,248,0.5);color:var(--night);background:var(--night-bg);font-weight:600}
+.cctv-pill.past{color:var(--text3);border-color:var(--border)}
+.cctv-cdown{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--day);margin-left:auto;letter-spacing:0.04em;white-space:nowrap}
+.cctv-cdown.night-mode{color:var(--night)}
+@media(max-width:480px){.cctv-bar{gap:8px;padding:10px 14px}}
+.cal-day{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:46px;padding:3px 1px 2px;position:relative}
+.cal-day-num{line-height:1.2;font-size:12px}
+.cal-rota-row{display:flex;gap:2px;justify-content:center;flex-wrap:wrap;pointer-events:none}
+.cal-rota-chip{font-family:var(--mono);font-size:7px;font-weight:600;padding:1px 3px;border-radius:3px;letter-spacing:0.02em;line-height:1.4}
+.cal-rota-chip.r1{color:var(--r1);background:var(--r1-bg)}
+.cal-rota-chip.r2{color:var(--r2);background:var(--r2-bg)}
+.cal-rota-chip.r3{color:var(--r3);background:var(--r3-bg)}
+.cal-day.has-rdr-data::before{content:'';position:absolute;bottom:3px;right:4px;width:4px;height:4px;border-radius:50%;background:var(--day)}
+.cal-sum-oh-hdr{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
+.cal-sum-rdr-hdr{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--day);margin:8px 0 5px}
+.cal-sum-divider{height:1px;background:var(--border);margin:8px 0}
+.person-block{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:5px;transition:border-color 0.15s,box-shadow 0.15s,background 0.2s}
+.person-block:last-child{margin-bottom:0}
+.person-block.focused{border-color:var(--border3);box-shadow:0 0 0 2px rgba(129,140,248,0.08)}
+.person-block.off-duty{background:linear-gradient(90deg,rgba(248,113,113,0.055),var(--surface2));border-color:rgba(248,113,113,0.18)}
+.person-block.off-duty .person-name{color:var(--text2)}
+.person-block.off-duty .person-rank{color:rgba(248,113,113,0.4)}
+.person-top{display:flex;align-items:center;gap:10px;padding:9px 12px}
+.person-rank{font-family:var(--mono);font-size:9px;color:var(--text3);width:14px;text-align:right;flex-shrink:0}
+.person-name{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--text);min-width:100px;flex-shrink:0;letter-spacing:0.02em;-webkit-user-select:none;user-select:none}
+.status-wrap{flex:1;min-width:0}
+.status-input{width:100%;background:transparent;border:none;outline:none;color:var(--text);font-family:var(--mono);font-size:12px;padding:2px 4px;border-radius:4px;transition:background 0.1s}
+.status-input:focus{background:rgba(255,255,255,0.04)}
+.chips-row{display:none;flex-wrap:wrap;gap:5px;padding:0 12px 9px}
+.person-block.focused .chips-row{display:flex}
+.chip.chip-on{border-color:rgba(52,211,153,0.4);color:var(--green);background:var(--green-bg)}
+.chip.chip-on:hover{background:rgba(52,211,153,0.2)}
+.chip.chip-off-expand{border-color:rgba(248,113,113,0.3);color:var(--red)}
+.chip.chip-off-expand:hover{background:var(--red-bg)}
+.chip.chip-freetext{border-color:rgba(129,140,248,0.3);color:var(--night)}
+.chip.chip-freetext:hover{background:var(--night-bg)}
+.leave-chips{display:none;flex-wrap:wrap;gap:5px;padding:0 12px 9px}
+.leave-chips.open{display:flex}
+.lchip{padding:3px 9px;background:var(--surface3);border:1px solid rgba(248,113,113,0.25);border-radius:6px;color:var(--red);font-family:var(--mono);font-size:10px;cursor:pointer;transition:all 0.12s;white-space:nowrap;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.lchip:hover{background:var(--red-bg);border-color:rgba(248,113,113,0.5)}
+.rota-slbl{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;padding:10px 0 6px;border-top:1px solid var(--border);margin-top:4px}
+.rota-slbl:first-child{border-top:none;margin-top:0;padding-top:0}
+.rota-slbl.r1{color:var(--r1)}.rota-slbl.r2{color:var(--r2)}.rota-slbl.r3{color:var(--r3)}
+.preview-box{font-family:var(--mono);font-size:12px;color:var(--text);white-space:pre;line-height:1.9;padding:16px;overflow:auto;background:var(--surface2);border-radius:var(--radius);border:1px solid var(--border);min-height:320px;width:100%;resize:none;cursor:text;-webkit-user-select:text;user-select:text}
+.preview-label{font-family:var(--mono);font-size:9px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:4px}
+.copy-btn-rdr{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:16px;border-radius:var(--radius-lg);border:none;background:linear-gradient(135deg,#f5a623,#e8670a);color:#000;font-family:var(--mono);font-size:14px;font-weight:600;cursor:pointer;letter-spacing:0.06em;transition:all 0.2s;box-shadow:0 4px 20px rgba(245,166,35,0.3);text-transform:uppercase;margin-top:12px}
+.copy-btn-rdr:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(245,166,35,0.45)}
+.copy-btn-rdr.success{background:linear-gradient(135deg,var(--green),#059669);box-shadow:0 4px 20px rgba(52,211,153,0.35);color:#000}
+.rgl.rdr-grp{color:var(--day)}
+.cal-ctrl-section{border-top:1px solid var(--border);margin-top:10px;padding-top:8px}
+.cal-ctrl-toggle{display:flex;align-items:center;justify-content:space-between;background:none;border:none;width:100%;cursor:pointer;padding:2px 0 6px;-webkit-tap-highlight-color:transparent}
+.cal-ctrl-toggle-label{font-family:var(--mono);font-size:9px;letter-spacing:0.12em;text-transform:uppercase;color:var(--text3);font-weight:500}
+.cal-ctrl-body{display:none}
+.cal-ctrl-body.open{display:block}
+.cal-ctrl-row{display:flex;align-items:center;gap:8px;margin-bottom:8px;flex-wrap:wrap}
+.cal-ctrl-label{font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;min-width:44px}
+.pill-group{display:flex;gap:6px;flex-wrap:wrap}
+.pill{padding:5px 12px;border:1px solid var(--border2);border-radius:20px;background:transparent;color:var(--text2);font-family:var(--mono);font-size:11px;cursor:pointer;transition:all 0.15s;-webkit-user-select:none;user-select:none;-webkit-tap-highlight-color:transparent}
+.pill:hover{border-color:var(--border3);color:var(--text)}
+.pill.pill-r1{background:var(--r1-bg);border-color:var(--r1-border);color:var(--r1)}
+.pill.pill-r2{background:var(--r2-bg);border-color:var(--r2-border);color:var(--r2)}
+.pill.pill-r3{background:var(--r3-bg);border-color:var(--r3-border);color:var(--r3)}
+.pill.p-day{background:var(--day-bg);border-color:rgba(245,166,35,0.4);color:var(--day)}
+.pill.p-night{background:var(--night-bg);border-color:rgba(129,140,248,0.4);color:var(--night)}
+.pill.p-neutral{background:var(--surface3);border-color:var(--border3);color:var(--text)}
+.cal-dbn-row{display:flex;gap:6px;margin-top:8px}
+.cal-dbn{padding:5px 12px;background:var(--surface3);border:1px solid var(--border2);border-radius:var(--radius);color:var(--text2);font-family:var(--mono);font-size:11px;cursor:pointer;transition:all 0.15s;-webkit-tap-highlight-color:transparent;white-space:nowrap;flex:1;text-align:center}
+.cal-dbn:hover{border-color:var(--border3);color:var(--text)}
+.cal-dbn.today{border-color:rgba(245,166,35,0.4);color:var(--day);background:var(--day-bg)}
+.ex-src-row{display:flex;gap:6px;margin-bottom:12px}
+.ex-src-btn{flex:1;padding:5px 10px;border-radius:8px;font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;border:1px solid var(--border2);background:none;color:var(--text3);cursor:pointer;transition:all 0.15s}
+.ex-src-btn.active-oh{background:var(--accent-bg);border-color:rgba(56,189,248,0.4);color:var(--accent)}
+.ex-src-btn.active-rdr{background:var(--day-bg);border-color:rgba(245,166,35,0.4);color:var(--day)}
+.ex-src-btn.active-both{background:var(--green-bg);border-color:rgba(52,211,153,0.4);color:var(--green)}
+.dp-overlay{position:fixed;inset:0;background:rgba(0,0,0,0.72);display:flex;align-items:center;justify-content:center;z-index:200;backdrop-filter:blur(4px);padding:20px}
+.dp-modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--radius-xl);padding:20px;width:310px;max-width:100%;box-shadow:var(--shadow-lg)}
+.dp-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.dp-title{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--text)}
+.dp-nav{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text2);font-size:14px;width:30px;height:30px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+.dp-nav:hover{color:var(--text);border-color:var(--border3)}
+.dp-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:12px}
+.dp-dow{font-family:var(--mono);font-size:9px;color:var(--text3);text-align:center;padding:4px 0;letter-spacing:0.06em}
+.dp-day{font-family:var(--mono);font-size:12px;text-align:center;padding:7px 2px;border-radius:8px;cursor:pointer;border:1px solid transparent;transition:all 0.12s;color:var(--text2);background:none}
+.dp-day:hover{background:var(--surface3);color:var(--text)}
+.dp-day.empty{cursor:default;pointer-events:none}
+.dp-day.today{border-color:rgba(245,166,35,0.45);color:var(--day);font-weight:600}
+.dp-day.selected{background:var(--night-bg);border-color:rgba(129,140,248,0.5);color:var(--night);font-weight:600}
+.dp-day.in-range{background:rgba(129,140,248,0.06);color:var(--text)}
+.dp-day.range-end{background:var(--night-bg);border-color:rgba(129,140,248,0.5);color:var(--night);font-weight:600}
+.dp-hint{font-family:var(--mono);font-size:11px;color:var(--text2);text-align:center;margin-bottom:14px;min-height:16px}
+.dp-actions{display:flex;gap:8px;justify-content:flex-end}
+.dp-cancel{background:none;border:1px solid var(--border2);border-radius:var(--radius);color:var(--text2);font-family:var(--mono);font-size:11px;padding:6px 14px;cursor:pointer}
+.dp-cancel:hover{border-color:var(--border3);color:var(--text)}
+.dp-confirm{background:var(--green-bg);border:1px solid rgba(52,211,153,0.4);border-radius:var(--radius);color:var(--green);font-family:var(--mono);font-size:11px;padding:6px 14px;cursor:pointer;transition:all 0.15s}
+.dp-confirm:hover{background:rgba(52,211,153,0.18)}
+.dp-confirm:disabled{opacity:0.3;cursor:default}
+input[type="date"]{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);color:var(--text);font-family:var(--mono);font-size:12px;padding:6px 10px;outline:none;transition:border-color 0.15s;color-scheme:dark}
+input[type="date"]:focus{border-color:var(--border3)}
+
+/* ── ROTA CHIPS TOGGLE ─────────────────────────────────────── */
+.rota-toggle-row{display:flex;align-items:center;margin-bottom:10px}
+/* iOS-style toggle switch */
+.toggle-switch{display:inline-flex;align-items:center;gap:9px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
+.toggle-switch input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+.toggle-track{position:relative;width:36px;height:20px;background:var(--surface3);border:1px solid var(--border2);border-radius:10px;transition:background 0.22s,border-color 0.22s;flex-shrink:0}
+.toggle-thumb{position:absolute;top:2px;left:2px;width:14px;height:14px;background:var(--text3);border-radius:50%;transition:transform 0.22s,background 0.22s;box-shadow:0 1px 3px rgba(0,0,0,0.35)}
+.toggle-switch input:checked ~ .toggle-track{background:rgba(129,140,248,0.25);border-color:rgba(129,140,248,0.5)}
+.toggle-switch input:checked ~ .toggle-track .toggle-thumb{transform:translateX(16px);background:var(--night)}
+.toggle-lbl{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);transition:color 0.2s}
+.toggle-switch input:checked ~ .toggle-lbl{color:var(--night)}
 </style>
 </head>
 <body>
@@ -515,12 +671,17 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
   <span class="t-title">OH Movement</span>
   <div class="t-div"></div>
   <span class="t-date" id="t-date"></span>
+  <div class="mode-toggle">
+    <button class="mode-btn active-oh" id="btn-oh" onclick="setMode('oh')">OH</button>
+    <button class="mode-btn" id="btn-rdr" onclick="setMode('rdr')">RDR</button>
+  </div>
   <div class="t-right">
     <div class="sync-pill offline" id="sync-pill"><span class="sdot2"></span><span id="sync-txt">local</span></div>
     <div class="t-clock" id="t-clock">00:00:00</div>
   </div>
 </div>
 <div class="page">
+  <div id="oh-banner-area">
   <div id="wkcard-wrap" style="display:none"><div class="wkcard">
     <div class="wk-em" id="wk-em">🏖️</div><div class="wk-ti" id="wk-ti">Weekend</div>
     <div class="wk-su" id="wk-su">Enjoy the break.</div>
@@ -541,12 +702,43 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
       <span class="rc-lb">Rollcalls</span><div class="rc-ps" id="rc-ps"></div><div class="rc-cd" id="rc-cd"></div>
     </div>
   </div>
-  <div class="grid">
-    <div>
-      <!-- CALENDAR WIDGET -->
-      <div class="widget">
+  </div><!-- /oh-banner-area -->
+
+  <!-- RDR BANNER AREA -->
+  <div id="rdr-banner-area" style="display:none">
+    <div class="shift-banner" id="shift-banner">
+      <div class="banner-half banner-current">
+        <div class="banner-eyebrow">Currently on shift</div>
+        <div class="banner-rota" id="card-current-rota">—</div>
+      </div>
+      <div class="banner-divider">
+        <div class="banner-countdown-label" id="banner-countdown-label">Shift transition</div>
+        <div class="banner-countdown" id="banner-countdown">00:00:00</div>
+      </div>
+      <div class="banner-half banner-incoming" id="card-incoming-half">
+        <div class="banner-eyebrow" id="card-incoming-eyebrow">Incoming shift</div>
+        <div class="banner-rota" id="card-incoming-rota">—</div>
+      </div>
+    </div>
+    <div class="cctv-bar">
+      <span class="cctv-lbl">CCTV Checks</span>
+      <div class="cctv-pills" id="cctv-pills"></div>
+      <div class="cctv-cdown" id="cctv-cdown"></div>
+    </div>
+  </div><!-- /rdr-banner-area -->
+
+  <!-- CALENDAR WIDGET – full-width, always visible -->
+  <div class="widget" id="calendar-widget">
+
         <div class="wh"><span class="wh-t">Date</span><span class="badge b-in" id="date-badge">TODAY</span></div>
         <div class="wb">
+          <div class="rota-toggle-row">
+            <label class="toggle-switch">
+              <input type="checkbox" id="rota-toggle-input" onchange="toggleRotaChips()">
+              <div class="toggle-track"><div class="toggle-thumb"></div></div>
+              <span class="toggle-lbl">Show RDR Shifts</span>
+            </label>
+          </div>
           <div class="cal-wrap">
             <div class="cal-nav">
               <button class="cal-nav-btn" onclick="calShiftMonth(-1)">‹</button>
@@ -565,6 +757,43 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
             <button class="cal-export-btn" onclick="openExportModal()">⬆ Export TSV</button>
           </div>
           <input type="date" id="date-in" style="display:none" onchange="onDC()">
+          <!-- RDR date input (for shift controls) -->
+          <input type="date" id="rdr-date-input" style="display:none" onchange="rdrOnDateChange()">
+          <!-- RDR SHIFT CONTROLS (visible only in RDR mode) -->
+          <div class="cal-ctrl-section" id="rdr-shift-ctrl-section" style="display:none">
+            <button class="cal-ctrl-toggle" onclick="rdrToggleCalCtrl()">
+              <span class="cal-ctrl-toggle-label">Shift Controls</span>
+              <span class="col-chevron" id="cal-ctrl-chevron">&#9658;</span>
+            </button>
+            <div class="cal-ctrl-body" id="cal-ctrl-body">
+              <div class="cal-ctrl-row">
+                <span class="cal-ctrl-label">Date</span>
+                <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+                  <input type="date" id="rdr-date-input-vis" onchange="rdrDateInputChange()">
+                  <button class="cal-dbn" onclick="rdrShiftDay(-1)">&#8592;</button>
+                  <button class="cal-dbn today" onclick="rdrGoToday()">Today</button>
+                  <button class="cal-dbn" onclick="rdrShiftDay(1)">&#8594;</button>
+                </div>
+              </div>
+              <div class="cal-ctrl-row">
+                <span class="cal-ctrl-label">Rota</span>
+                <div class="pill-group">
+                  <button class="pill" id="pill-R1" onclick="setRotaOverride('R1')">Rota 1</button>
+                  <button class="pill" id="pill-R2" onclick="setRotaOverride('R2')">Rota 2</button>
+                  <button class="pill" id="pill-R3" onclick="setRotaOverride('R3')">Rota 3</button>
+                </div>
+              </div>
+              <div class="cal-ctrl-row">
+                <span class="cal-ctrl-label">Shift</span>
+                <div class="pill-group">
+                  <button class="pill" id="pill-Day" onclick="setShiftOverride('Day')">AM</button>
+                  <button class="pill" id="pill-Night" onclick="setShiftOverride('Night')">PM</button>
+                  <button class="pill p-neutral" id="pill-auto" onclick="setShiftOverride('auto')">Auto</button>
+                </div>
+              </div>
+              <div id="ctrl-sublabel" style="display:none;font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.04em;line-height:1.5;padding:4px 0 6px"></div>
+            </div>
+          </div>
         </div>
         <!-- IMPORT PANEL embedded in calendar widget -->
         <div class="imp-panel">
@@ -595,7 +824,38 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
             </div>
           </div>
         </div>
-      </div>
+        <!-- RDR IMPORT PANEL -->
+        <div class="imp-panel" id="rdr-imp-panel">
+          <div class="imp-panel-hdr" id="rdr-imp-panel-hdr" onclick="togRdrImp()">
+            <div class="imp-panel-icon" style="color:var(--day)">⬇</div>
+            <span class="imp-panel-lbl">Import RDR Messages</span>
+            <span class="imp-panel-hint" id="rdr-imp-panel-hint">paste attendance → calendar</span>
+            <span class="imp-panel-chev" id="rdr-imp-chev">▸</span>
+          </div>
+          <div class="imp-body" id="rdr-imp-body">
+            <div class="imp-inner">
+              <div class="imp-lbl">Paste RDR attendance messages (one or more blocks)</div>
+              <textarea class="imp-ta" id="rdr-imp-ta" placeholder="Attendance and Roll Call&#10;Rota 3 AM Shift 07/06/26&#10;NAME - ON DUTY ✅&#10;..." oninput="rdrImpLivePreview()" onpaste="rdrImpHandlePaste(event)"></textarea>
+              <div class="imp-live" id="rdr-imp-live"><span class="imp-live-none">Detected blocks appear here...</span></div>
+              <div class="imp-actions">
+                <button class="imp-btn imp-btn-parse" onclick="rdrImpParse()">⚡ Parse</button>
+                <button class="imp-btn imp-btn-tocal" id="rdr-imp-to-cal-btn" onclick="rdrImpOpenModal()" style="display:none">📅 Import to Calendar</button>
+                <button class="imp-btn imp-btn-clear" onclick="rdrImpClear()">✕ Clear</button>
+                <span class="imp-status" id="rdr-imp-status"></span>
+              </div>
+              <div id="rdr-imp-table-sect" style="display:none">
+                <div class="imp-lbl" style="margin-bottom:8px">Preview</div>
+                <div class="imp-table-wrap">
+                  <table class="imp-table" id="rdr-imp-table"></table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div><!-- /calendar-widget -->
+
+  <div class="grid" id="oh-grid">
+    <div>
       <!-- PERSONNEL WIDGET -->
       <div class="widget">
         <div class="wh"><span class="wh-t">Personnel</span><span class="badge b-ok" id="r-badge">ready</span></div>
@@ -678,7 +938,52 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
       </div>
     </div>
   </div>
-</div>
+</div><!-- right col end -->
+
+    <!-- RDR COLUMN (personnel + preview, visible in RDR mode) -->
+    <div id="rdr-col" style="display:none">
+      <div class="grid">
+        <div>
+          <!-- RDR Personnel widget -->
+          <div class="widget" id="rdr-personnel-widget">
+            <div class="wh">
+              <span class="wh-t">Personnel &mdash; <span id="rdr-rota-label" class="rota-r1">—</span></span>
+              <span class="badge" id="rdr-ctrl-badge">AUTO</span>
+            </div>
+            <div id="rdr-ctrl-sublabel-top" style="padding:6px 16px 0;font-family:var(--mono);font-size:9px;color:var(--text3);letter-spacing:0.04em;line-height:1.5;display:none"></div>
+            <div class="wb">
+              <div class="rmeta"><div class="rdot" id="rdr-rdot"></div><span id="rdr-roster-status-text">loading&hellip;</span></div>
+              <div id="rdr-person-list"></div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <!-- RDR Preview widget -->
+          <div class="widget">
+            <div class="wh"><span class="wh-t">Message Preview &mdash; RDR</span></div>
+            <div class="wb">
+              <div class="preview-label" id="rdr-preview-label"></div>
+              <textarea class="preview-box" id="rdr-preview-box" readonly spellcheck="false">Loading...</textarea>
+              <button class="copy-btn-rdr" id="rdr-copy-btn" onclick="rdrCopyMsg()">&#10022;&nbsp;&nbsp;Copy to Clipboard</button>
+            </div>
+          </div>
+          <!-- RDR Roster editor -->
+          <div class="widget">
+            <div class="wh col-hdr" onclick="togCol('rdr-red-body','rdr-red-chev')">
+              <span class="wh-t">Edit RDR Roster</span><span class="chev" id="rdr-red-chev">&#9658;</span>
+            </div>
+            <div class="coll" id="rdr-red-body">
+              <div class="wb" style="padding-top:8px">
+                <div class="red" id="rdr-red"></div>
+                <button class="rsave" onclick="rdrSaveRoster()">&#10003; Save &amp; Sync RDR Roster</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /rdr-col -->
+
+  </div>
 </div>
 <!-- IMPORT CONFIRM MODAL -->
 <div class="ic-dialog" id="ic-dialog" style="display:none">
@@ -693,10 +998,28 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
     </div>
   </div>
 </div>
+<!-- RDR IMPORT CONFIRM MODAL -->
+<div class="ic-dialog" id="rdr-ic-dialog" style="display:none">
+  <div class="ic-box">
+    <div class="ic-title" style="color:var(--day)">⬇ Import RDR to Calendar</div>
+    <div class="ic-sub">The following days will be updated with RDR statuses:</div>
+    <div class="ic-days" id="rdr-ic-days"></div>
+    <div class="ic-warn" id="rdr-ic-warn" style="display:none">⚠ Yellow dates already have RDR data and will be overwritten.</div>
+    <div class="ic-btns">
+      <button class="ic-btn ic-no" onclick="closeRdrImportModal()">Cancel</button>
+      <button class="ic-btn ic-yes" onclick="confirmRdrImport()">Import & Save</button>
+    </div>
+  </div>
+</div>
 <!-- EXPORT MODAL with inline calendar picker -->
 <div class="ex-dialog" id="ex-dialog" style="display:none">
   <div class="ex-box">
-    <div class="ex-title">⬆ Export to TSV</div>
+    <div class="ex-title">&#8679; Export to TSV</div>
+    <div class="ex-src-row">
+      <button class="ex-src-btn active-oh" id="ex-src-oh" onclick="setExSrc('oh')">OH only</button>
+      <button class="ex-src-btn" id="ex-src-rdr" onclick="setExSrc('rdr')">RDR only</button>
+      <button class="ex-src-btn" id="ex-src-both" onclick="setExSrc('both')">Both</button>
+    </div>
     <div class="ex-sub" id="ex-sub">Click a date to set start, click another to set end.</div>
     <div class="ex-cal-nav">
       <button class="cal-nav-btn" onclick="exShiftMonth(-1)">‹</button>
@@ -728,7 +1051,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 /* ═══════════════════════ CONSTANTS ═══════════════════════ */
 const ROSTER_LS='oh_roster_v3',SAVED_LS='oh_saved_v3',FB_LS='oh_fb_url';
 // ── HARDCODED FIREBASE (delete this block to revert) ──────────────────────────
-const HARDCODED_FB='https://ops-rollcall-default-rtdb.asia-southeast1.firebasedatabase.app/';
+const HARDCODED_FB='https://ops-rollcall-default-rtdb.asia-southeast1.firebasedatabase.app';
 // const HARDCODED_FB=''; // <-- original: paste your Firebase URL here to hardcode it
 // ──────────────────────────────────────────────────────────────────────────────
 
@@ -876,13 +1199,13 @@ function calShiftMonth(d){
   calViewMonth+=d;
   if(calViewMonth<0){calViewMonth=11;calViewYear--;}
   if(calViewMonth>11){calViewMonth=0;calViewYear++;}
-  buildCalendar();
+  rdrBuildCalendar();
 }
 function selectCalDay(key){
   calSelectedKey=key;
   document.getElementById('date-in').value=key;
   onDC();
-  buildCalendar();
+  rdrBuildCalendar();
   buildCalSummary(key);
 }
 function buildCalSummary(key){
@@ -929,7 +1252,7 @@ function buildCalSummary(key){
       if(remote.emoji)all[key].emoji=remote.emoji;
       localStorage.setItem(SAVED_LS,JSON.stringify(all));
       renderSummary(all[key]);
-      buildCalendar();
+      rdrBuildCalendar();
     }).catch(()=>{});
   }
 }
@@ -992,7 +1315,7 @@ function applyRemoteDay(d){
     });
     updatePreview();
     saveLocal();
-    buildCalendar();
+    rdrBuildCalendar();
     if(calSelectedKey===curDateKey)buildCalSummary(curDateKey);
   }
 }
@@ -1047,7 +1370,7 @@ function fbListenRoster(){
       const d=JSON.parse(e.data);
       if(d&&d.data&&(d.data.MAIN||d.data.EMS)){
         roster=d.data;localStorage.setItem(ROSTER_LS,JSON.stringify(roster));
-        renderPersonList();updatePreview();buildCalendar();
+        renderPersonList();updatePreview();rdrBuildCalendar();
         showToast('📋 Roster updated by another user');
       }
     }catch(_){}});
@@ -1057,7 +1380,7 @@ function fbListenRoster(){
         if(d.data.MAIN)roster.MAIN=d.data.MAIN;
         if(d.data.EMS)roster.EMS=d.data.EMS;
         localStorage.setItem(ROSTER_LS,JSON.stringify(roster));
-        renderPersonList();updatePreview();buildCalendar();
+        renderPersonList();updatePreview();rdrBuildCalendar();
         showToast('📋 Roster updated by another user');
       }
     }catch(_){}});
@@ -1104,7 +1427,7 @@ async function fbSyncCalendarDots(){
       }catch(_){}
     }));
     localStorage.setItem(SAVED_LS,JSON.stringify(all));
-    buildCalendar();
+    rdrBuildCalendar();
     buildCalSummary(calSelectedKey);
   }catch(_){}
 
@@ -1125,7 +1448,7 @@ async function fbSyncCalendarDots(){
         if(d.data.toRows&&d.data.toRows.length)all[k].toRows=d.data.toRows;
         if(d.data.emoji)all[k].emoji=d.data.emoji;
         localStorage.setItem(SAVED_LS,JSON.stringify(all));
-        buildCalendar();
+        rdrBuildCalendar();
         if(calSelectedKey===k)buildCalSummary(k);
       }
     }catch(_){}});
@@ -1146,7 +1469,7 @@ async function fbSyncCalendarDots(){
           if(d.data.emoji)all[k].emoji=d.data.emoji;
         }
         localStorage.setItem(SAVED_LS,JSON.stringify(all));
-        buildCalendar();
+        rdrBuildCalendar();
         if(calSelectedKey===k)buildCalSummary(k);
       }
     }catch(_){}});
@@ -1302,7 +1625,7 @@ function mkPB(name,grp){
     // Parse any date range from the current value and clear those dates too
     clearRangeStatus(key, statuses[key]);
     setSingleMode(sw,si,key,blk);
-    statuses[key]='';si.value='';styleBlock(blk,'');persist();updatePreview();buildCalendar();
+    statuses[key]='';si.value='';styleBlock(blk,'');persist();updatePreview();rdrBuildCalendar();
     lc.classList.remove('op');
   });
 
@@ -1369,7 +1692,7 @@ function applyLeaf(def,sw,si,key,blk,lc){
       assembleStatus(sw,si,key);
       styleBlock(blk,statuses[key]);persist();
       if(p2)propagateRangeStatus(key,statuses[key],p1,p2);
-      updatePreview();buildCalendar();
+      updatePreview();rdrBuildCalendar();
     });
     lc.classList.remove('op');return;
   }
@@ -1705,7 +2028,7 @@ function shiftDay(n){const d=dateFromKey(curDateKey);d.setDate(d.getDate()+n);se
 function goToday(){selectCalDay(fmtKey(new Date()));}
 function onDC(){const v=document.getElementById('date-in').value;if(v)selectCalDay(v);}
 
-function navigateToDate(key){
+function _ohNavigateToDate(key){
   curDateKey=key;calSelectedKey=key;
   const d=dateFromKey(key),isToday=key===fmtKey(new Date());
   document.getElementById('date-badge').textContent=isToday?'TODAY':'CUSTOM';
@@ -1721,7 +2044,7 @@ function selectCalDay(key){
   // sync calendar view to the selected month
   const d=dateFromKey(key);
   calViewYear=d.getFullYear();calViewMonth=d.getMonth();
-  buildCalendar();buildCalSummary(key);
+  rdrBuildCalendar();buildCalSummary(key);
 }
 
 /* ═══════════════════════ TOAST ═══════════════════════ */
@@ -2032,7 +2355,8 @@ function impCopy(){
 function buildBookmarklet(){
   var code='(function(){var nl=String.fromCharCode(10);var report=[];function deepQuery(root,sel){  var res=[];  try{res=Array.from(root.querySelectorAll(sel));}catch(e){}  var all=[];  try{all=Array.from(root.querySelectorAll(\'*\'));}catch(e){}  all.forEach(function(el){if(el.shadowRoot)res=res.concat(deepQuery(el.shadowRoot,sel));});  return res;}var tests=[\'[data-pre-plain-text]\',\'[data-testid]\',\'.copyable-text\',\'[class*="msg"]\',\'[role="row"]\',\'[aria-label]\',\'span\',\'div\'];report.push(\'=== SHADOW DOM DIAGNOSTIC ===\');tests.forEach(function(sel){  try{var n=deepQuery(document,sel).length;report.push(sel+\': \'+n);}catch(e){report.push(sel+\': ERR \'+e.message);}});report.push(\'--- Sample text nodes ---\');var spans=deepQuery(document,\'span\');var textSamples=spans.filter(function(s){var t=(s.innerText||\'\').trim();return t.length>5&&t.length<80;}).slice(0,8);textSamples.forEach(function(s){report.push(\'SPAN: \'+JSON.stringify((s.innerText||\'\').trim().substring(0,60)));});var divs=deepQuery(document,\'div\');var divSamples=divs.filter(function(d){var t=(d.innerText||\'\').trim();return t.length>20&&t.length<120&&d.children.length<4;}).slice(0,6);divSamples.forEach(function(d){report.push(\'DIV(\'+d.children.length+\'ch): \'+JSON.stringify((d.innerText||\'\').trim().substring(0,80)));});report.push(\'--- data-* attrs in shadow ---\');var allInShadow=deepQuery(document,\'*\');var withData=allInShadow.filter(function(e){return Array.from(e.attributes||[]).some(function(a){return a.name.startsWith(\'data-\');});}).slice(0,6);withData.forEach(function(e){  var attrs=Array.from(e.attributes).filter(function(a){return a.name.startsWith(\'data-\');}).slice(0,3);  report.push(e.tagName+\': \'+attrs.map(function(a){return a.name+\'=\'+JSON.stringify(a.value.substring(0,25));}).join(\' \'));});prompt(\'Copy all and send:\',report.join(nl));})();';
   var full='javascript:'+code;
-  document.getElementById('bm-link').href=full;
+  var el=document.getElementById('bm-link');
+  if(el)el.href=full;
   var box=document.getElementById('bm-manual-code');
   if(box)box.value=full;
 }
@@ -2115,7 +2439,7 @@ function confirmImport(){
   if(hdrEl)hdrEl.classList.remove('has-pending');
 
   closeImportModal();
-  buildCalendar();
+  rdrBuildCalendar();
   if(calSelectedKey&&pushedKeys.includes(calSelectedKey))buildCalSummary(calSelectedKey);
   showToast(`✓ Imported ${pushedKeys.length} day${pushedKeys.length>1?'s':''} to calendar`);
 }
@@ -2284,11 +2608,990 @@ function init(){
   roster=JSON.parse(localStorage.getItem(ROSTER_LS)||'null')||deepCopy(DEFAULT_ROSTER);
   loadLocal(now);renderPersonList();renderToRows();
   if(curEmoji)applyEmoji(curEmoji,false);else resetEmoji();
-  updatePreview();updateStreakUI();buildCalendar();buildCalSummary(curDateKey);
+  updatePreview();updateStreakUI();rdrBuildCalendar();buildCalSummary(curDateKey);
   tick();setInterval(tick,1000);
   if(fbUrl){const fbin=document.getElementById('fb-in');if(fbin){fbin.value=fbUrl;fbin.classList.add('connected');}initFb();}
   else setSyncUI('offline');
 }
+/* init() called below after RDR layer loads */
+/* ════════════════════════════════════════════════════════════
+   MERGE LAYER — RDR + MODE SWITCHING
+   ════════════════════════════════════════════════════════════ */
+
+/* ── CONSTANTS ─────────────────────────────────────────────── */
+const MODE_LS = 'unified_mode';
+const RDR_ROSTER_LS = 'rdr_roster_v3';
+const RDR_SAVED_LS = 'rdr_saved_v3';
+// RDR Firebase — paste your Firebase URL here
+const RDR_HARDCODED_FB = 'https://rota-rollcall-default-rtdb.asia-southeast1.firebasedatabase.app';
+
+/* ── RDR ROTA CYCLE ─────────────────────────────────────────── */
+const RDR_ANCHOR = new Date(2026, 4, 26); // Mon 26 May 2026
+const RDR_CYCLE = [
+  {day:'R3',night:'R1'},{day:'R3',night:'R1'},
+  {day:'R2',night:'R3'},{day:'R2',night:'R3'},
+  {day:'R1',night:'R2'},{day:'R1',night:'R2'},
+  {day:'R3',night:'R1'},{day:'R3',night:'R1'},
+  {day:'R2',night:'R3'},{day:'R2',night:'R3'},
+  {day:'R1',night:'R2'},{day:'R1',night:'R2'},
+];
+// AM shift: 08:00-18:00. PM shift: 18:00-08:00.
+// Detection: hour 7-17 = AM display; otherwise PM
+function rdrDetectShift(hour){return(hour>=7&&hour<17)?'Day':'Night';}
+
+/* ── RDR STATE ─────────────────────────────────────────────── */
+const RDR_DEFAULT_ROSTER = {
+  R1:['SYAHIR','PRAVIN','SULAIMAN','TERRY','JIQIANG'],
+  R2:['PIERCE','ADEL','ALOYSIUS','YANG ZHI','FURQAN'],
+  R3:['JIA LE','DANIAL','ALOYSIUS','KINGSLEY','IZZULHADI']
+};
+let rdrRoster = JSON.parse(localStorage.getItem(RDR_ROSTER_LS)||'null') || JSON.parse(JSON.stringify(RDR_DEFAULT_ROSTER));
+let rdrStatuses = {};
+let rdrFbUrl = RDR_HARDCODED_FB;
+let rdrFbStream = null, rdrSuppressRemote = false;
+let rdrOverrideRota = null, rdrOverrideShift = 'auto';
+
+/* ── ROTA CHIP TOGGLE STATE ─────────────────────────────────── */
+let rdrShowChips = false; // OFF by default in OH mode; ON by default in RDR mode
+
+function toggleRotaChips() {
+  const cb = document.getElementById('rota-toggle-input');
+  rdrShowChips = cb ? cb.checked : !rdrShowChips;
+  rdrBuildCalendar();
+}
+
+function setRotaChipsForMode(isRDR) {
+  rdrShowChips = isRDR;
+  const cb = document.getElementById('rota-toggle-input');
+  if (cb) cb.checked = isRDR;
+}
+
+/* ── CURRENT MODE ───────────────────────────────────────────── */
+let currentMode = localStorage.getItem(MODE_LS) || 'oh';
+
+/* ── MODE SWITCH ────────────────────────────────────────────── */
+function setMode(m) {
+  currentMode = m;
+  localStorage.setItem(MODE_LS, m);
+  applyMode();
+}
+
+function applyMode() {
+  const isOH = currentMode === 'oh';
+  // Topbar logo/title
+  const logo = document.querySelector('.t-logo');
+  const title = document.querySelector('.t-title');
+  if (isOH) {
+    logo.style.background = 'linear-gradient(135deg,var(--accent),#0ea5e9)';
+    logo.textContent = 'OH';
+    if (title) title.textContent = 'OH Movement';
+  } else {
+    logo.style.background = 'linear-gradient(135deg,var(--day),#e8670a)';
+    logo.textContent = 'RDR';
+    if (title) title.textContent = 'Roll Call';
+  }
+  // Mode buttons
+  document.getElementById('btn-oh').className = 'mode-btn' + (isOH ? ' active-oh' : '');
+  document.getElementById('btn-rdr').className = 'mode-btn' + (!isOH ? ' active-rdr' : '');
+  // Banner areas
+  document.getElementById('oh-banner-area').style.display = isOH ? '' : 'none';
+  document.getElementById('rdr-banner-area').style.display = !isOH ? '' : 'none';
+  // Auto-manage rota chips visibility
+  setRotaChipsForMode(!isOH);
+  // Grid: toggle the whole OH grid vs RDR column
+  // Calendar widget is full-width above both and always visible
+  const ohGrid = document.getElementById('oh-grid');
+  if (ohGrid) ohGrid.style.display = isOH ? '' : 'none';
+  document.getElementById('rdr-col').style.display = !isOH ? '' : 'none';
+  // Hide rota toggle in RDR mode (chips always on there), show in OH mode
+  const rotaToggleRow = document.querySelector('.rota-toggle-row');
+  if (rotaToggleRow) rotaToggleRow.style.display = !isOH ? 'none' : '';
+  // RDR shift controls inside calendar
+  const rdrCtrl = document.getElementById('rdr-shift-ctrl-section');
+  if (rdrCtrl) rdrCtrl.style.display = !isOH ? '' : 'none';
+  // Rebuild calendar (both modes show unified calendar in col 0 of grid which is always visible)
+  rdrBuildCalendar();
+  // Rebuild summaries
+  rdrBuildCalSummary(calSelectedKey);
+  if (!isOH) {
+    rdrLoadLocal(dateFromKey(curDateKey));
+    rdrRender();
+    // Sync RDR Firebase for current date
+    if (rdrFbUrl) {
+      rdrFbFetch(curDateKey).then(() => rdrFbListen(curDateKey));
+    }
+    // Set visible date input to current date
+    const vis = document.getElementById('rdr-date-input-vis');
+    if (vis) vis.value = curDateKey;
+    const hid = document.getElementById('rdr-date-input');
+    if (hid) hid.value = curDateKey;
+  }
+}
+
+/* ── PATCH: unified buildCalendar that adds RDR chips ─────────
+   We override the OH buildCalendar to add rota chips + dual dots
+   ─────────────────────────────────────────────────────────── */
+function rdrBuildCalendar() {
+  // Only patch if OH calendar is already built — we rely on OH's buildCalendar
+  // being called first; here we just re-run it with our enhancements.
+  buildCalendar(); // call OH's version (it reads OH localStorage)
+  // Now annotate each day cell with RDR chips and RDR dot
+  const rdrAll = JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
+  document.querySelectorAll('.cal-day[data-key]').forEach(el => {
+    const key = el.getAttribute('data-key');
+    const [y,m,d] = key.split('-').map(Number);
+    const td = new Date(y,m-1,d);
+    // Add/remove rota chips based on toggle state
+    const existingRow = el.querySelector('.cal-rota-row');
+    if (rdrShowChips) {
+      if (!existingRow) {
+        const sched = rdrGetSchedule(td);
+        const rotaRow = document.createElement('div');
+        rotaRow.className = 'cal-rota-row';
+        const dc = document.createElement('span');
+        dc.className = 'cal-rota-chip ' + sched.day.toLowerCase();
+        dc.textContent = sched.day + 'D';
+        const nc = document.createElement('span');
+        nc.className = 'cal-rota-chip ' + sched.night.toLowerCase();
+        nc.textContent = sched.night + 'N';
+        rotaRow.appendChild(dc);
+        rotaRow.appendChild(nc);
+        el.appendChild(rotaRow);
+      }
+    } else {
+      if (existingRow) existingRow.remove();
+    }
+    // RDR dot (amber, bottom-right)
+    el.classList.remove('has-rdr-data');
+    if (rdrAll[key]) {
+      const s = rdrAll[key].statuses||{};
+      if (Object.values(s).some(v=>v&&v.trim()&&v.trim()!=='ON DUTY')) {
+        el.classList.add('has-rdr-data');
+      }
+    }
+    // Ensure day-number is wrapped in span (OH builds it as a text node)
+    // Strip the rota row text from the day number before wrapping
+    if (!el.querySelector('.cal-day-num')) {
+      // Collect text nodes only (not element nodes like .cal-rota-row)
+      const textNodes = [...el.childNodes].filter(n => n.nodeType === 3);
+      const numTxt = textNodes.map(n => n.textContent.trim()).join('').replace(/[^0-9]/g,'');
+      // Remove text nodes
+      textNodes.forEach(n => n.remove());
+      // Prepend the num span before any existing children
+      const numEl = document.createElement('span');
+      numEl.className = 'cal-day-num';
+      numEl.textContent = numTxt || d;
+      el.insertBefore(numEl, el.firstChild);
+    }
+  });
+}
+
+/* ── RDR SCHEDULE HELPERS ──────────────────────────────────── */
+function rdrGetSchedule(date) {
+  const d = new Date(date.getFullYear(),date.getMonth(),date.getDate());
+  const a = new Date(RDR_ANCHOR.getFullYear(),RDR_ANCHOR.getMonth(),RDR_ANCHOR.getDate());
+  const diff = Math.round((d-a)/86400000);
+  return RDR_CYCLE[((diff%RDR_CYCLE.length)+RDR_CYCLE.length)%RDR_CYCLE.length];
+}
+function rdrFmtShort(date){
+  return String(date.getDate()).padStart(2,'0')+'/'+String(date.getMonth()+1).padStart(2,'0')+'/'+String(date.getFullYear()).slice(2);
+}
+function rdrGetInfo() {
+  const date = dateFromKey(curDateKey);
+  const now = new Date(), hour = now.getHours();
+  const autoShift = rdrDetectShift(hour);
+  const sched = rdrGetSchedule(date);
+  let rota, shift;
+  if (rdrOverrideRota || rdrOverrideShift !== 'auto') {
+    shift = rdrOverrideShift !== 'auto' ? rdrOverrideShift : autoShift;
+    rota = rdrOverrideRota || (shift==='Day' ? sched.day : sched.night);
+  } else {
+    shift = autoShift;
+    if (hour >= 7 && hour < 18) {
+      rota = sched.day; shift = 'Day';
+    } else if (hour >= 18) {
+      rota = sched.night; shift = 'Night';
+    } else {
+      const yesterday = new Date(date); yesterday.setDate(yesterday.getDate()-1);
+      rota = rdrGetSchedule(yesterday).night; shift = 'Night';
+    }
+  }
+  const isAuto = !rdrOverrideRota && rdrOverrideShift === 'auto';
+  return {rota, shift, date, sched, isAuto};
+}
+
+/* ── RDR BANNER UPDATES (called from main tick) ─────────────── */
+function rdrUpdateCards() {
+  const now = new Date(), hour = now.getHours();
+  const today = new Date(now.getFullYear(),now.getMonth(),now.getDate());
+  const sched = rdrGetSchedule(today);
+  let curShift, curRota, incShift, incRota;
+  if (hour >= 8 && hour < 18) {
+    curShift='Day'; curRota=sched.day; incShift='Night'; incRota=sched.night;
+  } else if (hour >= 18) {
+    curShift='Night'; curRota=sched.night;
+    const tom = new Date(today); tom.setDate(tom.getDate()+1);
+    const ts = rdrGetSchedule(tom); incShift='Day'; incRota=ts.day;
+  } else {
+    const y = new Date(today); y.setDate(y.getDate()-1);
+    const ys = rdrGetSchedule(y); curShift='Night'; curRota=ys.night;
+    incShift='Day'; incRota=sched.day;
+  }
+  const amLbl=curShift==='Day'?'AM':'PM', pmLbl=incShift==='Day'?'AM':'PM';
+  const cur=document.getElementById('card-current-rota');
+  cur.textContent=`Rota ${curRota.replace('R','')} · ${amLbl} Shift`;
+  cur.className='banner-rota '+(curRota==='R1'?'rota-r1':curRota==='R2'?'rota-r2':'rota-r3');
+  const inc=document.getElementById('card-incoming-rota');
+  inc.textContent=`Rota ${incRota.replace('R','')} · ${pmLbl} Shift`;
+  inc.className='banner-rota '+(incRota==='R1'?'rota-r1':incRota==='R2'?'rota-r2':'rota-r3');
+  const endHour=curShift==='Day'?18:8;
+  const s2=secondsUntilHour ? secondsUntilHour(endHour) : rdrSecsUntilHour(endHour);
+  document.getElementById('banner-countdown').textContent=hms(s2);
+  document.getElementById('banner-countdown-label').textContent=curShift==='Day'?'AM shift ends in':'PM shift ends in';
+  rdrUpdateCCTV();
+}
+function rdrSecsUntilHour(h){const n=new Date(),t=new Date(n);t.setHours(h,0,0,0);if(t<=n)t.setDate(t.getDate()+1);return Math.floor((t-n)/1000);}
+function secondsUntilHour(h){return rdrSecsUntilHour(h);}
+function rdrM2s(m){const r=m%(24*60);return String(Math.floor(r/60)).padStart(2,'0')+String(r%60).padStart(2,'0');}
+function rdrSecsUntilMins(tm){const n=new Date(),c=n.getHours()*60+n.getMinutes();let d=tm-c;if(d<0)d+=24*60;return d*60-n.getSeconds();}
+function rdrUpdateCCTV() {
+  const{shift}=rdrGetInfo();
+  const times=shift==='Day'?[10*60,14*60]:[20*60,25*60];
+  const now=new Date(),cur=now.getHours()*60+now.getMinutes(),isNight=shift==='Night';
+  const pills=document.getElementById('cctv-pills');pills.innerHTML='';
+  let adjCur=cur; if(isNight&&cur<8*60)adjCur=cur+24*60;
+  let nextIdx=-1;
+  times.forEach((t,i)=>{
+    const pill=document.createElement('div');pill.className='cctv-pill';
+    const isPast=t<=adjCur;
+    if(!isPast&&nextIdx===-1){nextIdx=i;pill.classList.add(isNight?'next-night':'next');}
+    else if(isPast)pill.classList.add('past');
+    pill.textContent=rdrM2s(t)+'hrs';
+    pills.appendChild(pill);
+  });
+  const cd=document.getElementById('cctv-cdown');
+  cd.className='cctv-cdown'+(isNight?' night-mode':'');
+  if(nextIdx>=0)cd.textContent=hms(rdrSecsUntilMins(times[nextIdx]))+' to CCTV';
+  else cd.textContent='All CCTV checks done';
+}
+
+/* ── PATCH the main tick to also update RDR when in RDR mode ── */
+function tick() {
+  // update clock manually since we override
+  const n=new Date();
+  document.getElementById('t-clock').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0');
+  if(currentMode==='oh'){updateBanner();updateRCBar();}
+  else{rdrUpdateCards();}
+}
+
+/* ── PATCH buildCalSummary to show BOTH OH and RDR ───────────── */
+function buildCalSummary(key) {
+  rdrBuildCalSummary(key);
+}
+function rdrBuildCalSummary(key) {
+  const wrap = document.getElementById('cal-summary');
+  if (!wrap) return;
+  const ohAll = JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
+  const rdrAll = JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
+  const d = dateFromKey(key);
+  wrap.innerHTML = '';
+  const div = document.createElement('div'); div.className = 'cal-summary';
+  const hdr = document.createElement('div'); hdr.className = 'cal-sum-date';
+  hdr.textContent = fmt(d)+' '+dayName(d); div.appendChild(hdr);
+
+  // OH section
+  const ohHdr = document.createElement('div'); ohHdr.className = 'cal-sum-oh-hdr'; ohHdr.textContent = 'OH'; div.appendChild(ohHdr);
+  const ohSaved = ohAll[key];
+  let ohAny = false;
+  if (ohSaved && ohSaved.statuses) {
+    const names = [...(roster.MAIN||[]),...(roster.EMS||[])];
+    names.forEach(n => {
+      const grp = (roster.EMS||[]).includes(n) ? 'EMS' : 'MAIN';
+      const st = (ohSaved.statuses[grp+'-'+n]||'').trim();
+      if (st) {
+        ohAny = true;
+        const row=document.createElement('div');row.className='cal-sum-row';
+        const nm=document.createElement('span');nm.className='cal-sum-name';nm.textContent=n;
+        const sv=document.createElement('span');sv.className='cal-sum-status';sv.textContent=st;
+        row.appendChild(nm);row.appendChild(sv);div.appendChild(row);
+      }
+    });
+  }
+  if (!ohAny) { const e=document.createElement('div');e.className='cal-sum-empty';e.textContent='No statuses recorded.';div.appendChild(e); }
+
+  // Divider + RDR section
+  const divEl = document.createElement('div'); divEl.className = 'cal-sum-divider'; div.appendChild(divEl);
+  const rdrHdr = document.createElement('div'); rdrHdr.className = 'cal-sum-rdr-hdr'; rdrHdr.textContent = 'RDR'; div.appendChild(rdrHdr);
+  const rdrSaved = rdrAll[key];
+  let rdrAny = false;
+  if (rdrSaved && rdrSaved.statuses) {
+    const seen = new Set();
+    ['R1','R2','R3'].forEach(r => {
+      (rdrRoster[r]||[]).forEach(n => {
+        const k = r+'-'+n;
+        if (seen.has(k)) return; seen.add(k);
+        const st = (rdrSaved.statuses[k]||'').trim();
+        if (st && st !== 'ON DUTY') {
+          rdrAny = true;
+          const row=document.createElement('div');row.className='cal-sum-row';
+          const nm=document.createElement('span');nm.className='cal-sum-name';nm.textContent=n+' ('+r+')';
+          const sv=document.createElement('span');sv.className='cal-sum-status';sv.textContent=st;
+          row.appendChild(nm);row.appendChild(sv);div.appendChild(row);
+        }
+      });
+    });
+  }
+  if (!rdrAny) { const e=document.createElement('div');e.className='cal-sum-empty';e.textContent='No off-duty statuses.';div.appendChild(e); }
+  wrap.appendChild(div);
+}
+
+/* ── PATCH selectCalDay to also load RDR data ────────────────── */
+function navigateToDate(key) {
+  _ohNavigateToDate(key);
+  // Also load RDR data for this date
+  rdrLoadLocal(dateFromKey(key));
+  if (currentMode === 'rdr') {
+    rdrRender();
+    if (rdrFbUrl) rdrFbFetch(key).then(() => rdrFbListen(key));
+    const vis = document.getElementById('rdr-date-input-vis');
+    if (vis) vis.value = key;
+  }
+}
+
+/* ── RDR LOCAL STORAGE ─────────────────────────────────────── */
+function rdrSaveLocal() {
+  const all = JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
+  all[curDateKey] = { statuses: Object.assign({}, rdrStatuses) };
+  localStorage.setItem(RDR_SAVED_LS, JSON.stringify(all));
+  clearTimeout(rdrSaveLocal._t);
+  rdrSaveLocal._t = setTimeout(() => rdrFbPush(curDateKey), 800);
+}
+function rdrLoadLocal(date) {
+  const key = fmtKey(date);
+  const all = JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
+  const saved = all[key];
+  rdrStatuses = saved ? Object.assign({}, saved.statuses) : {};
+}
+
+/* ── RDR FIREBASE ───────────────────────────────────────────── */
+function rdrFbBase(){return rdrFbUrl?rdrFbUrl.replace(/\/+$/,''):null}
+async function rdrFbPush(dateKey) {
+  if(!rdrFbBase())return;
+  try{await fetch(rdrFbBase()+'/data/'+dateKey+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({statuses:Object.assign({},rdrStatuses)})});}
+  catch(e){}
+}
+async function rdrFbFetch(k) {
+  if(!rdrFbBase())return;
+  try{const r=await fetch(rdrFbBase()+'/data/'+k+'.json');if(!r.ok)throw 0;const d=await r.json();if(d&&d.statuses)rdrApplyRemote(d);}
+  catch(e){}
+}
+async function rdrFbFetchRoster() {
+  if(!rdrFbBase())return false;
+  try{const r=await fetch(rdrFbBase()+'/roster.json');if(!r.ok)throw 0;const d=await r.json();if(d&&(d.R1||d.R2||d.R3)){rdrRoster={R1:d.R1||[],R2:d.R2||[],R3:d.R3||[]};localStorage.setItem(RDR_ROSTER_LS,JSON.stringify(rdrRoster));return true;}}
+  catch(e){}return false;
+}
+function rdrApplyRemote(d) {
+  if(rdrSuppressRemote||!d||!d.statuses)return;
+  let changed=false;
+  Object.entries(d.statuses).forEach(([k,v])=>{if(rdrStatuses[k]!==v){rdrStatuses[k]=v;changed=true;}});
+  if(changed){rdrRender();rdrBuildCalendar();}
+}
+function rdrFbListen(k) {
+  if(rdrFbStream){rdrFbStream.close();rdrFbStream=null;}
+  if(!rdrFbBase())return;
+  try{
+    const es=new EventSource(rdrFbBase()+'/data/'+k+'.json?stream=true',{withCredentials:false});
+    rdrFbStream=es;
+    es.addEventListener('put',e=>{try{const d=JSON.parse(e.data);if(d&&d.data)rdrApplyRemote(d.data);}catch(_){}});
+    es.addEventListener('patch',e=>{try{const d=JSON.parse(e.data);if(!d||!d.data)return;const path=(d.path||'').replace(/^\//,'');if(!path||path==='statuses')rdrApplyRemote(path?{statuses:d.data}:d.data);else if(path.startsWith('statuses/'))rdrApplyRemote({statuses:{[path.replace('statuses/','')]:d.data}});}catch(_){}});
+    es.onopen=()=>setSyncUI('online');
+    es.onerror=()=>{setSyncUI('offline');setTimeout(()=>rdrFbListen(k),5000);};}
+  catch(e){}
+}
+async function rdrFbSyncCalendarDots() {
+  if(!rdrFbBase())return;
+  try{
+    const r=await fetch(rdrFbBase()+'/data.json?shallow=true');
+    if(!r.ok)return;
+    const keys=await r.json();
+    if(!keys||typeof keys!=='object')return;
+    const all=JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
+    await Promise.all(Object.keys(keys).map(async k=>{
+      try{
+        const r2=await fetch(rdrFbBase()+'/data/'+k+'.json');
+        if(!r2.ok)return;
+        const d=await r2.json();
+        if(d&&d.statuses){
+          if(!all[k])all[k]={statuses:{}};
+          all[k].statuses=Object.assign({},all[k].statuses,d.statuses);
+        }
+      }catch(_){}
+    }));
+    localStorage.setItem(RDR_SAVED_LS,JSON.stringify(all));
+    rdrBuildCalendar();
+  }catch(_){}
+}
+
+/* ── RDR RENDER ─────────────────────────────────────────────── */
+function rdrRender() {
+  const{rota,shift,date,sched,isAuto}=rdrGetInfo();
+  const roNum=rota.replace('R',''), shiftLabel=shift==='Day'?'AM':'PM';
+  // Badge
+  const badge=document.getElementById('rdr-ctrl-badge');
+  if(badge){badge.textContent=isAuto?'AUTO':'OVERRIDE';badge.className='badge '+(isAuto?(shift==='Day'?'b-in':'b-ov'):'b-ov');}
+  // Sublabel
+  const subl=document.getElementById('rdr-ctrl-sublabel-top');
+  if(subl){
+    if(!isAuto&&rdrOverrideShift!=='auto'){
+      subl.textContent=rdrFmtShort(date)+' · AM → Rota '+sched.day.replace('R','')+' · PM → Rota '+sched.night.replace('R','');
+      subl.style.display='';
+    }else subl.style.display='none';
+  }
+  // Rota label
+  const rl=document.getElementById('rdr-rota-label');
+  if(rl){rl.textContent='Rota '+roNum+' · '+shiftLabel;rl.className='rota-r'+roNum;}
+  // Pills
+  ['R1','R2','R3'].forEach(r=>{const btn=document.getElementById('pill-'+r);if(btn){const cc=r==='R1'?'pill-r1':r==='R2'?'pill-r2':'pill-r3';btn.className='pill'+(rdrOverrideRota===r?' '+cc:'');}});
+  const dBtn=document.getElementById('pill-Day'),nBtn=document.getElementById('pill-Night'),aBtn=document.getElementById('pill-auto');
+  if(dBtn)dBtn.className='pill'+(rdrOverrideShift==='Day'?' p-day':'');
+  if(nBtn)nBtn.className='pill'+(rdrOverrideShift==='Night'?' p-night':'');
+  if(aBtn)aBtn.className='pill'+(rdrOverrideShift==='auto'?' p-neutral':'');
+  // ctrl-sublabel (inside shift controls)
+  const cs=document.getElementById('ctrl-sublabel');
+  if(cs){
+    if(!isAuto&&rdrOverrideShift!=='auto'){cs.textContent=rdrFmtShort(date)+' · AM → Rota '+sched.day.replace('R','')+' · PM → Rota '+sched.night.replace('R','');cs.style.display='';}
+    else cs.style.display='none';
+  }
+  // Person list
+  const list=document.getElementById('rdr-person-list');if(!list)return;
+  list.innerHTML='';
+  ['R1','R2','R3'].forEach(r=>{
+    const people=rdrRoster[r]||[];if(!people.length)return;
+    const lbl=document.createElement('div');lbl.className='rota-slbl '+r.toLowerCase();
+    lbl.textContent='Rota '+r.replace('R','')+(r===rota?' · '+shiftLabel+' (active)':'');
+    list.appendChild(lbl);
+    people.forEach((name,idx)=>{
+      const key=r+'-'+name;if(!rdrStatuses[key])rdrStatuses[key]='ON DUTY';
+      const block=document.createElement('div');block.className='person-block';
+      const top=document.createElement('div');top.className='person-top';
+      const rank=document.createElement('span');rank.className='person-rank';rank.textContent=idx+1;
+      const nameEl=document.createElement('span');nameEl.className='person-name';nameEl.textContent=name;
+      const wrap=document.createElement('div');wrap.className='status-wrap';
+      const input=document.createElement('input');input.type='text';input.className='status-input';
+      input.value=rdrStatuses[key];input.placeholder='status…';
+      input.setAttribute('autocomplete','off');input.setAttribute('autocorrect','off');
+      input.setAttribute('autocapitalize','characters');input.setAttribute('spellcheck','false');
+      input.addEventListener('input',()=>{rdrSuppressRemote=true;rdrStatuses[key]=input.value;rdrRefreshBlockStyle(block,input.value);rdrUpdatePreview();clearTimeout(input._sr);input._sr=setTimeout(()=>rdrSuppressRemote=false,2000);});
+      input.addEventListener('focus',()=>block.classList.add('focused'));
+      input.addEventListener('blur',()=>setTimeout(()=>block.classList.remove('focused'),180));
+      wrap.appendChild(input);top.appendChild(rank);top.appendChild(nameEl);top.appendChild(wrap);block.appendChild(top);
+      const chipsRow=document.createElement('div');chipsRow.className='chips-row';
+      const onChip=document.createElement('button');onChip.className='chip chip-on';onChip.textContent='ON DUTY';onChip.type='button';
+      onChip.addEventListener('mousedown',e=>{e.preventDefault();input.value='ON DUTY';rdrStatuses[key]='ON DUTY';rdrRefreshBlockStyle(block,'ON DUTY');leaveChips.classList.remove('open');rdrUpdatePreview();});
+      const offChip=document.createElement('button');offChip.className='chip chip-off-expand';offChip.textContent='OFF DUTY ▾';offChip.type='button';
+      offChip.addEventListener('mousedown',e=>{e.preventDefault();leaveChips.classList.toggle('open');});
+      const ftChip=document.createElement('button');ftChip.className='chip chip-freetext';ftChip.textContent='Custom…';ftChip.type='button';
+      ftChip.addEventListener('mousedown',e=>{e.preventDefault();input.value='';rdrStatuses[key]='';input.focus();rdrRefreshBlockStyle(block,'');rdrUpdatePreview();});
+      chipsRow.appendChild(onChip);chipsRow.appendChild(offChip);chipsRow.appendChild(ftChip);block.appendChild(chipsRow);
+      const leaveChips=document.createElement('div');leaveChips.className='leave-chips';
+      const RDR_LD=[{label:'OFF DUTY',type:'set',val:'OFF DUTY'},{label:'RS',type:'suffix',code:'RS'},{label:'MC',type:'datepick',code:'MC'},{label:'VL',type:'datepick',code:'VL'},{label:'OVL',type:'datepick',code:'OVL'},{label:'HL',type:'suffix',code:'HL'},{label:'CL',type:'datepick',code:'CL'}];
+      RDR_LD.forEach(def=>{
+        const b=document.createElement('button');b.className='lchip';b.textContent=def.label;b.type='button';
+        b.addEventListener('mousedown',e=>{
+          e.preventDefault();
+          if(def.type==='set'){input.value=def.val;rdrStatuses[key]=def.val;rdrRefreshBlockStyle(block,def.val);}
+          else if(def.type==='suffix'){input.value='OFF DUTY ('+def.code+')';rdrStatuses[key]=input.value;rdrRefreshBlockStyle(block,input.value);}
+          else if(def.type==='datepick'){rdrOpenDatePicker(def.code,input,key,block);leaveChips.classList.remove('open');return;}
+          leaveChips.classList.remove('open');rdrUpdatePreview();
+        });
+        leaveChips.appendChild(b);
+      });
+      block.appendChild(leaveChips);rdrRefreshBlockStyle(block,rdrStatuses[key]);list.appendChild(block);
+    });
+  });
+  rdrUpdatePreview();
+}
+function rdrRefreshBlockStyle(block,val){const v=(val||'').toUpperCase();if(v==='ON DUTY')block.classList.remove('off-duty');else if(v.startsWith('OFF DUTY')||v==='MC'||v==='RS'||v==='HL')block.classList.add('off-duty');else block.classList.remove('off-duty');}
+
+/* Convert stored RDR status → compact TSV/display value
+   ON DUTY            → IN
+   ON DUTY (Late)     → IN (Late)
+   OFF DUTY (VL)      → VL
+   OFF DUTY (OVL 05/06 - 06/06) → OVL
+   OFF DUTY           → OFF
+   blank              → blank (preserved)                     */
+function rdrDisplayStatus(raw) {
+  const v = (raw || '').trim();
+  if (!v) return '';
+  const onMatch = v.match(/^ON\s+DUTY\s*(?:\(([^)]+)\))?$/i);
+  if (onMatch) return onMatch[1] ? 'IN (' + onMatch[1].trim() + ')' : 'IN';
+  const offMatch = v.match(/^OFF\s+DUTY\s*\(([^)]+)\)/i);
+  if (offMatch) {
+    // Strip trailing date range e.g. "OVL 05/06 - 06/06" → "OVL"
+    const reason = offMatch[1].replace(/\s+\d{1,2}\/\d{1,2}.*$/, '').trim();
+    return reason || 'OFF';
+  }
+  if (/^OFF\s+DUTY$/i.test(v)) return 'OFF';
+  return v; // custom / freetext passes through as-is
+}
+function rdrUpdatePreview(){
+  const{rota,shift,date}=rdrGetInfo();
+  const roNum=rota.replace('R',''),shiftLabel=shift==='Day'?'AM':'PM';
+  const lines=['Attendance and Roll Call','',`Rota ${roNum} ${shiftLabel} Shift ${rdrFmtShort(date)}`];
+  (rdrRoster[rota]||[]).forEach(name=>{const key=rota+'-'+name;lines.push(`${name} - ${(rdrStatuses[key]||'ON DUTY').trim()}`);});
+  const box=document.getElementById('rdr-preview-box');if(box)box.value=lines.join('\n');
+  const lbl=document.getElementById('rdr-preview-label');if(lbl)lbl.textContent='Rota '+roNum+' · '+shiftLabel+' · '+rdrFmtShort(date);
+  rdrSaveLocal();rdrBuildCalendar();
+}
+function rdrCopyMsg(){
+  const text=document.getElementById('rdr-preview-box').value;
+  const btn=document.getElementById('rdr-copy-btn');
+  const ok=()=>{btn.classList.add('success');btn.textContent='✓  Copied!';setTimeout(()=>{btn.classList.remove('success');btn.innerHTML='✦ &nbsp;Copy to Clipboard';},2500);};
+  navigator.clipboard.writeText(text).then(ok).catch(()=>{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();});
+}
+
+/* ── SHIFT CONTROLS ─────────────────────────────────────────── */
+function rdrToggleCalCtrl(){const b=document.getElementById('cal-ctrl-body'),c=document.getElementById('cal-ctrl-chevron');const open=b.classList.toggle('open');c.style.transform=open?'rotate(90deg)':'rotate(0deg)';}
+function setRotaOverride(r){rdrOverrideRota=rdrOverrideRota===r?null:r;rdrLoadLocal(dateFromKey(curDateKey));rdrRender();}
+function setShiftOverride(s){rdrOverrideShift=s;rdrLoadLocal(dateFromKey(curDateKey));rdrRender();}
+function rdrOnDateChange(){}
+function rdrDateInputChange(){const v=document.getElementById('rdr-date-input-vis').value;if(v)selectCalDay(v);}
+function rdrShiftDay(n){const d=dateFromKey(curDateKey);d.setDate(d.getDate()+n);selectCalDay(fmtKey(d));}
+function rdrGoToday(){selectCalDay(fmtKey(new Date()));}
+
+/* ── RDR ROSTER EDITOR ──────────────────────────────────────── */
+function rdrBuildRED(){
+  const ed=document.getElementById('rdr-red');if(!ed)return;ed.innerHTML='';
+  ['R1','R2','R3'].forEach(grp=>{
+    const l=document.createElement('div');l.className='rgl rdr-grp';l.textContent='Rota '+grp.replace('R','');ed.appendChild(l);
+    (rdrRoster[grp]||[]).forEach((n,i)=>{
+      const row=document.createElement('div');row.className='rrow';
+      const inp=document.createElement('input');inp.type='text';inp.className='ri';inp.value=n;inp.placeholder='NAME';inp.setAttribute('autocapitalize','characters');
+      inp.addEventListener('input',()=>{rdrRoster[grp][i]=inp.value.toUpperCase();});
+      const del=document.createElement('button');del.className='rdel';del.textContent='×';del.onclick=()=>{rdrRoster[grp].splice(i,1);rdrBuildRED();};
+      row.appendChild(inp);row.appendChild(del);ed.appendChild(row);
+    });
+    const a=document.createElement('button');a.className='radd';a.textContent='+ Add Rota '+grp.replace('R','')+' member';
+    a.onclick=()=>{rdrRoster[grp].push('');rdrBuildRED();};ed.appendChild(a);
+  });
+}
+function rdrSaveRoster(){
+  ['R1','R2','R3'].forEach(g=>{rdrRoster[g]=(rdrRoster[g]||[]).map(n=>n.trim().toUpperCase()).filter(Boolean);});
+  localStorage.setItem(RDR_ROSTER_LS,JSON.stringify(rdrRoster));
+  rdrStatuses={};rdrRender();
+  if(rdrFbBase()){fetch(rdrFbBase()+'/roster.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(rdrRoster)}).catch(()=>{});}
+  showToast('✓ RDR Roster saved!');rdrBuildRED();rdrBuildCalendar();
+}
+
+/* ── RDR DATE PICKER ────────────────────────────────────────── */
+function rdrOpenDatePicker(code,input,key,block){
+  const ex=document.getElementById('rdr-dp-overlay');if(ex)ex.remove();
+  const today=new Date();let vY=today.getFullYear(),vM=today.getMonth(),p1=null,p2=null;
+  const overlay=document.createElement('div');overlay.className='dp-overlay';overlay.id='rdr-dp-overlay';
+  const modal=document.createElement('div');modal.className='dp-modal';
+  modal.addEventListener('mousedown',e=>e.stopPropagation());
+  function fp(d){return String(d.getDate()).padStart(2,'0')+'/'+String(d.getMonth()+1).padStart(2,'0');}
+  function build(){
+    modal.innerHTML='';
+    const hdr=document.createElement('div');hdr.className='dp-header';
+    const pv=document.createElement('button');pv.className='dp-nav';pv.textContent='‹';pv.addEventListener('mousedown',e=>{e.preventDefault();vM--;if(vM<0){vM=11;vY--;}build();});
+    const nx=document.createElement('button');nx.className='dp-nav';nx.textContent='›';nx.addEventListener('mousedown',e=>{e.preventDefault();vM++;if(vM>11){vM=0;vY++;}build();});
+    const tt=document.createElement('span');tt.className='dp-title';tt.textContent=new Date(vY,vM,1).toLocaleDateString('en-SG',{month:'long',year:'numeric'});
+    hdr.appendChild(pv);hdr.appendChild(tt);hdr.appendChild(nx);modal.appendChild(hdr);
+    const gr=document.createElement('div');gr.className='dp-grid';
+    ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d=>{const e=document.createElement('div');e.className='dp-dow';e.textContent=d;gr.appendChild(e);});
+    const fd=new Date(vY,vM,1).getDay(),dim=new Date(vY,vM+1,0).getDate();
+    for(let i=0;i<fd;i++){const e=document.createElement('button');e.className='dp-day empty';gr.appendChild(e);}
+    for(let d=1;d<=dim;d++){
+      const td=new Date(vY,vM,d);const e=document.createElement('button');e.className='dp-day';e.textContent=d;
+      if(td.toDateString()===today.toDateString())e.classList.add('today');
+      if(p1&&td.toDateString()===p1.toDateString())e.classList.add('selected');
+      else if(p2&&td.toDateString()===p2.toDateString())e.classList.add('range-end');
+      else if(p1&&p2&&td>p1&&td<p2)e.classList.add('in-range');
+      e.addEventListener('mousedown',ev=>{ev.preventDefault();if(!p1){p1=td;p2=null;}else if(!p2){if(td>p1)p2=td;else if(td.toDateString()===p1.toDateString())p1=null;else{p1=td;p2=null;}}else{p1=td;p2=null;}build();});
+      gr.appendChild(e);
+    }
+    modal.appendChild(gr);
+    const hi=document.createElement('div');hi.className='dp-hint';hi.textContent=!p1?'tap a date':!p2?fp(p1)+' — tap for range':code+' ('+fp(p1)+' - '+fp(p2)+')';modal.appendChild(hi);
+    const ac=document.createElement('div');ac.className='dp-actions';
+    const ca=document.createElement('button');ca.className='dp-cancel';ca.textContent='Cancel';ca.addEventListener('mousedown',e=>{e.preventDefault();overlay.remove();});
+    const ok=document.createElement('button');ok.className='dp-confirm';ok.textContent='Confirm';ok.disabled=!p1;
+    ok.addEventListener('mousedown',e=>{
+      e.preventDefault();if(!p1)return;
+      const offCodes=['MC','VL','OVL','CL'];const autoBase=offCodes.includes(code)?'OFF DUTY':(input.value.split(' (')[0]||'ON DUTY');
+      const suf=p2?code+' ('+fp(p1)+' - '+fp(p2)+')':code+' ('+fp(p1)+')';
+      input.value=autoBase+' '+suf;rdrStatuses[key]=input.value;
+      if(block)rdrRefreshBlockStyle(block,input.value);rdrUpdatePreview();overlay.remove();
+    });
+    ac.appendChild(ca);ac.appendChild(ok);modal.appendChild(ac);
+  }
+  build();overlay.appendChild(modal);overlay.addEventListener('mousedown',()=>overlay.remove());document.body.appendChild(overlay);
+}
+
+/* ── PATCH export to support OH+RDR source ───────────────────── */
+let exSrc = 'oh';
+function setExSrc(s){
+  exSrc=s;
+  ['oh','rdr','both'].forEach(x=>{
+    const btn=document.getElementById('ex-src-'+x);
+    if(btn)btn.className='ex-src-btn'+(x===s?' active-'+s:'');
+  });
+  exBuildPicker();
+}
+
+/* Patch openExportModal to accept both data sources */
+function openExportModal(){
+  const ohAll=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
+  const rdrAll=JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
+  const allKeys=[...new Set([...Object.keys(ohAll),...Object.keys(rdrAll)])].sort();
+  if(!allKeys.length){showToast('No calendar data to export yet.');return;}
+  exPickStart=null;exPickEnd=null;
+  const ld=dateFromKey(allKeys[allKeys.length-1]);
+  exViewMonth=ld.getMonth();exViewYear=ld.getFullYear();
+  document.getElementById('ex-dialog').style.display='flex';
+  setExSrc(exSrc);
+}
+
+/* Patch exBuildPicker to use exSrc */
+function exBuildPicker(){
+  const ohAll=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
+  const rdrAll=JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
+  const firstDay=new Date(exViewYear,exViewMonth,1);
+  document.getElementById('ex-cal-month').textContent=firstDay.toLocaleDateString('en-SG',{month:'long',year:'numeric'});
+  const grid=document.getElementById('ex-cal-grid');grid.innerHTML='';
+  ['Su','Mo','Tu','We','Th','Fr','Sa'].forEach(d=>{const e=document.createElement('div');e.className='ex-cal-dow';e.textContent=d;grid.appendChild(e);});
+  const startDow=firstDay.getDay(),dim=new Date(exViewYear,exViewMonth+1,0).getDate();
+  for(let i=0;i<startDow;i++){const e=document.createElement('div');e.className='ex-cal-day empty';grid.appendChild(e);}
+  for(let d=1;d<=dim;d++){
+    const td=new Date(exViewYear,exViewMonth,d),key=fmtKey(td);
+    const ohHas=!!(ohAll[key]&&ohAll[key].statuses&&Object.values(ohAll[key].statuses).some(v=>v&&v.trim()));
+    const rdrHas=!!(rdrAll[key]&&rdrAll[key].statuses&&Object.values(rdrAll[key].statuses).some(v=>v&&v.trim()&&v.trim()!=='ON DUTY'));
+    const hasData=(exSrc==='oh'&&ohHas)||(exSrc==='rdr'&&rdrHas)||(exSrc==='both'&&(ohHas||rdrHas));
+    const el=document.createElement('div');el.className='ex-cal-day'+(hasData?' has-data':' no-data');el.textContent=d;el.setAttribute('data-key',key);
+    if(exPickStart&&exPickEnd){const s=exPickStart<exPickEnd?exPickStart:exPickEnd,e2=exPickStart<exPickEnd?exPickEnd:exPickStart;if(key===s)el.classList.add('range-start');else if(key===e2)el.classList.add('range-end');else if(key>s&&key<e2)el.classList.add('in-range');}
+    else if(exPickStart&&key===exPickStart)el.classList.add('range-start');
+    if(hasData)el.addEventListener('click',()=>exPickDay(key));
+    grid.appendChild(el);
+  }
+  exUpdateHint();
+}
+
+/* Patch exUpdateHint for mixed sources */
+function exUpdateHint(){
+  const hint=document.getElementById('ex-hint'),btn=document.getElementById('ex-copy-btn');
+  if(!exPickStart){hint.textContent='Click a date to start';hint.className='ex-hint';btn.disabled=true;return;}
+  if(!exPickEnd){hint.textContent='Now click the end date';hint.className='ex-hint';btn.disabled=true;return;}
+  const s=exPickStart<exPickEnd?exPickStart:exPickEnd,e=exPickStart<exPickEnd?exPickEnd:exPickStart;
+  const ohAll=JSON.parse(localStorage.getItem(SAVED_LS)||'{}'),rdrAll=JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
+  let withData=0,total=0;const cursor=new Date(s+'T00:00:00'),end=new Date(e+'T00:00:00');
+  while(cursor<=end){const k=fmtKey(cursor);total++;
+    const ohHas=!!(ohAll[k]&&ohAll[k].statuses&&Object.values(ohAll[k].statuses).some(v=>v&&v.trim()));
+    const rdrHas=!!(rdrAll[k]&&rdrAll[k].statuses&&Object.values(rdrAll[k].statuses).some(v=>v&&v.trim()&&v.trim()!=='ON DUTY'));
+    if((exSrc==='oh'&&ohHas)||(exSrc==='rdr'&&rdrHas)||(exSrc==='both'&&(ohHas||rdrHas)))withData++;
+    cursor.setDate(cursor.getDate()+1);}
+  if(!withData){hint.textContent='No data in selected range';hint.className='ex-hint warn';btn.disabled=true;return;}
+  const missing=total-withData;hint.textContent=`${withData} day${withData>1?'s':''} with data${missing?' · '+missing+' empty':''}`;
+  hint.className=missing?'ex-hint warn':'ex-hint ok';btn.disabled=false;
+}
+
+/* Patch exCopy for mixed sources */
+function exCopy(){
+  if(!exPickStart||!exPickEnd)return;
+  const s=exPickStart<exPickEnd?exPickStart:exPickEnd,e=exPickStart<exPickEnd?exPickEnd:exPickStart;
+  const ohAll=JSON.parse(localStorage.getItem(SAVED_LS)||'{}'),rdrAll=JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
+  const dates=[];const cursor=new Date(s+'T00:00:00'),end=new Date(e+'T00:00:00');
+  while(cursor<=end){dates.push(fmtKey(new Date(cursor)));cursor.setDate(cursor.getDate()+1);}
+  const nameKeys=[];
+  if(exSrc==='oh'||exSrc==='both'){[...(roster.MAIN||[])].forEach(n=>nameKeys.push('MAIN-'+n));[...(roster.EMS||[])].forEach(n=>nameKeys.push('EMS-'+n));}
+  if(exSrc==='rdr'||exSrc==='both'){['R1','R2','R3'].forEach(r=>{(rdrRoster[r]||[]).forEach(n=>{const k=r+'-'+n;if(!nameKeys.includes(k))nameKeys.push(k);});});}
+  let html='<table>';const tsvRows=[];
+  nameKeys.forEach(sk=>{html+='<tr>';const cols=dates.map(dk=>{
+    let sv='';
+    if(sk.startsWith('R1-')||sk.startsWith('R2-')||sk.startsWith('R3-')){sv=(rdrAll[dk]&&rdrAll[dk].statuses&&rdrAll[dk].statuses[sk])||'';}
+    else{sv=(ohAll[dk]&&ohAll[dk].statuses&&ohAll[dk].statuses[sk])||'';}
+    html+=`<td style="font-family:Calibri;font-size:${sv.length>3?'8pt':'11pt'}">${sv}</td>`;return sv;
+  });html+='</tr>';tsvRows.push(cols.join('\t'));});
+  html+='</table>';const tsv=tsvRows.join('\n');
+  const btn=document.getElementById('ex-copy-btn');
+  const ok=()=>{btn.textContent='✓ Copied!';setTimeout(()=>{btn.textContent='Copy TSV';closeExportModal();},1800);};
+  if(window.ClipboardItem){navigator.clipboard.write([new ClipboardItem({'text/html':new Blob([html],{type:'text/html'}),'text/plain':new Blob([tsv],{type:'text/plain'})})]).then(ok).catch(()=>navigator.clipboard.writeText(tsv).then(ok));}
+  else{navigator.clipboard.writeText(tsv).then(ok).catch(()=>{const ta=document.createElement('textarea');ta.value=tsv;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();});}
+}
+
+/* ═══════════════════════ RDR IMPORT ════════════════════════ */
+var rdrImpData = null;
+var _rdrImpPreviewKeys = [];
+
+function togRdrImp() {
+  const body = document.getElementById('rdr-imp-body');
+  const chev = document.getElementById('rdr-imp-chev');
+  const hdr = document.getElementById('rdr-imp-panel-hdr');
+  const open = body.classList.toggle('open');
+  chev.classList.toggle('open', open);
+  if (hdr) hdr.classList.toggle('open', open);
+}
+
+function rdrImpClear() {
+  document.getElementById('rdr-imp-ta').value = '';
+  document.getElementById('rdr-imp-status').textContent = '';
+  document.getElementById('rdr-imp-status').className = 'imp-status';
+  document.getElementById('rdr-imp-table-sect').style.display = 'none';
+  document.getElementById('rdr-imp-to-cal-btn').style.display = 'none';
+  document.getElementById('rdr-imp-table').innerHTML = '';
+  _rdrImpPreviewKeys.forEach(k => { const el = document.querySelector(`.cal-day[data-key="${k}"]`); if (el) el.classList.remove('pending'); });
+  _rdrImpPreviewKeys = [];
+  const hdr = document.getElementById('rdr-imp-panel-hdr');
+  if (hdr) hdr.classList.remove('has-pending');
+  const hint = document.getElementById('rdr-imp-panel-hint');
+  if (hint) hint.textContent = 'paste attendance → calendar';
+  rdrImpData = null;
+}
+
+function rdrImpHandlePaste(e) { setTimeout(() => rdrImpLivePreview(), 0); }
+
+function rdrStripEmoji(s) {
+  return s
+    .replace(/[\u{1F000}-\u{1FFFF}]/gu, '').replace(/[\u2600-\u27BF]/g, '')
+    .replace(/[\uFE0F\u200D]/g, '').replace(/[✅✓✔☑]/g, '')
+    .replace(/\s{2,}/g, ' ').trim();
+}
+
+function rdrImpParseHeader(line) {
+  // Matches: "Rota 3 AM Shift 07/06/26" or "Rota 2 NIGHT Shift 6/6/2026"
+  const m = line.match(/rota\s*([123])\s+(AM|PM|NIGHT|DAY)\s+shift\s+(\d{1,2})\/(\d{1,2})\/(\d{2,4})/i);
+  if (!m) return null;
+  const rota = 'R' + m[1];
+  const shiftRaw = m[2].toUpperCase();
+  const shift = (shiftRaw === 'AM' || shiftRaw === 'DAY') ? 'Day' : 'Night';
+  let day = parseInt(m[3]), month = parseInt(m[4]), year = parseInt(m[5]);
+  if (year < 100) year += 2000;
+  const key = year + '-' + String(month).padStart(2, '0') + '-' + String(day).padStart(2, '0');
+  return { rota, shift, day, month, year, key };
+}
+
+function rdrImpNormalizeStatus(raw) {
+  const clean = rdrStripEmoji(raw).trim();
+  const upper = clean.toUpperCase();
+  const offMatch = upper.match(/^OFF\s+DUTY\s*\(([^)]+)\)/);
+  if (offMatch) return 'OFF DUTY (' + offMatch[1].replace(/\s+/g, ' ').trim() + ')';
+  if (/^OFF\s+DUTY/.test(upper)) return 'OFF DUTY';
+  const onMatch = clean.match(/^ON\s+DUTY\s*\(([^)]+)\)/i);
+  if (onMatch) return 'ON DUTY (' + onMatch[1].trim() + ')';
+  if (/^ON\s+DUTY/i.test(clean)) return 'ON DUTY';
+  return clean || raw.trim();
+}
+
+function rdrImpExtractBlocks(raw) {
+  const lines = raw.split('\n');
+  const blocks = [];
+  let cur = null;
+  for (const line of lines) {
+    const trimmed = line.trim();
+    const hdr = rdrImpParseHeader(trimmed);
+    if (hdr) {
+      if (cur) blocks.push(cur);
+      cur = { hdr, lines: [] };
+    } else if (cur) {
+      cur.lines.push(trimmed);
+    }
+  }
+  if (cur) blocks.push(cur);
+  // Deduplicate: same key+rota → keep last occurrence (most recent message wins)
+  const seen = {};
+  for (const b of blocks) seen[b.hdr.key + '-' + b.hdr.rota] = b;
+  return Object.values(seen);
+}
+
+function rdrImpLivePreview() {
+  const raw = document.getElementById('rdr-imp-ta').value;
+  const live = document.getElementById('rdr-imp-live');
+  const hint = document.getElementById('rdr-imp-panel-hint');
+  const hdr = document.getElementById('rdr-imp-panel-hdr');
+  const blocks = rdrImpExtractBlocks(raw);
+  _rdrImpPreviewKeys.forEach(k => { const el = document.querySelector(`.cal-day[data-key="${k}"]`); if (el) el.classList.remove('pending'); });
+  _rdrImpPreviewKeys = [];
+  if (!blocks.length) {
+    live.innerHTML = '<span class="imp-live-none">Detected blocks appear here...</span>';
+    if (hdr) hdr.classList.remove('has-pending');
+    if (hint) hint.textContent = 'paste attendance → calendar';
+    return;
+  }
+  _rdrImpPreviewKeys = [...new Set(blocks.map(b => b.hdr.key))];
+  _rdrImpPreviewKeys.forEach(k => { const el = document.querySelector(`.cal-day[data-key="${k}"]`); if (el) el.classList.add('pending'); });
+  if (hdr) hdr.classList.add('has-pending');
+  const labels = blocks.map(b => String(b.hdr.day).padStart(2,'0') + '/' + String(b.hdr.month).padStart(2,'0') + ' R' + b.hdr.rota.slice(1) + ' ' + b.hdr.shift);
+  if (hint) hint.textContent = blocks.length + ' block' + (blocks.length > 1 ? 's' : '') + ' detected';
+  live.innerHTML = labels.map(l => `<span class="imp-live-tag">${l}</span>`).join('');
+}
+
+function rdrImpParse() {
+  const raw = document.getElementById('rdr-imp-ta').value.trim();
+  const status = document.getElementById('rdr-imp-status');
+  if (!raw) { status.textContent = 'Nothing pasted.'; status.className = 'imp-status err'; return; }
+  const blocks = rdrImpExtractBlocks(raw);
+  if (!blocks.length) {
+    status.textContent = 'No "Rota X AM/PM Shift DD/MM/YY" headers found.';
+    status.className = 'imp-status err';
+    return;
+  }
+  // Build parsed data
+  const parsed = {};   // dateKey → { 'R1-NAME': status, ... }
+  const allNames = {}; // rota → Set of names
+  const dateInfos = {};
+  for (const block of blocks) {
+    const { rota, key, day, month } = block.hdr;
+    if (!parsed[key]) parsed[key] = {};
+    if (!allNames[rota]) allNames[rota] = new Set();
+    dateInfos[key] = { day, month };
+    for (const line of block.lines) {
+      if (!line || /^attendance/i.test(line)) continue;
+      const sep = line.match(/^(.+?)\s*[-–]\s*(.+)$/);
+      if (!sep) continue;
+      const name = rdrStripEmoji(sep[1]).trim().toUpperCase();
+      if (!name || name.length < 2) continue;
+      const stat = rdrImpNormalizeStatus(sep[2]);
+      if (!stat) continue;
+      const storeKey = rota + '-' + name;
+      if (!parsed[key][storeKey]) { parsed[key][storeKey] = stat; allNames[rota].add(name); }
+    }
+  }
+  // Build ordered row keys: roster order first, then extras
+  const rowKeys = [];
+  for (const rota of ['R1', 'R2', 'R3']) {
+    if (!allNames[rota] || !allNames[rota].size) continue;
+    const rosterNames = (rdrRoster[rota] || []).map(n => n.trim().toUpperCase());
+    for (const n of rosterNames) { if (allNames[rota].has(n)) rowKeys.push(rota + '-' + n); }
+    for (const n of allNames[rota]) { const k = rota + '-' + n; if (!rowKeys.includes(k)) rowKeys.push(k); }
+  }
+  const dates = Object.keys(dateInfos).sort().map(k => ({ key: k, ...dateInfos[k] }));
+  // Build preview table
+  const table = document.getElementById('rdr-imp-table');
+  table.innerHTML = '';
+  const thead = table.createTHead();
+  const hr = thead.insertRow();
+  const th0 = document.createElement('th'); th0.textContent = 'Name'; hr.appendChild(th0);
+  for (const d of dates) {
+    const th = document.createElement('th');
+    th.textContent = String(d.day).padStart(2,'0') + '/' + String(d.month).padStart(2,'0');
+    hr.appendChild(th);
+  }
+  const tbody = table.createTBody();
+  for (const rk of rowKeys) {
+    const [rota, ...nameParts] = rk.split('-');
+    const tr = tbody.insertRow();
+    const td0 = tr.insertCell(); td0.textContent = rota + ' ' + nameParts.join('-');
+    for (const d of dates) {
+      const td = tr.insertCell();
+      const s = (parsed[d.key] && parsed[d.key][rk]) || '';
+      td.textContent = s || '—';
+      td.className = s ? (/OFF/i.test(s) ? 's-out' : 's-in') : '';
+    }
+  }
+  rdrImpData = { dates, rowKeys, parsed };
+  document.getElementById('rdr-imp-table-sect').style.display = '';
+  document.getElementById('rdr-imp-to-cal-btn').style.display = '';
+  status.textContent = '✓ ' + dates.length + ' day' + (dates.length > 1 ? 's' : '') + ', ' + rowKeys.length + ' entries';
+  status.className = 'imp-status ok';
+}
+
+function rdrImpOpenModal() {
+  if (!rdrImpData || !rdrImpData.dates || !rdrImpData.dates.length) { showToast('Nothing parsed yet — paste and parse first.'); return; }
+  const all = JSON.parse(localStorage.getItem(RDR_SAVED_LS) || '{}');
+  const container = document.getElementById('rdr-ic-days');
+  container.innerHTML = '';
+  let hasExisting = false;
+  rdrImpData.dates.forEach(d => {
+    const tag = document.createElement('span');
+    tag.textContent = String(d.day).padStart(2,'0') + '/' + String(d.month).padStart(2,'0');
+    const existing = all[d.key] && all[d.key].statuses && Object.values(all[d.key].statuses).some(v => v && v.trim());
+    tag.className = existing ? 'ic-day-tag has-existing' : 'ic-day-tag';
+    if (existing) hasExisting = true;
+    container.appendChild(tag);
+  });
+  document.getElementById('rdr-ic-warn').style.display = hasExisting ? '' : 'none';
+  document.getElementById('rdr-ic-dialog').style.display = 'flex';
+}
+
+function closeRdrImportModal() { document.getElementById('rdr-ic-dialog').style.display = 'none'; }
+
+function confirmRdrImport() {
+  if (!rdrImpData) return;
+  const all = JSON.parse(localStorage.getItem(RDR_SAVED_LS) || '{}');
+  const pushedKeys = [];
+  rdrImpData.dates.forEach(d => {
+    const dk = d.key;
+    if (!all[dk]) all[dk] = { statuses: {} };
+    // Merge incoming over existing (same rota entries overwritten, other rotas preserved)
+    const incoming = {};
+    rdrImpData.rowKeys.forEach(rk => {
+      const val = (rdrImpData.parsed[dk] && rdrImpData.parsed[dk][rk]) || '';
+      if (val) incoming[rk] = val;
+    });
+    all[dk].statuses = Object.assign({}, all[dk].statuses, incoming);
+    pushedKeys.push(dk);
+  });
+  localStorage.setItem(RDR_SAVED_LS, JSON.stringify(all));
+  // Push to Firebase
+  if (rdrFbBase()) {
+    pushedKeys.forEach(dk => {
+      fetch(rdrFbBase() + '/rdr/data/' + dk + '.json', { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(all[dk]) }).catch(() => {});
+    });
+  }
+  _rdrImpPreviewKeys.forEach(k => { const el = document.querySelector(`.cal-day[data-key="${k}"]`); if (el) el.classList.remove('pending'); });
+  _rdrImpPreviewKeys = [];
+  const hdrEl = document.getElementById('rdr-imp-panel-hdr');
+  if (hdrEl) hdrEl.classList.remove('has-pending');
+  closeRdrImportModal();
+  rdrBuildCalendar();
+  if (calSelectedKey && pushedKeys.includes(calSelectedKey)) buildCalSummary(calSelectedKey);
+  showToast('✓ Imported ' + pushedKeys.length + ' day' + (pushedKeys.length > 1 ? 's' : '') + ' to RDR calendar');
+}
+
+/* ── RDR INIT (called from merged init) ──────────────────────── */
+async function rdrInit(){
+  rdrRoster=JSON.parse(localStorage.getItem(RDR_ROSTER_LS)||'null')||JSON.parse(JSON.stringify(RDR_DEFAULT_ROSTER));
+  rdrLoadLocal(dateFromKey(curDateKey));
+  rdrBuildRED();
+  // Update roster status
+  const dot=document.getElementById('rdr-rdot'),st=document.getElementById('rdr-roster-status-text');
+  if(dot)dot.className='rdot';if(st)st.textContent=Object.values(rdrRoster).flat().length+' personnel (local)';
+  // Firebase
+  if(rdrFbUrl){
+    const ok=await rdrFbFetchRoster();
+    if(ok&&dot&&st){dot.className='rdot';st.textContent=Object.values(rdrRoster).flat().length+' personnel (firebase)';}
+    rdrFbFetch(curDateKey).then(()=>rdrFbListen(curDateKey));
+    rdrFbSyncCalendarDots();
+  }
+}
+
+/* ── MERGED INIT (replaces OH init) ─────────────────────────── */
+function init(){
+  // Original OH init
+  const now=new Date();
+  curDateKey=fmtKey(now);calSelectedKey=curDateKey;
+  calViewYear=now.getFullYear();calViewMonth=now.getMonth();
+  document.getElementById('date-in').value=curDateKey;
+  document.getElementById('t-date').textContent=now.toLocaleDateString('en-SG',{weekday:'short',day:'numeric',month:'short',year:'numeric'});
+  roster=JSON.parse(localStorage.getItem(ROSTER_LS)||'null')||deepCopy(DEFAULT_ROSTER);
+  loadLocal(now);renderPersonList();renderToRows();
+  if(curEmoji)applyEmoji(curEmoji,false);else resetEmoji();
+  updatePreview();updateStreakUI();
+  // Unified calendar with rota chips
+  rdrBuildCalendar();
+  rdrBuildCalSummary(curDateKey);
+  tick();setInterval(tick,1000);
+  // OH Firebase
+  if(fbUrl){const fbin=document.getElementById('fb-in');if(fbin){fbin.value=fbUrl;fbin.classList.add('connected');}initFb();}
+  else setSyncUI('offline');
+  // RDR init
+  rdrInit().then(()=>{
+    // Apply mode after everything loaded
+    applyMode();
+    // Build RDR roster editor
+    rdrBuildRED();
+  });
+}
+
 init();
 </script>
 </body>
