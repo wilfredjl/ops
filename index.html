@@ -1097,6 +1097,10 @@ input[type="date"]:focus{border-color:var(--border3)}
           </div>
           <div class="cal-export-row">
             <button class="cal-export-btn" onclick="openExportModal()">⬆ Export TSV</button>
+              <button onclick="devNukeAllData()"
+        style="background:#7f1d1d;color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer">
+  ☢ DEV NUKE ALL DATA
+</button>
           </div>
           <input type="date" id="date-in" style="display:none" onchange="onDC()">
           <!-- RDR date input (for shift controls) -->
@@ -4063,6 +4067,62 @@ function init(){
   const saved = localStorage.getItem(THEME_KEY);
   if (saved === 'light') applyTheme(true);
 })();
+
+async function devNukeAllData() {
+  const ok = confirm(
+    'NUKE ALL DATA?\n\n' +
+    'This will delete:\n' +
+    '- OH calendar data\n' +
+    '- OH roster\n' +
+    '- RDR calendar data\n' +
+    '- RDR roster\n' +
+    '- Firebase data\n' +
+    '- Local browser data\n\n' +
+    'This cannot be undone.'
+  );
+
+  if (!ok) return;
+
+  try {
+    // Local storage
+    localStorage.removeItem('oh_saved_v3');
+    localStorage.removeItem('oh_roster_v3');
+    localStorage.removeItem('rdr_saved_v3');
+    localStorage.removeItem('rdr_roster_v3');
+
+    // Optional
+    localStorage.removeItem('unified_mode');
+
+    // OH Firebase
+    if (fbBase()) {
+      await fetch(fbBase() + '/data.json', {
+        method: 'DELETE'
+      });
+
+      await fetch(fbBase() + '/roster.json', {
+        method: 'DELETE'
+      });
+    }
+
+    // RDR Firebase
+    if (typeof rdrFbBase === 'function' && rdrFbBase()) {
+      await fetch(rdrFbBase() + '/data.json', {
+        method: 'DELETE'
+      });
+
+      await fetch(rdrFbBase() + '/roster.json', {
+        method: 'DELETE'
+      });
+    }
+
+    alert('All data nuked.');
+    location.reload();
+
+  } catch (err) {
+    console.error(err);
+    alert('Nuke failed. Check console.');
+  }
+}
 
 init();
 </script>
