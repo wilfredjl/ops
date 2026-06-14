@@ -823,39 +823,52 @@ body.light {
   color: var(--gold); margin-top: 3px; opacity: 0.8;
 }
 
-/* Input row at the bottom */
-.uimp-input-row {
-  display: flex; align-items: center; gap: 8px;
+/* Input row — WA-style textarea always visible */
+.uimp-textbox-row {
+  display: flex; align-items: flex-end; gap: 8px;
   padding: 8px 12px 10px;
   border-top: 1px solid var(--border);
 }
+/* Paste icon button (left of textarea) */
 .uimp-paste-btn {
-  flex: 1; display: flex; align-items: center; justify-content: center; gap: 7px;
-  padding: 9px 14px; border-radius: var(--radius);
+  width: 36px; height: 36px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%;
   background: linear-gradient(135deg, var(--wa-green-dark), var(--wa-green));
   color: #fff; border: none;
-  font-family: var(--mono); font-size: 11px; font-weight: 700;
-  letter-spacing: 0.06em; text-transform: uppercase;
   cursor: pointer; transition: all 0.15s;
-  box-shadow: 0 3px 14px rgba(37,211,102,0.35);
+  box-shadow: 0 2px 10px rgba(37,211,102,0.35);
 }
 .uimp-paste-btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 5px 20px rgba(37,211,102,0.5);
+  transform: scale(1.08);
+  box-shadow: 0 4px 16px rgba(37,211,102,0.5);
 }
-.uimp-paste-btn.loading {
-  opacity: 0.6; cursor: wait; transform: none;
-}
+.uimp-paste-btn.loading { opacity: 0.6; cursor: wait; transform: none; }
 .uimp-paste-btn.done {
   background: linear-gradient(135deg, #047857, #34d399);
-  box-shadow: 0 3px 14px rgba(52,211,153,0.35);
 }
+/* Textarea */
+.uimp-manual-ta {
+  flex: 1; resize: none; min-height: 36px; max-height: 120px;
+  padding: 8px 12px; border-radius: 18px;
+  background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--text1); font-size: 13px; line-height: 1.45;
+  font-family: var(--sans); outline: none;
+  transition: border-color 0.15s;
+  scrollbar-width: thin;
+}
+.uimp-manual-ta:focus {
+  border-color: var(--wa-green);
+  box-shadow: 0 0 0 2px rgba(37,211,102,0.12);
+}
+.uimp-manual-ta::placeholder { color: var(--text3); opacity: 0.65; }
+/* Clear button (right of textarea) */
 .uimp-clear-btn {
-  width: 34px; height: 34px; border-radius: var(--radius);
+  width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
   background: none; border: 1px solid transparent;
   color: var(--text3); cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: all 0.2s; opacity: 0.3; flex-shrink: 0;
+  transition: all 0.2s; opacity: 0.3;
 }
 .uimp-clear-btn:hover {
   border-color: rgba(248,113,113,0.35);
@@ -1018,21 +1031,76 @@ body.light {
 .imp-table .s-in{color:var(--green)}.imp-table .s-out{color:var(--red)}
 .imp-table .s-ado{color:var(--accent)}.imp-table .s-part{color:var(--gold)}.imp-table .s-empty{color:var(--text3)}
 .imp-table .s-warn{color:#f59e0b;background:rgba(245,158,11,0.12);border-radius:4px;padding:1px 5px;outline:1px solid rgba(245,158,11,0.35);font-weight:700}
-/* Fuzzy-matched name: shown with alias indicator */
-.imp-table .name-fuzzy{color:var(--accent);font-size:9px;margin-left:4px;opacity:0.8;white-space:nowrap}
-.imp-table .name-unknown{color:var(--red);font-size:9px;margin-left:4px;font-weight:700}
-/* Unknown personnel warning box inside confirm */
-.imp-unknown-warn{background:rgba(248,113,113,0.07);border:1px solid rgba(248,113,113,0.22);border-radius:8px;
-  padding:8px 12px;margin-bottom:10px;font-family:var(--mono);font-size:9px;color:var(--red);line-height:1.7;display:none}
+/* ── Inline table indicators ── */
+.imp-table .name-fuzzy{
+  display:inline-flex;align-items:center;gap:3px;
+  margin-left:5px;padding:1px 6px 1px 5px;
+  background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);
+  border-radius:4px;
+  font-size:8px;font-family:var(--mono);font-weight:600;letter-spacing:0.04em;
+  color:var(--accent);white-space:nowrap;vertical-align:middle;
+  transition:background 0.15s}
+.imp-table .name-fuzzy::before{content:'⇠';font-size:9px;opacity:0.7}
+.imp-table .name-unknown{
+  display:inline-flex;align-items:center;gap:2px;
+  margin-left:5px;padding:1px 6px;
+  background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);
+  border-radius:4px;
+  font-size:8px;font-family:var(--mono);font-weight:700;letter-spacing:0.06em;
+  color:var(--red);white-space:nowrap;vertical-align:middle}
+.imp-table .name-unknown::before{content:'✦';font-size:7px;opacity:0.8}
+
+/* ── Unknown-personnel warning banner ── */
+.imp-unknown-warn{
+  display:none;margin-bottom:10px;padding:10px 12px;
+  background:rgba(248,113,113,0.06);
+  border:1px solid rgba(248,113,113,0.22);
+  border-left:3px solid rgba(248,113,113,0.6);
+  border-radius:0 8px 8px 0;
+  font-family:var(--mono);font-size:9px;color:var(--red);line-height:1.9}
 .imp-unknown-warn.visible{display:block}
-.imp-unknown-warn strong{color:var(--text);display:block;margin-bottom:4px;font-size:10px}
-.imp-unknown-tag{display:inline-block;background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.3);
-  border-radius:20px;padding:1px 7px;margin:2px 3px;color:var(--red);font-size:9px}
-/* Fuzzy-match info banner */
-.imp-fuzzy-info{background:rgba(56,189,248,0.06);border:1px solid rgba(56,189,248,0.2);border-radius:8px;
-  padding:8px 12px;margin-bottom:10px;font-family:var(--mono);font-size:9px;color:var(--accent);line-height:1.7;display:none}
+.imp-unknown-warn .imp-banner-hdr{
+  display:flex;align-items:center;gap:6px;
+  font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--text);margin-bottom:7px}
+.imp-unknown-warn .imp-banner-hdr-icon{
+  width:16px;height:16px;border-radius:4px;
+  background:rgba(248,113,113,0.18);border:1px solid rgba(248,113,113,0.35);
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:9px;flex-shrink:0}
+.imp-unknown-tag{
+  display:inline-flex;align-items:center;
+  background:rgba(248,113,113,0.1);border:1px solid rgba(248,113,113,0.28);
+  border-radius:4px;padding:2px 8px;margin:2px 3px;
+  color:var(--red);font-size:9px;font-family:var(--mono);font-weight:600;
+  letter-spacing:0.04em}
+
+/* ── Fuzzy-match info banner ── */
+.imp-fuzzy-info{
+  display:none;margin-bottom:10px;padding:10px 12px;
+  background:rgba(56,189,248,0.05);
+  border:1px solid rgba(56,189,248,0.2);
+  border-left:3px solid rgba(56,189,248,0.45);
+  border-radius:0 8px 8px 0;
+  font-family:var(--mono);font-size:9px;color:var(--accent);line-height:1.9}
 .imp-fuzzy-info.visible{display:block}
-.imp-fuzzy-info strong{color:var(--text);display:block;margin-bottom:4px;font-size:10px}
+.imp-fuzzy-info .imp-banner-hdr{
+  display:flex;align-items:center;gap:6px;
+  font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;
+  color:var(--text);margin-bottom:7px}
+.imp-fuzzy-info .imp-banner-hdr-icon{
+  width:16px;height:16px;border-radius:4px;
+  background:rgba(56,189,248,0.12);border:1px solid rgba(56,189,248,0.3);
+  display:inline-flex;align-items:center;justify-content:center;
+  font-size:9px;flex-shrink:0}
+.imp-fuzzy-tag{
+  display:inline-flex;align-items:center;gap:4px;
+  background:rgba(56,189,248,0.07);border:1px solid rgba(56,189,248,0.22);
+  border-radius:4px;padding:2px 8px;margin:2px 3px;
+  font-size:9px;font-family:var(--mono);font-weight:600;letter-spacing:0.03em}
+.imp-fuzzy-tag .ftag-orig{color:var(--text2)}
+.imp-fuzzy-tag .ftag-arrow{color:var(--text3);font-size:8px}
+.imp-fuzzy-tag .ftag-canon{color:var(--accent)}
 
 /* Calendar pending-import overlay */
 .cal-day.pending{background:rgba(167,139,250,0.13)!important;border-color:rgba(167,139,250,0.5)!important;
@@ -1399,12 +1467,14 @@ input[type="date"]:focus{border-color:var(--border3)}
                 <div class="uimp-empty-txt">Paste WhatsApp messages here.<br>OH and RDR are detected automatically.</div>
               </div>
             </div>
-            <!-- Input row -->
-            <div class="uimp-input-row">
+            <!-- Input row: always-visible textarea + inline paste button -->
+            <div class="uimp-textbox-row" id="uimp-textbox-row">
               <button class="uimp-paste-btn" id="uimp-paste-btn" onclick="uimpDoPaste()" title="Paste from clipboard">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M17 4h2a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h2"/><path d="M9 12h6M9 16h4"/></svg>
-                Paste
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="4" rx="1"/><path d="M17 4h2a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V6a2 2 0 012-2h2"/><path d="M9 12h6M9 16h4"/></svg>
               </button>
+              <textarea class="uimp-manual-ta" id="uimp-manual-ta" placeholder="Paste WhatsApp messages — OH and RDR detected automatically…"
+                onpaste="setTimeout(()=>uimpAutoSubmit(),50)"
+              ></textarea>
               <button class="uimp-clear-btn" id="uimp-clear-btn" onclick="uimpClear()" title="Clear all">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
               </button>
@@ -1540,28 +1610,6 @@ input[type="date"]:focus{border-color:var(--border3)}
           </div>
         </div>
         <div>
-          <!-- Clock-In Reminder widget -->
-          <div class="widget" id="rdr-clockin-widget">
-            <div class="wh"><span class="wh-t">Clock-In Reminder</span><span class="badge" id="rdr-clockin-badge" style="background:var(--surface3);color:var(--text2)">standby</span></div>
-            <div class="wb">
-              <div id="rdr-clockin-body" style="display:flex;flex-direction:column;gap:10px">
-                <div id="rdr-clockin-info" style="font-family:var(--mono);font-size:12px;color:var(--text2);line-height:1.6">
-                  <span id="rdr-clockin-msg">No handover within the next 15 minutes.</span>
-                </div>
-                <div id="rdr-clockin-countdown-row" style="display:none;align-items:center;gap:10px">
-                  <div style="flex:1">
-                    <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:3px" id="rdr-clockin-sub">Handover in</div>
-                    <div style="font-family:var(--mono);font-size:28px;font-weight:700;letter-spacing:-0.02em;color:var(--day)" id="rdr-clockin-timer">--:--</div>
-                  </div>
-                  <div style="text-align:right">
-                    <div style="font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:3px">Incoming</div>
-                    <div style="font-family:var(--mono);font-size:13px;font-weight:700" id="rdr-clockin-incoming">—</div>
-                  </div>
-                </div>
-                <button id="rdr-clockin-btn" onclick="rdrOpenWorkpal()" style="display:none;width:100%;padding:14px 16px;border-radius:var(--radius-lg);border:none;background:linear-gradient(135deg,#f5a623,#e8670a);color:#000;font-family:var(--mono);font-size:13px;font-weight:700;cursor:pointer;letter-spacing:0.07em;text-transform:uppercase;box-shadow:0 4px 18px rgba(245,166,35,0.32);transition:all 0.2s">⏱  Clock In — Workpal</button>
-              </div>
-            </div>
-          </div>
           <!-- RDR Preview widget -->
           <div class="widget">
             <div class="wh"><span class="wh-t">Message Preview &mdash; RDR</span></div>
@@ -2968,9 +3016,9 @@ function impParse(){
     const td0=tr.insertCell();
     // Show fuzzy alias info inline
     if(fuzzyRevMap[name]){
-      td0.innerHTML=name+'<span class="name-fuzzy" title="Auto-matched from message">← '+fuzzyRevMap[name].join('/')+'</span>';
+      td0.innerHTML=name+'<span class="name-fuzzy" title="Auto-matched from message">'+fuzzyRevMap[name].join('/')+'</span>';
     } else if(unknownNames.includes(name)){
-      td0.innerHTML=name+'<span class="name-unknown">✦ new</span>';
+      td0.innerHTML=name+'<span class="name-unknown">new</span>';
     } else {
       td0.textContent=name;
     }
@@ -3031,18 +3079,23 @@ function impCopy(){
   // Plain TSV fallback
   const tsv=orderedNames.map(name=>dates.map(d=>(parsed[d.key]&&parsed[d.key][name])||'').join('\t')).join('\n');
 
+  function _copyFb(){
+    const ta=document.createElement('textarea');
+    ta.value=tsv;ta.style.cssText='position:fixed;top:-9999px;left:-9999px;opacity:0;';
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');}catch(e){}
+    document.body.removeChild(ta);ok();
+  }
   if(window.ClipboardItem){
     const item=new ClipboardItem({
       'text/html':new Blob([html],{type:'text/html'}),
       'text/plain':new Blob([tsv],{type:'text/plain'})
     });
     navigator.clipboard.write([item]).then(ok).catch(()=>{
-      navigator.clipboard.writeText(tsv).then(ok);
+      navigator.clipboard.writeText(tsv).then(ok).catch(_copyFb);
     });
   } else {
-    navigator.clipboard.writeText(tsv).then(ok).catch(()=>{
-      const ta=document.createElement('textarea');ta.value=tsv;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();
-    });
+    navigator.clipboard.writeText(tsv).then(ok).catch(_copyFb);
   }
 }
 
@@ -3098,8 +3151,8 @@ function showImpConfirm(){
     const frev=impData.fuzzyRevMap||{};
     const pairs=Object.entries(frev);
     if(pairs.length){
-      fuzzyBox.innerHTML='<strong>🔍 Auto-matched names (from message → roster)</strong>'+
-        pairs.map(([canon,origs])=>`<span class="imp-unknown-tag" style="color:var(--accent);border-color:rgba(56,189,248,0.3);background:rgba(56,189,248,0.07)">${origs.join('/')} → ${canon}</span>`).join('');
+      fuzzyBox.innerHTML='<div class="imp-banner-hdr"><span class="imp-banner-hdr-icon">⇢</span>Nickname match</div>'+
+        pairs.map(([canon,origs])=>`<span class="imp-fuzzy-tag"><span class="ftag-orig">${origs.join('/')}</span><span class="ftag-arrow">→</span><span class="ftag-canon">${canon}</span></span>`).join('');
       fuzzyBox.classList.add('visible');
     } else {
       fuzzyBox.classList.remove('visible');
@@ -3111,7 +3164,7 @@ function showImpConfirm(){
   if(unknownBox){
     const unknowns=impData.unknownNames||[];
     if(unknowns.length){
-      unknownBox.innerHTML='<strong>⚠ New personnel not in roster — will be added on confirm</strong>'+
+      unknownBox.innerHTML='<div class="imp-banner-hdr"><span class="imp-banner-hdr-icon">✦</span>New personnel</div>'+
         unknowns.map(n=>`<span class="imp-unknown-tag">${n}</span>`).join('');
       unknownBox.classList.add('visible');
     } else {
@@ -3386,14 +3439,45 @@ function uimpDismissConfirm(){
 
 async function uimpDoPaste(){
   const btn=document.getElementById('uimp-paste-btn');
+  const ta=document.getElementById('uimp-manual-ta');
   if(btn)btn.classList.add('loading');
-  let text='';
-  try{text=await navigator.clipboard.readText();}
-  catch(e){if(btn)btn.classList.remove('loading');showToast('Tap inside and press Ctrl+V / \u2318V to paste.');return;}
+
+  // Strategy 1: modern clipboard API (permission already granted)
+  try {
+    const text = await navigator.clipboard.readText();
+    if(btn){btn.classList.remove('loading');btn.classList.add('done');setTimeout(()=>btn.classList.remove('done'),1200);}
+    if(!text.trim()){showToast('Clipboard is empty.');return;}
+    if(ta){ta.value=text;}
+    uimpAutoSubmit();
+    return;
+  } catch(e){}
+
+  // Strategy 2: execCommand paste into the visible textarea directly
+  try {
+    if(ta){
+      ta.focus();
+      const ok=document.execCommand('paste');
+      if(ok&&ta.value.trim()){
+        if(btn){btn.classList.remove('loading');btn.classList.add('done');setTimeout(()=>btn.classList.remove('done'),1200);}
+        setTimeout(()=>uimpAutoSubmit(),30);
+        return;
+      }
+    }
+  } catch(e){}
+
   if(btn)btn.classList.remove('loading');
-  if(!text.trim()){showToast('Clipboard is empty.');return;}
+  showToast('Paste blocked by browser — use Ctrl+V / ⌘V in the text box.');
+  if(ta)ta.focus();
+}
+
+// Auto-parse whatever is in the textarea (called on paste event or after clipboard inject)
+function uimpAutoSubmit(){
+  const ta=document.getElementById('uimp-manual-ta');
+  if(!ta||!ta.value.trim())return;
+  const text=ta.value;
+  ta.value='';
+  ta.style.height='auto';
   uimpProcessPaste(text);
-  if(btn){btn.classList.add('done');setTimeout(()=>btn.classList.remove('done'),1400);}
 }
 
 function uimpProcessPaste(raw){
@@ -3801,15 +3885,23 @@ function exCopy(){
     btn.classList.add('success');btn.textContent='✓ Copied!';
     setTimeout(()=>{btn.classList.remove('success');btn.innerHTML='⬆ Copy TSV';closeExportModal();},1800);
   };
+  // execCommand fallback — always works, no permission required
+  function _copyFallback(){
+    const ta=document.createElement('textarea');
+    ta.value=tsv;ta.style.cssText='position:fixed;top:-9999px;left:-9999px;opacity:0;';
+    document.body.appendChild(ta);ta.select();
+    try{document.execCommand('copy');}catch(e){}
+    document.body.removeChild(ta);ok();
+  }
   if(window.ClipboardItem){
     navigator.clipboard.write([new ClipboardItem({
       'text/html':new Blob([html],{type:'text/html'}),
       'text/plain':new Blob([tsv],{type:'text/plain'})
-    })]).then(ok).catch(()=>navigator.clipboard.writeText(tsv).then(ok));
-  }else{
-    navigator.clipboard.writeText(tsv).then(ok).catch(()=>{
-      const ta=document.createElement('textarea');ta.value=tsv;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();
+    })]).then(ok).catch(()=>{
+      navigator.clipboard.writeText(tsv).then(ok).catch(_copyFallback);
     });
+  }else{
+    navigator.clipboard.writeText(tsv).then(ok).catch(_copyFallback);
   }
 }
 
@@ -4124,7 +4216,7 @@ function tick() {
   const n=new Date();
   document.getElementById('t-clock').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0');
   if(currentMode==='oh'){updateBanner();updateRCBar();}
-  else{rdrUpdateCards();rdrClockInTick();}
+  else{rdrUpdateCards();}
 }
 
 function buildCalSummary(key) {
@@ -4453,24 +4545,6 @@ function rdrCopyMsg(){
   navigator.clipboard.writeText(text).then(ok).catch(()=>{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();});
 }
 
-/* ── CLOCK-IN REMINDER ─────────────────────────────────────── */
-// Shift handover times in minutes from midnight
-const RDR_HANDOVERS = [8*60, 18*60]; // 08:00 and 18:00
-const RDR_CLOCKIN_WINDOW = 15; // minutes before and after
-
-function rdrOpenWorkpal(){
-  // Try Workpal deep-link first; fall back to Play/App Store search
-  const link = 'workpal://clockin';
-  const fallback = 'https://www.workpal.app';
-  const a = document.createElement('a');
-  a.href = link;
-  a.style.display = 'none';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  // Fallback after short delay if app isn't installed
-  setTimeout(()=>{ try{ window.open(fallback,'_blank'); }catch(e){} }, 1500);
-}
 
 function rdrSyncPreviewToCalendar(){
   const text = document.getElementById('rdr-preview-box').value;
@@ -4508,68 +4582,6 @@ function rdrSyncPreviewToCalendar(){
   if(btn){const orig=btn.innerHTML;btn.textContent='✓  Saved!';btn.style.background='linear-gradient(135deg,var(--green),#059669)';btn.style.boxShadow='0 4px 20px rgba(52,211,153,0.35)';setTimeout(()=>{btn.innerHTML=orig;btn.style.background='';btn.style.boxShadow='';},2500);}
 }
 
-function rdrClockInTick(){
-  const now=new Date(), cur=now.getHours()*60+now.getMinutes();
-  const badge=document.getElementById('rdr-clockin-badge');
-  const msg=document.getElementById('rdr-clockin-msg');
-  const row=document.getElementById('rdr-clockin-countdown-row');
-  const timerEl=document.getElementById('rdr-clockin-timer');
-  const subEl=document.getElementById('rdr-clockin-sub');
-  const incomingEl=document.getElementById('rdr-clockin-incoming');
-  const btn=document.getElementById('rdr-clockin-btn');
-  if(!badge)return;
-
-  // Find nearest handover within ±15 min
-  let found=null, minDiff=Infinity;
-  RDR_HANDOVERS.forEach(hm=>{
-    const diff=hm-cur; // minutes until handover (negative = passed)
-    const absDiff=Math.abs(diff);
-    if(absDiff<=RDR_CLOCKIN_WINDOW && absDiff<minDiff){
-      minDiff=absDiff; found={hm,diff};
-    }
-  });
-
-  if(!found){
-    // Standby — find next handover for idle label
-    let nextDiff=Infinity, nextHm=null;
-    RDR_HANDOVERS.forEach(hm=>{let d=hm-cur;if(d<0)d+=24*60;if(d<nextDiff){nextDiff=d;nextHm=hm;}});
-    badge.textContent='standby';
-    badge.style.background='var(--surface3)';badge.style.color='var(--text2)';
-    const hh=String(Math.floor(nextHm/60)).padStart(2,'0'), mm=String(nextHm%60).padStart(2,'0');
-    msg.textContent=`Next handover at ${hh}:${mm}`;
-    row.style.display='none';
-    btn.style.display='none';
-  } else {
-    const {hm,diff}=found;
-    const secs=diff*60-now.getSeconds(); // signed seconds
-    const absSecs=Math.abs(secs);
-    const mm=String(Math.floor(absSecs/60)).padStart(2,'0');
-    const ss=String(absSecs%60).padStart(2,'0');
-    const hh=String(Math.floor(hm/60)).padStart(2,'0'), mpad=String(hm%60).padStart(2,'0');
-    const handoverLabel=`${hh}:${mpad}`;
-    // Determine incoming rota
-    const today=new Date(now.getFullYear(),now.getMonth(),now.getDate());
-    const sched=rdrGetSchedule(today);
-    let incomingRota='';
-    if(hm===8*60){ incomingRota='Rota '+sched.day.replace('R','')+' AM'; }
-    else if(hm===18*60){ incomingRota='Rota '+sched.night.replace('R','')+' PM'; }
-    if(incomingEl)incomingEl.textContent=incomingRota;
-    if(diff>0){
-      badge.textContent='⚠️ handover soon';
-      badge.style.background='rgba(245,166,35,0.18)';badge.style.color='var(--day)';
-      subEl.textContent=`Handover at ${handoverLabel} in`;
-      msg.textContent=`Clock in before ${handoverLabel} handover!`;
-    } else {
-      badge.textContent='⏰ clock in now';
-      badge.style.background='rgba(239,68,68,0.15)';badge.style.color='#f87171';
-      subEl.textContent=`Handover was ${handoverLabel} —`;
-      msg.textContent=`Clock in now! Handover was ${handoverLabel}`;
-    }
-    timerEl.textContent=(diff<0?'+':'')+mm+':'+ss;
-    row.style.display='flex';
-    btn.style.display='block';
-  }
-}
 
 function rdrOnDateChange(){}
 
@@ -4844,9 +4856,9 @@ function rdrImpParse() {
     const td0 = tr.insertCell();
     td0.className = rotaCls;
     if (rdrFuzzyRevMap[rk]) {
-      td0.innerHTML = rota + ' ' + displayName + '<span class="name-fuzzy" title="Auto-matched from message">← ' + rdrFuzzyRevMap[rk].join('/') + '</span>';
+      td0.innerHTML = rota + ' ' + displayName + '<span class="name-fuzzy" title="Auto-matched from message">' + rdrFuzzyRevMap[rk].join('/') + '</span>';
     } else if (rdrUnknown.includes(rk)) {
-      td0.innerHTML = rota + ' ' + displayName + '<span class="name-unknown">✦ new</span>';
+      td0.innerHTML = rota + ' ' + displayName + '<span class="name-unknown">new</span>';
     } else {
       td0.textContent = rota + ' ' + displayName;
     }
@@ -4889,10 +4901,10 @@ function showRdrImpConfirm() {
     const pairs = Object.entries(frev);
     if (pairs.length) {
       const [rota, ...nameParts] = pairs[0][0].split('-'); // just for display
-      fuzzyBox.innerHTML = '<strong>🔍 Auto-matched names (from message → roster)</strong>' +
+      fuzzyBox.innerHTML = '<div class="imp-banner-hdr"><span class="imp-banner-hdr-icon">⇢</span>Nickname match</div>' +
         pairs.map(([canonKey, origs]) => {
           const [r, ...np] = canonKey.split('-');
-          return `<span class="imp-unknown-tag" style="color:var(--accent);border-color:rgba(56,189,248,0.3);background:rgba(56,189,248,0.07)">${origs.join('/')} → ${r} ${np.join('-')}</span>`;
+          return `<span class="imp-fuzzy-tag"><span class="ftag-orig">${origs.join('/')}</span><span class="ftag-arrow">→</span><span class="ftag-canon">${r} ${np.join('-')}</span></span>`;
         }).join('');
       fuzzyBox.classList.add('visible');
     } else {
@@ -4905,7 +4917,7 @@ function showRdrImpConfirm() {
   if (unknownBox) {
     const unknowns = rdrImpData.rdrUnknown || [];
     if (unknowns.length) {
-      unknownBox.innerHTML = '<strong>⚠ New personnel not in RDR roster — will be added on confirm</strong>' +
+      unknownBox.innerHTML = '<div class="imp-banner-hdr"><span class="imp-banner-hdr-icon">✦</span>New personnel</div>' +
         unknowns.map(sk => {
           const [r, ...np] = sk.split('-');
           return `<span class="imp-unknown-tag">${r} ${np.join('-')}</span>`;
@@ -5059,59 +5071,49 @@ function init(){
 })();
 
 async function devNukeAllData() {
-  const ok = confirm(
+  const confirmed = confirm(
     'NUKE ALL DATA?\n\n' +
     'This will delete:\n' +
     '- OH calendar data\n' +
     '- OH roster\n' +
     '- RDR calendar data\n' +
     '- RDR roster\n' +
-    '- Firebase data\n' +
+    '- Firebase data (best-effort)\n' +
     '- Local browser data\n\n' +
     'This cannot be undone.'
   );
+  if (!confirmed) return;
 
-  if (!ok) return;
+  // 1. Nuke localStorage first — this always works
+  const LS_KEYS = [
+    'oh_saved_v3','oh_roster_v3',
+    'rdr_saved_v3','rdr_roster_v3',
+    'unified_mode','oh_fb_url'
+  ];
+  LS_KEYS.forEach(k => localStorage.removeItem(k));
 
+  // 2. Firebase — best-effort, failures don't block the reload
+  const fbDeletes = [];
   try {
-    // Local storage
-    localStorage.removeItem('oh_saved_v3');
-    localStorage.removeItem('oh_roster_v3');
-    localStorage.removeItem('rdr_saved_v3');
-    localStorage.removeItem('rdr_roster_v3');
-
-    // Optional
-    localStorage.removeItem('unified_mode');
-
-    // OH Firebase
     if (fbBase()) {
-      await fetch(fbBase() + '/data.json', {
-        method: 'DELETE'
-      });
-
-      await fetch(fbBase() + '/roster.json', {
-        method: 'DELETE'
-      });
+      fbDeletes.push(fetch(fbBase() + '/data.json',   {method:'DELETE'}).catch(()=>{}));
+      fbDeletes.push(fetch(fbBase() + '/roster.json', {method:'DELETE'}).catch(()=>{}));
     }
-
-    // RDR Firebase
+  } catch(e){}
+  try {
     if (typeof rdrFbBase === 'function' && rdrFbBase()) {
-      await fetch(rdrFbBase() + '/data.json', {
-        method: 'DELETE'
-      });
-
-      await fetch(rdrFbBase() + '/roster.json', {
-        method: 'DELETE'
-      });
+      fbDeletes.push(fetch(rdrFbBase() + '/data.json',   {method:'DELETE'}).catch(()=>{}));
+      fbDeletes.push(fetch(rdrFbBase() + '/roster.json', {method:'DELETE'}).catch(()=>{}));
     }
+  } catch(e){}
 
-    alert('All data nuked.');
-    location.reload();
+  // Wait up to 3 s for Firebase, then reload regardless
+  await Promise.race([
+    Promise.all(fbDeletes),
+    new Promise(r => setTimeout(r, 3000))
+  ]);
 
-  } catch (err) {
-    console.error(err);
-    alert('Nuke failed. Check console.');
-  }
+  location.reload();
 }
 
 init();
