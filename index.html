@@ -33,24 +33,20 @@ body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:1
 
 /* ── LIGHT MODE ─────────────────────────────────────────────── */
 body.light{
-  /* Page & surface hierarchy — warm whites with blue-grey tint */
-  --bg:#eef0f5;
+    --bg:#eef0f5;
   --surface:#ffffff;
   --surface2:#f4f5f9;
   --surface3:#e8eaf2;
 
-  /* Borders — subtle ink, not stark black */
-  --border:rgba(60,70,110,0.09);
+    --border:rgba(60,70,110,0.09);
   --border2:rgba(60,70,110,0.15);
   --border3:rgba(60,70,110,0.30);
 
-  /* Typography — near-black navy, not pure black */
-  --text:#1c2035;
+    --text:#1c2035;
   --text2:#505878;
   --text3:#929bbf;
 
-  /* Accents — deeper, more saturated for legibility on white */
-  --accent:#0369a1;
+    --accent:#0369a1;
   --accent-bg:rgba(3,105,161,0.08);
   --accent-glow:rgba(3,105,161,0.18);
   --green:#047857;
@@ -62,19 +58,16 @@ body.light{
   --purple:#5b21b6;
   --purple-bg:rgba(91,33,182,0.09);
 
-  /* Shadows — soft, warm, directional (not just opacity scaled) */
-  --shadow:0 1px 3px rgba(30,40,80,0.08),0 4px 16px rgba(30,40,80,0.07);
+    --shadow:0 1px 3px rgba(30,40,80,0.08),0 4px 16px rgba(30,40,80,0.07);
   --shadow-lg:0 2px 8px rgba(30,40,80,0.08),0 12px 40px rgba(30,40,80,0.12);
 
-  /* RDR shift colours — warmer, more muted on white */
-  --day:#c2410c;--day-bg:rgba(194,65,12,0.08);--day-glow:rgba(194,65,12,0.14);
+    --day:#c2410c;--day-bg:rgba(194,65,12,0.08);--day-glow:rgba(194,65,12,0.14);
   --night:#4338ca;--night-bg:rgba(67,56,202,0.08);--night-glow:rgba(67,56,202,0.14);
   --r1:#b91c1c;--r1-bg:rgba(185,28,28,0.08);--r1-border:rgba(185,28,28,0.25);
   --r2:#4338ca;--r2-bg:rgba(67,56,202,0.08);--r2-border:rgba(67,56,202,0.25);
   --r3:#047857;--r3-bg:rgba(4,120,87,0.08);--r3-border:rgba(4,120,87,0.25);
 
-  /* Override computed vars */
-  --topbar-bg:rgba(255,255,255,0.88);
+    --topbar-bg:rgba(255,255,255,0.88);
   --overlay-bg:rgba(20,25,50,0.4);
   --surface-lift:linear-gradient(135deg,rgba(255,255,255,0.95),rgba(244,245,249,0.9));
   --input-focus-bg:rgba(3,105,161,0.05);
@@ -82,7 +75,6 @@ body.light{
   --fb-hint-bg:rgba(60,70,110,0.05);
 }
 
-/* Page background — barely-there dot grid, not lines */
 body.light{
   background-color:var(--bg);
   background-image:radial-gradient(circle,rgba(60,70,110,0.12) 1px,transparent 1px);
@@ -177,7 +169,6 @@ body.light .imp-ta:focus{border-color:rgba(91,33,182,0.4);background:var(--surfa
 body.light .imp-ta::placeholder{color:var(--text3)}
 body.light .preview-box{background:var(--surface2);color:var(--text);border-color:var(--border)}
 
-/* Import table */
 body.light .imp-table th{background:var(--surface2);color:var(--text3);border-color:var(--border)}
 body.light .imp-table td{border-color:var(--border);color:var(--text2)}
 body.light .imp-table td:first-child{background:var(--surface);color:var(--text)}
@@ -228,7 +219,6 @@ body.light .fb-hint{background:var(--surface2);border-color:var(--border)}
 /* ── WEEK CARD COUNTDOWN ── */
 body.light .wk-cd{color:var(--text)}
 
-/* Smooth all transitions */
 body.light *{transition-property:background-color,border-color,color,box-shadow;transition-duration:0.2s;transition-timing-function:ease}
 .topbar{position:sticky;top:0;z-index:50;background:var(--topbar-bg);backdrop-filter:blur(16px);
   -webkit-backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 20px;height:52px;
@@ -321,7 +311,6 @@ body.light *{transition-property:background-color,border-color,color,box-shadow;
 
 /* CALENDAR WIDGET – full-width above grid */
 #calendar-widget{margin-bottom:12px}
-/* Unified grid — RDR uses same layout rules as OH, no stretch overrides */
 #rdr-col .grid{align-items:start}
 #rdr-col .grid > div{display:block}
 #rdr-col .grid > div .widget{flex:none}
@@ -345,7 +334,6 @@ body.light *{transition-property:background-color,border-color,color,box-shadow;
   width:4px;height:4px;border-radius:50%;background:var(--green)}
 .cal-day.wknd{color:var(--text3)}
 .cal-day.wknd:hover{color:var(--text2)}
-/* day summary panel */
 .cal-summary{background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);
   padding:12px;margin-top:8px;animation:fadeUp 0.18s ease;min-height:54px}
 @keyframes fadeUp{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
@@ -356,7 +344,6 @@ body.light *{transition-property:background-color,border-color,color,box-shadow;
 .cal-sum-name{color:var(--text);font-weight:600;min-width:100px;flex-shrink:0}
 .cal-sum-status{color:var(--text2)}
 .cal-sum-empty{font-family:var(--mono);font-size:11px;color:var(--text3);font-style:italic}
-/* Compact summary styles */
 .cal-sum-section{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:2px}
 .cal-sum-section-lbl{font-family:var(--mono);font-size:9px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;flex-shrink:0}
 .cal-sum-section-lbl.oh{color:var(--accent)}
@@ -372,7 +359,6 @@ body.light *{transition-property:background-color,border-color,color,box-shadow;
 .cal-sum-all.open{display:block}
 .cal-sum-all .cal-sum-row{font-size:10px;padding:1px 0}
 
-/* prev/today/next row */
 .dbn-row{display:flex;gap:6px;margin-top:10px}
 .dbn{padding:5px 12px;background:var(--surface3);border:1px solid var(--border2);border-radius:var(--radius);
   color:var(--text2);font-family:var(--mono);font-size:11px;cursor:pointer;transition:all 0.15s;
@@ -406,11 +392,9 @@ body.light *{transition-property:background-color,border-color,color,box-shadow;
 .pn{font-family:var(--mono);font-size:12px;font-weight:600;color:var(--text);
   min-width:110px;flex-shrink:0;letter-spacing:0.02em;-webkit-user-select:none;user-select:none}
 .sw{flex:1;min-width:0;display:flex;align-items:center;gap:4px;overflow:hidden}
-/* single input mode */
 .si{flex:1;background:transparent;border:none;outline:none;color:var(--text);
   font-family:var(--mono);font-size:12px;padding:2px 4px;border-radius:4px;transition:background 0.1s;min-width:0}
 .si:focus{background:var(--input-focus-bg)}
-/* split AM/PM mode */
 .sw.split{gap:4px}
 .sw-part{display:flex;align-items:center;gap:3px;flex:1;min-width:0;max-width:50%}
 .sw-part .si{min-width:0;width:0;flex:1}
@@ -419,7 +403,6 @@ body.light *{transition-property:background-color,border-color,color,box-shadow;
 .sw-tag.am{color:var(--green)}
 .sw-tag.pm{color:var(--purple)}
 .sw-div{width:1px;height:18px;background:var(--border2);flex-shrink:0}
-/* clear X button */
 .p-clear{width:22px;height:22px;background:none;border:none;cursor:pointer;
   display:flex;align-items:center;justify-content:center;border-radius:6px;
   color:transparent;transition:all 0.15s;flex-shrink:0;font-size:14px;line-height:1}
@@ -436,7 +419,6 @@ body.light *{transition-property:background-color,border-color,color,box-shadow;
 .chip.cout{border-color:rgba(248,113,113,0.3);color:var(--red)}
 .chip.campm{border-color:rgba(251,191,36,0.3);color:var(--gold)}
 .chip.campm.active{background:var(--gold-bg)}
-/* OUT sub-chips */
 .lchips{display:none;flex-wrap:wrap;gap:5px;padding:0 12px 9px}
 .lchips.op{display:flex}
 .lc{padding:3px 9px;background:var(--surface3);border:1px solid rgba(248,113,113,0.25);border-radius:6px;
@@ -609,68 +591,53 @@ body.light *{transition-property:background-color,border-color,color,box-shadow;
    padding, widget sizing, or grid breakpoints.
 ─────────────────────────────────────────────────────────────────── */
 
-/* Shared layout token: inner widget body padding */
 .wb{padding:14px 16px}
 
-/* Both grids: consistent gap and breakpoint */
 .grid{gap:12px}
 #oh-grid, #rdr-col > .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
 @media(max-width:700px){
   #oh-grid,#rdr-col > .grid{grid-template-columns:1fr}
 }
 
-/* Widgets: identical in both modes */
 .widget{border-radius:var(--radius-lg);margin-bottom:12px}
 .widget:last-child{margin-bottom:0}
 .wh{padding:12px 16px}
 
-/* Page padding — identical regardless of mode */
 .page{padding:20px 16px 60px}
 @media(max-width:700px){
   .page{padding:16px 14px 56px}
 }
 @media(max-width:480px){
   .page{padding:12px 10px 48px}
-  /* Widget body: slightly tighter on small screens */
-  .wb{padding:12px 12px}
+    .wb{padding:12px 12px}
   .wh{padding:10px 12px}
-  /* Banners */
-  .sbanner{padding:14px;border-radius:14px}
+    .sbanner{padding:14px;border-radius:14px}
   .shift-banner{padding:14px;border-radius:14px}
   .rcbar,.cctv-bar{gap:8px;padding:10px 12px}
-  /* Copy buttons */
-  .cbtn,.copy-btn-rdr{font-size:13px;padding:14px}
-  /* Emoji roller */
-  .slot-win{width:80px;height:80px}
+    .cbtn,.copy-btn-rdr{font-size:13px;padding:14px}
+    .slot-win{width:80px;height:80px}
   .slot-item{width:80px;height:80px;font-size:42px}
   .slot-q{width:80px;height:80px;font-size:42px}
-  /* Time picker drum */
-  .tp-drum-wrap{width:70px}
+    .tp-drum-wrap{width:70px}
   .tp-drum-win{height:150px}
   .tp-drum-item{height:50px;font-size:20px}
   .tp-drum-item.sel{font-size:24px}
   .tp-drum-sel{top:50px;height:50px}
 }
 
-/* Person blocks: identical structure in both OH (.pb) and RDR (.person-block) */
 .pb,.person-block{border-radius:var(--radius);margin-bottom:5px}
 .pb:last-child,.person-block:last-child{margin-bottom:0}
 .ptop,.person-top{padding:8px 10px 8px 12px;min-height:40px}
-/* OH .pn and RDR .person-name: same width */
 .pn,.person-name{min-width:110px;font-size:12px}
 
-/* Preview boxes: same min-height and sizing in both modes */
 .prev-box,.preview-box{min-height:280px;max-height:480px}
 @media(max-width:700px){
   .prev-box,.preview-box{min-height:200px;max-height:360px}
 }
 
-/* Banner areas: same bottom margin so grid starts at same vertical position */
 #oh-banner-area,#rdr-banner-area{margin-bottom:0}
 .sbanner,.shift-banner{margin-bottom:12px}
 .rcbar,.cctv-bar{margin-bottom:16px}
-
-
 
 /* ── UNIFIED IMPORT PANEL (WhatsApp-themed) ──────────────────── */
 :root {
@@ -731,26 +698,22 @@ body.light {
 }
 .uimp-hdr-chev.open { transform: rotate(90deg); }
 
-/* Collapsible body */
 .uimp-body {
   overflow: hidden; max-height: 0;
   transition: max-height 0.38s cubic-bezier(0.4,0,0.2,1);
 }
 .uimp-body.open { max-height: 2400px; }
 
-/* Chat feed */
 .uimp-feed {
   max-height: 340px; overflow-y: auto;
   padding: 10px 12px 4px;
   display: flex; flex-direction: column; gap: 8px;
-  /* custom scrollbar */
-  scrollbar-width: thin;
+    scrollbar-width: thin;
   scrollbar-color: rgba(37,211,102,0.2) transparent;
 }
 .uimp-feed::-webkit-scrollbar { width: 4px; }
 .uimp-feed::-webkit-scrollbar-thumb { background: rgba(37,211,102,0.2); border-radius: 2px; }
 
-/* Empty state */
 .uimp-empty {
   display: flex; flex-direction: column; align-items: center;
   justify-content: center; padding: 28px 16px; gap: 10px; opacity: 0.5;
@@ -761,7 +724,6 @@ body.light {
   text-align: center; line-height: 1.6;
 }
 
-/* Message bubbles */
 @keyframes bubblePop {
   from { opacity: 0; transform: translateY(6px) scale(0.97); }
   to   { opacity: 1; transform: translateY(0) scale(1); }
@@ -789,7 +751,6 @@ body.light {
   background: linear-gradient(135deg, var(--wa-bubble-oh), var(--wa-bubble-rdr));
   border: 1px solid var(--wa-green-border);
 }
-/* type badge */
 .uimp-bubble-type {
   font-family: var(--mono); font-size: 8px; font-weight: 700;
   letter-spacing: 0.12em; text-transform: uppercase;
@@ -798,7 +759,6 @@ body.light {
 .uimp-bubble.type-oh .uimp-bubble-type { color: var(--wa-green); }
 .uimp-bubble.type-rdr .uimp-bubble-type { color: var(--day); }
 .uimp-bubble.type-mixed .uimp-bubble-type { color: var(--wa-green); }
-/* blocks inside a bubble */
 .uimp-bubble-blocks {
   display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 5px;
 }
@@ -812,12 +772,10 @@ body.light {
 .uimp-bblock.rdr.r1 { background: var(--r1-bg); border-color: var(--r1-border); color: var(--r1); }
 .uimp-bblock.rdr.r2 { background: var(--r2-bg); border-color: var(--r2-border); color: var(--r2); }
 .uimp-bblock.rdr.r3 { background: var(--r3-bg); border-color: var(--r3-border); color: var(--r3); }
-/* bubble timestamp / meta */
 .uimp-bubble-meta {
   font-family: var(--mono); font-size: 8px; color: var(--text3);
   text-align: right; letter-spacing: 0.04em;
 }
-/* duplicate / overwrite warning on bubble */
 .uimp-bubble-warn {
   font-family: var(--mono); font-size: 8px;
   color: var(--gold); margin-top: 3px; opacity: 0.8;
@@ -829,7 +787,6 @@ body.light {
   padding: 8px 12px 10px;
   border-top: 1px solid var(--border);
 }
-/* Paste icon button (left of textarea) */
 .uimp-paste-btn {
   width: 36px; height: 36px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
@@ -847,7 +804,6 @@ body.light {
 .uimp-paste-btn.done {
   background: linear-gradient(135deg, #047857, #34d399);
 }
-/* Textarea */
 .uimp-manual-ta {
   flex: 1; resize: none; min-height: 36px; max-height: 120px;
   padding: 8px 12px; border-radius: 18px;
@@ -862,7 +818,6 @@ body.light {
   box-shadow: 0 0 0 2px rgba(37,211,102,0.12);
 }
 .uimp-manual-ta::placeholder { color: var(--text3); opacity: 0.65; }
-/* Clear button (right of textarea) */
 .uimp-clear-btn {
   width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
   background: none; border: 1px solid transparent;
@@ -875,7 +830,6 @@ body.light {
   color: var(--red); background: var(--red-bg); opacity: 1;
 }
 
-/* Confirm panel */
 .uimp-confirm {
   margin: 0 12px 10px;
   background: var(--surface2); border: 1px solid var(--border2);
@@ -912,7 +866,6 @@ body.light {
 }
 .uimp-confirm-cancel:hover { border-color: var(--border3); color: var(--text); }
 
-/* Keep old IDs working silently */
 #imp-panel-hdr,#rdr-imp-panel-hdr,#imp-body,#rdr-imp-body,
 #imp-live,#rdr-imp-live,#imp-status,#rdr-imp-status,
 #imp-confirm,#rdr-imp-confirm,#imp-table-sect,#rdr-imp-table-sect,
@@ -938,14 +891,12 @@ body.light {
 .imp-lbl{font-family:var(--mono);font-size:9px;letter-spacing:0.14em;text-transform:uppercase;
   color:var(--text3);margin-bottom:7px}
 
-/* Paste area row */
 .imp-paste-row{position:relative;margin-bottom:8px}
 .imp-ta{width:100%;min-height:100px;background:var(--surface2);border:1px solid var(--border2);
   border-radius:var(--radius);color:var(--text);font-family:var(--mono);font-size:11px;
   padding:10px 12px;resize:vertical;outline:none;transition:border-color 0.15s,box-shadow 0.15s;line-height:1.7}
 .imp-ta:focus{border-color:rgba(167,139,250,0.5);box-shadow:0 0 0 3px rgba(167,139,250,0.08)}
 .imp-ta::placeholder{color:var(--text3)}
-/* Paste button — overlaid bottom-right of textarea */
 .imp-paste-btn{position:absolute;bottom:10px;right:10px;display:flex;align-items:center;gap:6px;
   padding:6px 12px;border-radius:8px;border:1px solid var(--border2);
   background:var(--surface);color:var(--text2);font-family:var(--mono);font-size:10px;font-weight:600;
@@ -956,13 +907,11 @@ body.light {
   background:var(--purple-bg);box-shadow:0 2px 12px rgba(167,139,250,0.2)}
 .imp-paste-btn.done{border-color:rgba(52,211,153,0.5);color:var(--green);background:var(--green-bg)}
 
-/* Detected tags row */
 .imp-live{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px;min-height:16px}
 .imp-live-tag{font-family:var(--mono);font-size:9px;padding:2px 8px;border-radius:20px;
   background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.25);color:var(--purple);letter-spacing:0.04em}
 .imp-live-none{font-family:var(--mono);font-size:9px;color:var(--text3);font-style:italic}
 
-/* Action row */
 .imp-actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:10px}
 .imp-btn-parse{
   background:linear-gradient(135deg,#6d28d9,#7c3aed);color:#fff;
@@ -990,7 +939,6 @@ body.light {
 .imp-status{font-family:var(--mono);font-size:9px;color:var(--text3);margin-left:2px}
 .imp-status.ok{color:var(--green)}.imp-status.err{color:var(--red)}
 
-/* Inline confirm panel — replaces modal */
 .imp-confirm{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius);
   padding:12px 14px;margin-bottom:10px;animation:fadeUp 0.18s ease;display:none}
 .imp-confirm.visible{display:block}
@@ -1018,7 +966,6 @@ body.light {
   cursor:pointer;transition:all 0.15s}
 .imp-confirm-cancel:hover{border-color:var(--border3);color:var(--text)}
 
-/* Preview table */
 .imp-table-wrap{overflow-x:auto;margin-top:4px}
 .imp-table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:11px}
 .imp-table th{padding:6px 10px;text-align:left;background:var(--surface2);border:1px solid var(--border);
@@ -1102,18 +1049,15 @@ body.light {
 .imp-fuzzy-tag .ftag-arrow{color:var(--text3);font-size:8px}
 .imp-fuzzy-tag .ftag-canon{color:var(--accent)}
 
-/* Calendar pending-import overlay */
 .cal-day.pending{background:rgba(167,139,250,0.13)!important;border-color:rgba(167,139,250,0.5)!important;
   box-shadow:0 0 0 2px rgba(167,139,250,0.18)!important;color:var(--purple)!important}
 .cal-day.pending .cal-day-num{color:var(--purple)}
 
-/* Calendar flash animation for newly imported days */
 @keyframes calFlash{0%{background:rgba(52,211,153,0.4);box-shadow:0 0 0 3px rgba(52,211,153,0.4)}
   60%{background:rgba(52,211,153,0.15);box-shadow:0 0 0 1px rgba(52,211,153,0.2)}
   100%{background:transparent;box-shadow:none}}
 .cal-day.just-imported{animation:calFlash 1.4s ease forwards!important}
 
-/* ic/ap dialog kept in DOM but hidden — override to never show */
 .ic-dialog,.ap-dialog{display:none!important}
 
 /* ═══ RDR + MERGE ADDITIONS ════════════════════════════════ */
@@ -1193,14 +1137,12 @@ body.light {
 .rota-slbl{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;padding:10px 0 6px;border-top:1px solid var(--border);margin-top:4px}
 .rota-slbl:first-child{border-top:none;margin-top:0;padding-top:0}
 .rota-slbl.r1{color:var(--r1)}.rota-slbl.r2{color:var(--r2)}.rota-slbl.r3{color:var(--r3)}
-/* Rota-colored left accent on person blocks */
 .person-block.rota-r1{border-left:3px solid var(--r1);background:linear-gradient(90deg,var(--r1-bg),var(--surface2))}
 .person-block.rota-r2{border-left:3px solid var(--r2);background:linear-gradient(90deg,var(--r2-bg),var(--surface2))}
 .person-block.rota-r3{border-left:3px solid var(--r3);background:linear-gradient(90deg,var(--r3-bg),var(--surface2))}
 .person-block.rota-r1.off-duty{border-left-color:var(--r1)}
 .person-block.rota-r2.off-duty{border-left-color:var(--r2)}
 .person-block.rota-r3.off-duty{border-left-color:var(--r3)}
-/* Rich colorized preview */
 .rdr-preview-rich{font-family:var(--mono);font-size:12px;white-space:pre-wrap;line-height:1.9;padding:16px;overflow:auto;background:var(--surface2);border-radius:var(--radius);border:1px solid var(--border);width:100%;min-height:280px;max-height:480px;cursor:text;-webkit-user-select:text;user-select:text;box-sizing:border-box}
 @media(max-width:700px){.rdr-preview-rich{min-height:200px;max-height:360px}}
 .rdr-preview-rich .prev-header{color:var(--text2)}
@@ -1210,7 +1152,6 @@ body.light {
 .rdr-preview-rich .prev-status-on{color:var(--green)}
 .rdr-preview-rich .prev-status-off{color:var(--red)}
 .rdr-preview-rich .prev-status-custom{color:var(--gold)}
-/* Import table rota column coloring */
 .imp-table .rota-r1-cell{color:var(--r1)!important;font-weight:700}
 .imp-table .rota-r2-cell{color:var(--r2)!important;font-weight:700}
 .imp-table .rota-r3-cell{color:var(--r3)!important;font-weight:700}
@@ -1220,7 +1161,6 @@ body.light {
 .copy-btn-rdr:hover{transform:translateY(-1px);box-shadow:0 6px 28px rgba(245,166,35,0.45)}
 .copy-btn-rdr.success{background:linear-gradient(135deg,var(--green),#059669);box-shadow:0 4px 20px rgba(52,211,153,0.35);color:#000}
 .rgl.rdr-grp{color:var(--day)}
-/* unconfirmed RDR person block — no import data yet */
 .person-block.unconfirmed .status-input{color:var(--text3)}
 .person-block.unconfirmed{opacity:0.6}
 .cal-dbn-row{display:flex;gap:6px;margin-top:8px}
@@ -1248,7 +1188,6 @@ body.light {
   transition:all 0.15s}
 .ex-close-btn:hover{border-color:rgba(248,113,113,0.4);color:var(--red)}
 .ex-sub{font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:10px;line-height:1.6}
-/* Source toggle */
 .ex-src-row{display:flex;gap:4px;margin-bottom:12px;background:var(--surface2);padding:3px;border-radius:10px;border:1px solid var(--border)}
 .ex-src-btn{flex:1;padding:5px 8px;border-radius:7px;font-family:var(--mono);font-size:9px;font-weight:700;
   letter-spacing:0.1em;text-transform:uppercase;border:none;background:none;color:var(--text3);cursor:pointer;transition:all 0.18s}
@@ -1256,7 +1195,6 @@ body.light {
 .ex-src-btn.active-oh{background:var(--accent-bg);border:1px solid rgba(56,189,248,0.4);color:var(--accent)}
 .ex-src-btn.active-rdr{background:var(--day-bg);border:1px solid rgba(245,166,35,0.4);color:var(--day)}
 .ex-src-btn.active-both{background:var(--purple-bg);border:1px solid rgba(167,139,250,0.4);color:var(--purple)}
-/* Range display */
 .ex-range-display{display:flex;align-items:center;gap:8px;margin-bottom:10px;padding:8px 12px;
   background:var(--surface2);border:1px solid var(--border2);border-radius:var(--radius)}
 .ex-range-slot{display:flex;flex-direction:column;gap:2px;flex:1}
@@ -1268,13 +1206,11 @@ body.light {
   padding:2px 5px;border-radius:4px;transition:all 0.15s;flex-shrink:0;display:none}
 .ex-range-clear.visible{display:block}
 .ex-range-clear:hover{color:var(--red)}
-/* Calendar nav */
 .ex-cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
 .ex-cal-month{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--text);letter-spacing:0.04em}
 .ex-nav-btn{background:var(--surface2);border:1px solid var(--border2);border-radius:8px;color:var(--text2);
   width:26px;height:26px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;transition:all 0.15s}
 .ex-nav-btn:hover{border-color:rgba(167,139,250,0.4);color:var(--purple)}
-/* Calendar grid */
 .ex-cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:12px}
 .ex-cal-dow{font-family:var(--mono);font-size:9px;color:var(--text3);text-align:center;padding:3px 0;letter-spacing:0.06em}
 .ex-cal-day{font-family:var(--mono);font-size:11px;text-align:center;padding:6px 2px;
@@ -1290,12 +1226,10 @@ body.light {
 .ex-cal-day.in-range{background:rgba(167,139,250,0.1);border-color:rgba(167,139,250,0.25);color:var(--purple)}
 .ex-cal-day.has-dot::after{content:'';position:absolute;bottom:2px;left:50%;transform:translateX(-50%);
   width:3px;height:3px;border-radius:50%;background:var(--purple);opacity:0.7}
-/* Hint */
 .ex-hint{font-family:var(--mono);font-size:10px;color:var(--text3);margin-bottom:14px;
   padding:7px 10px;background:var(--surface2);border-radius:8px;border:1px solid var(--border)}
 .ex-hint.ok{color:var(--purple);background:var(--purple-bg);border-color:rgba(167,139,250,0.3)}
 .ex-hint.warn{color:var(--gold);background:var(--gold-bg);border-color:rgba(251,191,36,0.25)}
-/* Buttons */
 .ex-btns{display:flex;gap:8px;justify-content:flex-end}
 .ex-btn{padding:8px 18px;border-radius:var(--radius);font-family:var(--mono);font-size:11px;
   font-weight:600;cursor:pointer;letter-spacing:0.04em;transition:all 0.15s;border:none}
@@ -1338,7 +1272,6 @@ input[type="date"]:focus{border-color:var(--border3)}
 
 /* ── ROTA CHIPS TOGGLE ─────────────────────────────────────── */
 .rota-toggle-row{display:flex;align-items:center;margin-bottom:10px}
-/* iOS-style toggle switch */
 .toggle-switch{display:inline-flex;align-items:center;gap:9px;cursor:pointer;user-select:none;-webkit-tap-highlight-color:transparent}
 .toggle-switch input{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
 .toggle-track{position:relative;width:36px;height:20px;background:var(--surface3);border:1px solid var(--border2);border-radius:10px;transition:background 0.22s,border-color 0.22s;flex-shrink:0}
@@ -1347,6 +1280,68 @@ input[type="date"]:focus{border-color:var(--border3)}
 .toggle-switch input:checked ~ .toggle-track .toggle-thumb{transform:translateX(16px);background:var(--night)}
 .toggle-lbl{font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);transition:color 0.2s}
 .toggle-switch input:checked ~ .toggle-lbl{color:var(--night)}
+
+/* ── FIRST-RUN SETUP OVERLAY ─────────────────────────────────── */
+#setup-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(10,14,20,0.82);
+  backdrop-filter: blur(6px);
+  display: flex; align-items: center; justify-content: center;
+}
+#setup-overlay.hidden { display: none; }
+.setup-card {
+  background: var(--surface1); border: 1px solid var(--border2);
+  border-radius: 16px; padding: 32px 28px 24px;
+  width: min(440px, 92vw);
+  box-shadow: 0 24px 64px rgba(0,0,0,0.45);
+}
+.setup-card h2 {
+  margin: 0 0 4px; font-size: 17px; font-weight: 700;
+  color: var(--text1); letter-spacing: -0.01em;
+}
+.setup-card p {
+  margin: 0 0 22px; font-size: 12.5px; color: var(--text3); line-height: 1.5;
+}
+.setup-field { margin-bottom: 14px; }
+.setup-field label {
+  display: block; font-size: 11px; font-weight: 600;
+  color: var(--text2); letter-spacing: 0.06em; text-transform: uppercase;
+  margin-bottom: 5px;
+}
+.setup-field input {
+  width: 100%; box-sizing: border-box;
+  padding: 9px 12px; border-radius: 8px;
+  background: var(--surface2); border: 1px solid var(--border2);
+  color: var(--text1); font-size: 13px; font-family: var(--mono);
+  outline: none; transition: border-color 0.15s;
+}
+.setup-field input:focus {
+  border-color: var(--wa-green);
+  box-shadow: 0 0 0 2px rgba(37,211,102,0.12);
+}
+.setup-field input::placeholder { color: var(--text3); opacity: 0.6; }
+.setup-actions {
+  display: flex; gap: 10px; margin-top: 22px; align-items: center;
+}
+.setup-save {
+  flex: 1; padding: 10px; border-radius: 8px; border: none;
+  background: linear-gradient(135deg, var(--wa-green-dark), var(--wa-green));
+  color: #fff; font-size: 13px; font-weight: 700;
+  cursor: pointer; transition: all 0.15s;
+  box-shadow: 0 2px 12px rgba(37,211,102,0.3);
+}
+.setup-save:hover { transform: translateY(-1px); box-shadow: 0 4px 18px rgba(37,211,102,0.45); }
+.setup-skip {
+  font-size: 11.5px; color: var(--text3); background: none;
+  border: none; cursor: pointer; padding: 4px 6px;
+  text-decoration: underline; text-underline-offset: 2px;
+  transition: color 0.15s;
+}
+.setup-skip:hover { color: var(--text2); }
+.setup-note {
+  margin-top: 14px; font-size: 11px; color: var(--text3);
+  line-height: 1.5; border-top: 1px solid var(--border); padding-top: 12px;
+}
 </style>
 </head>
 <body>
@@ -1439,10 +1434,6 @@ input[type="date"]:focus{border-color:var(--border3)}
           </div>
           <div class="cal-export-row">
             <button class="cal-export-btn" onclick="openExportModal()">⬆ Export TSV</button>
-              <button onclick="devNukeAllData()"
-        style="background:#7f1d1d;color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer">
-  ☢ DEV NUKE ALL DATA
-</button>
           </div>
           <input type="date" id="date-in" style="display:none" onchange="onDC()">
           <!-- RDR date input (for shift controls) -->
@@ -1542,8 +1533,7 @@ input[type="date"]:focus{border-color:var(--border3)}
                 </div>
               </div>
             </div>-->
-            <!-- END HARDCODED FIREBASE -->
-          </div>
+                      </div>
         </div>
       </div>
     </div>
@@ -1661,14 +1651,28 @@ input[type="date"]:focus{border-color:var(--border3)}
     </div>
   </div>
 </div>
+<!-- FIRST-RUN SETUP OVERLAY — shown once if no Firebase URLs in localStorage -->
+<div id="setup-overlay" class="hidden">
+  <div class="setup-card">
+    <h2>Firebase Setup</h2>
+    <p>Paste your Firebase Realtime Database URL below. OH and RDR share one database — data is namespaced internally. Saved to this browser only — never committed to the repo.</p>
+    <div class="setup-field">
+      <label>Firebase URL</label>
+      <input id="setup-oh-url" type="url" placeholder="https://your-project-default-rtdb.region.firebasedatabase.app" />
+    </div>
+    <div class="setup-actions">
+      <button class="setup-save" onclick="setupSave()">Save &amp; Continue</button>
+      <button class="setup-skip" onclick="setupSkip()">Skip (offline mode)</button>
+    </div>
+    <p class="setup-note">URLs are stored in <code>localStorage</code> and loaded on every visit. To reset, open DevTools → Application → Local Storage and delete <code>oh_fb_url</code>.</p>
+  </div>
+</div>
 <div class="toast" id="toast"></div>
 <script>
 /* ═══════════════════════ CONSTANTS ═══════════════════════ */
 const ROSTER_LS='oh_roster_v3',SAVED_LS='oh_saved_v3',FB_LS='oh_fb_url';
-// ── HARDCODED FIREBASE (delete this block to revert) ──────────────────────────
-const HARDCODED_FB='https://ops-rollcall-default-rtdb.asia-southeast1.firebasedatabase.app';
-// const HARDCODED_FB=''; // <-- original: paste your Firebase URL here to hardcode it
-// ──────────────────────────────────────────────────────────────────────────────
+// Firebase Realtime Database URL — loaded from localStorage (set on first run)
+const HARDCODED_FB='';
 
 const DEFAULT_ROSTER={
   MAIN:['LCP IRFAN','CPL RAZIN','CPL RIZQ','LCP JEFF','PTE HUZAIFAH','LCP ZACHARIAH','LCP MARCUS',
@@ -1852,7 +1856,6 @@ function buildCalSummary(key){
     }
   }
 
-  // render immediately from localStorage (instant feedback)
   renderSummary(all[key]);
   wrap.appendChild(div);
 
@@ -1877,11 +1880,10 @@ function setSyncUI(state,extra){
   const pill=document.getElementById('sync-pill'),txt=document.getElementById('sync-txt');
   pill.className='sync-pill '+state;
   txt.textContent=extra||{online:'synced',syncing:'syncing…',offline:'local',error:'error',paused:'paused'}[state]||state;
-  // Update tooltip
   if(pill) pill.title = state==='paused' ? 'Sync paused — click to resume' : 'Click to pause sync';
 }
 let syncPaused = false;
-function fbBase(){if(syncPaused)return null;return fbUrl?fbUrl.replace(/\/+$/,''):null}
+function fbBase(){if(syncPaused)return null;return fbUrl?fbUrl.replace(/\/+$/,'')+'/oh':null}
 function toggleSyncPause(){
   // Only meaningful when Firebase is configured
   if(!fbUrl) return;
@@ -1933,16 +1935,14 @@ function applyRemoteDay(d){
   if(d.toRows){toRows=d.toRows;renderToRows();}
   if(d.emoji&&d.emoji!==curEmoji){curEmoji=d.emoji;rollCount=d.rollCount||1;bestRolls=d.bestRolls||1;applyEmoji(d.emoji,true);updateStreakUI();}
   if(changed){
-    // Update single-mode inputs
-    document.querySelectorAll('[data-sk]').forEach(inp=>{
+      document.querySelectorAll('[data-sk]').forEach(inp=>{
       const k=inp.getAttribute('data-sk');
       if(document.activeElement!==inp&&statuses[k]!==undefined){
         inp.value=statuses[k];
         const blk=inp.closest('.pb');if(blk)styleBlock(blk,statuses[k]);
       }
     });
-    // Update AM/PM split inputs
-    document.querySelectorAll('.pb').forEach(blk=>{
+      document.querySelectorAll('.pb').forEach(blk=>{
       const sw=blk.querySelector('.sw');if(!sw||!sw.classList.contains('split'))return;
       const key=blk.getAttribute('data-key');if(!key)return;
       const val=statuses[key]||'';
@@ -1973,12 +1973,10 @@ function fbListen(k){
     es.addEventListener('patch',e=>{try{
       const d=JSON.parse(e.data);
       if(!d||!d.data)return;
-      // Firebase patch path tells us which subfield changed
-      const path=(d.path||'').replace(/^\//,'');
+          const path=(d.path||'').replace(/^\//,'');
       let wrapped={};
       if(!path||path===''){
-        // root patch — data is the full day object or partial
-        wrapped=d.data;
+              wrapped=d.data;
       } else if(path==='statuses'){
         wrapped={statuses:d.data};
       } else if(path==='toRows'){
@@ -1986,8 +1984,7 @@ function fbListen(k){
       } else if(path==='emoji'){
         wrapped={emoji:d.data};
       } else if(path.startsWith('statuses/')){
-        // single field: statuses/MAIN-LCP IRFAN
-        const field=path.replace('statuses/','');
+              const field=path.replace('statuses/','');
         wrapped={statuses:{[field]:d.data}};
       } else {
         wrapped=d.data;
@@ -2053,16 +2050,14 @@ async function fbSyncCalendarDots(){
     const keys=await r.json();
     if(!keys||typeof keys!=='object')return;
     const all=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
-    // Fetch all known remote keys (not just missing ones — remote is truth)
-    await Promise.all(Object.keys(keys).map(async k=>{
+      await Promise.all(Object.keys(keys).map(async k=>{
       try{
         const r2=await fetch(fbBase()+'/data/'+k+'.json');
         if(!r2.ok)return;
         const d=await r2.json();
         if(!d)return;
         if(!all[k])all[k]={statuses:{},toRows:[],emoji:null,rollCount:0,bestRolls:0};
-        // Overwrite with remote (remote wins)
-        if(d.statuses)all[k].statuses={...all[k].statuses,...d.statuses};
+              if(d.statuses)all[k].statuses={...all[k].statuses,...d.statuses};
         if(d.toRows&&d.toRows.length)all[k].toRows=d.toRows;
         if(d.emoji)all[k].emoji=d.emoji;
       }catch(_){}
@@ -2072,7 +2067,6 @@ async function fbSyncCalendarDots(){
     buildCalSummary(calSelectedKey);
   }catch(_){}
 
-  // Live SSE on the whole /data node — fires when any date changes on any device
   if(fbCalStream){fbCalStream.close();fbCalStream=null;}
   try{
     const es=new EventSource(fbBase()+'/data.json?stream=true',{withCredentials:false});
@@ -2081,8 +2075,7 @@ async function fbSyncCalendarDots(){
       const d=JSON.parse(e.data);
       if(!d||!d.data)return;
       const all=JSON.parse(localStorage.getItem(SAVED_LS)||'{}');
-      // d.path is like '/2026-06-01', d.data is the day object
-      if(d.path&&d.path.length>1&&d.data&&typeof d.data==='object'&&d.data.statuses){
+          if(d.path&&d.path.length>1&&d.data&&typeof d.data==='object'&&d.data.statuses){
         const k=d.path.replace(/^\//,'');
         if(!all[k])all[k]={statuses:{},toRows:[],emoji:null,rollCount:0,bestRolls:0};
         all[k].statuses={...all[k].statuses,...d.data.statuses};
@@ -2169,15 +2162,13 @@ function propagateRangeStatus(key,statusValue,p1,p2,force=true){
    Called when a user hits the X clear button. */
 function clearRangeStatus(key,statusValue){
   if(!statusValue)return;
-  // parse dates like "dd/mm" from the status string
   const match=statusValue.match(/(\d{2}\/\d{2})\s*-\s*(\d{2}\/\d{2})/);
   if(!match)return;
   const now=new Date();
   function parseDate(s){
     const[d,m]=s.split('/').map(Number);
     let y=now.getFullYear();
-    // if month already passed this year, use next year
-    const td=new Date(y,m-1,d);
+      const td=new Date(y,m-1,d);
     if(td<new Date(now.getFullYear(),now.getMonth()-1,1))y++;
     return new Date(y,m-1,d);
   }
@@ -2243,12 +2234,10 @@ function mkPB(name,grp){
   if(statuses[key]===undefined)statuses[key]='';
   const blk=document.createElement('div');blk.className='pb';blk.setAttribute('data-key',key);
 
-  // top row: name | status area | clear X
   const top=document.createElement('div');top.className='ptop';
   const nm=document.createElement('span');nm.className='pn';nm.textContent=name;
 
   const sw=document.createElement('div');sw.className='sw';
-  // single input (default)
   const si=document.createElement('input');si.type='text';si.className='si';
   si.value=statuses[key];si.placeholder='—';
   si.setAttribute('autocomplete','off');si.setAttribute('autocorrect','off');
@@ -2259,12 +2248,10 @@ function mkPB(name,grp){
   si.addEventListener('blur',()=>setTimeout(()=>blk.classList.remove('foc'),180));
   sw.appendChild(si);
 
-  // clear button
   const clr=document.createElement('button');clr.className='p-clear';clr.innerHTML='✕';clr.type='button';clr.title='Clear';
   clr.addEventListener('mousedown',e=>{
     e.preventDefault();
-    // Parse any date range from the current value and clear those dates too
-    clearRangeStatus(key, statuses[key]);
+      clearRangeStatus(key, statuses[key]);
     setSingleMode(sw,si,key,blk);
     statuses[key]='';si.value='';styleBlock(blk,'');persist();updatePreview();rdrBuildCalendar();
     lc.classList.remove('op');
@@ -2272,15 +2259,11 @@ function mkPB(name,grp){
 
   top.appendChild(nm);top.appendChild(sw);top.appendChild(clr);blk.appendChild(top);
 
-  // chips row
   const chips=document.createElement('div');chips.className='chips';
-  // IN
   const cin=document.createElement('button');cin.className='chip cin';cin.textContent='IN';cin.type='button';
   cin.addEventListener('mousedown',e=>{e.preventDefault();setSingleMode(sw,si,key,blk);si.value='IN';statuses[key]='IN';styleBlock(blk,'IN');lc.classList.remove('op');persist();updatePreview();});
-  // OUT▾
   const cout=document.createElement('button');cout.className='chip cout';cout.textContent='OUT ▾';cout.type='button';
   cout.addEventListener('mousedown',e=>{e.preventDefault();lc.classList.toggle('op');});
-  // AM/PM
   const campm=document.createElement('button');campm.className='chip campm';campm.textContent='AM/PM';campm.type='button';
   campm.addEventListener('mousedown',e=>{
     e.preventDefault();
@@ -2291,7 +2274,6 @@ function mkPB(name,grp){
   });
   chips.appendChild(cin);chips.appendChild(cout);chips.appendChild(campm);blk.appendChild(chips);
 
-  // leave sub-chips
   const lc=document.createElement('div');lc.className='lchips';
   LEAVE_DEFS.forEach(def=>{
     const b=document.createElement('button');b.className='lc';b.type='button';
@@ -2307,7 +2289,6 @@ function mkPB(name,grp){
   blk.appendChild(lc);
   styleBlock(blk,statuses[key]);
 
-  // restore split mode if value looks like AM/PM
   if(statuses[key]&&statuses[key].includes('AM ')&&statuses[key].includes(' PM ')){
     setSplitMode(sw,si,key,blk,true);
     campm.classList.add('active');
@@ -2316,7 +2297,6 @@ function mkPB(name,grp){
 }
 
 function applyLeaf(def,sw,si,key,blk,lc){
-  // figure out active field: if split mode, use focused half; else single
   let target=si;
   if(sw.classList.contains('split')){
     const focused=sw.querySelector('input:focus');
@@ -2327,8 +2307,7 @@ function applyLeaf(def,sw,si,key,blk,lc){
   else if(def.type==='bto'){target.value='BTO';}
   else if(def.type==='dp'){
     openDP(def.code,target,(p1,p2,suf)=>{
-      // prepend "OFF DUTY" so the status reads "OFF DUTY MC (01/06 - 03/06)"
-      const fullVal='OFF DUTY '+suf;
+          const fullVal='OFF DUTY '+suf;
       target.value=fullVal;
       assembleStatus(sw,si,key);
       styleBlock(blk,statuses[key]);persist();
@@ -2341,7 +2320,6 @@ function applyLeaf(def,sw,si,key,blk,lc){
 }
 
 function setSingleMode(sw,si,key,blk){
-  // remove any split elements, restore si
   [...sw.querySelectorAll('.sw-part,.sw-div,.sw-tag')].forEach(e=>e.remove());
   sw.classList.remove('split');
   if(!sw.contains(si))sw.appendChild(si);
@@ -2351,7 +2329,6 @@ function setSingleMode(sw,si,key,blk){
 
 function setSplitMode(sw,si,key,blk,silent){
   if(sw.classList.contains('split'))return;
-  // parse existing value into AM/PM if possible
   let amVal='',pmVal='';
   const cur=statuses[key]||'';
   const ampmMatch=cur.match(/^AM\s+(.*?)\s+PM\s+(.*)$/i);
@@ -2477,15 +2454,13 @@ function openTP(label,initialMins,onConfirm){
     const track=document.createElement('div');track.className='tp-drum-track';
     const PAD=1;const padded=[...Array(PAD).fill(null),...values,...Array(PAD).fill(null)];
     padded.forEach((v,i)=>{const item=document.createElement('div');item.className='tp-drum-item';item.textContent=(v===null)?'':String(v).padStart(2,'0');track.appendChild(item);});
-    // Read ITEM_H from DOM after append so mobile CSS overrides are respected
-    let ITEM_H=56;
+      let ITEM_H=56;
     let curIdx=values.indexOf(initVal)+PAD;
     let offsetY=0;
     function getItemH(){return track.firstChild?track.firstChild.getBoundingClientRect().height||ITEM_H:ITEM_H;}
     function updateSel(y){
       const ih=ITEM_H;
-      // center slot index = 1 (PAD), selected item sits at visual center (slot 1 of 3 visible)
-      const ni=Math.round(-y/ih);
+          const ni=Math.round(-y/ih);
       track.querySelectorAll('.tp-drum-item').forEach((el,i)=>el.classList.toggle('sel',i===ni+PAD));
       const ri=ni,v=values[Math.max(0,Math.min(values.length-1,ri))];onChange(v);
     }
@@ -2496,8 +2471,7 @@ function openTP(label,initialMins,onConfirm){
       updateSel(y);
     }
     function snapTo(val,anim){const vi=values.indexOf(val);setOff(-(vi*ITEM_H),anim);}
-    // Init after DOM insertion so we can measure real height
-    win.appendChild(selBar);win.appendChild(track);wrap.appendChild(win);
+      win.appendChild(selBar);win.appendChild(track);wrap.appendChild(win);
     requestAnimationFrame(()=>{
       ITEM_H=getItemH()||ITEM_H;
       snapTo(initVal,false);
@@ -2654,8 +2628,7 @@ function openDP(code,targetInp,cb){
       e.preventDefault();if(!p1)return;
       const suf=p2?code+' ('+fp(p1)+' - '+fp(p2)+')':code+' ('+fp(p1)+')';
       targetInp.value=suf;
-      // snapshot p1/p2 before overlay removal clears them
-      const _p1=p1,_p2=p2;
+          const _p1=p1,_p2=p2;
       ov.remove();
       if(cb)cb(_p1,_p2,suf);
     });
@@ -2682,7 +2655,6 @@ function _ohNavigateToDate(key){
 
 function selectCalDay(key){
   navigateToDate(key);
-  // sync calendar view to the selected month
   const d=dateFromKey(key);
   calViewYear=d.getFullYear();calViewMonth=d.getMonth();
   rdrBuildCalendar();buildCalSummary(key);
@@ -2715,7 +2687,6 @@ function impClear(){
 }
 
 function stripNoise(s){
-  // Remove ticks (✅✓✔), emojis (general unicode ranges), extra whitespace
   return s
     .replace(/[\u2705\u2713\u2714\u{1F3E5}\u{1F6CF}\u{1F4CB}]/gu,'')
     .replace(/[\uFE0F\u200D]/g,'')
@@ -2727,7 +2698,6 @@ function stripNoise(s){
 }
 
 function parseDate(line){
-  // Matches DD/MM/YYYY
   const m=line.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
   if(m) return {day:parseInt(m[1]),month:parseInt(m[2]),year:parseInt(m[3]),key:`${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`,label:m[1]};
   return null;
@@ -2779,7 +2749,6 @@ function statusClass(s){
   const u=s.toUpperCase().trim();
   if(u==='IN') return 's-in';
   if(u==='ADO') return 's-ado';
-  // AM/PM split
   if(/^AM\s+\S+\s+PM\s+\S+$/.test(u)){
     const parts=u.match(/^AM\s+(\S+)\s+PM\s+(\S+)$/);
     if(parts&&isKnown(parts[1])&&isKnown(parts[2])) return 's-part';
@@ -2817,7 +2786,6 @@ function impLivePreview(){
   const raw=document.getElementById('imp-ta').value;
   const live=document.getElementById('imp-live');
   const blocks=extractBlocks(raw);
-  // Clear old pending highlights
   _impPreviewKeys.forEach(k=>{const el=document.querySelector(`.cal-day[data-key="${k}"]`);if(el)el.classList.remove('pending');});
   _impPreviewKeys=[];
   const hdr=document.getElementById('imp-panel-hdr');
@@ -2830,7 +2798,6 @@ function impLivePreview(){
   }
   const dates=blocks.map(b=>b.date).sort((a,b)=>a.key.localeCompare(b.key));
   _impPreviewKeys=dates.map(d=>d.key);
-  // Highlight calendar cells for pending-import dates
   _impPreviewKeys.forEach(k=>{
     const el=document.querySelector(`.cal-day[data-key="${k}"]`);
     if(el)el.classList.add('pending');
@@ -2901,13 +2868,11 @@ function impParse(){
     return;
   }
 
-  // Build known section ordering from roster
   const rosterMain=(roster&&roster.MAIN||[]).map(n=>n.trim().toUpperCase());
   const rosterEMS=(roster&&roster.EMS||[]).map(n=>n.trim().toUpperCase());
   const rosterAll=[...rosterMain,...rosterEMS];
 
   const nameSet=new Set();
-  // Track section per name: 'MAIN' or 'EMS' — for ordering new names correctly
   const nameSection={};
   const parsed={};
 
@@ -2939,8 +2904,7 @@ function impParse(){
       if(sep&&RANK.test(sep[1].trim())){
         const name=parseName(sep[1]);
         const stat=parseStatus(sep[2]);
-        // Only keep first (authoritative) status per name per day — don't overwrite with Time off line
-        if(!parsed[dk][name]) parsed[dk][name]=stat;
+              if(!parsed[dk][name]) parsed[dk][name]=stat;
         if(!nameSet.has(name)){
           nameSet.add(name);
           nameSection[name]=inEMS?'EMS':'MAIN';
@@ -2949,9 +2913,7 @@ function impParse(){
     }
   }
 
-  // Build ordered name list: roster order first, then new names by section
   const newMain=[], newEMS=[];
-  // Fuzzy-resolve names not in roster
   const fuzzyMap={};   // originalName → rosterName (auto-resolved)
   const unknownNames=[]; // names with no roster match at all
   for(const name of nameSet){
@@ -2961,14 +2923,12 @@ function impParse(){
       if(match){
         fuzzyMap[name]=match;
       } else {
-        // Genuinely new — add to appropriate section list
-        if(nameSection[name]==='EMS') newEMS.push(name);
+              if(nameSection[name]==='EMS') newEMS.push(name);
         else newMain.push(name);
         if(!rosterAll.includes(name)) unknownNames.push(name);
       }
     }
   }
-  // Remap fuzzy-matched names in parsed data to their canonical roster names
   for(const dk of Object.keys(parsed)){
     for(const origName of Object.keys(fuzzyMap)){
       if(parsed[dk][origName]!==undefined){
@@ -2978,7 +2938,6 @@ function impParse(){
       }
     }
   }
-  // Also remap nameSection for canonical names
   for(const [orig,canon] of Object.entries(fuzzyMap)){
     if(!nameSection[canon]) nameSection[canon]=nameSection[orig];
   }
@@ -3005,7 +2964,6 @@ function impParse(){
   }
 
   const tbody=table.createTBody();
-  // Build reverse fuzzy map: canonName → [origNames]
   const fuzzyRevMap={};
   for(const [orig,canon] of Object.entries(fuzzyMap)){
     if(!fuzzyRevMap[canon]) fuzzyRevMap[canon]=[];
@@ -3014,8 +2972,7 @@ function impParse(){
   for(const name of nameOrder){
     const tr=tbody.insertRow();
     const td0=tr.insertCell();
-    // Show fuzzy alias info inline
-    if(fuzzyRevMap[name]){
+      if(fuzzyRevMap[name]){
       td0.innerHTML=name+'<span class="name-fuzzy" title="Auto-matched from message">'+fuzzyRevMap[name].join('/')+'</span>';
     } else if(unknownNames.includes(name)){
       td0.innerHTML=name+'<span class="name-unknown">new</span>';
@@ -3044,14 +3001,10 @@ function impCopy(){
   const btn=document.getElementById('imp-copy-btn');
   const ok=()=>{btn.classList.add('ok');btn.textContent='✓ Copied!';setTimeout(()=>{btn.classList.remove('ok');btn.textContent='⬇ Copy as TSV';},2500);};
 
-  // Build output order from the CURRENT roster (which may already include newly confirmed
-  // people), then append any extras not yet in roster in their original message order.
-  // This ensures the row order always matches the roster — consistent with Export TSV.
   const rMain=(roster&&roster.MAIN||[]).map(n=>n.trim().toUpperCase());
   const rEMS=(roster&&roster.EMS||[]).map(n=>n.trim().toUpperCase());
   const rAllSet=new Set([...rMain,...rEMS]);
   const nameSet=new Set(names);
-  // Extras: new people from the message not yet saved to roster (pre-confirm)
   const extrasMain=names.filter(n=>!rAllSet.has(n)&&!(impData.nameSection&&impData.nameSection[n]==='EMS'));
   const extrasEMS=names.filter(n=>!rAllSet.has(n)&&impData.nameSection&&impData.nameSection[n]==='EMS');
   const orderedNames=[
@@ -3061,8 +3014,6 @@ function impCopy(){
     ...extrasEMS,
   ];
 
-  // Build HTML table for clipboard — Excel respects inline styles on paste
-  // Short statuses (≤3 chars): Calibri 11pt. Longer (AM/PM etc): Calibri 8pt.
   let html='<table>';
   for(const name of orderedNames){
     html+='<tr>';
@@ -3076,7 +3027,6 @@ function impCopy(){
   }
   html+='</table>';
 
-  // Plain TSV fallback
   const tsv=orderedNames.map(name=>dates.map(d=>(parsed[d.key]&&parsed[d.key][name])||'').join('\t')).join('\n');
 
   function _copyFb(){
@@ -3099,7 +3049,6 @@ function impCopy(){
   }
 }
 
-
 function buildBookmarklet(){
   var code='(function(){var nl=String.fromCharCode(10);var report=[];function deepQuery(root,sel){  var res=[];  try{res=Array.from(root.querySelectorAll(sel));}catch(e){}  var all=[];  try{all=Array.from(root.querySelectorAll(\'*\'));}catch(e){}  all.forEach(function(el){if(el.shadowRoot)res=res.concat(deepQuery(el.shadowRoot,sel));});  return res;}var tests=[\'[data-pre-plain-text]\',\'[data-testid]\',\'.copyable-text\',\'[class*="msg"]\',\'[role="row"]\',\'[aria-label]\',\'span\',\'div\'];report.push(\'=== SHADOW DOM DIAGNOSTIC ===\');tests.forEach(function(sel){  try{var n=deepQuery(document,sel).length;report.push(sel+\': \'+n);}catch(e){report.push(sel+\': ERR \'+e.message);}});report.push(\'--- Sample text nodes ---\');var spans=deepQuery(document,\'span\');var textSamples=spans.filter(function(s){var t=(s.innerText||\'\').trim();return t.length>5&&t.length<80;}).slice(0,8);textSamples.forEach(function(s){report.push(\'SPAN: \'+JSON.stringify((s.innerText||\'\').trim().substring(0,60)));});var divs=deepQuery(document,\'div\');var divSamples=divs.filter(function(d){var t=(d.innerText||\'\').trim();return t.length>20&&t.length<120&&d.children.length<4;}).slice(0,6);divSamples.forEach(function(d){report.push(\'DIV(\'+d.children.length+\'ch): \'+JSON.stringify((d.innerText||\'\').trim().substring(0,80)));});report.push(\'--- data-* attrs in shadow ---\');var allInShadow=deepQuery(document,\'*\');var withData=allInShadow.filter(function(e){return Array.from(e.attributes||[]).some(function(a){return a.name.startsWith(\'data-\');});}).slice(0,6);withData.forEach(function(e){  var attrs=Array.from(e.attributes).filter(function(a){return a.name.startsWith(\'data-\');}).slice(0,3);  report.push(e.tagName+\': \'+attrs.map(function(a){return a.name+\'=\'+JSON.stringify(a.value.substring(0,25));}).join(\' \'));});prompt(\'Copy all and send:\',report.join(nl));})();';
   var full='javascript:'+code;
@@ -3108,7 +3057,6 @@ function buildBookmarklet(){
   var box=document.getElementById('bm-manual-code');
   if(box)box.value=full;
 }
-
 
 // Build on load
 document.addEventListener('DOMContentLoaded',buildBookmarklet);
@@ -3144,7 +3092,6 @@ function showImpConfirm(){
   const warn=document.getElementById('imp-confirm-warn');
   if(warn)warn.classList.toggle('visible',hasExisting);
 
-  // Fuzzy match info
   const fuzzyBox=document.getElementById('imp-fuzzy-info');
   if(fuzzyBox){
     const fmap=impData.fuzzyMap||{};
@@ -3159,7 +3106,6 @@ function showImpConfirm(){
     }
   }
 
-  // Unknown names
   const unknownBox=document.getElementById('imp-unknown-warn');
   if(unknownBox){
     const unknowns=impData.unknownNames||[];
@@ -3238,7 +3184,6 @@ function confirmImport(){
     }
   }
 
-  // Clear pending highlights
   _impPreviewKeys.forEach(k=>{const el=document.querySelector(`.cal-day[data-key="${k}"]`);if(el)el.classList.remove('pending');});
   _impPreviewKeys=[];
   const hdrEl=document.getElementById('imp-panel-hdr');
@@ -3246,11 +3191,9 @@ function confirmImport(){
 
   dismissImpConfirm();
 
-  // Rebuild calendar so dots appear immediately
   rdrBuildCalendar();
   if(calSelectedKey&&pushedKeys.includes(calSelectedKey))buildCalSummary(calSelectedKey);
 
-  // Flash imported cells green — the visual confirmation, no toast needed
   pushedKeys.forEach(dk=>{
     const el=document.querySelector(`.cal-day[data-key="${dk}"]`);
     if(el){
@@ -3261,7 +3204,6 @@ function confirmImport(){
     }
   });
 
-  // Update hint text briefly
   const hint=document.getElementById('imp-panel-hint');
   if(hint){hint.textContent=pushedKeys.length+' day'+(pushedKeys.length>1?'s':'')+' saved ✓';
     setTimeout(()=>{hint.textContent='paste → calendar';},3000);}
@@ -3442,7 +3384,6 @@ async function uimpDoPaste(){
   const ta=document.getElementById('uimp-manual-ta');
   if(btn)btn.classList.add('loading');
 
-  // Strategy 1: modern clipboard API (permission already granted)
   try {
     const text = await navigator.clipboard.readText();
     if(btn){btn.classList.remove('loading');btn.classList.add('done');setTimeout(()=>btn.classList.remove('done'),1200);}
@@ -3452,7 +3393,6 @@ async function uimpDoPaste(){
     return;
   } catch(e){}
 
-  // Strategy 2: execCommand paste into the visible textarea directly
   try {
     if(ta){
       ta.focus();
@@ -3733,16 +3673,14 @@ function exBuildPicker(){
     el.textContent=d;el.setAttribute('data-key',key);
     if(key===todayKey)el.classList.add('today-ex');
     if(hasData)el.classList.add('has-dot');
-    // Range highlights — apply regardless of hasData so range is visible across empty days
-    if(s&&e2){
+      if(s&&e2){
       if(key===s)el.classList.add('range-start');
       else if(key===e2)el.classList.add('range-end');
       else if(key>s&&key<e2)el.classList.add('in-range');
     } else if(s&&key===s){
       el.classList.add('range-start');
     }
-    // All days are clickable — empty days just extend the range (included as blank cols in TSV)
-    el.addEventListener('click',()=>exPickDay(key));
+      el.addEventListener('click',()=>exPickDay(key));
     grid.appendChild(el);
   }
   exUpdateRangeDisplay();
@@ -3754,11 +3692,9 @@ function exPickDay(key){
     exPickStart=key;exPickEnd=null;
     document.getElementById('ex-sub').textContent='Now click the end date (or same date for single day).';
   } else if(key===exPickStart){
-    // Single day — treat as both start and end
-    exPickEnd=key;
+      exPickEnd=key;
   } else {
-    // Always sort so start ≤ end regardless of click order
-    if(key<exPickStart){exPickEnd=exPickStart;exPickStart=key;}
+      if(key<exPickStart){exPickEnd=exPickStart;exPickStart=key;}
     else exPickEnd=key;
     document.getElementById('ex-sub').textContent='Range selected. Click ⬆ Copy TSV to export.';
   }
@@ -3785,7 +3721,6 @@ function exUpdateHint(){
   btn.disabled=false;
 }
 
-/* Helper: display name for a storeKey (strips group prefix) */
 function exDisplayName(sk){
   // MAIN-LCP IRFAN → LCP IRFAN
   // EMS-CPL KHAIRI → CPL KHAIRI
@@ -3793,7 +3728,6 @@ function exDisplayName(sk){
   return sk.replace(/^(?:MAIN|EMS|R[123])-/,'');
 }
 
-/* Helper: get the export cell value for a store key + date */
 function exCellValue(sk, dk, ohAll, rdrAll){
   if(sk.startsWith('R1-')||sk.startsWith('R2-')||sk.startsWith('R3-')){
     const raw=(rdrAll[dk]&&rdrAll[dk].statuses&&rdrAll[dk].statuses[sk])||'';
@@ -3812,16 +3746,13 @@ function exCopy(){
   const cursor=new Date(s+'T00:00:00'),end=new Date(e+'T00:00:00');
   while(cursor<=end){dates.push(fmtKey(new Date(cursor)));cursor.setDate(cursor.getDate()+1);}
 
-  // ── Build ordered row groups ──────────────────────────────
-  // Each entry: { sk (store key), name (display) }
   const ohRows=[], rdrRows=[];
 
   if(exSrc==='oh'||exSrc==='both'){
     const seen=new Set();
     [...(roster.MAIN||[])].forEach(n=>{const k='MAIN-'+n;if(!seen.has(k)){seen.add(k);ohRows.push(k);}});
     [...(roster.EMS||[])].forEach(n=>{const k='EMS-'+n;if(!seen.has(k)){seen.add(k);ohRows.push(k);}});
-    // extras from saved data not in current roster
-    dates.forEach(dk=>{if(!ohAll[dk]||!ohAll[dk].statuses)return;
+      dates.forEach(dk=>{if(!ohAll[dk]||!ohAll[dk].statuses)return;
       Object.keys(ohAll[dk].statuses).forEach(k=>{if(!seen.has(k)&&(k.startsWith('MAIN-')||k.startsWith('EMS-'))){seen.add(k);ohRows.push(k);}});
     });
   }
@@ -3834,8 +3765,6 @@ function exCopy(){
     });
   }
 
-  // ── Assemble rows array (with blank separator for "both") ─
-  // Each item is either a storeKey string or null (blank row separator)
   const allRows=[];
   if(exSrc==='both'){
     ohRows.forEach(k=>allRows.push(k));
@@ -3847,8 +3776,6 @@ function exCopy(){
     rdrRows.forEach(k=>allRows.push(k));
   }
 
-  // ── Build HTML table (for rich paste into Excel) ──────────
-  // Column A = name, then one column per date
   const CELL_STYLE='font-family:Calibri;font-size:11pt;vertical-align:middle;text-align:center';
   const NAME_STYLE='font-family:Calibri;font-size:11pt;vertical-align:middle;text-align:left';
 
@@ -3857,8 +3784,7 @@ function exCopy(){
 
   allRows.forEach(sk=>{
     if(sk===null){
-      // blank separator row — empty name + empty status cells
-      const emptyCols='\t'.repeat(dates.length);
+          const emptyCols='\t'.repeat(dates.length);
       tsvRows.push(emptyCols);
       html+='<tr><td></td>'+dates.map(()=>'<td></td>').join('')+'</tr>';
       return;
@@ -3868,8 +3794,7 @@ function exCopy(){
     const tsvCols=[name];
     dates.forEach(dk=>{
       const sv=exCellValue(sk,dk,ohAll,rdrAll);
-      // Smaller font for long values (AM/PM splits), standard for short
-      const fs=sv.length>5?'9pt':'11pt';
+          const fs=sv.length>5?'9pt':'11pt';
       html+=`<td style="${CELL_STYLE};font-size:${fs}">${sv}</td>`;
       tsvCols.push(sv);
     });
@@ -3885,7 +3810,6 @@ function exCopy(){
     btn.classList.add('success');btn.textContent='✓ Copied!';
     setTimeout(()=>{btn.classList.remove('success');btn.innerHTML='⬆ Copy TSV';closeExportModal();},1800);
   };
-  // execCommand fallback — always works, no permission required
   function _copyFallback(){
     const ta=document.createElement('textarea');
     ta.value=tsv;ta.style.cssText='position:fixed;top:-9999px;left:-9999px;opacity:0;';
@@ -3918,8 +3842,7 @@ async function impDoPaste(){
     setTimeout(() => { impParse(); btn.classList.remove('pasting'); btn.classList.add('done'); setTimeout(() => btn.classList.remove('done'), 1400); }, 80);
   } catch(e) {
     btn.classList.remove('pasting');
-    // Fallback: focus textarea so user can Ctrl+V
-    ta.focus();
+      ta.focus();
     showToast('Click the text area and press Ctrl+V / ⌘V to paste.');
   }
 }
@@ -3963,7 +3886,6 @@ function init(){
   if(fbUrl){const fbin=document.getElementById('fb-in');if(fbin){fbin.value=fbUrl;fbin.classList.add('connected');}initFb();}
   else setSyncUI('offline');
 }
-/* init() called below after RDR layer loads */
 /* ════════════════════════════════════════════════════════════
    MERGE LAYER — RDR + MODE SWITCHING
    ════════════════════════════════════════════════════════════ */
@@ -3972,8 +3894,7 @@ function init(){
 const MODE_LS = 'unified_mode';
 const RDR_ROSTER_LS = 'rdr_roster_v3';
 const RDR_SAVED_LS = 'rdr_saved_v3';
-// RDR Firebase — paste your Firebase URL here
-const RDR_HARDCODED_FB = 'https://rota-rollcall-default-rtdb.asia-southeast1.firebasedatabase.app';
+// RDR uses the same Firebase URL as OH, namespaced under /rdr
 
 /* ── RDR ROTA CYCLE ─────────────────────────────────────────── */
 const RDR_ANCHOR = new Date(2026, 4, 26); // Mon 26 May 2026
@@ -3997,9 +3918,8 @@ const RDR_DEFAULT_ROSTER = {
 };
 let rdrRoster = JSON.parse(localStorage.getItem(RDR_ROSTER_LS)||'null') || JSON.parse(JSON.stringify(RDR_DEFAULT_ROSTER));
 let rdrStatuses = {};
-let rdrFbUrl = RDR_HARDCODED_FB;
+let rdrFbUrl = localStorage.getItem('oh_fb_url') || '';
 let rdrFbStream = null, rdrSuppressRemote = false;
-
 
 /* ── ROTA CHIP TOGGLE STATE ─────────────────────────────────── */
 let rdrShowChips = false; // OFF by default in OH mode; ON by default in RDR mode
@@ -4028,7 +3948,6 @@ function setMode(m) {
 
 function applyMode() {
   const isOH = currentMode === 'oh';
-  // Topbar logo/title
   const logo = document.querySelector('.t-logo');
   const title = document.querySelector('.t-title');
   if (isOH) {
@@ -4040,31 +3959,22 @@ function applyMode() {
     logo.textContent = 'RDR';
     if (title) title.textContent = 'Roll Call';
   }
-  // Mode buttons
   document.getElementById('btn-oh').className = 'mode-btn' + (isOH ? ' active-oh' : '');
   document.getElementById('btn-rdr').className = 'mode-btn' + (!isOH ? ' active-rdr' : '');
-  // Banner areas
   document.getElementById('oh-banner-area').style.display = isOH ? '' : 'none';
   document.getElementById('rdr-banner-area').style.display = !isOH ? '' : 'none';
-  // Auto-manage rota chips visibility
   setRotaChipsForMode(!isOH);
-  // Grid: toggle the whole OH grid vs RDR column
-  // Calendar widget is full-width above both and always visible
   const ohGrid = document.getElementById('oh-grid');
   if (ohGrid) ohGrid.style.display = isOH ? '' : 'none';
   document.getElementById('rdr-col').style.display = !isOH ? '' : 'none';
-  // Hide rota toggle in RDR mode (chips always on there), show in OH mode
   const rotaToggleRow = document.getElementById('rota-toggle-row');
   if (rotaToggleRow) rotaToggleRow.style.display = !isOH ? 'none' : '';
-  // Rebuild calendar (both modes show unified calendar in col 0 of grid which is always visible)
   rdrBuildCalendar();
-  // Rebuild summaries
   rdrBuildCalSummary(calSelectedKey);
   if (!isOH) {
     rdrLoadLocal(dateFromKey(curDateKey));
     rdrRender();
-    // Sync RDR Firebase for current date
-    if (rdrFbUrl) {
+      if (rdrFbUrl) {
       rdrFbFetch(curDateKey).then(() => rdrFbListen(curDateKey));
     }
 
@@ -4075,17 +3985,13 @@ function applyMode() {
    We override the OH buildCalendar to add rota chips + dual dots
    ─────────────────────────────────────────────────────────── */
 function rdrBuildCalendar() {
-  // Only patch if OH calendar is already built — we rely on OH's buildCalendar
-  // being called first; here we just re-run it with our enhancements.
   buildCalendar(); // call OH's version (it reads OH localStorage)
-  // Now annotate each day cell with RDR chips and RDR dot
   const rdrAll = JSON.parse(localStorage.getItem(RDR_SAVED_LS)||'{}');
   document.querySelectorAll('.cal-day[data-key]').forEach(el => {
     const key = el.getAttribute('data-key');
     const [y,m,d] = key.split('-').map(Number);
     const td = new Date(y,m-1,d);
-    // Add/remove rota chips based on toggle state
-    const existingRow = el.querySelector('.cal-rota-row');
+      const existingRow = el.querySelector('.cal-rota-row');
     if (rdrShowChips) {
       if (!existingRow) {
         const sched = rdrGetSchedule(td);
@@ -4104,24 +4010,18 @@ function rdrBuildCalendar() {
     } else {
       if (existingRow) existingRow.remove();
     }
-    // RDR dot (amber, bottom-right)
-    el.classList.remove('has-rdr-data');
+      el.classList.remove('has-rdr-data');
     if (rdrAll[key]) {
       const s = rdrAll[key].statuses||{};
       if (Object.values(s).some(v=>v&&v.trim())) {
         el.classList.add('has-rdr-data');
       }
     }
-    // Ensure day-number is wrapped in span (OH builds it as a text node)
-    // Strip the rota row text from the day number before wrapping
-    if (!el.querySelector('.cal-day-num')) {
-      // Collect text nodes only (not element nodes like .cal-rota-row)
-      const textNodes = [...el.childNodes].filter(n => n.nodeType === 3);
+        if (!el.querySelector('.cal-day-num')) {
+          const textNodes = [...el.childNodes].filter(n => n.nodeType === 3);
       const numTxt = textNodes.map(n => n.textContent.trim()).join('').replace(/[^0-9]/g,'');
-      // Remove text nodes
-      textNodes.forEach(n => n.remove());
-      // Prepend the num span before any existing children
-      const numEl = document.createElement('span');
+          textNodes.forEach(n => n.remove());
+          const numEl = document.createElement('span');
       numEl.className = 'cal-day-num';
       numEl.textContent = numTxt || d;
       el.insertBefore(numEl, el.firstChild);
@@ -4212,7 +4112,6 @@ function rdrUpdateCCTV() {
 
 /* ── PATCH the main tick to also update RDR when in RDR mode ── */
 function tick() {
-  // update clock manually since we override
   const n=new Date();
   document.getElementById('t-clock').textContent=String(n.getHours()).padStart(2,'0')+':'+String(n.getMinutes()).padStart(2,'0')+':'+String(n.getSeconds()).padStart(2,'0');
   if(currentMode==='oh'){updateBanner();updateRCBar();}
@@ -4233,7 +4132,6 @@ function rdrBuildCalSummary(key) {
   const hdr = document.createElement('div'); hdr.className = 'cal-sum-date';
   hdr.textContent = fmt(d)+' '+dayName(d); div.appendChild(hdr);
 
-  // Helper: classify status for chip colour
   function chipClass(st) {
     if (!st) return 's-other';
     const u = st.toUpperCase();
@@ -4242,7 +4140,6 @@ function rdrBuildCalSummary(key) {
     return 's-other';
   }
 
-  // Helper: build a compact section
   function buildSection(entries, sectionClass, label) {
     if (!entries.length) return;
     const row = document.createElement('div'); row.className = 'cal-sum-section';
@@ -4254,8 +4151,7 @@ function rdrBuildCalSummary(key) {
       const chip = document.createElement('span');
       chip.className = 'cal-sum-chip ' + chipClass(st);
       chip.title = name + ': ' + st;
-      // Shorten name to first word only for compactness
-      chip.textContent = name.split(' ')[0] + (st ? ' · ' + st.split(' ').slice(0,2).join(' ') : '');
+          chip.textContent = name.split(' ')[0] + (st ? ' · ' + st.split(' ').slice(0,2).join(' ') : '');
       chipsWrap.appendChild(chip);
     });
     if (entries.length > MAX_SHOW) {
@@ -4279,7 +4175,6 @@ function rdrBuildCalSummary(key) {
     }
   }
 
-  // OH entries
   const ohSaved = ohAll[key];
   const ohEntries = [];
   if (ohSaved && ohSaved.statuses) {
@@ -4293,10 +4188,8 @@ function rdrBuildCalSummary(key) {
   if (ohEntries.length) buildSection(ohEntries, 'oh', 'OH');
   else { const e=document.createElement('div');e.className='cal-sum-empty';e.style.fontSize='10px';e.textContent='OH: no statuses.';div.appendChild(e); }
 
-  // Divider
   const divEl = document.createElement('div'); divEl.className = 'cal-sum-divider'; div.appendChild(divEl);
 
-  // RDR entries (off-duty only)
   const rdrSaved = rdrAll[key];
   const rdrEntries = [];
   if (rdrSaved && rdrSaved.statuses) {
@@ -4319,7 +4212,6 @@ function rdrBuildCalSummary(key) {
 /* ── PATCH selectCalDay to also load RDR data ────────────────── */
 function navigateToDate(key) {
   _ohNavigateToDate(key);
-  // Also load RDR data for this date
   rdrLoadLocal(dateFromKey(key));
   if (currentMode === 'rdr') {
     rdrRender();
@@ -4344,7 +4236,7 @@ function rdrLoadLocal(date) {
 }
 
 /* ── RDR FIREBASE ───────────────────────────────────────────── */
-function rdrFbBase(){if(syncPaused)return null;return rdrFbUrl?rdrFbUrl.replace(/\/+$/,''):null}
+function rdrFbBase(){if(syncPaused)return null;return rdrFbUrl?rdrFbUrl.replace(/\/+$/,'')+'/rdr':null}
 async function rdrFbPush(dateKey) {
   if(!rdrFbBase())return;
   try{await fetch(rdrFbBase()+'/data/'+dateKey+'.json',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({statuses:Object.assign({},rdrStatuses)})});}
@@ -4406,10 +4298,8 @@ async function rdrFbSyncCalendarDots() {
 function rdrRender() {
   const{rota,shift,date,sched}=rdrGetInfo();
   const roNum=rota.replace('R',''), shiftLabel=shift==='Day'?'AM':'PM';
-  // Rota label in widget header
   const rl=document.getElementById('rdr-rota-label');
   if(rl){rl.textContent='Rota '+roNum+' · '+shiftLabel;rl.className='rota-r'+roNum;}
-  // Determine current and incoming rotas (same logic as banner)
   {
     const _now=new Date(),_h=_now.getHours();
     var curRota,incRota,curSL,incSL;
@@ -4425,7 +4315,6 @@ function rdrRender() {
       incRota=sched.day;incSL='AM';
     }
   }
-  // Person list — only the 2 relevant rotas
   const list=document.getElementById('rdr-person-list');if(!list)return;
   list.innerHTML='';
   [[curRota,curSL,'active'],[incRota,incSL,'incoming']].forEach(([r,sl,role])=>{
@@ -4495,8 +4384,7 @@ function rdrDisplayStatus(raw) {
   if (onMatch) return onMatch[1] ? 'IN (' + onMatch[1].trim() + ')' : 'IN';
   const offMatch = v.match(/^OFF\s+DUTY\s*\(([^)]+)\)/i);
   if (offMatch) {
-    // Strip trailing date range e.g. "OVL 05/06 - 06/06" → "OVL"
-    const reason = offMatch[1].replace(/\s+\d{1,2}\/\d{1,2}.*$/, '').trim();
+      const reason = offMatch[1].replace(/\s+\d{1,2}\/\d{1,2}.*$/, '').trim();
     return reason || 'OFF';
   }
   if (/^OFF\s+DUTY$/i.test(v)) return 'OFF';
@@ -4505,16 +4393,13 @@ function rdrDisplayStatus(raw) {
 function rdrUpdatePreview(){
   const{rota,shift,date}=rdrGetInfo();
   const roNum=rota.replace('R',''),shiftLabel=shift==='Day'?'AM':'PM';
-  // Preview defaults: unset members show as ON DUTY in the preview only (not saved)
   const plainLines=['Attendance and Roll Call','',`Rota ${roNum} ${shiftLabel} Shift ${rdrFmtShort(date)}`];
   (rdrRoster[rota]||[]).forEach(name=>{
     const key=rota+'-'+name;
     const st=(rdrStatuses[key]||'').trim();
     plainLines.push(`${name} - ${st||'ON DUTY'}`);
   });
-  // Keep hidden textarea in sync for copy
   const box=document.getElementById('rdr-preview-box');if(box)box.value=plainLines.join('\n');
-  // Build rich HTML
   const rich=document.getElementById('rdr-preview-rich');
   if(rich){
     const rotaCls='prev-'+rota.toLowerCase()+'-name';
@@ -4545,13 +4430,11 @@ function rdrCopyMsg(){
   navigator.clipboard.writeText(text).then(ok).catch(()=>{const ta=document.createElement('textarea');ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);ok();});
 }
 
-
 function rdrSyncPreviewToCalendar(){
   const text = document.getElementById('rdr-preview-box').value;
   if(!text.trim()){ showToast('No preview to sync.'); return; }
   const{rota,shift,date}=rdrGetInfo();
   const roNum=rota.replace('R',''), shiftLabel=shift==='Day'?'AM':'PM';
-  // Build ICS event
   const startHour = shift==='Day'?8:18, endHour = shift==='Day'?18:32; // 32 = next day 08:00
   const y=date.getFullYear(), mo=String(date.getMonth()+1).padStart(2,'0'), d=String(date.getDate()).padStart(2,'0');
   const startDt = `${y}${mo}${d}T${String(startHour%24).padStart(2,'0')}0000`;
@@ -4581,7 +4464,6 @@ function rdrSyncPreviewToCalendar(){
   const btn=document.getElementById('rdr-sync-cal-btn');
   if(btn){const orig=btn.innerHTML;btn.textContent='✓  Saved!';btn.style.background='linear-gradient(135deg,var(--green),#059669)';btn.style.boxShadow='0 4px 20px rgba(52,211,153,0.35)';setTimeout(()=>{btn.innerHTML=orig;btn.style.background='';btn.style.boxShadow='';},2500);}
 }
-
 
 function rdrOnDateChange(){}
 
@@ -4696,7 +4578,6 @@ function rdrStripEmoji(s) {
 }
 
 function rdrImpParseHeader(line) {
-  // Matches: "Rota 3 AM Shift 07/06/26" or "Rota 2 NIGHT Shift 6/6/2026"
   const m = line.match(/rota\s*([123])\s+(AM|PM|NIGHT|DAY)\s+shift\s+(\d{1,2})\/(\d{1,2})\/(\d{2,4})/i);
   if (!m) return null;
   const rota = 'R' + m[1];
@@ -4735,7 +4616,6 @@ function rdrImpExtractBlocks(raw) {
     }
   }
   if (cur) blocks.push(cur);
-  // Deduplicate: same key+rota → keep last occurrence (most recent message wins)
   const seen = {};
   for (const b of blocks) seen[b.hdr.key + '-' + b.hdr.rota] = b;
   return Object.values(seen);
@@ -4773,7 +4653,6 @@ function rdrImpParse() {
     status.className = 'imp-status err';
     return;
   }
-  // Build parsed data
   const parsed = {};   // dateKey → { 'R1-NAME': status, ... }
   const allNames = {}; // rota → Set of names
   const dateInfos = {};
@@ -4794,43 +4673,35 @@ function rdrImpParse() {
       if (!parsed[key][storeKey]) { parsed[key][storeKey] = stat; allNames[rota].add(name); }
     }
   }
-  // Build ordered row keys: roster order first, then fuzzy-resolve extras, then truly new
   const rdrFuzzyMap={};   // 'R1-ORIGNAME' → 'R1-CANONNAME'
   const rdrUnknown=[];    // storeKeys with no roster match
   const rowKeys = [];
   for (const rota of ['R1', 'R2', 'R3']) {
     if (!allNames[rota] || !allNames[rota].size) continue;
     const rosterNames = (rdrRoster[rota] || []).map(n => n.trim().toUpperCase());
-    // First add roster-order matches
-    for (const n of rosterNames) { if (allNames[rota].has(n)) rowKeys.push(rota + '-' + n); }
-    // For non-roster names, try fuzzy match
-    for (const n of allNames[rota]) {
+      for (const n of rosterNames) { if (allNames[rota].has(n)) rowKeys.push(rota + '-' + n); }
+      for (const n of allNames[rota]) {
       const sk = rota + '-' + n;
       if (rowKeys.includes(sk)) continue; // already matched exactly
-      // Check if already resolved via fuzzy
-      const fuzzyCanon = fuzzyMatchName(n, rosterNames);
+          const fuzzyCanon = fuzzyMatchName(n, rosterNames);
       if (fuzzyCanon) {
         rdrFuzzyMap[sk] = rota + '-' + fuzzyCanon;
-        // Remap parsed data
-        for (const dk of Object.keys(parsed)) {
+              for (const dk of Object.keys(parsed)) {
           if (parsed[dk][sk] !== undefined) {
             const canonKey = rota + '-' + fuzzyCanon;
             if (!parsed[dk][canonKey]) parsed[dk][canonKey] = parsed[dk][sk];
             delete parsed[dk][sk];
           }
         }
-        // Add canonical to rowKeys if not already present
-        const canonKey = rota + '-' + fuzzyCanon;
+              const canonKey = rota + '-' + fuzzyCanon;
         if (!rowKeys.includes(canonKey)) rowKeys.push(canonKey);
       } else {
-        // Genuinely unknown
-        rowKeys.push(sk);
+              rowKeys.push(sk);
         rdrUnknown.push(sk);
       }
     }
   }
   const dates = Object.keys(dateInfos).sort().map(k => ({ key: k, ...dateInfos[k] }));
-  // Build preview table
   const table = document.getElementById('rdr-imp-table');
   table.innerHTML = '';
   const thead = table.createTHead();
@@ -4841,7 +4712,6 @@ function rdrImpParse() {
     th.textContent = String(d.day).padStart(2,'0') + '/' + String(d.month).padStart(2,'0');
     hr.appendChild(th);
   }
-  // Build reverse map for display: canonKey → [origNames]
   const rdrFuzzyRevMap = {};
   for (const [orig, canon] of Object.entries(rdrFuzzyMap)) {
     if (!rdrFuzzyRevMap[canon]) rdrFuzzyRevMap[canon] = [];
@@ -4873,7 +4743,6 @@ function rdrImpParse() {
   document.getElementById('rdr-imp-table-sect').style.display = '';
   status.textContent = '✓ ' + dates.length + ' day' + (dates.length > 1 ? 's' : '') + ', ' + rowKeys.length + ' entries';
   status.className = 'imp-status ok';
-  // Show inline confirm panel
   showRdrImpConfirm();
 }
 
@@ -4894,7 +4763,6 @@ function showRdrImpConfirm() {
   const warn = document.getElementById('rdr-imp-confirm-warn');
   if (warn) warn.classList.toggle('visible', hasExisting);
 
-  // Fuzzy match info
   const fuzzyBox = document.getElementById('rdr-imp-fuzzy-info');
   if (fuzzyBox) {
     const frev = rdrImpData.rdrFuzzyRevMap || {};
@@ -4912,7 +4780,6 @@ function showRdrImpConfirm() {
     }
   }
 
-  // Unknown names
   const unknownBox = document.getElementById('rdr-imp-unknown-warn');
   if (unknownBox) {
     const unknowns = rdrImpData.rdrUnknown || [];
@@ -4963,7 +4830,6 @@ function confirmRdrImport() {
     });
   }
 
-  // Auto-add genuinely unknown personnel to RDR roster under their rota
   {
     const unknowns = rdrImpData.rdrUnknown || [];
     const added = [];
@@ -4992,7 +4858,6 @@ function confirmRdrImport() {
   dismissRdrImpConfirm();
   rdrBuildCalendar();
   if (calSelectedKey && pushedKeys.includes(calSelectedKey)) buildCalSummary(calSelectedKey);
-  // Flash imported cells — visual confirmation, no toast
   pushedKeys.forEach(dk => {
     const el = document.querySelector(`.cal-day[data-key="${dk}"]`);
     if (el) {
@@ -5012,10 +4877,8 @@ async function rdrInit(){
   rdrRoster=JSON.parse(localStorage.getItem(RDR_ROSTER_LS)||'null')||JSON.parse(JSON.stringify(RDR_DEFAULT_ROSTER));
   rdrLoadLocal(dateFromKey(curDateKey));
   rdrBuildRED();
-  // Update roster status
   const dot=document.getElementById('rdr-rdot'),st=document.getElementById('rdr-roster-status-text');
   if(dot)dot.className='rdot';if(st)st.textContent=Object.values(rdrRoster).flat().length+' personnel (local)';
-  // Firebase
   if(rdrFbUrl){
     const ok=await rdrFbFetchRoster();
     if(ok&&dot&&st){dot.className='rdot';st.textContent=Object.values(rdrRoster).flat().length+' personnel (firebase)';}
@@ -5026,7 +4889,6 @@ async function rdrInit(){
 
 /* ── MERGED INIT (replaces OH init) ─────────────────────────── */
 function init(){
-  // Original OH init
   const now=new Date();
   curDateKey=fmtKey(now);calSelectedKey=curDateKey;
   calViewYear=now.getFullYear();calViewMonth=now.getMonth();
@@ -5036,19 +4898,14 @@ function init(){
   loadLocal(now);renderPersonList();renderToRows();
   if(curEmoji)applyEmoji(curEmoji,false);else resetEmoji();
   updatePreview();updateStreakUI();
-  // Unified calendar with rota chips
   rdrBuildCalendar();
   rdrBuildCalSummary(curDateKey);
   tick();setInterval(tick,1000);
-  // OH Firebase
   if(fbUrl){const fbin=document.getElementById('fb-in');if(fbin){fbin.value=fbUrl;fbin.classList.add('connected');}initFb();}
   else setSyncUI('offline');
-  // RDR init
   rdrInit().then(()=>{
-    // Apply mode after everything loaded
-    applyMode();
-    // Build RDR roster editor
-    rdrBuildRED();
+      applyMode();
+      rdrBuildRED();
   });
 }
 
@@ -5065,55 +4922,29 @@ function init(){
     localStorage.setItem(THEME_KEY, isLight ? 'dark' : 'light');
     applyTheme(!isLight);
   };
-  // Apply saved preference immediately (before init)
   const saved = localStorage.getItem(THEME_KEY);
   if (saved === 'light') applyTheme(true);
 })();
 
-async function devNukeAllData() {
-  const confirmed = confirm(
-    'NUKE ALL DATA?\n\n' +
-    'This will delete:\n' +
-    '- OH calendar data\n' +
-    '- OH roster\n' +
-    '- RDR calendar data\n' +
-    '- RDR roster\n' +
-    '- Firebase data (best-effort)\n' +
-    '- Local browser data\n\n' +
-    'This cannot be undone.'
-  );
-  if (!confirmed) return;
+/* ── FIRST-RUN SETUP ─────────────────────────────────────────── */
+(function(){
+  const ohUrl = localStorage.getItem('oh_fb_url') || '';
+  if(!ohUrl){
+    document.getElementById('setup-overlay').classList.remove('hidden');
+  }
+})();
 
-  // 1. Nuke localStorage first — this always works
-  const LS_KEYS = [
-    'oh_saved_v3','oh_roster_v3',
-    'rdr_saved_v3','rdr_roster_v3',
-    'unified_mode','oh_fb_url'
-  ];
-  LS_KEYS.forEach(k => localStorage.removeItem(k));
-
-  // 2. Firebase — best-effort, failures don't block the reload
-  const fbDeletes = [];
-  try {
-    if (fbBase()) {
-      fbDeletes.push(fetch(fbBase() + '/data.json',   {method:'DELETE'}).catch(()=>{}));
-      fbDeletes.push(fetch(fbBase() + '/roster.json', {method:'DELETE'}).catch(()=>{}));
-    }
-  } catch(e){}
-  try {
-    if (typeof rdrFbBase === 'function' && rdrFbBase()) {
-      fbDeletes.push(fetch(rdrFbBase() + '/data.json',   {method:'DELETE'}).catch(()=>{}));
-      fbDeletes.push(fetch(rdrFbBase() + '/roster.json', {method:'DELETE'}).catch(()=>{}));
-    }
-  } catch(e){}
-
-  // Wait up to 3 s for Firebase, then reload regardless
-  await Promise.race([
-    Promise.all(fbDeletes),
-    new Promise(r => setTimeout(r, 3000))
-  ]);
-
+function setupSave(){
+  const url = document.getElementById('setup-oh-url').value.trim();
+  if(url) localStorage.setItem('oh_fb_url', url);
+  document.getElementById('setup-overlay').classList.add('hidden');
   location.reload();
+}
+
+function setupSkip(){
+  // Mark as seen so overlay doesn't re-appear; app runs offline
+  localStorage.setItem('oh_fb_url', '');
+  document.getElementById('setup-overlay').classList.add('hidden');
 }
 
 init();
@@ -5134,8 +4965,7 @@ init();
     'imp-live','rdr-imp-live'
   ]);
   function makeStub(id){
-    // Returns a deeply-recursive stub that swallows any chain of calls/property access
-    function stub(){
+      function stub(){
       return new Proxy(Object.assign(stub,{
         id,style:{},
         classList:{add:()=>{},remove:()=>{},toggle:()=>{},contains:()=>false},
