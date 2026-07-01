@@ -8,6 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="./css/styles.min.css">
 <script src="./js/theme-toggle.js" defer></script>
+<script src="./js/app.js" defer></script>
 </head>
 <body>
 <div class="topbar">
@@ -25,30 +26,48 @@
     <div class="t-clock" id="t-clock">00:00:00</div>
   </div>
 </div>
+
 <div class="page">
+  <!-- ── OH MODE: WEEKEND / SHIFT BANNER ────────── -->
   <div id="oh-banner-area">
-  <div id="wkcard-wrap" style="display:none"><div class="wkcard">
-    <div class="wk-em" id="wk-em">🏖️</div><div class="wk-ti" id="wk-ti">Weekend</div>
-    <div class="wk-su" id="wk-su">Enjoy the break.</div>
-    <div class="wk-cd" id="wk-cd">--:--:--</div><div class="wk-lb">until Monday OH opens</div>
-  </div></div>
-  <div id="shift-wrap" style="display:none">
-    <div class="sbanner">
-      <div class="bn-h"><div class="bn-ey">Office Hours</div><div class="bn-m" id="bn-hrs">0800 – 1800</div><div class="bn-s" id="bn-day">Mon – Thu</div></div>
-      <div class="bn-c">
-        <div class="bn-cl" id="bn-cl">Closes in</div><div class="bn-cd" id="bn-cd">--:--:--</div>
-        <div class="bchip c-op" id="bchip"><span class="sdot"></span><span id="bchip-t">Open</span></div>
-      </div>
-      <div class="bn-h" style="align-items:flex-end;text-align:right">
-        <div class="bn-ey">Next Rollcall</div><div class="bn-m" id="bn-nrc">—</div><div class="bn-s" id="bn-rci">—</div>
+    <div id="wkcard-wrap" style="display:none">
+      <div class="wkcard">
+        <div class="wk-em" id="wk-em">🏖️</div>
+        <div class="wk-ti" id="wk-ti">Weekend</div>
+        <div class="wk-su" id="wk-su">Enjoy the break.</div>
+        <div class="wk-cd" id="wk-cd">--:--:--</div>
+        <div class="wk-lb">until Monday OH opens</div>
       </div>
     </div>
-    <div class="rcbar">
-      <span class="rc-lb">Rollcalls</span><div class="rc-ps" id="rc-ps"></div><div class="rc-cd" id="rc-cd"></div>
+
+    <div id="shift-wrap" style="display:none">
+      <div class="sbanner">
+        <div class="bn-h">
+          <div class="bn-ey">Office Hours</div>
+          <div class="bn-m" id="bn-hrs">0800 – 1800</div>
+          <div class="bn-s" id="bn-day">Mon – Thu</div>
+        </div>
+        <div class="bn-c">
+          <div class="bn-cl" id="bn-cl">Closes in</div>
+          <div class="bn-cd" id="bn-cd">--:--:--</div>
+          <div class="bchip c-op" id="bchip"><span class="sdot"></span><span id="bchip-t">Open</span></div>
+        </div>
+        <div class="bn-h" style="align-items:flex-end;text-align:right">
+          <div class="bn-ey">Next Rollcall</div>
+          <div class="bn-m" id="bn-nrc">—</div>
+          <div class="bn-s" id="bn-rci">—</div>
+        </div>
+      </div>
+
+      <div class="rcbar">
+        <span class="rc-lb">Rollcalls</span>
+        <div class="rc-ps" id="rc-ps"></div>
+        <div class="rc-cd" id="rc-cd"></div>
+      </div>
     </div>
-  </div>
   </div>
 
+  <!-- ── RDR MODE: SHIFT BANNER ────────────────── -->
   <div id="rdr-banner-area" style="display:none">
     <div class="shift-banner" id="shift-banner">
       <div class="banner-half banner-current">
@@ -64,6 +83,7 @@
         <div class="banner-rota" id="card-incoming-rota">—</div>
       </div>
     </div>
+
     <div class="cctv-bar">
       <span class="cctv-lbl">CCTV Checks</span>
       <div class="cctv-pills" id="cctv-pills"></div>
@@ -71,14 +91,17 @@
     </div>
   </div>
 
+  <!-- ────────────────────────── CALENDAR ─────────────────── -->
   <div class="widget" id="calendar-widget">
-    <div class="wh"><span class="wh-t">Date</span>
+    <div class="wh">
+      <span class="wh-t">Date</span>
       <label class="toggle-switch" id="rota-toggle-row" style="margin-left:auto;margin-right:8px">
         <input type="checkbox" id="rota-toggle-input" onchange="toggleRotaChips()">
         <div class="toggle-track"><div class="toggle-thumb"></div></div>
         <span class="toggle-lbl">Show RDR Shifts</span>
       </label>
-      <span class="badge b-in" id="date-badge">TODAY</span></div>
+      <span class="badge b-in" id="date-badge">TODAY</span>
+    </div>
     <div class="wb">
       <div class="cal-wrap">
         <div class="cal-nav">
@@ -101,6 +124,16 @@
       <input type="date" id="rdr-date-input" style="display:none" onchange="rdrOnDateChange()">
     </div>
   </div>
+
+  <!-- ────────────────────────── GRIDS ─────────────────── -->
+  <div id="oh-col">
+    <div class="grid" id="oh-grid"></div>
+  </div>
+
+  <div id="rdr-col" style="display:none">
+    <div class="grid" id="rdr-grid"></div>
+  </div>
 </div>
+
 </body>
 </html>
