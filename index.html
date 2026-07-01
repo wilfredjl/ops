@@ -10,20 +10,97 @@
 <script src="./js/theme-toggle.js" defer></script>
 </head>
 <body>
-  <!-- Content unchanged. Inline styles were extracted to css/styles.css (and minified css/styles.min.css). -->
+<div class="topbar">
+  <div class="t-logo">OH</div>
+  <span class="t-title">OH Movement</span>
+  <div class="t-div"></div>
+  <span class="t-date" id="t-date"></span>
+  <div class="mode-toggle">
+    <button class="mode-btn active-oh" id="btn-oh" onclick="setMode('oh')">OH</button>
+    <button class="mode-btn" id="btn-rdr" onclick="setMode('rdr')">RDR</button>
+  </div>
+  <div class="t-right">
+    <div class="sync-pill offline" id="sync-pill" data-clickable onclick="toggleSyncPause()" title="Click to pause/resume Firebase sync"><span class="sdot2"></span><span id="sync-txt">local</span></div>
+    <button class="theme-btn" id="theme-btn" onclick="toggleTheme()" title="Toggle light/dark mode">🌙</button>
+    <div class="t-clock" id="t-clock">00:00:00</div>
+  </div>
+</div>
+<div class="page">
+  <div id="oh-banner-area">
+  <div id="wkcard-wrap" style="display:none"><div class="wkcard">
+    <div class="wk-em" id="wk-em">🏖️</div><div class="wk-ti" id="wk-ti">Weekend</div>
+    <div class="wk-su" id="wk-su">Enjoy the break.</div>
+    <div class="wk-cd" id="wk-cd">--:--:--</div><div class="wk-lb">until Monday OH opens</div>
+  </div></div>
+  <div id="shift-wrap" style="display:none">
+    <div class="sbanner">
+      <div class="bn-h"><div class="bn-ey">Office Hours</div><div class="bn-m" id="bn-hrs">0800 – 1800</div><div class="bn-s" id="bn-day">Mon – Thu</div></div>
+      <div class="bn-c">
+        <div class="bn-cl" id="bn-cl">Closes in</div><div class="bn-cd" id="bn-cd">--:--:--</div>
+        <div class="bchip c-op" id="bchip"><span class="sdot"></span><span id="bchip-t">Open</span></div>
+      </div>
+      <div class="bn-h" style="align-items:flex-end;text-align:right">
+        <div class="bn-ey">Next Rollcall</div><div class="bn-m" id="bn-nrc">—</div><div class="bn-s" id="bn-rci">—</div>
+      </div>
+    </div>
+    <div class="rcbar">
+      <span class="rc-lb">Rollcalls</span><div class="rc-ps" id="rc-ps"></div><div class="rc-cd" id="rc-cd"></div>
+    </div>
+  </div>
+  </div>
 
-  <div class="topbar">
-    <div class="t-logo">OH</div>
-    <div class="t-title">OH Movement Chart</div>
-    <div class="t-div"></div>
-    <div class="t-date">June 2026</div>
-    <div class="t-right">
-      <div class="t-clock">12:00</div>
+  <div id="rdr-banner-area" style="display:none">
+    <div class="shift-banner" id="shift-banner">
+      <div class="banner-half banner-current">
+        <div class="banner-eyebrow">Currently on shift</div>
+        <div class="banner-rota" id="card-current-rota">—</div>
+      </div>
+      <div class="banner-divider">
+        <div class="banner-countdown-label" id="banner-countdown-label">Shift transition</div>
+        <div class="banner-countdown" id="banner-countdown">00:00:00</div>
+      </div>
+      <div class="banner-half banner-incoming" id="card-incoming-half">
+        <div class="banner-eyebrow" id="card-incoming-eyebrow">Incoming shift</div>
+        <div class="banner-rota" id="card-incoming-rota">—</div>
+      </div>
+    </div>
+    <div class="cctv-bar">
+      <span class="cctv-lbl">CCTV Checks</span>
+      <div class="cctv-pills" id="cctv-pills"></div>
+      <div class="cctv-cdown" id="cctv-cdown"></div>
     </div>
   </div>
 
-  <main class="page">
-    <!-- The rest of your page markup goes here. I preserved the original HTML structure. -->
-  </main>
+  <div class="widget" id="calendar-widget">
+    <div class="wh"><span class="wh-t">Date</span>
+      <label class="toggle-switch" id="rota-toggle-row" style="margin-left:auto;margin-right:8px">
+        <input type="checkbox" id="rota-toggle-input" onchange="toggleRotaChips()">
+        <div class="toggle-track"><div class="toggle-thumb"></div></div>
+        <span class="toggle-lbl">Show RDR Shifts</span>
+      </label>
+      <span class="badge b-in" id="date-badge">TODAY</span></div>
+    <div class="wb">
+      <div class="cal-wrap">
+        <div class="cal-nav">
+          <button class="cal-nav-btn" onclick="calShiftMonth(-1)">‹</button>
+          <div class="cal-month" id="cal-month"></div>
+          <button class="cal-nav-btn" onclick="calShiftMonth(1)">›</button>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+      </div>
+      <div id="cal-summary"></div>
+      <div class="dbn-row">
+        <button class="dbn" onclick="shiftDay(-1)">← Prev</button>
+        <button class="dbn today" onclick="goToday()">Today</button>
+        <button class="dbn" onclick="shiftDay(1)">Next →</button>
+      </div>
+      <div class="cal-export-row">
+        <button class="cal-export-btn" onclick="openExportModal()">⬆ Export TSV</button>
+      </div>
+      <input type="date" id="date-in" style="display:none" onchange="onDC()">
+      <input type="date" id="rdr-date-input" style="display:none" onchange="rdrOnDateChange()">
+    </div>
+  </div>
+</div>
 </body>
 </html>
